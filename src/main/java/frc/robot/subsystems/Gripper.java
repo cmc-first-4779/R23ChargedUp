@@ -15,7 +15,7 @@ public class Gripper extends SubsystemBase {
   public Gripper() {
     gripper=new DoubleSolenoid(null, 0,1); 
 
-    
+
   }
 
   // Declaring my gripper as an double solonoid
@@ -27,11 +27,11 @@ public class Gripper extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void openNoseCone() {
+  public void OpenGripper() {
     gripper.set(DoubleSolenoid.Value.kReverse);
   }
 
-  public void closeNoseCone() {
+  public void CloseGripper() {
     gripper.set(DoubleSolenoid.Value.kForward);
   }
 
