@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import javax.naming.InitialContext;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -16,17 +17,25 @@ import frc.robot.StaticConstants.MotorAmpConstants;
 
 public class GripperSubsystem extends SubsystemBase {
 
-  static CANSparkMax gripperMotor;
+  CANSparkMax gripperMotor;
+  RelativeEncoder gripperEncoder;
 
   /** Creates a new GripperSubsystem. */
   public GripperSubsystem() {
     gripperMotor = new CANSparkMax(HardwareMapConstants.CAN_ADDRESS_GRIPPER, MotorType.kBrushless);
     initMotorController(gripperMotor);
+    gripperEncoder = gripperMotor.getEncoder();
+    gripperEncoder.setPosition(0);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  private double getEncoder() {
+    return gripperEncoder.getPosition();
+
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
@@ -39,11 +48,11 @@ public class GripperSubsystem extends SubsystemBase {
     sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
   }
 
-  private static void openGripper(double speed) {
+  private void openGripper(double speed) {
     gripperMotor.set(speed);
   }
 
-  private static void closeGripper(double speed) {
+  private void closeGripper(double speed) {
     gripperMotor.set(speed * -1);
 
   }
