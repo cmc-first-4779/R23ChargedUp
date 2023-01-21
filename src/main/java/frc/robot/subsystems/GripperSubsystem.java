@@ -33,13 +33,13 @@ public class GripperSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  private double getEncoder() {
+  public double getEncoder() {
     return gripperEncoder.getPosition();
 
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
-  private static void initMotorController(CANSparkMax sparkMax) {
+  public  static void initMotorController(CANSparkMax sparkMax) {
     System.out.println("Initializing SparkMax: " + sparkMax);
     sparkMax.restoreFactoryDefaults(); // Reset to the our factory defaults
     sparkMax.setIdleMode(IdleMode.kBrake); // kCoast is Coast... kBrake is Brake
@@ -48,11 +48,11 @@ public class GripperSubsystem extends SubsystemBase {
     sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
   }
 
-  private void openGripper(double speed) {
+  public void openGripper(double speed) {
     gripperMotor.set(speed);
   }
 
-  private void closeGripper(double speed) {
+  public void closeGripper(double speed) {
     gripperMotor.set(speed * -1);
 
   }
