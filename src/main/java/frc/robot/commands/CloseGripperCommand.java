@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.GripperSubsystem;
 
-public class OpenGripperCommand extends CommandBase {
+public class CloseGripperCommand extends CommandBase {
   GripperSubsystem m_gripperSubsystem; 
   double currentEncoderPosition;
   /** Creates a new OpenGripperCommand. */
-  public OpenGripperCommand (GripperSubsystem gripperSubsystem) {
+  public CloseGripperCommand(GripperSubsystem gripperSubsystem) {
     m_gripperSubsystem = gripperSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   addRequirements(m_gripperSubsystem);
@@ -42,5 +42,4 @@ public class OpenGripperCommand extends CommandBase {
   public boolean isFinished() {
     return currentEncoderPosition >= Constants.GRIPPER_ENCODER_MAX; 
   }
-  }
-
+}
