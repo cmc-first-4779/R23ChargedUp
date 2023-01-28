@@ -36,7 +36,7 @@ public final class Constants {
 public static final double PIVOT_SPEED = 1; // DUMMY VARIABLE   
   public static final double PIVOT_START_POSITION = 0; // DUMMY VARIABLE
   public static final double PIVOT_LOW_POSITION = 5; // DUMMY VARIABLE
-  public static final double PIVOT_MED_POSITION = 10; // DUMMY VARIABLE 
+  public static final double PIVOT_MID_POSITION = 10; // DUMMY VARIABLE 
   public static final double PIVOT_HIGH_POSITION = 15; // DUMMY VARIABLE 
   public static final double PIVOT_kF = 0.5; // DUMMY VARIABLE
   public static final double PIVOT_kP = 0.13; // DUMMY VARIABLE

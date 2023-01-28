@@ -87,8 +87,8 @@ public class PivotSubsystem extends SubsystemBase {
   }
 
 
-public void setMedPosition(Object ControlMode) {
-    m_desiredPosition = Constants.PIVOT_MED_POSITION;
+public void setMidPosition(Object ControlMode) {
+    m_desiredPosition = Constants.PIVOT_MID_POSITION;
     configPIDFValues(Constants.PIVOT_kP, Constants.PIVOT_kI, Constants.PIVOT_kD, Constants.PIVOT_kF, 0);
     pivotMotor.set(TalonFXControlMode.Position, m_desiredPosition);
   }
