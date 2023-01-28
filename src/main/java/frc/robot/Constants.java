@@ -20,7 +20,13 @@ public static final double GRIPPER_ENCODER_MAX = 4;
 
 public static final double GRIPPER_ENCODER_MIN = 0;
 
-  }
+public static final double EXTENDER_SPEED = 1; 
+  public static final double EXTENDER_LOW_POSITION = 5; // dummy VARIABLE
+public static final double EXTENDER_MED_POSITION = 10; // DUMMY VARIABLE 
+public static final double EXTENDER_HIGH_POSITION = 15; // DUMMY VARIABLE
+  
+
+}
 
 
 
