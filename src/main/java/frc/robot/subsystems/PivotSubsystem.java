@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.RelativeEncoder;
 
@@ -20,6 +21,9 @@ public class PivotSubsystem extends SubsystemBase {
   /** Creates a new ExtenderSubsystem. */
   WPI_TalonFX pivotMotor;
   RelativeEncoder pivotEncoder;
+
+  private double m_desiredPosition;
+  private boolean IsArmInPosition;
 
   public PivotSubsystem() {
     pivotMotor = new WPI_TalonFX(HardwareMapConstants.CAN_ADDRESS_EXTENDER);
@@ -61,6 +65,40 @@ public class PivotSubsystem extends SubsystemBase {
             MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
   }
 
+  // Set up our PID Values for the motor controller
+  private void configPIDFValues(double p, double i, double d, double f, int slot) {
+    // Configure the PID settings for Slot0
+    pivotMotor.config_kF(slot, f);
+    pivotMotor.config_kP(slot, p);
+    pivotMotor.config_kI(slot, i);
+    pivotMotor.config_kD(slot, d);
+  }
+
+  public void setStartPosition(Object ControlMode) {
+    m_desiredPosition = Constants.PIVOT_START_POSITION;
+    configPIDFValues(Constants.PIVOT_kP, Constants.PIVOT_kI, Constants.PIVOT_kD, Constants.PIVOT_kF, 0);
+    pivotMotor.set(TalonFXControlMode.Position, m_desiredPosition);
+  }
+
+  public void setLowPosition(Object ControlMode) {
+    m_desiredPosition = Constants.PIVOT_LOW_POSITION;
+    configPIDFValues(Constants.PIVOT_kP, Constants.PIVOT_kI, Constants.PIVOT_kD, Constants.PIVOT_kF, 0);
+    pivotMotor.set(TalonFXControlMode.Position, m_desiredPosition);
+  }
+
+
+public void setMedPosition(Object ControlMode) {
+    m_desiredPosition = Constants.PIVOT_MED_POSITION;
+    configPIDFValues(Constants.PIVOT_kP, Constants.PIVOT_kI, Constants.PIVOT_kD, Constants.PIVOT_kF, 0);
+    pivotMotor.set(TalonFXControlMode.Position, m_desiredPosition);
+  }
+
+  public void setHighPosition(Object ControlMode) {
+    m_desiredPosition = Constants.PIVOT_HIGH_POSITION;
+    configPIDFValues(Constants.PIVOT_kP, Constants.PIVOT_kI, Constants.PIVOT_kD, Constants.PIVOT_kF, 0);
+    pivotMotor.set(TalonFXControlMode.Position, m_desiredPosition);
+  }
+  
   public void stopMotor() {
     pivotMotor.stopMotor();
   }
