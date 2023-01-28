@@ -13,6 +13,7 @@ import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.MaxMotorAmpsConstants;
+import frc.robot.Constants;
 import frc.robot.StaticConstants.HardwareMapConstants;
 
 public class ExtenderSubsystem extends SubsystemBase {
@@ -71,6 +72,14 @@ public class ExtenderSubsystem extends SubsystemBase {
 
   public void resetEncoder() {
     extenderMotor.setSelectedSensorPosition(0);
+  }
+
+  public void extendArm() {
+    extenderMotor.set(Constants.EXTENDER_SPEED);
+  }
+
+  public void retractArm() {
+    extenderMotor.set(Constants.EXTENDER_SPEED * -1);
   }
 
 }
