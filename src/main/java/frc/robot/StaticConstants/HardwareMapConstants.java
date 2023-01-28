@@ -10,6 +10,6 @@ public class HardwareMapConstants {
     // Any Victors that are slaved to Talons have a CAN address of 10 + the TALON
     // address that it is slaved to.
     public static final int CAN_ADDRESS_GRIPPER = 2; //  Gripper Motor 
-
+    public static final int CAN_ADDRESS_EXTENDER = 3; // Extender Motor
 
 }
