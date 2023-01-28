@@ -44,6 +44,6 @@ public class retractExtenderCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return currentencoderposition >= Constants.EXTENDER_LOW_POSITION;
+    return currentencoderposition <= Constants.EXTENDER_START_POSITION;
   }
 }
