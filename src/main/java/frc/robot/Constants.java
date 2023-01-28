@@ -17,7 +17,12 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 public static final double GRIPPER_ENCODER_MAX = 4; 
+<<<<<<< HEAD
 public static final double GRIPPER_ENCODER_MIN = 0;
+=======
+public static final double GRIPPER_ENCODER_MIN = 0; 
+
+>>>>>>> 4f0a8153fa07c651bf2825977ab508acde938e59
   }
 
 
