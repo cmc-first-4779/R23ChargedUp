@@ -28,7 +28,7 @@ public class CloseGripperCommand extends CommandBase {
   @Override
   public void execute() {
     currentEncoderPosition = m_gripperSubsystem.getEncoder(); 
-    m_gripperSubsystem.openGripper(2);
+m_gripperSubsystem.closeGripper(-2);
   }
 
   // Called once the command ends or is interrupted.
