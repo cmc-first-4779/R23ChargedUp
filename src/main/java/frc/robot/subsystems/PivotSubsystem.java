@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -29,7 +30,7 @@ public class PivotSubsystem extends SubsystemBase {
     pivotMotor = new WPI_TalonFX(HardwareMapConstants.CAN_ADDRESS_EXTENDER);
     initMotorController(pivotMotor);
     pivotMotor.setInverted(true);
-
+    initMM();
   }
 
   @Override
@@ -63,6 +64,13 @@ public class PivotSubsystem extends SubsystemBase {
         new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
             MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
             MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
+
+  }
+
+  public void initMM() {
+    pivotMotor.configMotionCruiseVelocity(Constants.PIVOT_MM_VELOCITY);
+    pivotMotor.configMotionCruiseVelocity(Constants.PIVOT_MM_ACCELERATION);
+
   }
 
   // Set up our PID Values for the motor controller
@@ -86,8 +94,7 @@ public class PivotSubsystem extends SubsystemBase {
     pivotMotor.set(TalonFXControlMode.Position, m_desiredPosition);
   }
 
-
-public void setMidPosition(Object ControlMode) {
+  public void setMidPosition(Object ControlMode) {
     m_desiredPosition = Constants.PIVOT_MID_POSITION;
     configPIDFValues(Constants.PIVOT_kP, Constants.PIVOT_kI, Constants.PIVOT_kD, Constants.PIVOT_kF, 0);
     pivotMotor.set(TalonFXControlMode.Position, m_desiredPosition);
@@ -98,7 +105,7 @@ public void setMidPosition(Object ControlMode) {
     configPIDFValues(Constants.PIVOT_kP, Constants.PIVOT_kI, Constants.PIVOT_kD, Constants.PIVOT_kF, 0);
     pivotMotor.set(TalonFXControlMode.Position, m_desiredPosition);
   }
-  
+
   public void stopMotor() {
     pivotMotor.stopMotor();
   }
@@ -119,5 +126,7 @@ public void setMidPosition(Object ControlMode) {
   public void rotatePivotDown() {
     pivotMotor.set(Constants.PIVOT_SPEED * -1);
   }
-
+public void rotateArmMM(double encoderPosition) {
+  pivotMotor.set(ControlMode.MotionMagic, encoderPosition);
+}
 }
