@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.GripperSubsystem;
 
-public class CloseGripperCommand extends CommandBase {
+public class closeGripperCommand extends CommandBase {
   GripperSubsystem m_gripperSubsystem; 
   double currentEncoderPosition;
   /** Creates a new OpenGripperCommand. */
-  public CloseGripperCommand(GripperSubsystem gripperSubsystem) {
+  public closeGripperCommand(GripperSubsystem gripperSubsystem) {
     m_gripperSubsystem = gripperSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   addRequirements(m_gripperSubsystem);

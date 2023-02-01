@@ -31,15 +31,15 @@ public final class Constants {
   public static final double EXTENDER_HIGH_POSITION = 15; // DUMMY VARIABLE
   public static final double EXTENDER_START_POSITION = 0;// DUMMY VARIABLE
 
-
-
-public static final double PIVOT_SPEED = 1; // DUMMY VARIABLE   
+  public static final double PIVOT_SPEED = 1; // DUMMY VARIABLE
   public static final double PIVOT_START_POSITION = 0; // DUMMY VARIABLE
   public static final double PIVOT_LOW_POSITION = 5; // DUMMY VARIABLE
-  public static final double PIVOT_MID_POSITION = 10; // DUMMY VARIABLE 
-  public static final double PIVOT_HIGH_POSITION = 15; // DUMMY VARIABLE 
+  public static final double PIVOT_MID_POSITION = 10; // DUMMY VARIABLE
+  public static final double PIVOT_HIGH_POSITION = 15; // DUMMY VARIABLE
   public static final double PIVOT_kF = 0.5; // DUMMY VARIABLE
   public static final double PIVOT_kP = 0.13; // DUMMY VARIABLE
   public static final double PIVOT_kI = 0.0; // DUMMY VARIABLE
   public static final double PIVOT_kD = 0.0; // DUMMY VARIABLE
+  public static final double PIVOT_MM_VELOCITY = 15000;// DUMMY VARIABLE
+  public static final double PIVOT_MM_ACCELERATION = 6000; // DUMMY VARIABLE
 }
