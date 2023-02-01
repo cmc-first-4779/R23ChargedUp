@@ -32,7 +32,8 @@ public final class Constants {
   *
   * Should be measured from center to center.
   */
- public static final double PIGEON_DEADBAND = .5;
+ public static final double PIGEON_DEADBAND_GOING_UP = .5;
+ public static final double PIGEON_DEADBAND_GOING_DOWN = -.5;
  public static final double DRIVETRAIN_WHEELBASE_METERS = 0.5334; // DONE Measure and set wheelbase
 
  public static final int DRIVETRAIN_PIGEON_ID = 5; // DONE Set Pigeon ID

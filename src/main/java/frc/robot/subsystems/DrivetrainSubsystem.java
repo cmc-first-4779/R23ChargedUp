@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -125,7 +126,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         .withPosition(0, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
                 .withDriveMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_DRIVE_MOTOR)
-                .withSteerMotor(MotorType.NEO, Constants.FRONT_LEFT_MODULE_STEER_MOTOR)
+                .withSteerMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_STEER_MOTOR)
                 .withSteerEncoderPort(Constants.FRONT_LEFT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.FRONT_LEFT_MODULE_STEER_OFFSET)
                 .build();
@@ -134,9 +135,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withLayout(shuffleboardTab.getLayout("Front Right Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(2, 0))
-                .withGearRatio(SdsModuleConfigurations.MK4I_L1)
-                .withDriveMotor(MotorType.NEO, Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR)
-                .withSteerMotor(MotorType.NEO, Constants.FRONT_RIGHT_MODULE_STEER_MOTOR)
+                .withGearRatio(SdsModuleConfigurations.MK4_L1)
+                .withDriveMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_STEER_MOTOR)
                 .withSteerEncoderPort(Constants.FRONT_RIGHT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.FRONT_RIGHT_MODULE_STEER_OFFSET)
                 .build();
@@ -145,9 +146,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withLayout(shuffleboardTab.getLayout("Back Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(4, 0))
-                .withGearRatio(SdsModuleConfigurations.MK4I_L1)
-                .withDriveMotor(MotorType.NEO, Constants.BACK_LEFT_MODULE_DRIVE_MOTOR)
-                .withSteerMotor(MotorType.NEO, Constants.BACK_LEFT_MODULE_STEER_MOTOR)
+                .withGearRatio(SdsModuleConfigurations.MK4_L1)
+                .withDriveMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_STEER_MOTOR)
                 .withSteerEncoderPort(Constants.BACK_LEFT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.BACK_LEFT_MODULE_STEER_OFFSET)
                 .build();
@@ -156,9 +157,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withLayout(shuffleboardTab.getLayout("Back Right Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(6, 0))
-                .withGearRatio(SdsModuleConfigurations.MK4I_L1)
-                .withDriveMotor(MotorType.NEO, Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR)
-                .withSteerMotor(MotorType.NEO, Constants.BACK_RIGHT_MODULE_STEER_MOTOR)
+                .withGearRatio(SdsModuleConfigurations.MK4_L1)
+                .withDriveMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_STEER_MOTOR)
                 .withSteerEncoderPort(Constants.BACK_RIGHT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.BACK_RIGHT_MODULE_STEER_OFFSET)
                 .build();
@@ -180,28 +181,28 @@ public class DrivetrainSubsystem extends SubsystemBase {
      * robot is currently facing to the
      * 'forwards' direction.
      */
-    // public CommandBase zeroGyroscope() {
+    public void zeroGyroscope() {
     // // Inline construction of command goes here.
     // // Subsystem::RunOnce implicitly requires `this` subsystem.
-    // return runOnce(
-    // () -> {
-    // gyroscope.setYaw(0.0);
-    // });
-    // // Don't Remove following if you are using a Pigeon
-    // // m_pigeon.setFusedHeading(0.0);
-    // // m_pigeon.setYaw(0.0);
+//     return runOnce(
+//     () -> {
+//     gyroscope.setYaw(0.0);
+//     });
+    // Don't Remove following if you are using a Pigeon
+//     m_pigeon.setFusedHeading(0.0);
+    gyroscope.setYaw(0.0);
 
     // // Uncomment Following if you are using a NavX
     // // m_navx.zeroYaw();
-    // }
-
-    public void zeroGyroscope() {
-        odometry.resetPosition(
-                Rotation2d.fromDegrees(gyroscope.getYaw()),
-                new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
-                        backLeftModule.getPosition(), backRightModule.getPosition() },
-                new Pose2d(odometry.getPoseMeters().getTranslation(), Rotation2d.fromDegrees(0.0)));
     }
+
+//     public void zeroGyroscope() {
+//         odometry.resetPosition(
+//                 Rotation2d.fromDegrees(gyroscope.getYaw()),
+//                 new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
+//                         backLeftModule.getPosition(), backRightModule.getPosition() },
+//                 new Pose2d(odometry.getPoseMeters().getTranslation(), Rotation2d.fromDegrees(0.0)));
+//     }
 
     public Rotation2d getGyroscopeRotation() {
         // Don't Remove Follwoing if you are using a Pigeon
@@ -320,6 +321,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
         backLeftModule.set(2, 0);
         ;
         backRightModule.set(2, 0);
+    }
+
+    public void driveBackwardsSlow() {
+        frontLeftModule.set(-2, 0);
+        frontRightModule.set(-2, 0);
+        ;
+        backLeftModule.set(-2, 0);
+        ;
+        backRightModule.set(-2, 0);
     }
 
     public void sturdyBase() {

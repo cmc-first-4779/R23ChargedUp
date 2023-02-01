@@ -27,13 +27,22 @@ public class balanceTest extends CommandBase {
   @Override
   public void execute() {
     m_pigeonPitch = m_drive.getPitch();
-    if (m_pigeonPitch >= Constants.PIGEON_DEADBAND) {
-       m_drive.driveStraightSlow();
+    if (m_pigeonPitch <= Constants.PIGEON_DEADBAND_GOING_DOWN) {
+      m_drive.driveBackwardsSlow();
+    }
+    if (m_pigeonPitch >= Constants.PIGEON_DEADBAND_GOING_UP) {
+      m_drive.driveStraightSlow();
     }
     else {
       m_drive.sturdyBase();
       
     }
+    // if (m_pigeonPitch <= Constants.PIGEON_DEADBAND_GOING_DOWN) {
+    //   m_drive.driveBackwardsSlow();
+    // }
+    // else {
+    //   m_drive.sturdyBase();
+    // }
   }
 
   // Called once the command ends or is interrupted.
