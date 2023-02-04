@@ -118,6 +118,17 @@ public class WristSubsystem extends SubsystemBase {
     wristMotorLeft.set(TalonFXControlMode.Position, position);
     wristMotorRight.set(TalonFXControlMode.Position, position);
   }
+// return our encoder values for our right wrist motor
+public double getRightEncoderPosition(){
+  return wristMotorRight.getSelectedSensorPosition(); 
+}
+
+// return our encoder values for our left wrist motor
+public double getLeftEncoderPosition(){
+  return wristMotorLeft.getSelectedSensorPosition(); 
+}
+
+
 
 // Control the Up and Down Values with Motion Magic
   public void moveWristMM(double ySpeed) {
