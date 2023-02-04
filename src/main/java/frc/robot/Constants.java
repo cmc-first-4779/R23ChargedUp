@@ -69,8 +69,8 @@ public final class Constants {
          new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
          new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2));
 
- public static final double kPXController = 1.5;
- public static final double kPYController = 1.5;
+ public static final double kPXController = 0.077777;
+ public static final double kPYController = 0.077777;
  public static final double kPThetaController = 3;
 
  // I'm not sure where these values come from, but this is what 0 to auto code is using. 
