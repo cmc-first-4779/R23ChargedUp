@@ -4,13 +4,16 @@
 
 package frc.robot;
 
+import frc.StaticConstants.BlingConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.StaticConstants.HardwareMapConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.BlingCommands.BlingSetPatternCommand;
 import frc.robot.commands.WristCommands.DownWristCommand;
 import frc.robot.commands.WristCommands.StopWristCommand;
 import frc.robot.commands.WristCommands.UpWristCommand;
+import frc.robot.subsystems.BlingSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import edu.wpi.first.wpilibj.PS4Controller;
@@ -32,7 +35,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final WristSubsystem m_Wristsubsystem = new WristSubsystem();
-
+  private final BlingSubsystem m_BlingSubsystem = new BlingSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -42,7 +45,9 @@ public class RobotContainer {
   private final StopWristCommand stopWristCommand = new StopWristCommand(m_Wristsubsystem);
   private final UpWristCommand upWrist = new UpWristCommand(m_Wristsubsystem);
   private final DownWristCommand downWrist = new DownWristCommand(m_Wristsubsystem);
-
+  private final BlingSetPatternCommand blingSetPatternViolet = new BlingSetPatternCommand(m_BlingSubsystem, BlingConstants.BLING_VIOLET);
+  private final BlingSetPatternCommand blingSetPatternYellow = new BlingSetPatternCommand(m_BlingSubsystem, BlingConstants.BLING_YELLOW);
+  private final BlingSetPatternCommand blingSetPatternParty = new BlingSetPatternCommand(m_BlingSubsystem, BlingConstants.BLING_PARTY_PALETTE);
   // Declare our PS4 Controllers for the Driver and Operator
   // PS4Controller m_driverStick = new
   // PS4Controller(HardwareMapConstants.DRIVERSTICK_USB_PORT);
@@ -85,6 +90,7 @@ public class RobotContainer {
     m_operstick.R1().whileTrue(upWrist);
     m_operstick.L1().whileTrue(downWrist);
     m_operstick.share().whileTrue(stopWristCommand);
+    m_operstick.share().whileTrue()
   }
 
   /**
