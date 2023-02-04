@@ -32,6 +32,7 @@ public class WristSubsystem extends SubsystemBase {
     initMotorController(wristMotorRight);
     wristMotorLeft.setInverted(true);
     wristMotorRight.setInverted(false);
+   wristMotorLeft.follow(wristMotorRight);
     initMM(wristMotorLeft);
     initMM(wristMotorRight);
     resetEncoders();
@@ -115,8 +116,7 @@ public class WristSubsystem extends SubsystemBase {
 // This sets the target Climber position for the controllers based off of
   // Constant
   public void setPosition(double position) {
-    wristMotorLeft.set(TalonFXControlMode.Position, position);
-    wristMotorRight.set(TalonFXControlMode.Position, position);
+    wristMotorRight.set(TalonFXControlMode.MotionMagic, position);
   }
 // return our encoder values for our right wrist motor
 public double getRightEncoderPosition(){

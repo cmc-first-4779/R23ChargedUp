@@ -4,10 +4,8 @@
 
 package frc.robot.commands.WristCommands;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.WristSubsystem;
@@ -31,14 +29,16 @@ public class upWrist extends CommandBase {
     rightPosition = wrist.getRightEncoderPosition();
     leftPosition = wrist.getLeftEncoderPosition();
     isItFinished = false;
+    wrist.setPosition(Constants.WRIST_UP_POSITION);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     rightPosition = wrist.getRightEncoderPosition();
-    leftPosition = wrist.getLeftEncoderPosition();
-    wrist.moveWristMM(Constants.WRIST_UP_SPEED);
+    leftPosition = wrist.getLeftEncoderPosition(); 
+    SmartDashboard.putNumber("Right Wrist Position", rightPosition);
+    SmartDashboard.putNumber("Left Wrist Position", leftPosition);
   }
 
   // Called once the command ends or is interrupted.
