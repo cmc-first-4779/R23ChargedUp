@@ -42,4 +42,7 @@ public final class Constants {
   public static final double PIVOT_kD = 0.0; // DUMMY VARIABLE
   public static final double PIVOT_MM_VELOCITY = 15000;// DUMMY VARIABLE
   public static final double PIVOT_MM_ACCELERATION = 6000; // DUMMY VARIABLE
+  
+  public static final double WRIST_MM_ACCELERATION = 6000; // DUMMY VARIABLE
+  public static final double WRIST_MM_VELOCITY = 15000; // DUMMY VARIABLE
 }

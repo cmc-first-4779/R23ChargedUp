@@ -11,5 +11,7 @@ public class HardwareMapConstants {
     // address that it is slaved to.
     public static final int CAN_ADDRESS_GRIPPER = 2; //  Gripper Motor 
     public static final int CAN_ADDRESS_EXTENDER = 3; // Extender Motor
+    public static final int CAN_ADDRESS_WRIST_MOTOR_LEFT = 4; // Left Wrist Motor
+    public static final int CAN_ADDRESS_WRIST_MOTOR_RIGHT = 5; // Right Wrist Motor
 
 }
