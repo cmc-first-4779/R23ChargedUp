@@ -10,7 +10,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.WristCommands.DownWrist;
 import frc.robot.commands.WristCommands.StopWristCommand;
-import frc.robot.commands.WristCommands.upWrist;
+import frc.robot.commands.WristCommands.UpWristCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import edu.wpi.first.wpilibj.PS4Controller;
@@ -40,7 +40,7 @@ public class RobotContainer {
       OperatorConstants.kDriverControllerPort);
 
    private final StopWristCommand stopWristCommand = new StopWristCommand(m_Wristsubsystem);
-   private final upWrist upWrist = new upWrist(m_Wristsubsystem); 
+   private final UpWristCommand upWrist = new UpWristCommand(m_Wristsubsystem); 
    private final DownWrist downWrist = new DownWrist(m_Wristsubsystem); 
 
       // Declare our PS4 Controllers for the Driver and Operator
