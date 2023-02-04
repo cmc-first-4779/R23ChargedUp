@@ -16,4 +16,6 @@ public class HardwareMapConstants {
 
     public static final int DRIVERSTICK_USB_PORT = 0;
     public static final int OPERSTICK_USB_PORT = 1;
+    
+    public static final int PWM_PORT_BLING = 0;
 }
