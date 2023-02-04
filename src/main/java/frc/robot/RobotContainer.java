@@ -90,7 +90,9 @@ public class RobotContainer {
     m_operstick.R1().whileTrue(upWrist);
     m_operstick.L1().whileTrue(downWrist);
     m_operstick.share().whileTrue(stopWristCommand);
-    m_operstick.share().whileTrue()
+    m_operstick.L3().whileTrue(blingSetPatternViolet);
+    m_operstick.R3().whileTrue(blingSetPatternYellow);
+    m_operstick.options().whileTrue(blingSetPatternParty);
   }
 
   /**
