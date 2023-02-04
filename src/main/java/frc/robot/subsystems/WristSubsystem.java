@@ -119,10 +119,11 @@ public class WristSubsystem extends SubsystemBase {
     wristMotorRight.set(TalonFXControlMode.Position, position);
   }
 
-  public void goJoystick(double ySpeed) {
+// Control the Up and Down Values with Motion Magic
+  public void moveWristMM(double ySpeed) {
     wristMotorLeft.set(TalonFXControlMode.MotionMagic, ySpeed);
     wristMotorRight.set(TalonFXControlMode.MotionMagic,ySpeed);
   }
-
+  
 
 }
