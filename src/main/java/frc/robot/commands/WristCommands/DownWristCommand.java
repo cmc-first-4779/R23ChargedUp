@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.WristSubsystem;
 
-public class DownWrist extends CommandBase {
+public class DownWristCommand extends CommandBase {
   WristSubsystem wrist;
   double rightPosition;
   double leftPosition;
   boolean isItFinished;
 
   /** Creates a new DownCommand. */
-  public DownWrist(WristSubsystem wrist) {
+  public DownWristCommand(WristSubsystem wrist) {
     this.wrist = wrist;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(wrist);

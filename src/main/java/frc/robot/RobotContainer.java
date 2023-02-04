@@ -8,7 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.StaticConstants.HardwareMapConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.WristCommands.DownWrist;
+import frc.robot.commands.WristCommands.DownWristCommand;
 import frc.robot.commands.WristCommands.StopWristCommand;
 import frc.robot.commands.WristCommands.UpWristCommand;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -36,16 +36,18 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandPS4Controller m_operstick = new CommandPS4Controller( 
+  private final CommandPS4Controller m_operstick = new CommandPS4Controller(
       OperatorConstants.kDriverControllerPort);
 
-   private final StopWristCommand stopWristCommand = new StopWristCommand(m_Wristsubsystem);
-   private final UpWristCommand upWrist = new UpWristCommand(m_Wristsubsystem); 
-   private final DownWrist downWrist = new DownWrist(m_Wristsubsystem); 
+  private final StopWristCommand stopWristCommand = new StopWristCommand(m_Wristsubsystem);
+  private final UpWristCommand upWrist = new UpWristCommand(m_Wristsubsystem);
+  private final DownWristCommand downWrist = new DownWristCommand(m_Wristsubsystem);
 
-      // Declare our PS4 Controllers for the Driver and Operator
-  //PS4Controller m_driverStick = new PS4Controller(HardwareMapConstants.DRIVERSTICK_USB_PORT);
-  //PS4Controller m_operStick = new PS4Controller(HardwareMapConstants.OPERSTICK_USB_PORT);
+  // Declare our PS4 Controllers for the Driver and Operator
+  // PS4Controller m_driverStick = new
+  // PS4Controller(HardwareMapConstants.DRIVERSTICK_USB_PORT);
+  // PS4Controller m_operStick = new
+  // PS4Controller(HardwareMapConstants.OPERSTICK_USB_PORT);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -78,10 +80,11 @@ public class RobotContainer {
     // pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-   // new JoystickButton(m_operStick, PS4Controller.Button.kR1.value).whenPressed(stopWristCommand)(turretMotorClockwiseCommand);
-   m_operstick.R1().whileTrue(upWrist);
-   m_operstick.L1().whileTrue(downWrist);
-   m_operstick.share().whileTrue(stopWristCommand);
+    // new JoystickButton(m_operStick,
+    // PS4Controller.Button.kR1.value).whenPressed(stopWristCommand)(turretMotorClockwiseCommand);
+    m_operstick.R1().whileTrue(upWrist);
+    m_operstick.L1().whileTrue(downWrist);
+    m_operstick.share().whileTrue(stopWristCommand);
   }
 
   /**
