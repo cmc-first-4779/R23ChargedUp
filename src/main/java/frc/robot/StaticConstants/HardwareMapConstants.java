@@ -14,4 +14,6 @@ public class HardwareMapConstants {
     public static final int CAN_ADDRESS_WRIST_MOTOR_LEFT = 4; // Left Wrist Motor
     public static final int CAN_ADDRESS_WRIST_MOTOR_RIGHT = 5; // Right Wrist Motor
 
+    public static final int DRIVERSTICK_USB_PORT = 0;
+    public static final int OPERSTICK_USB_PORT = 1;
 }
