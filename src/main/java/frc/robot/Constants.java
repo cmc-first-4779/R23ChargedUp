@@ -45,4 +45,9 @@ public final class Constants {
   
   public static final double WRIST_MM_ACCELERATION = 6000; // DUMMY VARIABLE
   public static final double WRIST_MM_VELOCITY = 15000; // DUMMY VARIABLE
+
+  public static final double WRIST_DEFAULT_P = 0.5; // DUMMY VARIABLE
+  public static final double WRIST_DEFAULT_I = 0; // DUMMY VARIABLE
+  public static final double WRIST_DEFAULT_D = 0; // DUMMY VARIABLE
+  public static final double WRIST_DEFAULT_F = 0.5; // DUMMY VARIABLE
 }

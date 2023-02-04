@@ -34,6 +34,11 @@ public class WristSubsystem extends SubsystemBase {
     wristMotorRight.setInverted(false);
     initMM(wristMotorLeft);
     initMM(wristMotorRight);
+    resetEncoders();
+    zeroEncoders();
+    // Set up PID Values for the Climber
+    configPIDFValues(Constants.WRIST_DEFAULT_P, Constants.WRIST_DEFAULT_I, Constants.WRIST_DEFAULT_D,
+        Constants.WRIST_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
   }
 
   @Override
@@ -74,5 +79,50 @@ public class WristSubsystem extends SubsystemBase {
     talon.configMotionCruiseVelocity(Constants.WRIST_MM_VELOCITY);
     talon.configMotionCruiseVelocity(Constants.WRIST_MM_ACCELERATION);
   }
+
+  // Method to reset our encoders
+  public void resetEncoders() {
+    wristMotorLeft.setSelectedSensorPosition(0);
+    wristMotorRight.setSelectedSensorPosition(0);
+  }
+
+  // Zero's out both encoders
+  public void zeroEncoders() {
+    int kTimeoutMs = 30;
+    wristMotorLeft.getSensorCollection().setIntegratedSensorPosition(0, kTimeoutMs);
+    wristMotorRight.getSensorCollection().setIntegratedSensorPosition(0, kTimeoutMs);
+    // System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
+  }
+
+  // Set up our PID Values for the motor controllers
+  public void configPIDFValues(double p, double i, double d, double f, int slot) {
+    // Configure the PID settings for Slot0
+    wristMotorLeft.config_kF(slot, f);
+    wristMotorLeft.config_kP(slot, p);
+    wristMotorLeft.config_kI(slot, i);
+    wristMotorLeft.config_kD(slot, d);
+    wristMotorRight.config_kF(slot, f);
+    wristMotorRight.config_kP(slot, p);
+    wristMotorRight.config_kI(slot, i);
+    wristMotorRight.config_kD(slot, d);
+  }
+
+  // Method to stop our motors
+  public void stopMotors() {
+    wristMotorLeft.stopMotor();
+    wristMotorRight.stopMotor();
+  }
+// This sets the target Climber position for the controllers based off of
+  // Constant
+  public void setPosition(double position) {
+    wristMotorLeft.set(TalonFXControlMode.Position, position);
+    wristMotorRight.set(TalonFXControlMode.Position, position);
+  }
+
+  public void goJoystick(double ySpeed) {
+    wristMotorLeft.set(TalonFXControlMode.MotionMagic, ySpeed);
+    wristMotorRight.set(TalonFXControlMode.MotionMagic,ySpeed);
+  }
+
 
 }
