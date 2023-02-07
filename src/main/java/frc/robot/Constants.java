@@ -29,10 +29,13 @@ public final class Constants {
   public static final double WINCH_DEFAULT_I = 0.00;// Dummy variable - Test this!
   public static final double WINCH_DEFAULT_D = 0.01;// Dummy variable - Test this!
   public static final double WINCH_DEFAULT_F = 0.52;// Dummy variable - Test this!
-  public static final double WINCH_POSITION_STOWED = 0;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_STOW = 0;  // Dummy variable - Test this!
   public static final double WINCH_POSITION_GROUND = 2000;   // Dummy variable - Test this!
   public static final double WINCH_POSITION_LOW_CONE_NODE = 4000;  // Dummy variable - Test this!
   public static final double WINCH_POSITION_MID_CONE_NODE = 8000;  // Dummy variable - Test this!
   public static final double WINCH_POSITION_HIGH_CONE_NODE = 12000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_LOW_CUBE_NODE = 4000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_MID_CUBE_NODE = 8000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_HIGH_CUBE_NODE = 12000;  // Dummy variable - Test this!
 
 }
