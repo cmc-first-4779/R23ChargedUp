@@ -16,4 +16,27 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  // Extender Arm Constants
+  public static final int EXTENDER_PID_SLOT = 0;
+  public static final double EXTENDER_kF = 0.5;  // Dummy variable - Test this!
+  public static final double EXTENDER_kP = 0.15;  // Dummy variable - Test this!
+  public static final double EXTENDER_kI = 0.0;  // Dummy variable - Test this!
+  public static final double EXTENDER_kD = 0.0;  // Dummy variable - Test this!
+  public static final double EXTENDER_kMaxOuput = 1;
+  public static final double EXTENDER_kMinOutput = -1;
+  public static final double EXTENDER_MAX_RPM = 5700;
+  public static final double EXTENDER_POSITION_STOW = 0;  // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_GROUND = 2000;   // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_LOW_CONE_NODE = 4000;  // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_MID_CONE_NODE = 8000;  // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_HIGH_CONE_NODE = 12000;  // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_LOW_CUBE_NODE = 4000;  // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_MID_CUBE_NODE = 8000;  // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_HIGH_CUBE_NODE = 12000;  // Dummy variable - Test this!
+  public static final double EXTENDER_SM_MAX_VEL = 2000;  // Dummy variable - Test this!
+  public static final double EXTENDER_SM_MIN_VEL = 200;  // Dummy variable - Test this!
+  public static final double EXTENDER_SM_MAX_ACCEL = 200;  // Dummy variable - Test this!
+  public static final double EXTENDER_SM_ALLOWED_ERR = 200;  // Dummy variable - Test this!
+
 }
