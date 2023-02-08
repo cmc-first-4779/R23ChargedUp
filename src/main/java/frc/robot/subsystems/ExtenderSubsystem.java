@@ -104,7 +104,7 @@ public class ExtenderSubsystem extends SubsystemBase {
   }
 
   // Stop our Extender Motor
-  public void stopExtender() {
+  public void stopMotor() {
     extenderMotor.stopMotor();
   }
 
@@ -115,6 +115,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
   }
 
+  //  Used for testing our PID settings for SmartMotion
   public void testExtenderPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
       double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
       int slot) {
