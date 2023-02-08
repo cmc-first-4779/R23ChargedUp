@@ -71,6 +71,7 @@ public class WinchSubsystem extends SubsystemBase {
     talon.configFactoryDefault();
     // Set Neutral Mode
     talon.setNeutralMode(NeutralMode.Brake); // Neutral Mode is Brake
+    // Netural the controller output and disable it until we call it later
     talon.neutralOutput();
     // Config the neutral deadband
     talon.configNeutralDeadband(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
@@ -94,7 +95,6 @@ public class WinchSubsystem extends SubsystemBase {
      *
      * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
      */
-    // talon.configStatorCurrentLimit(MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500);
     talon.configStatorCurrentLimit(
         new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
             MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
@@ -103,7 +103,7 @@ public class WinchSubsystem extends SubsystemBase {
 
   // Resets our Encoder to ZERO
   public void resetEncoders(WPI_TalonFX talon) {
-     talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
+    talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
     // System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
   }
 
