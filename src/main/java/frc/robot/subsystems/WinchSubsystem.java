@@ -37,7 +37,6 @@ public class WinchSubsystem extends SubsystemBase {
   RelativeEncoder winchEncoderSlave;
   RelativeEncoder winchEncoderMaster;
 
-
   /** Creates a new WinchPulleySubsystem. */
   public WinchSubsystem() {
     // Address our controllers
@@ -68,15 +67,24 @@ public class WinchSubsystem extends SubsystemBase {
   // Initialize a TalonFX Motor controller and set our default settings.
   private static void initMotorController(WPI_TalonFX talon) {
     System.out.println("Initializing Falcon: " + talon);
+    // Set factory defaults
     talon.configFactoryDefault();
+    // Set Neutral Mode
     talon.setNeutralMode(NeutralMode.Brake); // Neutral Mode is Brake
     talon.neutralOutput();
-    talon.setSensorPhase(false);
-    talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
-    talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
-    talon.configNominalOutputForward(0.0, 0);
-    talon.configNominalOutputReverse(0.0, 0);
-    talon.configClosedloopRamp(0.5, 0);
+    // Config the neutral deadband
+    talon.configNeutralDeadband(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+        Constants.kTimeoutMs);
+    talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+        Constants.kTimeoutMs);
+    /* Set the peak and nominal outputs */
+    talon.configNominalOutputForward(Constants.WINCH_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configNominalOutputReverse(Constants.WINCH_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    talon.configPeakOutputForward(Constants.WINCH_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configPeakOutputReverse(Constants.WINCH_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    // Set how many seconds that the motor can ramp from neutral to full
+    talon.configClosedloopRamp(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
     /**
      * Configure the current limits that will be used
      * Stator Current is the current that passes through the motor stators.
@@ -95,8 +103,7 @@ public class WinchSubsystem extends SubsystemBase {
 
   // Resets our Encoder to ZERO
   public void resetEncoders(WPI_TalonFX talon) {
-    int kTimeoutMs = 30;
-    talon.getSensorCollection().setIntegratedSensorPosition(0, kTimeoutMs);
+     talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
     // System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
   }
 
@@ -123,22 +130,10 @@ public class WinchSubsystem extends SubsystemBase {
     talon.configMotionAcceleration(acceleration, 0);
   }
 
-  /**
-   * Max out the peak output (for all modes). However you can limit the output of
-   * a given PID object with configClosedLoopPeakOutput().
-   * 
-   * @param fwdMax
-   * @param revMax
-   */
-  private void configPeakVelocities(WPI_TalonFX talon, double fwdMax, double revMax) {
-    talon.configPeakOutputForward(fwdMax, Constants.kTimeoutMs);
-    talon.configPeakOutputReverse(revMax, Constants.kTimeoutMs);
-  }
-
-  private void configAllowableError(WPI_TalonFX talon, int slot, int allowedError) {
+  private void configAllowableError(WPI_TalonFX talon, int slot, double allowedError) {
     // Configure the closeed loop error, which is how close the sensor has to be to
     // target to be successful.
-    talon.configAllowableClosedloopError(0, 10, 3);
+    talon.configAllowableClosedloopError(slot, allowedError, Constants.kTimeoutMs);
   }
 
   private void configSimpleMM(WPI_TalonFX talon) {
@@ -152,7 +147,6 @@ public class WinchSubsystem extends SubsystemBase {
     configPIDFValues(talon, Constants.WINCH_DEFAULT_P, Constants.WINCH_DEFAULT_I, Constants.WINCH_DEFAULT_D,
         Constants.WINCH_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
     configMotionCruiseAndAcceleration(talon, Constants.WINCH_MM_VELOCITY, Constants.WINCH_MM_ACCELERATION);
-    configPeakVelocities(talon, 0.2, -0.2);
     configAllowableError(talon, 0, 500);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
   }
