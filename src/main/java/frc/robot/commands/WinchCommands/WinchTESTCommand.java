@@ -10,7 +10,7 @@ import frc.robot.subsystems.WinchSubsystem;
 
 public class WinchTESTCommand extends CommandBase {
   WinchSubsystem winchSubsystem;
-  /** Creates a new WinchGroundCommand. */
+  /** Creates a new WinchTESTommand. */
   public WinchTESTCommand(WinchSubsystem winchSubsystem) {
     this.winchSubsystem = winchSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
