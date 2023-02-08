@@ -16,4 +16,27 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+    // Wrist Constants
+    public static final int WRIST_PID_SLOT = 0;
+    public static final double WRIST_kF = 0.5;  // Dummy variable - Test this!
+    public static final double WRIST_kP = 0.15;  // Dummy variable - Test this!
+    public static final double WRIST_kI = 0.0;  // Dummy variable - Test this!
+    public static final double WRIST_kD = 0.0;  // Dummy variable - Test this!
+    public static final double WRIST_kMaxOuput = 1;
+    public static final double WRIST_kMinOutput = -1;
+    public static final double WRIST_MAX_RPM = 5700;
+    public static final double WRIST_POSITION_STOW = 0;  // Dummy variable - Test this!
+    public static final double WRIST_POSITION_GROUND = 2000;   // Dummy variable - Test this!
+    public static final double WRIST_POSITION_LOW_CONE_NODE = 4000;  // Dummy variable - Test this!
+    public static final double WRIST_POSITION_MID_CONE_NODE = 8000;  // Dummy variable - Test this!
+    public static final double WRIST_POSITION_HIGH_CONE_NODE = 12000;  // Dummy variable - Test this!
+    public static final double WRIST_POSITION_LOW_CUBE_NODE = 4000;  // Dummy variable - Test this!
+    public static final double WRIST_POSITION_MID_CUBE_NODE = 8000;  // Dummy variable - Test this!
+    public static final double WRIST_POSITION_HIGH_CUBE_NODE = 12000;  // Dummy variable - Test this!
+    public static final double WRIST_SM_MAX_VEL = 2000;  // Dummy variable - Test this!
+    public static final double WRIST_SM_MIN_VEL = 200;  // Dummy variable - Test this!
+    public static final double WRIST_SM_MAX_ACCEL = 200;  // Dummy variable - Test this!
+    public static final double WRIST_SM_ALLOWED_ERR = 200;  // Dummy variable - Test this!
+
 }
