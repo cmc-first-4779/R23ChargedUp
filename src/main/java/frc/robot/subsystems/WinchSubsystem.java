@@ -126,8 +126,8 @@ public class WinchSubsystem extends SubsystemBase {
     // run the motor at 100% and do a selftest snapshot to get the velocity which
     // will be in units/100ms. This is the max velocity the motor can do in it's
     // current configuration.
-    talon.configMotionCruiseVelocity(velocity, 0);
-    talon.configMotionAcceleration(acceleration, 0);
+    talon.configMotionCruiseVelocity(velocity, Constants.kTimeoutMs);
+    talon.configMotionAcceleration(acceleration, Constants.kTimeoutMs);
   }
 
   private void configAllowableError(WPI_TalonFX talon, int slot, double allowedError) {
@@ -158,6 +158,14 @@ public class WinchSubsystem extends SubsystemBase {
 
   // Use MotionMagic to set the winch to a specific Encoder Position.
   public void setWinchPositionMM(double position) {
+    winchMotorMaster.setSafetyEnabled(false);
+    // distance = SmartDashboard.getNumber("MM Distance", 1000);
+    winchMotorMaster.set(TalonFXControlMode.MotionMagic, position);
+  }
+
+  public void testWinchMM(double position, double kF, double kP, double kI, double kD, double cruiseVel, double cruiseAccel){
+    configPIDFValues(winchMotorMaster, kP, kI, kD, kF, 0);
+    configMotionCruiseAndAcceleration(winchMotorMaster, cruiseVel, cruiseAccel);
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, position);
