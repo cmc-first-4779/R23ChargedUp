@@ -16,4 +16,9 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  //  Intake Constants
+  public static final double INTAKE_SPEED = .90;  //  Dummy value.  NEED TO TEST THIS!
+  public static final double EJECT_SPEED = .90;  //  Dummy value.  NEED TO TEST THIS!
+
 }
