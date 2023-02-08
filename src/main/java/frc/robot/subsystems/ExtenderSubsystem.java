@@ -115,4 +115,24 @@ public class ExtenderSubsystem extends SubsystemBase {
     m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
   }
 
+  public void testExtenderPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
+      double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
+      int slot) {
+    // Declare our PID Controller
+    SparkMaxPIDController m_pidController = extenderMotor.getPIDController();
+    // Configure the PID settings
+    m_pidController.setFF(kF);
+    m_pidController.setP(kP);
+    m_pidController.setIZone(kI);
+    m_pidController.setD(kD);
+    m_pidController.setOutputRange(kMinOutput, kMaxOutput);
+    // Set our crusing velocities, accell, and error.
+    m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
+    m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
+    m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
+    m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
+    // send our setpoint to SmartMotion
+    m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+  }
+
 }
