@@ -18,7 +18,7 @@ public final class Constants {
   }
 
   //  Intake Constants
-  public static final double INTAKE_SPEED = .90;  //  Dummy value.  NEED TO TEST THIS!
-  public static final double EJECT_SPEED = .90;  //  Dummy value.  NEED TO TEST THIS!
+  public static final double INTAKE_SPEED = 0.90;  //  Dummy value.  NEED TO TEST THIS!
+  public static final double EJECT_SPEED = -0.90;  //  Dummy value.  NEED TO TEST THIS!
 
 }
