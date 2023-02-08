@@ -17,7 +17,7 @@ import frc.robot.Constants;
 
 //  This Subsystem is for our Extender Arm and will be powered by one Spark Neo550;
 
-public class ExtenderArmSubsystem extends SubsystemBase {
+public class ExtenderSubsystem extends SubsystemBase {
 
   // Declare our SparkMax Motor Controller
   CANSparkMax extenderMotor;
@@ -26,7 +26,7 @@ public class ExtenderArmSubsystem extends SubsystemBase {
   public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
 
   /** Creates a new ExtenderArmSubsystem. */
-  public ExtenderArmSubsystem() {
+  public ExtenderSubsystem() {
     // Address our motor
     extenderMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_EXTENDER_ARM, MotorType.kBrushless);
 
