@@ -120,6 +120,7 @@ public class ExtenderSubsystem extends SubsystemBase {
       double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
       int slot) {
     // Declare our PID Controller
+    //
     SparkMaxPIDController m_pidController = extenderMotor.getPIDController();
     // Configure the PID settings
     m_pidController.setFF(kF);
