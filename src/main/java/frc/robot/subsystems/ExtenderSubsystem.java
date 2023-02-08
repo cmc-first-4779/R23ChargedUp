@@ -31,7 +31,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     extenderMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_EXTENDER_ARM, MotorType.kBrushless);
 
     // Initialize our SparkMax's to known settings
-    initSparkMaxMotorController(extenderMotor, "NEO550");
+    initSparkMaxMotorController(extenderMotor, "NEO");
     // Reset our Encoder
     resetEncoder(extenderMotor);
     // Config our PID Values
