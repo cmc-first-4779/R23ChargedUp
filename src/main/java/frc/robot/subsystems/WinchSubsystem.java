@@ -4,13 +4,13 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.RelativeEncoder;
 
@@ -37,9 +37,6 @@ public class WinchSubsystem extends SubsystemBase {
   RelativeEncoder winchEncoderSlave;
   RelativeEncoder winchEncoderMaster;
 
-  // Booleans for tracking position
-  private double m_desiredPosition;
-  private boolean IsArmInPosition;
 
   /** Creates a new WinchPulleySubsystem. */
   public WinchSubsystem() {
@@ -57,9 +54,6 @@ public class WinchSubsystem extends SubsystemBase {
     // Reset the encoders
     resetEncoders(winchMotorMaster);
     resetEncoders(winchMotorSlave);
-    // Set up PID Values for the Winch
-    configPIDFValues(winchMotorMaster, Constants.WINCH_DEFAULT_P, Constants.WINCH_DEFAULT_I, Constants.WINCH_DEFAULT_D,
-        Constants.WINCH_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
     // Configure Motion Magic on the Motors
     configSimpleMM(winchMotorMaster);
   }
@@ -67,7 +61,7 @@ public class WinchSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //  Put the encoder value of the Master Motor to the Dashboard
+    // Put the encoder value of the Master Motor to the Dashboard
     SmartDashboard.putNumber("Winch Encoder Position", winchMotorMaster.getSelectedSensorPosition());
   }
 
@@ -106,7 +100,7 @@ public class WinchSubsystem extends SubsystemBase {
     // System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
   }
 
-  //  Configure our PID Values
+  // Configure our PID Values
   public void configPIDFValues(WPI_TalonFX talon, double p, double i, double d, double f, int slot) {
     // Configure the PID settings for Slot0
     talon.config_kF(slot, f);
@@ -149,35 +143,30 @@ public class WinchSubsystem extends SubsystemBase {
 
   private void configSimpleMM(WPI_TalonFX talon) {
     // Tell each talon to use Quad Encoder as their PID0
-    talon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, Constants.PID_CLOSED_LOOP,
+    talon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PID_CLOSED_LOOP,
         Constants.kTimeoutMs);
     // Talons have 4 slots of PID variables and 2 PID indexes. Set the PID0 to use
     // Slot0
     talon.selectProfileSlot(0, 0);
-    // Config our Arm PID
-    double kF = Constants.WINCH_DEFAULT_F;
-    double kP = Constants.WINCH_DEFAULT_P;
-    double kI = Constants.WINCH_DEFAULT_I;
-    double kD = Constants.WINCH_DEFAULT_D;
-    talon.config_kF(0, kF);
-    talon.config_kP(0, kP);
-    talon.config_kI(0, kI);
-    talon.config_kD(0, kD);
-    configMotionCruiseAndAcceleration(talon, Constants.WINCH_MM_VELOCITY, Constants.WINCH_MM_ACCELERATION); // 8000 6000
+    // Set up PID Values for the Winch
+    configPIDFValues(talon, Constants.WINCH_DEFAULT_P, Constants.WINCH_DEFAULT_I, Constants.WINCH_DEFAULT_D,
+        Constants.WINCH_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
+    configMotionCruiseAndAcceleration(talon, Constants.WINCH_MM_VELOCITY, Constants.WINCH_MM_ACCELERATION);
     configPeakVelocities(talon, 0.2, -0.2);
     configAllowableError(talon, 0, 500);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
   }
 
+  // Stop our motor(s)
   public void stopWinch() {
     winchMotorMaster.stopMotor();
   }
 
-  public void simpleMM(double distance) {
+  // Use MotionMagic to set the winch to a specific Encoder Position.
+  public void setWinchPositionMM(double position) {
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
-    winchMotorMaster.set(ControlMode.MotionMagic, distance);
+    winchMotorMaster.set(TalonFXControlMode.MotionMagic, position);
   }
-
 
 }

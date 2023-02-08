@@ -22,7 +22,7 @@ public class WinchStowCommand extends CommandBase {
   @Override
   public void initialize() {
     //  Call Motion Magic to set our Winch Position to the Ground
-    winchSubsystem.simpleMM(Constants.WINCH_POSITION_STOW);
+    winchSubsystem.setWinchPositionMM(Constants.WINCH_POSITION_STOW);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

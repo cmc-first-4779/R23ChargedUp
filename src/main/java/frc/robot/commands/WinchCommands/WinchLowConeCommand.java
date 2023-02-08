@@ -22,7 +22,7 @@ public class WinchLowConeCommand extends CommandBase {
   @Override
   public void initialize() {
     //  Call Motion Magic to set our Winch Position to the Ground
-    winchSubsystem.simpleMM(Constants.WINCH_POSITION_LOW_CONE_NODE);
+    winchSubsystem.setWinchPositionMM(Constants.WINCH_POSITION_LOW_CONE_NODE);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
