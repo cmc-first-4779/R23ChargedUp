@@ -46,7 +46,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   // Stop the Intake motor
-  public void intakeStop() {
+  public void stopIntake() {
     intakeMotor.stopMotor();
   }
 
