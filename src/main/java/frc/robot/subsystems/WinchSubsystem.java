@@ -31,28 +31,28 @@ public class WinchSubsystem extends SubsystemBase {
 
   /** Creates a new ExtenderSubsystem. */
   // Declare our TalonFX Motor Controllers
-  WPI_TalonFX winchMotorSlave;
+  //WPI_TalonFX winchMotorSlave;
   WPI_TalonFX winchMotorMaster;
   // Declare our Encoders
-  RelativeEncoder winchEncoderSlave;
+  //RelativeEncoder winchEncoderSlave;
   RelativeEncoder winchEncoderMaster;
 
   /** Creates a new WinchPulleySubsystem. */
   public WinchSubsystem() {
     // Address our controllers
-    winchMotorSlave = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_WINCH_MOTOR_LEFT);
+    //winchMotorSlave = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_WINCH_MOTOR_LEFT);
     winchMotorMaster = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_WINCH_MOTOR_RIGHT);
     // Initiatize the settings
-    initMotorController(winchMotorSlave);
+    //initMotorController(winchMotorSlave);
     initMotorController(winchMotorMaster);
     // Invert motors (if needed)
-    winchMotorSlave.setInverted(true);
+    //winchMotorSlave.setInverted(true);
     winchMotorMaster.setInverted(false);
     // Have the left motor follow the right motor
-    winchMotorSlave.follow(winchMotorMaster);
+    //winchMotorSlave.follow(winchMotorMaster);
     // Reset the encoders
     resetEncoders(winchMotorMaster);
-    resetEncoders(winchMotorSlave);
+    //resetEncoders(winchMotorSlave);
     // Configure Motion Magic on the Motors
     configSimpleMM(winchMotorMaster);
   }
