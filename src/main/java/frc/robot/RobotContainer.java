@@ -46,7 +46,7 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  private final DrivetrainSubsystem m_drivetrainSubsystem = DrivetrainSubsystem.getInstance();
 
  // @AutoBuilderAccessible this method enables the command to be used in AutoBuilder
   @AutoBuilderAccessible

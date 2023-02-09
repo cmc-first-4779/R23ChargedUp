@@ -127,7 +127,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public DrivetrainSubsystem() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
         SmartDashboard.putData("Field", field);
-
+        System.out.println("Running First Module");
         frontLeftModule = new MkSwerveModuleBuilder()
                 .withLayout(shuffleboardTab.getLayout("Front Left Module:", BuiltInLayouts.kList)
                         .withSize(2, 4)
@@ -138,7 +138,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withSteerEncoderPort(Constants.FRONT_LEFT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.FRONT_LEFT_MODULE_STEER_OFFSET)
                 .build();
-
+        System.out.println("Running Second Module");
         frontRightModule = new MkSwerveModuleBuilder()
                 .withLayout(shuffleboardTab.getLayout("Front Right Module:", BuiltInLayouts.kList)
                         .withSize(2, 4)
@@ -149,7 +149,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withSteerEncoderPort(Constants.FRONT_RIGHT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.FRONT_RIGHT_MODULE_STEER_OFFSET)
                 .build();
-
+        System.out.println("Running Third Module");
         backLeftModule = new MkSwerveModuleBuilder()
                 .withLayout(shuffleboardTab.getLayout("Back Left Module:", BuiltInLayouts.kList)
                         .withSize(2, 4)
@@ -160,7 +160,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withSteerEncoderPort(Constants.BACK_LEFT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.BACK_LEFT_MODULE_STEER_OFFSET)
                 .build();
-
+        System.out.println("Running Fourth Module");
         backRightModule = new MkSwerveModuleBuilder()
                 .withLayout(shuffleboardTab.getLayout("Back Right Module:", BuiltInLayouts.kList)
                         .withSize(2, 4)
@@ -403,4 +403,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     final Lock currentAutoTrajectoryLock = new ReentrantLock();
     volatile Rotation2d autoTargetHeading;
     private volatile boolean isAutoAiming = false;
+
+    private static final /*@NotNull*/ DrivetrainSubsystem INSTANCE = new DrivetrainSubsystem();
+    public static /*@NotNull*/ DrivetrainSubsystem getInstance() {
+        return INSTANCE;
+    }
 }
