@@ -8,12 +8,19 @@ import static frc.robot.Constants.DRIVETRAIN_PIGEON_ID;
 import static frc.robot.Constants.DRIVETRAIN_TRACKWIDTH_METERS;
 import static frc.robot.Constants.DRIVETRAIN_WHEELBASE_METERS;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+// import javax.annotation.Nonnull;
+// import javax.annotation.Nullable;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -22,12 +29,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -306,6 +314,24 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return Rotation2d.fromDegrees(getHeading());
     }
 
+    public void setAutoRotation(Rotation2d rotation){
+        currentAutoTrajectoryLock.lock();
+        try {
+            autoTargetHeading = rotation;
+        } finally {
+            currentAutoTrajectoryLock.unlock();
+        }
+        System.out.println("new rotation" + rotation.getDegrees());
+    }
+
+    synchronized public boolean isFinished() {
+        return driveState == DriveState.STOP || driveState == DriveState.DONE || driveState == DriveState.TELEOP;
+    }
+
+    public double getAutoElapsedTime() {
+        return Timer.getFPGATimestamp() - autoStartTime;
+    }
+
     public double getPitch() {
         return gyroscope.getPitch();
     }
@@ -342,4 +368,39 @@ public class DrivetrainSubsystem extends SubsystemBase {
         frontLeftModule.set(0, 45);
         ;
     }
+
+
+    public enum DriveState {
+        TELEOP, TURN, HOLD, DONE, RAMSETE, STOP
+    }
+    public /*@Nonnull*/ DriveState driveState;
+
+    public synchronized void setDriveState(/*@Nonnull*/ DriveState driveState) {
+        this.driveState = driveState;
+    }
+
+
+    double autoStartTime;
+
+    private final ReentrantLock swerveAutoControllerLock = new ReentrantLock();
+    private /*@Nullable*/ HolonomicDriveController swerveAutoController;
+    boolean swerveAutoControllerInitialized = false;
+
+    public void setAutoPath(Trajectory trajectory) {
+        currentAutoTrajectoryLock.lock();
+        try {
+            swerveAutoControllerInitialized = false;
+            setDriveState(DriveState.RAMSETE);
+            this.currentAutoTrajectory = trajectory;
+            this.isAutoAiming = false;
+            autoStartTime = Timer.getFPGATimestamp();
+        } finally {
+            currentAutoTrajectoryLock.unlock();
+        }
+    }
+
+    Trajectory currentAutoTrajectory;
+    final Lock currentAutoTrajectoryLock = new ReentrantLock();
+    volatile Rotation2d autoTargetHeading;
+    private volatile boolean isAutoAiming = false;
 }
