@@ -2,11 +2,6 @@ import org.gradle.internal.os.OperatingSystem
 
 pluginManagement {
     repositories {
-
-        maven {
-        url "https://maven.dacubeking.com/releases/"
-    }
-
         mavenLocal()
         gradlePluginPortal()
         String frcYear = '2023'

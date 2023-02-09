@@ -43,12 +43,14 @@ public class RobotContainer {
   SwerveModule m_frontRightModule;
   SwerveModule m_backLeftModule;
   SwerveModule m_backRightModule;
-  // @AutoBuilderAccessible this method enables the command to be used in AutoBuilder
 
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
+ // @AutoBuilderAccessible this method enables the command to be used in AutoBuilder
+  @AutoBuilderAccessible
+  private final balanceTest balancetest = new balanceTest(m_drivetrainSubsystem);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
   //     new CommandXboxController(OperatorConstants.kDriverControllerPort);

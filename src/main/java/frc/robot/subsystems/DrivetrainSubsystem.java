@@ -129,7 +129,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putData("Field", field);
 
         frontLeftModule = new MkSwerveModuleBuilder()
-                .withLayout(shuffleboardTab.getLayout("Front Left Module", BuiltInLayouts.kList)
+                .withLayout(shuffleboardTab.getLayout("Front Left Module:", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(0, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
@@ -140,7 +140,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .build();
 
         frontRightModule = new MkSwerveModuleBuilder()
-                .withLayout(shuffleboardTab.getLayout("Front Right Module", BuiltInLayouts.kList)
+                .withLayout(shuffleboardTab.getLayout("Front Right Module:", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(2, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
@@ -151,7 +151,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .build();
 
         backLeftModule = new MkSwerveModuleBuilder()
-                .withLayout(shuffleboardTab.getLayout("Back Left Module", BuiltInLayouts.kList)
+                .withLayout(shuffleboardTab.getLayout("Back Left Module:", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(4, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
@@ -162,7 +162,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .build();
 
         backRightModule = new MkSwerveModuleBuilder()
-                .withLayout(shuffleboardTab.getLayout("Back Right Module", BuiltInLayouts.kList)
+                .withLayout(shuffleboardTab.getLayout("Back Right Module:", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(6, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)

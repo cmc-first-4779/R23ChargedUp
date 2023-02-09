@@ -37,12 +37,6 @@ deploy {
     }
 }
 
-repositories {
-    maven {
-        url "https://maven.dacubeking.com/releases/"
-    }
-}
-
 def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 
 // Set to true to use debug for JNI.
@@ -104,4 +98,10 @@ wpi.java.configureTestTasks(test)
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
+}
+
+repositories {
+    maven {
+        url "https://maven.dacubeking.com/snapshots/"
+    }
 }
