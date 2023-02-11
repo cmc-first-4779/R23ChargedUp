@@ -49,6 +49,7 @@ public class WristSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
     SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("Wrist SetPoint", setPoint);
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
@@ -130,7 +131,7 @@ public class WristSubsystem extends SubsystemBase {
     if (setPoint >= Constants.WRIST_MIN_POSTION && setPoint <= Constants.WRIST_MAX_POSTION) {
       return true;
     } else {
-      System.out.println("Given position " + setpoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION
+      System.out.println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION
           + " and " + Constants.WRIST_MAX_POSTION);
     }
     return false;
@@ -152,33 +153,36 @@ public class WristSubsystem extends SubsystemBase {
     m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
     m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
 
-    if(setPointIsValid(setpoint)) {
-    // send our setpoint to SmartMotion
-    m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+    if (setPointIsValid(setpoint)) {
+      // send our setpoint to SmartMotion
+      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+    }
   }
 
   public void raiseWrist() {
-    // Raising the wrist is moving it in a negative direction.  Need to make sure we are not lower than the minimal position
+    // Raising the wrist is moving it in a negative direction. Need to make sure we
+    // are not lower than the minimal position
     double newSetPoint = setPoint - Constants.WRIST_MOVEMENT_INCREAMENT;
-    if (setPointIsValid(newSetPoint)) { 
+    if (setPointIsValid(newSetPoint)) {
       setPoint = newSetPoint;
       setWristPosition(setPoint);
     } else {
       System.out.println("Setpoint at it's lower limit allready: " + setPoint);
     }
 
-   }
+  }
 
-   public void lowerWrist() {
-    // Lowering the wrist is moving it in a positive direction.  Need to make sure we are not higher than the minimal position
+  public void lowerWrist() {
+    // Lowering the wrist is moving it in a positive direction. Need to make sure we
+    // are not higher than the minimal position
     double newSetPoint = setPoint + Constants.WRIST_MOVEMENT_INCREAMENT;
-    if (setPointIsValid(newSetPoint)) { 
+    if (setPointIsValid(newSetPoint)) {
       setPoint = newSetPoint;
       setWristPosition(setPoint);
     } else {
-      System.out.println("Setpoint at it's hiher limit allready: " + setPoint);
+      System.out.println("Setpoint at it's higher limit allready: " + setPoint);
     }
 
-   }
+  }
 
 }
