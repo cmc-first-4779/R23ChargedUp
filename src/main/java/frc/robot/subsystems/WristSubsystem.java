@@ -154,6 +154,7 @@ public class WristSubsystem extends SubsystemBase {
     m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
 
     if (setPointIsValid(setpoint)) {
+      setPoint = setpoint;
       // send our setpoint to SmartMotion
       m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
     }
