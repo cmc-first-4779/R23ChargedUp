@@ -119,5 +119,4 @@ public class BlingConstants {
   public static double BLING_DARK_GRAY = 0.97;
   public static double BLING_WHITE = 0.93;
   public static double BLING_BLACK = 0.99;
-
 }

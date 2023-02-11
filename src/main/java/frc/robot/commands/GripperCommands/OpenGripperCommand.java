@@ -2,17 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.GripperCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.GripperSubsystem;
 
-public class CloseGripperCommand extends CommandBase {
+public class OpenGripperCommand extends CommandBase {
   GripperSubsystem m_gripperSubsystem; 
   double currentEncoderPosition;
   /** Creates a new OpenGripperCommand. */
-  public CloseGripperCommand(GripperSubsystem gripperSubsystem) {
+  public OpenGripperCommand (GripperSubsystem gripperSubsystem) {
     m_gripperSubsystem = gripperSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   addRequirements(m_gripperSubsystem);
@@ -28,7 +28,7 @@ public class CloseGripperCommand extends CommandBase {
   @Override
   public void execute() {
     currentEncoderPosition = m_gripperSubsystem.getEncoder(); 
-    m_gripperSubsystem.closeGripper(-2);
+    m_gripperSubsystem.openGripper(2);
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +40,7 @@ public class CloseGripperCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return currentEncoderPosition <= Constants.GRIPPER_ENCODER_MIN; 
+    return currentEncoderPosition >= Constants.GRIPPER_ENCODER_MAX; 
   }
-}
+  }
+
