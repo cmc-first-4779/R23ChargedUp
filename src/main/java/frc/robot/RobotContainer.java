@@ -6,10 +6,12 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.WristCommands.WristLower;
+import frc.robot.commands.WristCommands.WristRaise;
 import frc.robot.commands.WristCommands.WristTESTCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WristSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -34,6 +36,17 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    // Add PID Fields to SmartDashboard
+    SmartDashboard.putNumber("Position", 0);
+    SmartDashboard.putNumber("kF", Constants.WRIST_kF);
+    SmartDashboard.putNumber("kP", Constants.WRIST_kP);
+    SmartDashboard.putNumber("kI", Constants.WRIST_kI);
+    SmartDashboard.putNumber("kD", Constants.WRIST_kD);
+    SmartDashboard.putNumber("Max Vel", Constants.WRIST_SM_MAX_VEL);
+    SmartDashboard.putNumber("Min Vel", Constants.WRIST_SM_MIN_VEL);
+    SmartDashboard.putNumber("Max Accel", Constants.WRIST_SM_MAX_ACCEL);
+
   }
 
   /**
@@ -50,7 +63,9 @@ public class RobotContainer {
     //new Trigger(m_exampleSubsystem::exampleCondition)
     //    .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-        m_driverController.L1().whileTrue(new WristTESTCommand(wristSubsystem));    
+        m_driverController.cross().onTrue(new WristTESTCommand(wristSubsystem));
+        m_driverController.L1().whileTrue(new WristLower(wristSubsystem));   
+        m_driverController.R1().whileTrue(new WristRaise(wristSubsystem));   
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

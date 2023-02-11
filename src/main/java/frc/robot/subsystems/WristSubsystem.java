@@ -19,14 +19,18 @@ public class WristSubsystem extends SubsystemBase {
 
   // Declare our SparkMax Motor Controller
   CANSparkMax wristMotor;
+  SparkMaxPIDController m_pidController;
+  double setPoint;
 
-  // Declare the variables
-  public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
+  // Declare the variables //Not being used so commmenting out --KH
+  // public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
 
   /** Creates a new WristSubsystem. */
   public WristSubsystem() {
     // Address our motor
     wristMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_WRIST, MotorType.kBrushless);
+    m_pidController = wristMotor.getPIDController();
+    setPoint = 0;
 
     // Initialize our SparkMax's to known settings
     initSparkMaxMotorController(wristMotor, "NEO550");
@@ -68,8 +72,6 @@ public class WristSubsystem extends SubsystemBase {
   // Configure our PID Values
   public void configPIDFValues(CANSparkMax sparkMax, double kP, double kI, double kD, double kF, double kMinOutput,
       double kMaxOutput) {
-    // Declare our PID Controller
-    SparkMaxPIDController m_pidController = sparkMax.getPIDController();
     // Configure the PID settings
     m_pidController.setFF(kF);
     m_pidController.setP(kP);
@@ -93,8 +95,7 @@ public class WristSubsystem extends SubsystemBase {
    */
   public void configureSmartMotion(CANSparkMax sparkMax, double maxVel, double minVel, double maxAccel,
       double allowedErr, int slot) {
-    // Declare our PID Controller
-    SparkMaxPIDController m_pidController = sparkMax.getPIDController();
+    m_pidController = sparkMax.getPIDController();
     m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
     m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
     m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
@@ -106,19 +107,39 @@ public class WristSubsystem extends SubsystemBase {
     wristMotor.stopMotor();
   }
 
+  /**
+   * Uses SmartMotion to set the position of the wrist to the given position
+   * 
+   * @param setpoint the desired position
+   */
   public void setWristPosition(double setpoint) {
-    // Declare our PID Controller
-    SparkMaxPIDController m_pidController = wristMotor.getPIDController();
-    // send our setpoint to SmartMotion
-    m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+    // Check to make sure give position is within our allowed limits.
+    if (setPointIsValid(setpoint)) {
+      // send our setpoint to SmartMotion
+      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+    }
+  }
+
+  /**
+   * Checks to see if the provided setPoint within the legal bounds
+   * 
+   * @param setPoint
+   * @return true if it falls on or between min and max allowed values.
+   */
+  private boolean setPointIsValid(double setPoint) {
+    if (setPoint >= Constants.WRIST_MIN_POSTION && setPoint <= Constants.WRIST_MAX_POSTION) {
+      return true;
+    } else {
+      System.out.println("Given position " + setpoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION
+          + " and " + Constants.WRIST_MAX_POSTION);
+    }
+    return false;
   }
 
   // Used for testing our PID settings for SmartMotion
   public void testWristPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
       double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
       int slot) {
-    // Declare our PID Controller
-    SparkMaxPIDController m_pidController = wristMotor.getPIDController();
     // Configure the PID settings
     m_pidController.setFF(kF);
     m_pidController.setP(kP);
@@ -130,8 +151,34 @@ public class WristSubsystem extends SubsystemBase {
     m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
     m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
     m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
+
+    if(setPointIsValid(setpoint)) {
     // send our setpoint to SmartMotion
     m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
   }
+
+  public void raiseWrist() {
+    // Raising the wrist is moving it in a negative direction.  Need to make sure we are not lower than the minimal position
+    double newSetPoint = setPoint - Constants.WRIST_MOVEMENT_INCREAMENT;
+    if (setPointIsValid(newSetPoint)) { 
+      setPoint = newSetPoint;
+      setWristPosition(setPoint);
+    } else {
+      System.out.println("Setpoint at it's lower limit allready: " + setPoint);
+    }
+
+   }
+
+   public void lowerWrist() {
+    // Lowering the wrist is moving it in a positive direction.  Need to make sure we are not higher than the minimal position
+    double newSetPoint = setPoint + Constants.WRIST_MOVEMENT_INCREAMENT;
+    if (setPointIsValid(newSetPoint)) { 
+      setPoint = newSetPoint;
+      setWristPosition(setPoint);
+    } else {
+      System.out.println("Setpoint at it's hiher limit allready: " + setPoint);
+    }
+
+   }
 
 }

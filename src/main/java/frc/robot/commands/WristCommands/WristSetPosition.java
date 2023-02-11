@@ -8,13 +8,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.WristSubsystem;
 
-public class WristStopCommand extends CommandBase {
+public class WristSetPosition extends CommandBase {
   // Declare our subsystem
   WristSubsystem wristSubsystem;
+  double setPoint;
 
-  /** Creates a new WristStopCommand. */
-  public WristStopCommand(WristSubsystem wristSubsystem) {
+  /** Creates a new WristGroundCommand. */
+  public WristSetPosition(WristSubsystem wristSubsystem, double setPoint) {
     this.wristSubsystem = wristSubsystem;
+    this.setPoint = setPoint;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(wristSubsystem);
   }
@@ -22,20 +24,20 @@ public class WristStopCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    wristSubsystem.stopMotor();
+    wristSubsystem.setWristPosition(setPoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Put the encoder value of the Master Motor to the Dashboard
-    SmartDashboard.putString("Wrist Target Position", "STOP");
+    // Put the target encoder value of the Motor to the Dashboard
+    SmartDashboard.putString("Wrist Target Position", Double.toString(setPoint));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // wristSubsystem.stopMotor(); //Can't stop motor if you want it to get to position
+    // wristSubsystem.stopMotor();  // Can't stop motor if you want it to get to position.
   }
 
   // Returns true when the command should end.

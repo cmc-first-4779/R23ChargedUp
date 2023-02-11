@@ -36,8 +36,8 @@ public class WristMidCubeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    wristSubsystem.stopMotor();
-  }
+    // wristSubsystem.stopMotor(); //Can't stop motor if you want it to get to position
+  } 
 
   // Returns true when the command should end.
   @Override
