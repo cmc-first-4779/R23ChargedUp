@@ -30,13 +30,15 @@ public class WristSubsystem extends SubsystemBase {
     // Address our motor
     wristMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_WRIST, MotorType.kBrushless);
     m_pidController = wristMotor.getPIDController();
+
     setPoint = 0;
 
     // Initialize our SparkMax's to known settings
     initSparkMaxMotorController(wristMotor, "NEO550");
     // Reset our Encoder
     resetEncoder(wristMotor);
-    // Config our PID Values
+    m_pidController = wristMotor.getPIDController();
+  // Config our PID Values
     configPIDFValues(wristMotor, Constants.WRIST_kP, Constants.WRIST_kI, Constants.WRIST_kD,
         Constants.WRIST_kF, Constants.WRIST_kMinOutput, Constants.WRIST_kMaxOuput);
     // Configure Smart Motion
@@ -62,7 +64,7 @@ public class WristSubsystem extends SubsystemBase {
     } else {
       sparkMax.setSmartCurrentLimit(MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_NEO); // Set the Amps limit
     }
-    sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
+    // sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
   }
 
   // Reset our Encoder
@@ -73,12 +75,15 @@ public class WristSubsystem extends SubsystemBase {
   // Configure our PID Values
   public void configPIDFValues(CANSparkMax sparkMax, double kP, double kI, double kD, double kF, double kMinOutput,
       double kMaxOutput) {
+        // m_pidController = wristMotor.getPIDController();
     // Configure the PID settings
     m_pidController.setFF(kF);
-    m_pidController.setP(kP);
-    m_pidController.setIZone(kI);
+  System.out.println("RevError: " + m_pidController.setP(.0005));
+  m_pidController.setIZone(kI);
     m_pidController.setD(kD);
     m_pidController.setOutputRange(kMinOutput, kMaxOutput);
+   
+    
   }
 
   // Configure our Smart Motion settings
@@ -96,7 +101,7 @@ public class WristSubsystem extends SubsystemBase {
    */
   public void configureSmartMotion(CANSparkMax sparkMax, double maxVel, double minVel, double maxAccel,
       double allowedErr, int slot) {
-    m_pidController = sparkMax.getPIDController();
+    // m_pidController = sparkMax.getPIDController();
     m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
     m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
     m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
@@ -117,6 +122,7 @@ public class WristSubsystem extends SubsystemBase {
     // Check to make sure give position is within our allowed limits.
     if (setPointIsValid(setpoint)) {
       // send our setpoint to SmartMotion
+      System.out.println("P: " + wristMotor.getPIDController().getP());
       m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
     }
   }
@@ -129,6 +135,7 @@ public class WristSubsystem extends SubsystemBase {
    */
   private boolean setPointIsValid(double setPoint) {
     if (setPoint >= Constants.WRIST_MIN_POSTION && setPoint <= Constants.WRIST_MAX_POSTION) {
+      System.out.println("Setpoint is valid: " + setPoint);
       return true;
     } else {
       System.out.println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION
@@ -143,7 +150,10 @@ public class WristSubsystem extends SubsystemBase {
       int slot) {
     // Configure the PID settings
     m_pidController.setFF(kF);
+    System.out.println("In TestWristPosition kP passed in: " + kP);
+    System.out.println("p of pidController before setting: " + m_pidController.getP());
     m_pidController.setP(kP);
+    System.out.println("p of pidController after setting: " + m_pidController.getP());
     m_pidController.setIZone(kI);
     m_pidController.setD(kD);
     m_pidController.setOutputRange(kMinOutput, kMaxOutput);
