@@ -82,6 +82,10 @@ public class RobotContainer {
     return Autos.exampleAuto(m_exampleSubsystem);
   }
 
+/**
+ * Gets the current postion of the arm
+ * @return
+ */
   public double getArmPosition() {
     return 0;
   }
