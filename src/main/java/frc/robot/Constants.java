@@ -39,8 +39,9 @@ public final class Constants {
     public static final double WRIST_SM_MAX_ACCEL = 1500;  // Dummy variable - Test this!
     public static final double WRIST_SM_ALLOWED_ERR = .05;  // Dummy variable - Test this!
 
-    public static final double WRIST_MAX_POSTION = 8; // Max forward rotation. Current gearing is 31.25 to one so position of 31.25 is one full rotation of output shaft.  Only need to go about 25%
+    public static final double WRIST_MAX_POSTION = 40; // Max forward rotation. Current gearing is 31.25 to one so position of 31.25 is one full rotation of output shaft.  Only need to go about 25%
     public static final double WRIST_MIN_POSTION = 0; // Min forward rotation. Assuming we are starting in our minimal position of 0.
-    public static final double WRIST_MOVEMENT_INCREAMENT = 0.15;  // Amount to move wrist postion at one time.
+    public static final double WRIST_MOVEMENT_INCREAMENT = 0.5;  // Amount to move wrist postion at one time.
+    public static final int WRIST_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
     
 }
