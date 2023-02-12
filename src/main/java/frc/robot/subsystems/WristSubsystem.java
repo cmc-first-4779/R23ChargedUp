@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.HardwareMap;
 import frc.StaticConstants.MaxMotorAmpsConstants;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class WristSubsystem extends SubsystemBase {
 
@@ -22,14 +23,19 @@ public class WristSubsystem extends SubsystemBase {
   SparkMaxPIDController m_pidController;
   double setPoint;
 
+  // Reference to robot container to access other subsystems
+  RobotContainer robotContainer;
+
   // Declare the variables //Not being used so commmenting out --KH
   // public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
 
   /** Creates a new WristSubsystem. */
-  public WristSubsystem() {
+  public WristSubsystem(RobotContainer robotContainer) {
     // Address our motor
     wristMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_WRIST, MotorType.kBrushless);
     m_pidController = wristMotor.getPIDController();
+    this.robotContainer = robotContainer;
+    
 
     setPoint = 0;
 
@@ -183,11 +189,20 @@ public class WristSubsystem extends SubsystemBase {
 
   }
 
+  private boolean safeToExtendWrist() {
+    // Need to check with arm to make sure it's in a good space.  
+    double armPosition = robotContainer.getArmPosition();
+    if (armPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND ) {
+      return true;
+    }
+    return false;
+  }
+
   public void lowerWrist() {
     // Lowering the wrist is moving it in a positive direction. Need to make sure we
     // are not higher than the minimal position
     double newSetPoint = setPoint + Constants.WRIST_MOVEMENT_INCREAMENT;
-    if (setPointIsValid(newSetPoint)) {
+    if (safeToExtendWrist() && setPointIsValid(newSetPoint)) {
       setPoint = newSetPoint;
       setWristPosition(setPoint);
     } else {
