@@ -35,13 +35,16 @@ public final class Constants {
   public static final double WINCH_DEFAULT_I = 0.00;// Dummy variable - Test this!
   public static final double WINCH_DEFAULT_D = 0.01;// Dummy variable - Test this!
   public static final double WINCH_DEFAULT_F = 0.52;// Dummy variable - Test this!
+  public static final double WINCH_POSITION_MIN = 0;  //  Min position of the arm
+  public static final double WINCH_POSITION_SAFE_TO_EXTEND = 40000;  //  Safe distance where can extend the rest of the arm
+  public static final double WINCH_POSITION_MAX = 150000;  // Max position of the arm
   public static final double WINCH_POSITION_STOW = 0;  // Dummy variable - Test this!
-  public static final double WINCH_POSITION_GROUND = 2000;   // Dummy variable - Test this!
-  public static final double WINCH_POSITION_LOW_CONE_NODE = 4000;  // Dummy variable - Test this!
-  public static final double WINCH_POSITION_MID_CONE_NODE = 8000;  // Dummy variable - Test this!
-  public static final double WINCH_POSITION_HIGH_CONE_NODE = 12000;  // Dummy variable - Test this!
-  public static final double WINCH_POSITION_LOW_CUBE_NODE = 4000;  // Dummy variable - Test this!
-  public static final double WINCH_POSITION_MID_CUBE_NODE = 8000;  // Dummy variable - Test this!
-  public static final double WINCH_POSITION_HIGH_CUBE_NODE = 12000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_GROUND = 20000;   // Dummy variable - Test this!
+  public static final double WINCH_POSITION_LOW_CONE_NODE = 60000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_MID_CONE_NODE = 110000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_HIGH_CONE_NODE = 160000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_LOW_CUBE_NODE = 50000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_MID_CUBE_NODE = 100000;  // Dummy variable - Test this!
+  public static final double WINCH_POSITION_HIGH_CUBE_NODE = 150000;  // Dummy variable - Test this!
 
 }
