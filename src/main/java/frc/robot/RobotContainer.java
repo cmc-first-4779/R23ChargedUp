@@ -6,8 +6,6 @@ package frc.robot;
 
 import java.util.List;
 
-import com.ctre.phoenix.Util;
-import com.dacubeking.AutoBuilder.robot.annotations.AutoBuilderAccessible;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -28,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.DriveStraightCommand;
 import frc.robot.commands.balanceTest;
 import frc.robot.commands.sturdyBaseCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -44,17 +41,10 @@ public class RobotContainer {
   SwerveModule m_frontRightModule;
   SwerveModule m_backLeftModule;
   SwerveModule m_backRightModule;
-
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DrivetrainSubsystem m_drivetrainSubsystem = DrivetrainSubsystem.getInstance();
+  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
- // @AutoBuilderAccessible this method enables the command to be used in AutoBuilder
-  @AutoBuilderAccessible
-  private final balanceTest balancetest = new balanceTest(m_drivetrainSubsystem);
-
-  @AutoBuilderAccessible
-  private final DriveStraightCommand driveStraight = new DriveStraightCommand(m_drivetrainSubsystem);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
   //     new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -118,11 +108,10 @@ public class RobotContainer {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(0, 0, new Rotation2d(0)),
                 List.of(
-                        new Translation2d(1, -1),
-                        new Translation2d(2, 0),
-                        new Translation2d(3, -1)),
-                        // new Translation2d(2.5, Rotation2d.fromDegrees(-90))),
-                new Pose2d(4, 0, Rotation2d.fromDegrees(360)),
+                        new Translation2d(1, 0),
+                        new Translation2d(0, -1)),
+                        // new Translation2d(2, Rotation2d.fromDegrees(-90))),
+                new Pose2d(1, -1, Rotation2d.fromDegrees(90)),
 
                 trajectoryConfig);
 

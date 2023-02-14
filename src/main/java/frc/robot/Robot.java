@@ -4,16 +4,9 @@
 
 package frc.robot;
 
-import com.dacubeking.AutoBuilder.robot.reflection.ClassInformationSender;
-import com.dacubeking.AutoBuilder.robot.robotinterface.AutonomousContainer;
-import com.dacubeking.AutoBuilder.robot.robotinterface.CommandTranslator;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,12 +15,9 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  private final SendableChooser<String> autoChooser = new SendableChooser<>();
-  private final SendableChooser<String> sideChooser = new SendableChooser<>();
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  // DrivetrainSubsystem drive = new DrivetrainSubsystem();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,35 +25,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    DrivetrainSubsystem drive = DrivetrainSubsystem.getInstance();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    AutonomousContainer.getInstance().initialize(
-    true,
-    new CommandTranslator(
-      drive::setAutoPath,/** DONE */
-      drive::stopModules,/** DONE */
-      drive::setAutoRotation,/** DONE */
-      drive::isFinished,/** DONE */
-      drive::getAutoElapsedTime,/** DONE */
-      drive::resetOdometry,/** DONE */
-      true
-    )
-    ,false,
-    this,
-    m_robotContainer
-    );
-
-       // Get the names of all the autos and then add them to a chooser
-       AutonomousContainer.getInstance().getAutonomousNames().forEach(name -> autoChooser.addOption(name, name));
-
-       //Ensure the second String is the name of the folder where your sided autos are located
-       sideChooser.setDefaultOption("Blue", "blue"); 
-       sideChooser.addOption("Red", "red");
-
-       SmartDashboard.putData("Auto choices", autoChooser);
-       SmartDashboard.putData("Red or Blue", sideChooser);    
   }
 
   /**
@@ -92,20 +56,12 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
- //Run the autos
- String autoName = autoChooser.getSelected();
- if (autoName == null) {
-     autoName = "Move Forward"; // Default auto if none is selected
- }
- // If it can't find a sided auto it will try to find a non-sided auto
- AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
-
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
-    // }
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
   }
 
   /** This function is called periodically during autonomous. */
@@ -139,9 +95,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {
-    ClassInformationSender.updateReflectionInformation("frc");
-  }
+  public void simulationInit() {}
 
   /** This function is called periodically whilst in simulation. */
   @Override

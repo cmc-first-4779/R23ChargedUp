@@ -71,7 +71,7 @@ public final class Constants {
 
  public static final double kPXController = 0.077777;
  public static final double kPYController = 0.077777;
- public static final double kPThetaController = 0.077777;
+ public static final double kPThetaController = 3;
 
  // I'm not sure where these values come from, but this is what 0 to auto code is using. 
  public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
