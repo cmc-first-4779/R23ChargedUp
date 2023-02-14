@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
  //Run the autos
  String autoName = autoChooser.getSelected();
  if (autoName == null) {
-     autoName = "1ball"; // Default auto if none is selected
+     autoName = "Move Forward"; // Default auto if none is selected
  }
  // If it can't find a sided auto it will try to find a non-sided auto
  AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
@@ -103,9 +103,9 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.schedule();
+    // }
   }
 
   /** This function is called periodically during autonomous. */

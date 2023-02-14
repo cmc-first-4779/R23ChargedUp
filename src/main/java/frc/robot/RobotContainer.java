@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.DriveStraightCommand;
 import frc.robot.commands.balanceTest;
 import frc.robot.commands.sturdyBaseCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -51,6 +52,9 @@ public class RobotContainer {
  // @AutoBuilderAccessible this method enables the command to be used in AutoBuilder
   @AutoBuilderAccessible
   private final balanceTest balancetest = new balanceTest(m_drivetrainSubsystem);
+
+  @AutoBuilderAccessible
+  private final DriveStraightCommand driveStraight = new DriveStraightCommand(m_drivetrainSubsystem);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
   //     new CommandXboxController(OperatorConstants.kDriverControllerPort);
