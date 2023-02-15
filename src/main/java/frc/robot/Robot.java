@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
  // If it can't find a sided auto it will try to find a non-sided auto
  AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
 
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {

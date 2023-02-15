@@ -15,6 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
 // import javax.annotation.Nullable;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.dacubeking.AutoBuilder.robot.annotations.AutoBuilderAccessible;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -290,7 +291,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
-
+    @AutoBuilderAccessible
     // I'm 100% sure I have this method doing what we want. Need to test it.
     public void resetOdometry(Pose2d pose) {
         odometry.resetPosition(pose.getRotation(),
@@ -298,7 +299,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         backLeftModule.getPosition(), backRightModule.getPosition() },
                 pose);
     }
-
+    @AutoBuilderAccessible
     public void stopModules() {
         frontLeftModule.set(0, frontLeftModule.getSteerAngle());
         frontRightModule.set(0, frontRightModule.getSteerAngle());
@@ -313,7 +314,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public Rotation2d getRotation2d() {
         return Rotation2d.fromDegrees(getHeading());
     }
-
+    @AutoBuilderAccessible
     public void setAutoRotation(Rotation2d rotation){
         currentAutoTrajectoryLock.lock();
         try {
@@ -323,11 +324,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
         }
         System.out.println("new rotation" + rotation.getDegrees());
     }
-
+    @AutoBuilderAccessible
     synchronized public boolean isFinished() {
         return driveState == DriveState.STOP || driveState == DriveState.DONE || driveState == DriveState.TELEOP;
     }
-
+    @AutoBuilderAccessible
     public double getAutoElapsedTime() {
         return Timer.getFPGATimestamp() - autoStartTime;
     }
@@ -385,7 +386,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final ReentrantLock swerveAutoControllerLock = new ReentrantLock();
     private /*@Nullable*/ HolonomicDriveController swerveAutoController;
     boolean swerveAutoControllerInitialized = false;
-
+    @AutoBuilderAccessible
     public void setAutoPath(Trajectory trajectory) {
         currentAutoTrajectoryLock.lock();
         try {
