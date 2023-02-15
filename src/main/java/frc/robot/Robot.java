@@ -14,6 +14,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -34,6 +36,9 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   SwerveControllerCommand autoCommand = null;
 
+  private final SendableChooser<String> autoChooser = new SendableChooser<>();
+  private final SendableChooser<String> sideChooser = new SendableChooser<>();
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -46,6 +51,16 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+    // Get the names of all the autos and then add them to a chooser
+    AutonomousContainer.getInstance().getAutonomousNames().forEach(name -> autoChooser.addOption(name, name));
+
+    // Ensure the second String is the name of the folder where your sided autos are
+    // located
+    sideChooser.setDefaultOption("Blue", "blue");
+    sideChooser.addOption("Red", "red");
+
+    SmartDashboard.putData("Auto choices", autoChooser);
+    SmartDashboard.putData("Red or Blue", sideChooser);
 
     AutonomousContainer.getInstance().setDebugPrints(true);
     AutonomousContainer.getInstance().initialize(
@@ -65,7 +80,7 @@ public class Robot extends TimedRobot {
         false,
         this,
         m_robotContainer);
-    
+
   }
 
   public SwerveControllerCommand createSwerveControllerCommand(Trajectory trajectory) {
@@ -75,21 +90,21 @@ public class Robot extends TimedRobot {
         () -> (getPose()),
         getKinematics(),
         new PIDController(Constants.kPXController, 0, 0),
-         new PIDController(Constants.kPYController, 0, 0),
+        new PIDController(Constants.kPYController, 0, 0),
         new ProfiledPIDController(Constants.kPThetaController, 0, 0, new TrapezoidProfile.Constraints(1, 1)),
         AutonomousContainer.getCommandTranslator()::getWantedRotation,
         drive::drive,
         drive // Make sure you add Drive as a requirement so that the controller doesn't
-                                             // try to control the modules while
+              // try to control the modules while
     // the robot is running an autonomous command
     );
   }
 
-  private SwerveDriveKinematics getKinematics(){
+  private SwerveDriveKinematics getKinematics() {
     return Constants.kDriveKinematics;
   }
 
-  private Pose2d getPose(){
+  private Pose2d getPose() {
     return m_robotContainer.getDriveSubsystem().getPose();
   }
 
@@ -130,12 +145,21 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    // // schedule the autonomous command (example)
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.schedule();
+    // }
+
+    //Run the autos
+    String autoName = autoChooser.getSelected();
+    if (autoName == null) {
+        autoName = "Auto 1"; // Default auto if none is selected
     }
+    // If it can't find a sided auto it will try to find a non-sided auto
+    AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
+
   }
 
   /** This function is called periodically during autonomous. */
