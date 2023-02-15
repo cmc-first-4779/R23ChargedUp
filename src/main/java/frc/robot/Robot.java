@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.dacubeking.AutoBuilder.robot.reflection.ClassInformationSender;
 import com.dacubeking.AutoBuilder.robot.robotinterface.AutonomousContainer;
 import com.dacubeking.AutoBuilder.robot.robotinterface.CommandTranslator;
 
@@ -155,7 +156,7 @@ public class Robot extends TimedRobot {
     //Run the autos
     String autoName = autoChooser.getSelected();
     if (autoName == null) {
-        autoName = "Auto 1"; // Default auto if none is selected
+        autoName = "Kevin"; // Default auto if none is selected
     }
     // If it can't find a sided auto it will try to find a non-sided auto
     AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
@@ -197,6 +198,7 @@ public class Robot extends TimedRobot {
   /** This function is called once when the robot is first started up. */
   @Override
   public void simulationInit() {
+    ClassInformationSender.updateReflectionInformation("frc");
   }
 
   /** This function is called periodically whilst in simulation. */

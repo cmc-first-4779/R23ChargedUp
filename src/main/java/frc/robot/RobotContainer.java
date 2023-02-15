@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.List;
 
+import com.dacubeking.AutoBuilder.robot.annotations.AutoBuilderAccessible;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -50,6 +51,10 @@ public class RobotContainer {
   //     new CommandXboxController(OperatorConstants.kDriverControllerPort);
       private final XboxController m_driverController =
       new XboxController(OperatorConstants.kDriverControllerPort);
+
+      @AutoBuilderAccessible
+      private final balanceTest balTest = new balanceTest(m_drivetrainSubsystem);
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
