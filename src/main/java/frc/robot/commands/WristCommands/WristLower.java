@@ -22,14 +22,13 @@ public class WristLower extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // Read the right and left bumper pads to raise and lower the wrist.
-    wristSubsystem.lowerWrist();
+    wristSubsystem.extendWrist();
   }
 
   // Called once the command ends or is interrupted.

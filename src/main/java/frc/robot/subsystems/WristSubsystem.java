@@ -26,16 +26,15 @@ public class WristSubsystem extends SubsystemBase {
   // Reference to robot container to access other subsystems
   RobotContainer robotContainer;
 
-  // Declare the variables //Not being used so commmenting out --KH
-  // public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
-
-  /** Creates a new WristSubsystem. */
+  /**
+   * Constructor for the wrist subsystem.  Sets up the motor and pid controller
+   * @param robotContainer reference to the robot used to get information about other subystems
+   */
   public WristSubsystem(RobotContainer robotContainer) {
     // Address our motor
     wristMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_WRIST, MotorType.kBrushless);
     m_pidController = wristMotor.getPIDController();
     this.robotContainer = robotContainer;
-    
 
     setPoint = 0;
 
@@ -44,7 +43,7 @@ public class WristSubsystem extends SubsystemBase {
     // Reset our Encoder
     resetEncoder(wristMotor);
     m_pidController = wristMotor.getPIDController();
-  // Config our PID Values
+    // Config our PID Values
     configPIDFValues(wristMotor, Constants.WRIST_kP, Constants.WRIST_kI, Constants.WRIST_kD,
         Constants.WRIST_kF, Constants.WRIST_kMinOutput, Constants.WRIST_kMaxOuput);
     // Configure Smart Motion
@@ -70,7 +69,8 @@ public class WristSubsystem extends SubsystemBase {
     } else {
       sparkMax.setSmartCurrentLimit(MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_NEO); // Set the Amps limit
     }
-    // sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
+    // sparkMax.burnFlash(); // Burn these settings into the flash in case of an
+    // electrical issue.
   }
 
   // Reset our Encoder
@@ -81,15 +81,14 @@ public class WristSubsystem extends SubsystemBase {
   // Configure our PID Values
   public void configPIDFValues(CANSparkMax sparkMax, double kP, double kI, double kD, double kF, double kMinOutput,
       double kMaxOutput) {
-        // m_pidController = wristMotor.getPIDController();
+    // m_pidController = wristMotor.getPIDController();
     // Configure the PID settings
     m_pidController.setFF(kF);
-  System.out.println("RevError: " + m_pidController.setP(.0005));
-  m_pidController.setIZone(kI);
+    System.out.println("RevError: " + m_pidController.setP(.0005));
+    m_pidController.setIZone(kI);
     m_pidController.setD(kD);
     m_pidController.setOutputRange(kMinOutput, kMaxOutput);
-   
-    
+
   }
 
   // Configure our Smart Motion settings
@@ -128,7 +127,6 @@ public class WristSubsystem extends SubsystemBase {
     // Check to make sure give position is within our allowed limits.
     if (setPointIsValid(setpoint)) {
       // send our setpoint to SmartMotion
-      System.out.println("P: " + wristMotor.getPIDController().getP());
       m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
     }
   }
@@ -150,7 +148,25 @@ public class WristSubsystem extends SubsystemBase {
     return false;
   }
 
-  // Used for testing our PID settings for SmartMotion
+  /**
+   * Used for testing our PID settings for SmartMotion by grabbing values from the
+   * dashboard
+   * 
+   * @param setpoint   The poisiton to set the wrist position to
+   * @param kF         feed forward constant for pid controlle
+   * @param kP         p constant for pid controller
+   * @param kI         i constant for pid controller
+   * @param kD         d cosntant for pid controller
+   * @param kMaxOutput maximum output value for pid controller
+   * @param kMinOutput minimum output value for pid controller
+   * @param maxVel     maxium velocity for wrist to move during smart motion
+   * @param minVel     minium velocity for wrist to move during smart motion
+   * @param maxAccel   maximum acceleration we want to the wrist to accelerate
+   *                   during smart motion
+   * @param allowedErr positional distance difference the wrist can be at and
+   *                   still be considered on target
+   * @param slot       the pid slot to use for smart motion
+   */
   public void testWristPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
       double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
       int slot) {
@@ -176,39 +192,56 @@ public class WristSubsystem extends SubsystemBase {
     }
   }
 
-  public void raiseWrist() {
-    // Raising the wrist is moving it in a negative direction. Need to make sure we
+  /**
+   * Retracts the wrist by the WRIST_MOVEMENT_INCREMENT
+   */
+  public void retractWrist() {
+    // Retracting the wrist is moving it in a negative direction. Need to make sure
+    // we
     // are not lower than the minimal position
-    double newSetPoint = setPoint - Constants.WRIST_MOVEMENT_INCREAMENT;
+    double newSetPoint = setPoint - Constants.WRIST_MOVEMENT_INCREMENT;
     if (setPointIsValid(newSetPoint)) {
       setPoint = newSetPoint;
       setWristPosition(setPoint);
     } else {
       System.out.println("Setpoint at it's lower limit allready: " + setPoint);
     }
-
   }
 
-  private boolean safeToExtendWrist() {
-    // Need to check with arm to make sure it's in a good space.  
-    double armPosition = robotContainer.getArmPosition();
-    if (armPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND ) {
-      return true;
-    }
-    return false;
-  }
-
-  public void lowerWrist() {
+  /**
+   * Extends the wrist by the WRIST_MOVEMENT_INCREMENT
+   */
+  public void extendWrist() {
     // Lowering the wrist is moving it in a positive direction. Need to make sure we
     // are not higher than the minimal position
-    double newSetPoint = setPoint + Constants.WRIST_MOVEMENT_INCREAMENT;
-    if (safeToExtendWrist() && setPointIsValid(newSetPoint)) {
+    double newSetPoint = setPoint + Constants.WRIST_MOVEMENT_INCREMENT;
+    if (!safeToExtendWrist()) {
+      System.out.println("Arm is not at safe position to extend wrist");
+      return;
+    }
+
+    if (setPointIsValid(newSetPoint)) {
       setPoint = newSetPoint;
       setWristPosition(setPoint);
     } else {
       System.out.println("Setpoint at it's higher limit allready: " + setPoint);
     }
 
+  }
+
+  /**
+   * Checks to see if the Arm is in a safe position for the wrist to extend
+   * 
+   * @return true if arm position is greater than minimum distance set to extend
+   */
+  private boolean safeToExtendWrist() {
+    // Need to check with arm to make sure it's in a good space.
+    double armPosition = robotContainer.getArmPosition();
+    if (armPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
+      System.out.println("Arm is at safe position to extend wrist");
+      return true;
+    }
+    return false;
   }
 
 }

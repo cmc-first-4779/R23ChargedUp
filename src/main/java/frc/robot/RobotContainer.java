@@ -87,6 +87,6 @@ public class RobotContainer {
  * @return
  */
   public double getArmPosition() {
-    return 0;
+    return 2; // Hardcoded for now, but eventually need to tie into winch subsystem for real value
   }
 }

@@ -29,7 +29,7 @@ public class WristRaise extends CommandBase {
   @Override
   public void execute() {
     // Read the right and left bumper pads to raise and lower the wrist.
-    wristSubsystem.raiseWrist();
+    wristSubsystem.retractWrist();
   }
 
   // Called once the command ends or is interrupted.
