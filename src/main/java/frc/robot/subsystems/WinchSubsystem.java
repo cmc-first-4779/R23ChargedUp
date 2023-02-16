@@ -49,10 +49,10 @@ public class WinchSubsystem extends SubsystemBase {
     winchMotorSlave.setInverted(true);
     winchMotorMaster.setInverted(false);
     // Have the left motor follow the right motor
-    //winchMotorSlave.follow(winchMotorMaster);
+    winchMotorSlave.follow(winchMotorMaster);
     // Reset the encoders
     resetEncoders(winchMotorMaster);
-    //resetEncoders(winchMotorSlave);
+    resetEncoders(winchMotorSlave);
     // Configure Motion Magic on the Motors
     configSimpleMM(winchMotorMaster);
   }
@@ -157,18 +157,18 @@ public class WinchSubsystem extends SubsystemBase {
   }
 
   // Use MotionMagic to set the winch to a specific Encoder Position.
-  public void setWinchPosition(double position) {
+  public void setWinchPosition(double setPoint) {
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
-    winchMotorMaster.set(TalonFXControlMode.MotionMagic, position);
+    winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
-  public void testWinchMM(double position, double kF, double kP, double kI, double kD, double cruiseVel, double cruiseAccel){
+  public void testWinchMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel, double cruiseAccel){
     configPIDFValues(winchMotorMaster, kP, kI, kD, kF, 0);
     configMotionCruiseAndAcceleration(winchMotorMaster, cruiseVel, cruiseAccel);
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
-    winchMotorMaster.set(TalonFXControlMode.MotionMagic, position);
+    winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
 }
