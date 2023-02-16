@@ -36,7 +36,7 @@ public class IntakeEjectCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.stopIntake();
+    intakeSubsystem.stopMotor();
   }
 
   // Returns true when the command should end.
