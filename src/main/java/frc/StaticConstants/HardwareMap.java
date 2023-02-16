@@ -8,7 +8,7 @@ package frc.StaticConstants;
 public class HardwareMap {
 
     //  CAN Network Addresses
-    public static final int CAN_ADDRESS_WINCH_MOTOR_LEFT = 100;
-    public static final int CAN_ADDRESS_WINCH_MOTOR_RIGHT = 60;
+    public static final int CAN_ADDRESS_WINCH_MOTOR_LEFT = 13;
+    public static final int CAN_ADDRESS_WINCH_MOTOR_RIGHT = 12;
 
 }
