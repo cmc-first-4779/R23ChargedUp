@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
     sideChooser.setDefaultOption("Blue", "blue");
     sideChooser.addOption("Red", "red");
 
+    System.out.println("Should be putting autochooser on SmartDashboard");
     SmartDashboard.putData("Auto choices", autoChooser);
     SmartDashboard.putData("Red or Blue", sideChooser);
 
@@ -81,6 +82,18 @@ public class Robot extends TimedRobot {
         false,
         this,
         m_robotContainer);
+
+            // Get the names of all the autos and then add them to a chooser
+    AutonomousContainer.getInstance().getAutonomousNames().forEach(name -> autoChooser.addOption(name, name));
+
+    // Ensure the second String is the name of the folder where your sided autos are
+    // located
+    sideChooser.setDefaultOption("Blue", "blue");
+    sideChooser.addOption("Red", "red");
+
+    System.out.println("Should be putting autochooser on SmartDashboard");
+    SmartDashboard.putData("Auto choices", autoChooser);
+    SmartDashboard.putData("Red or Blue", sideChooser);
 
   }
 
