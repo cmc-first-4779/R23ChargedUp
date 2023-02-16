@@ -256,7 +256,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         // SwerveModuleState[] states =
         // m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
 
-        //TODO need to update the odometry
+        odometry.update(Rotation2d.fromDegrees(gyroscope.getYaw()), new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
+            backLeftModule.getPosition(), backRightModule.getPosition() });
         // Trying update robot position on field image on dashboard
         System.out.println("Traying to update field:" + odometry.getPoseMeters());
         field.setRobotPose(odometry.getPoseMeters());
