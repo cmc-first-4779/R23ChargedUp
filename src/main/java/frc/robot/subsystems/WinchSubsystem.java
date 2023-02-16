@@ -163,7 +163,8 @@ public class WinchSubsystem extends SubsystemBase {
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
-  public void testWinchMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel, double cruiseAccel){
+  public void testWinchMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
+      double cruiseAccel) {
     configPIDFValues(winchMotorMaster, kP, kI, kD, kF, 0);
     configMotionCruiseAndAcceleration(winchMotorMaster, cruiseVel, cruiseAccel);
     winchMotorMaster.setSafetyEnabled(false);
@@ -171,4 +172,11 @@ public class WinchSubsystem extends SubsystemBase {
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
+  public void moveWinch(double speed) {
+    if (Math.abs(speed) > .1) {
+      winchMotorMaster.set(TalonFXControlMode.PercentOutput, speed);
+    } else {
+      winchMotorMaster.set(TalonFXControlMode.PercentOutput, 0);
+    }
+  }
 }
