@@ -157,7 +157,7 @@ public class WinchSubsystem extends SubsystemBase {
   }
 
   // Use MotionMagic to set the winch to a specific Encoder Position.
-  public void setWinchPositionMM(double position) {
+  public void setWinchPosition(double position) {
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, position);

@@ -6,15 +6,15 @@ package frc.robot.commands.WinchCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.WinchSubsystem;
 
-public class WinchMidCubeCommand extends CommandBase {
+public class WinchSetPosition extends CommandBase {
   WinchSubsystem winchSubsystem;
-
+  double setPoint;
   /** Creates a new WinchGroundCommand. */
-  public WinchMidCubeCommand(WinchSubsystem winchSubsystem) {
+  public WinchSetPosition(WinchSubsystem winchSubsystem, double setPoint) {
     this.winchSubsystem = winchSubsystem;
+    this.setPoint = setPoint;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(winchSubsystem);
   }
@@ -22,21 +22,21 @@ public class WinchMidCubeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Call Motion Magic to set our Winch Position to the Ground
-    winchSubsystem.setWinchPositionMM(Constants.WINCH_POSITION_MID_CUBE_NODE);
+    //  Call Motion Magic to set our Winch Position to the Ground
+    winchSubsystem.setWinchPosition(setPoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Put the encoder value of the Master Motor to the Dashboard
-    SmartDashboard.putString("Winch Target Position", "MID CUBE");
+        // Put the encoder value of the Master Motor to the Dashboard
+        SmartDashboard.putString("Winch Target Position", Double.toString(setPoint));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    winchSubsystem.stopMotor();
+    //winchSubsystem.stopMotor();
   }
 
   // Returns true when the command should end.
