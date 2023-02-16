@@ -6,15 +6,17 @@ package frc.robot.commands.ExtenderCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.ExtenderSubsystem;
 
-public class ExtenderHighConeCommand extends CommandBase {
+public class ExtenderSetPosition extends CommandBase {
   ExtenderSubsystem extenderSubsystem;
+  double setPoint;
 
   /** Creates a new ExtenderStowCommand. */
-  public ExtenderHighConeCommand(ExtenderSubsystem extenderSubsystem) {
+  public ExtenderSetPosition(ExtenderSubsystem extenderSubsystem, double setPoint) {
+    //  Declare our variables
     this.extenderSubsystem = extenderSubsystem;
+    this.setPoint = setPoint;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(extenderSubsystem);
   }
@@ -22,20 +24,20 @@ public class ExtenderHighConeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    extenderSubsystem.setExtenderPosition(Constants.EXTENDER_POSITION_HIGH_CONE_NODE);
+    extenderSubsystem.setExtenderPosition(setPoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // Put the encoder value of the Master Motor to the Dashboard
-    SmartDashboard.putString("Extender Target Position", "HIGH CONE");
+    SmartDashboard.putString("Extender Target Position", Double.toString(setPoint));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    extenderSubsystem.stopMotor();
+    
   }
 
   // Returns true when the command should end.

@@ -59,7 +59,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     } else {
       sparkMax.setSmartCurrentLimit(MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_NEO); // Set the Amps limit
     }
-    sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
+    //sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
   }
 
   // Reset our Encoder
