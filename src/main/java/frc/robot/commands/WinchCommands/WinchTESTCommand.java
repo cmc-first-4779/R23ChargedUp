@@ -20,9 +20,9 @@ public class WinchTESTCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double position = SmartDashboard.getNumber("Position", 2500);
+    double position = SmartDashboard.getNumber("Position", 165000);
     double kF = SmartDashboard.getNumber("kF", 0.50);
-    double kP = SmartDashboard.getNumber("kP", 0.01);
+    double kP = SmartDashboard.getNumber("kP", 0.1);
     double kI = SmartDashboard.getNumber("kI", 0.00);
     double kD = SmartDashboard.getNumber("kD", 0.00);
     double cruiseVel = SmartDashboard.getNumber("Cruise Vel", 2500);
