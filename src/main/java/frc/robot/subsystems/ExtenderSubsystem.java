@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.HardwareMap;
 import frc.StaticConstants.MaxMotorAmpsConstants;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 //  This Subsystem is for our Extender Arm and will be powered by one Spark Neo550;
 
@@ -24,6 +25,10 @@ public class ExtenderSubsystem extends SubsystemBase {
 
   // Declare the variables
   public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
+  double setPoint;
+
+   // Reference to robot container to access other subsystems
+   RobotContainer robotContainer;
 
   /** Creates a new ExtenderArmSubsystem. */
   public ExtenderSubsystem() {
@@ -115,6 +120,24 @@ public class ExtenderSubsystem extends SubsystemBase {
     m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
   }
 
+  /**
+   * Checks to see if the provided setPoint within the legal bounds
+   * 
+   * @param setPoint
+   * @return true if it falls on or between min and max allowed values.
+   */
+  private boolean setPointIsValid(double setPoint) {
+    if (setPoint >= Constants.EXTENDER_MIN_POSTION && setPoint <= Constants.EXTENDER_MAX_POSTION) {
+      System.out.println("Setpoint is valid: " + setPoint);
+      return true;
+    } else {
+      System.out.println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION
+          + " and " + Constants.EXTENDER_MAX_POSTION);
+    }
+    return false;
+  }
+
+
   //  Used for testing our PID settings for SmartMotion
   public void testExtenderPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
       double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
@@ -135,6 +158,58 @@ public class ExtenderSubsystem extends SubsystemBase {
     m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
     // send our setpoint to SmartMotion
     m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+  }
+
+  /**
+   * Retracts the wrist by the WRIST_MOVEMENT_INCREMENT
+   */
+  public void retractExtender() {
+    // Retracting the wrist is moving it in a negative direction. Need to make sure
+    // we
+    // are not lower than the minimal position
+    double newSetPoint = setPoint - Constants.EXTENDER_MOVEMENT_INCREMENT;
+    if (setPointIsValid(newSetPoint)) {
+      setPoint = newSetPoint;
+      setExtenderPosition(setPoint);
+    } else {
+      System.out.println("Setpoint at it's lower limit allready: " + setPoint);
+    }
+  }
+
+  /**
+   * Extends the wrist by the WRIST_MOVEMENT_INCREMENT
+   */
+  public void extendExtender() {
+    // Lowering the wrist is moving it in a positive direction. Need to make sure we
+    // are not higher than the minimal position
+    double newSetPoint = setPoint + Constants.EXTENDER_MOVEMENT_INCREMENT;
+    if (!safeToExtendExtender()) {
+      System.out.println("Arm is not at safe position to extend wrist");
+      return;
+    }
+
+    if (setPointIsValid(newSetPoint)) {
+      setPoint = newSetPoint;
+      setExtenderPosition(setPoint);
+    } else {
+      System.out.println("Setpoint at it's higher limit allready: " + setPoint);
+    }
+
+  }
+
+  /**
+   * Checks to see if the Arm is in a safe position for the wrist to extend
+   * 
+   * @return true if arm position is greater than minimum distance set to extend
+   */
+  private boolean safeToExtendExtender() {
+    // Need to check with arm to make sure it's in a good space.
+    double armPosition = robotContainer.getArmPosition();
+    if (armPosition > Constants.EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND) {
+      System.out.println("Arm is at safe position to extend Extender");
+      return true;
+    }
+    return false;
   }
 
 }
