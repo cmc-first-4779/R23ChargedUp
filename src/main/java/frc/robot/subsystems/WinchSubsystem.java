@@ -55,6 +55,16 @@ public class WinchSubsystem extends SubsystemBase {
     resetEncoders(winchMotorSlave);
     // Configure Motion Magic on the Motors
     configSimpleMM(winchMotorMaster);
+
+        // Add PID Fields to SmartDashboard
+        SmartDashboard.putNumber("Position", 0);
+        SmartDashboard.putNumber("kF", Constants.WINCH_DEFAULT_F);
+        SmartDashboard.putNumber("kP", Constants.WINCH_DEFAULT_P);
+        SmartDashboard.putNumber("kI", Constants.WINCH_DEFAULT_I);
+        SmartDashboard.putNumber("kD", Constants.WINCH_DEFAULT_D);
+        SmartDashboard.putNumber("Cruise Vel", Constants.WINCH_MM_VELOCITY);
+        SmartDashboard.putNumber("Cruise Accel ", Constants.WINCH_MM_ACCELERATION);
+    
   }
 
   @Override
