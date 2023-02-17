@@ -49,6 +49,17 @@ public class WristSubsystem extends SubsystemBase {
     // Configure Smart Motion
     configureSmartMotion(wristMotor, Constants.WRIST_SM_MAX_VEL, Constants.WRIST_SM_MIN_VEL,
         Constants.WRIST_SM_MAX_ACCEL, Constants.WRIST_SM_ALLOWED_ERR, Constants.WRIST_PID_SLOT);
+
+            // Add PID Fields to SmartDashboard
+    SmartDashboard.putNumber("Position", 0);
+    SmartDashboard.putNumber("kF", Constants.WRIST_kF);
+    SmartDashboard.putNumber("kP", Constants.WRIST_kP);
+    SmartDashboard.putNumber("kI", Constants.WRIST_kI);
+    SmartDashboard.putNumber("kD", Constants.WRIST_kD);
+    SmartDashboard.putNumber("Max Vel", Constants.WRIST_SM_MAX_VEL);
+    SmartDashboard.putNumber("Min Vel", Constants.WRIST_SM_MIN_VEL);
+    SmartDashboard.putNumber("Max Accel", Constants.WRIST_SM_MAX_ACCEL);
+
   }
 
   @Override
