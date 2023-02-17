@@ -37,7 +37,7 @@ public final class Constants {
   public static final double WINCH_DEFAULT_F = 0.52;// Dummy variable - Test this!
   public static final double WINCH_POSITION_MIN = 0;  //  Min position of the arm
   public static final double WINCH_POSITION_SAFE_TO_EXTEND = 40000;  //  Safe distance where can extend the rest of the arm
-  public static final double WINCH_POSITION_MAX = 150000;  // Max position of the arm
+  public static final double WINCH_POSITION_MAX = 90000;  // Max position of the arm
   public static final double WINCH_POSITION_STOW = 0;  // Dummy variable - Test this!
   public static final double WINCH_POSITION_GROUND = 20000;   // Dummy variable - Test this!
   public static final double WINCH_POSITION_LOW_CONE_NODE = 60000;  // Dummy variable - Test this!
