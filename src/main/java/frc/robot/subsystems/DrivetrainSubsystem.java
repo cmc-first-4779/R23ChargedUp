@@ -259,7 +259,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         odometry.update(Rotation2d.fromDegrees(gyroscope.getYaw()), new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
             backLeftModule.getPosition(), backRightModule.getPosition() });
         // Trying update robot position on field image on dashboard
-        System.out.println("Traying to update field:" + odometry.getPoseMeters());
         field.setRobotPose(odometry.getPoseMeters());
 
         if (states == null) {
