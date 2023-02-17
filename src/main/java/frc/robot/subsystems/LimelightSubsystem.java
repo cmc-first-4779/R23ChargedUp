@@ -10,7 +10,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.LimelightConstants;
 import frc.robot.Constants;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //  Our Limelight Subsystem is where all of our Vision Processing Takes place
 
 public class LimelightSubsystem extends SubsystemBase {
@@ -36,6 +36,7 @@ public class LimelightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Target Zone", getTargetZone));
   }
 
   // SET THE LIMELIGHT CAMERA MODE
@@ -107,10 +108,10 @@ public class LimelightSubsystem extends SubsystemBase {
     setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
   }
 
-  // Set the Snapshot mode.  Allows users to take snapshots during a match
-  // 0 ...  Resets snapshot mode
-  // 1 ...  Take exactly one snapshot
-  public void setSnapshotMode(double snapshotMode){
+  // Set the Snapshot mode. Allows users to take snapshots during a match
+  // 0 ... Resets snapshot mode
+  // 1 ... Take exactly one snapshot
+  public void setSnapshotMode(double snapshotMode) {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("snapshot").setNumber(snapshotMode);
     setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
   }
@@ -204,16 +205,44 @@ public class LimelightSubsystem extends SubsystemBase {
         .getDoubleArray(new double[6]);
   }
 
-  public void setCropValues(){
-    //  Declare an array to store our crop values
+  public void setCropValues() {
+    // Declare an array to store our crop values
     double[] cropValues = new double[4];
     // Populate the array with our Constant Values
-    cropValues[0] = Constants.LIMELIGHT_CROP_X0;  //X0
-    cropValues[1] = Constants.LIMELIGHT_CROP_X1;  //X1
-    cropValues[2] = Constants.LIMELIGHT_CROP_Y0;  //Y0
-    cropValues[3] = Constants.LIMELIGHT_CROP_Y1;  //Y1
-    //  Push the array back ot the Limelight Network Table to set it.
+    cropValues[0] = Constants.LIMELIGHT_CROP_X0; // X0
+    cropValues[1] = Constants.LIMELIGHT_CROP_X1; // X1
+    cropValues[2] = Constants.LIMELIGHT_CROP_Y0; // Y0
+    cropValues[3] = Constants.LIMELIGHT_CROP_Y1; // Y1
+    // Push the array back ot the Limelight Network Table to set it.
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("crop").setDoubleArray(cropValues);
+  }
+
+  // This method will return a Zone # (integer) based on how far it is from the
+  // target.
+  // We can then take that value and feed into a Shooter Flywheel velocity later.
+  public int getTargetZone() {
+    int zone;
+    // Make sure the Limelight is set for Vision
+    initLimelightforVision();
+    setPipeline(0);
+    // If the Limelight doesn't have a target, we are at the low goal
+    if (!hasTarget()) {
+      zone = 0;
+      // setPipeline(0);
+    }
+    // Else if the LL can see the target, return the zone # based on the TY value
+    else if ()  {
+      zone = 1;
+      setPipeline(0);
+    } else {
+      zone = 2;
+    } {
+      zone = 9;
+      setPipeline(1);
+    }
+
+    // Return the Zone #
+    return zone;
   }
 
 }
