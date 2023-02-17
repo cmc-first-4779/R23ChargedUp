@@ -36,7 +36,7 @@ public class LimelightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Target Zone", getTargetZone));
+   
   }
 
   // SET THE LIMELIGHT CAMERA MODE
@@ -217,32 +217,5 @@ public class LimelightSubsystem extends SubsystemBase {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("crop").setDoubleArray(cropValues);
   }
 
-  // This method will return a Zone # (integer) based on how far it is from the
-  // target.
-  // We can then take that value and feed into a Shooter Flywheel velocity later.
-  public int getTargetZone() {
-    int zone;
-    // Make sure the Limelight is set for Vision
-    initLimelightforVision();
-    setPipeline(0);
-    // If the Limelight doesn't have a target, we are at the low goal
-    if (!hasTarget()) {
-      zone = 0;
-      // setPipeline(0);
-    }
-    // Else if the LL can see the target, return the zone # based on the TY value
-    else if ()  {
-      zone = 1;
-      setPipeline(0);
-    } else {
-      zone = 2;
-    } {
-      zone = 9;
-      setPipeline(1);
-    }
-
-    // Return the Zone #
-    return zone;
-  }
-
+  
 }
