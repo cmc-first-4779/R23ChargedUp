@@ -45,7 +45,17 @@ public class ExtenderSubsystem extends SubsystemBase {
     // Configure Smart Motion
     configureSmartMotion(extenderMotor, Constants.EXTENDER_SM_MAX_VEL, Constants.EXTENDER_SM_MIN_VEL,
         Constants.EXTENDER_SM_MAX_ACCEL, Constants.EXTENDER_SM_ALLOWED_ERR, Constants.EXTENDER_PID_SLOT);
-  }
+  //
+      // Add PID Fields to SmartDashboard
+      SmartDashboard.putNumber("Position", 0);
+      SmartDashboard.putNumber("kF", Constants.EXTENDER_kF);
+      SmartDashboard.putNumber("kP", Constants.EXTENDER_kP);
+      SmartDashboard.putNumber("kI", Constants.EXTENDER_kI);
+      SmartDashboard.putNumber("kD", Constants.EXTENDER_kD);
+      SmartDashboard.putNumber("Cruise Vel", Constants.EXTENDER_SM_MAX_VEL);
+      SmartDashboard.putNumber("Cruise Accel ", Constants.EXTENDER_SM_MAX_ACCEL);
+
+      }
 
   @Override
   public void periodic() {
