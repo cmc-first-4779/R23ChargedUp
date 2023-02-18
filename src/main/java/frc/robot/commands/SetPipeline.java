@@ -34,6 +34,7 @@ public class SetPipeline extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putNumber("GetPipeline", pipeline);
+  
   }
 
   // Called once the command ends or is interrupted.

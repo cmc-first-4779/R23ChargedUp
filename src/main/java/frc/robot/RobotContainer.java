@@ -56,6 +56,11 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.triangle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 1));
+    m_driverController.circle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 2));
+    m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 3));
+    m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 4));
+    
+
   }
 
   /**
