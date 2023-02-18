@@ -90,7 +90,7 @@ public class RobotContainer {
     // m_driverController.x().onTrue(new balanceTest(m_drivetrainSubsystem)); // This button X on the controller
     new Trigger(m_driverController::getBButton).whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem, m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
     // Back button zeros the gyroscope
-    new Trigger(m_driverController::getXButton).onTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope));
+    new Trigger(m_driverController::getXButton).whileTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope));
     new Trigger(m_driverController::getAButton).whileTrue(new balanceTest(m_drivetrainSubsystem)); // This button A on the controller
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -116,7 +116,7 @@ public class RobotContainer {
                         new Translation2d(1, 0),
                         new Translation2d(0, -1)),
                         // new Translation2d(2, Rotation2d.fromDegrees(-90))),
-                new Pose2d(1, -1, Rotation2d.fromDegrees(90)),
+                new Pose2d(1, -1, Rotation2d.fromDegrees(180)),
 
                 trajectoryConfig);
 

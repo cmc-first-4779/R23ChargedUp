@@ -96,22 +96,30 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Red or Blue", sideChooser);
 
   }
+  
 
   public SwerveControllerCommand createSwerveControllerCommand(Trajectory trajectory) {
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
     DrivetrainSubsystem drive = m_robotContainer.getDriveSubsystem();
     return new SwerveControllerCommand(
         trajectory,
         () -> (getPose()),
         getKinematics(),
-        new PIDController(Constants.kPXController, 0, 0),
-        new PIDController(Constants.kPYController, 0, 0),
-        new ProfiledPIDController(Constants.kPThetaController, 0, 0, new TrapezoidProfile.Constraints(1, 1)),
+        xController,
+        yController,
+        thetaController,
         AutonomousContainer.getCommandTranslator()::getWantedRotation,
         drive::drive,
         drive // Make sure you add Drive as a requirement so that the controller doesn't
               // try to control the modules while
     // the robot is running an autonomous command
     );
+
   }
 
   private SwerveDriveKinematics getKinematics() {
@@ -159,6 +167,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    // DrivetrainSubsystem drive = m_robotContainer.getDriveSubsystem();
+    // drive.zeroGyroscope();
     // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // // schedule the autonomous command (example)
@@ -166,12 +176,12 @@ public class Robot extends TimedRobot {
     //   m_autonomousCommand.schedule();
     // }
 
-    //Run the autos
+    //Run the autos for autobuilder
     String autoName = autoChooser.getSelected();
     if (autoName == null) {
         autoName = "Kevin"; // Default auto if none is selected
     }
-    // If it can't find a sided auto it will try to find a non-sided auto
+    // // If it can't find a sided auto it will try to find a non-sided auto
     AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
 
   }
