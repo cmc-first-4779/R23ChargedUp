@@ -36,6 +36,8 @@ public class WinchSubsystem extends SubsystemBase {
   // Declare our Encoders
   RelativeEncoder winchEncoderSlave;
   RelativeEncoder winchEncoderMaster;
+  // Encoder Position
+  double winchMasterPosition, winchSlavePosition;
 
   /** Creates a new WinchPulleySubsystem. */
   public WinchSubsystem() {
@@ -56,21 +58,23 @@ public class WinchSubsystem extends SubsystemBase {
     // Configure Motion Magic on the Motors
     configSimpleMM(winchMotorMaster);
 
-        // Add PID Fields to SmartDashboard
-        SmartDashboard.putNumber("Position", 0);
-        SmartDashboard.putNumber("kF", Constants.WINCH_DEFAULT_F);
-        SmartDashboard.putNumber("kP", Constants.WINCH_DEFAULT_P);
-        SmartDashboard.putNumber("kI", Constants.WINCH_DEFAULT_I);
-        SmartDashboard.putNumber("kD", Constants.WINCH_DEFAULT_D);
-        SmartDashboard.putNumber("Cruise Vel", Constants.WINCH_MM_VELOCITY);
-        SmartDashboard.putNumber("Cruise Accel ", Constants.WINCH_MM_ACCELERATION);
-    
+    // Add PID Fields to SmartDashboard
+    SmartDashboard.putNumber("Position", 0);
+    SmartDashboard.putNumber("kF", Constants.WINCH_DEFAULT_F);
+    SmartDashboard.putNumber("kP", Constants.WINCH_DEFAULT_P);
+    SmartDashboard.putNumber("kI", Constants.WINCH_DEFAULT_I);
+    SmartDashboard.putNumber("kD", Constants.WINCH_DEFAULT_D);
+    SmartDashboard.putNumber("Cruise Vel", Constants.WINCH_MM_VELOCITY);
+    SmartDashboard.putNumber("Cruise Accel ", Constants.WINCH_MM_ACCELERATION);
+
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     // Put the encoder value of the Master Motor to the Dashboard
+    winchMasterPosition = winchMotorMaster.getSelectedSensorPosition();
+    winchSlavePosition = winchMotorSlave.getSelectedSensorPosition();
     SmartDashboard.putNumber("Winch Encoder Position", winchMotorMaster.getSelectedSensorPosition());
   }
 
@@ -146,6 +150,7 @@ public class WinchSubsystem extends SubsystemBase {
     talon.configAllowableClosedloopError(slot, allowedError, Constants.kTimeoutMs);
   }
 
+  //  Configure our Motion Magic PID Loop
   private void configSimpleMM(WPI_TalonFX talon) {
     // Tell each talon to use Quad Encoder as their PID0
     talon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PID_CLOSED_LOOP,
@@ -170,9 +175,14 @@ public class WinchSubsystem extends SubsystemBase {
   public void setWinchPosition(double setPoint) {
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
-    winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
+    if (safeToMoveArm()) {
+      winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
+    } else {
+      stopMotor();
+    }
   }
 
+  //  Method to test the winch with the SmartDashboard and get PID values
   public void testWinchMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
       double cruiseAccel) {
     configPIDFValues(winchMotorMaster, kP, kI, kD, kF, 0);
@@ -182,11 +192,37 @@ public class WinchSubsystem extends SubsystemBase {
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
+  //   Joystick method to move the winch manually
   public void moveWinch(double speed) {
     if (Math.abs(speed) > .1) {
-      winchMotorMaster.set(TalonFXControlMode.PercentOutput, speed);
+      if (safeToMoveArm()) {
+        winchMotorMaster.set(TalonFXControlMode.PercentOutput, speed);
+      }
     } else {
       winchMotorMaster.set(TalonFXControlMode.PercentOutput, 0);
     }
   }
+
+  //  Method to check whether we are in a safe range to move the arm
+  public boolean safeToMoveArm() {
+    if ((winchMasterPosition >= Constants.WINCH_POSITION_MIN)
+        && (winchMasterPosition <= Constants.WINCH_POSITION_MAX)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //  Method to check whether we are in a safe range to extend the
+  //   Extender and flip the wrist
+  public boolean safeToExtendAndWrist()
+  {
+    if ((winchMasterPosition >= Constants.WINCH_POSITION_MIN)
+        && (winchMasterPosition <= Constants.WINCH_POSITION_SAFE_TO_EXTEND)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 }
