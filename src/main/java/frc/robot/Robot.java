@@ -101,9 +101,12 @@ public class Robot extends TimedRobot {
   public SwerveControllerCommand createSwerveControllerCommand(Trajectory trajectory) {
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
     PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(
-            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    double kpTheta = SmartDashboard.getNumber("kpTheta", .07777);
+    // ProfiledPIDController thetaController = new ProfiledPIDController(
+    //         Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+            ProfiledPIDController thetaController = new ProfiledPIDController(
+              kpTheta, 0, 0, Constants.kThetaControllerConstraints);
+      thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     DrivetrainSubsystem drive = m_robotContainer.getDriveSubsystem();
     return new SwerveControllerCommand(
