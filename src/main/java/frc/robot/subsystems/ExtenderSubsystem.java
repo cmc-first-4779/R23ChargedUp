@@ -27,8 +27,8 @@ public class ExtenderSubsystem extends SubsystemBase {
   public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
   double setPoint;
 
-   // Reference to robot container to access other subsystems
-   RobotContainer robotContainer;
+  // Reference to robot container to access other subsystems
+  RobotContainer robotContainer;
 
   /** Creates a new ExtenderArmSubsystem. */
   public ExtenderSubsystem() {
@@ -64,7 +64,8 @@ public class ExtenderSubsystem extends SubsystemBase {
     } else {
       sparkMax.setSmartCurrentLimit(MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_NEO); // Set the Amps limit
     }
-    //sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
+    // sparkMax.burnFlash(); // Burn these settings into the flash in case of an
+    // electrical issue.
   }
 
   // Reset our Encoder
@@ -131,14 +132,14 @@ public class ExtenderSubsystem extends SubsystemBase {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
     } else {
-      System.out.println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION
-          + " and " + Constants.EXTENDER_MAX_POSTION);
+      System.out
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION
+              + " and " + Constants.EXTENDER_MAX_POSTION);
     }
     return false;
   }
 
-
-  //  Used for testing our PID settings for SmartMotion
+  // Used for testing our PID settings for SmartMotion
   public void testExtenderPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
       double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
       int slot) {
@@ -210,6 +211,17 @@ public class ExtenderSubsystem extends SubsystemBase {
       return true;
     }
     return false;
+  }
+
+  public void moveExtender(double speed) {
+    // Joystick method to move the extender manually
+    if (Math.abs(speed) > .1) {
+      if (safeToExtendExtender()) {
+        extenderMotor.set(speed);
+      }
+    } else {
+      stopMotor();
+    }
   }
 
 }
