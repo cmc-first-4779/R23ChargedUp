@@ -62,7 +62,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-    m_driverController.L1().whileTrue(new WinchTESTCommand(winchSubsystem));
+    m_driverController.L1().onTrue(new WinchTESTCommand(winchSubsystem));
     m_driverController.circle().whileTrue(new WinchMoveWithJoystick(winchSubsystem, m_driverController));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
