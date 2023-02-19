@@ -23,18 +23,18 @@ public final class Constants {
   public static final int kTimeoutMs = 30;
 
   //  WINCH Constants
-  public static final double WINCH_MM_VELOCITY = 5000;  // Dummy variable - Test this!
-  public static final double WINCH_MM_ACCELERATION = 2500; // Dummy variable - Test this!
+  public static final double WINCH_MM_VELOCITY = 1000;  // Dummy variable - Test this!
+  public static final double WINCH_MM_ACCELERATION = 500; // Dummy variable - Test this!
   public static final double WINCH_NOMINAL_OUTPUT_FORWARD = 0.0; 
   public static final double WINCH_NOMINAL_OUTPUT_REVERSE = 0.0; 
   public static final double WINCH_PEAK_OUTPUT_FORWARD = 1.0; 
   public static final double WINCH_PEAK_OUTPUT_REVERSE = -1.0; 
   public static final double WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = 0.5; // Dummy variable - Test this!
   public static final double WINCH_NEUTRAL_DEADBAND_PERCENT = 0.04;  // 0.04 is the default
-  public static final double WINCH_DEFAULT_P = 0.12;// Dummy variable - Test this!
+  public static final double WINCH_DEFAULT_P = 0.00;// Dummy variable - Test this!
   public static final double WINCH_DEFAULT_I = 0.00;// Dummy variable - Test this!
-  public static final double WINCH_DEFAULT_D = 0.01;// Dummy variable - Test this!
-  public static final double WINCH_DEFAULT_F = 0.52;// Dummy variable - Test this!
+  public static final double WINCH_DEFAULT_D = 0.00;// Dummy variable - Test this!
+  public static final double WINCH_DEFAULT_F = 0.10;// Dummy variable - Test this!
   public static final double WINCH_POSITION_MIN = 0;  //  Min position of the arm
   public static final double WINCH_POSITION_SAFE_TO_EXTEND = 40000;  //  Safe distance where can extend the rest of the arm
   public static final double WINCH_POSITION_MAX = 90000;  // Max position of the arm

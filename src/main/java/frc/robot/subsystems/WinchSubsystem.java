@@ -192,6 +192,12 @@ public class WinchSubsystem extends SubsystemBase {
     configMotionCruiseAndAcceleration(winchMotorMaster, cruiseVel, cruiseAccel);
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
+    this.setPoint = setPoint;
+    System.out.println("Setpoint  " +setPoint);
+    System.out.println("kF  " +kF);
+    System.out.println("kP  " +kP);
+    System.out.println("Velocity  " +cruiseVel);
+    System.out.println("Acceleration  " +cruiseAccel);
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
@@ -228,6 +234,9 @@ public class WinchSubsystem extends SubsystemBase {
     }
   }
 
+  /**
+   * Will hold last known setpoint
+   */
   public void holdPostion(){
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }

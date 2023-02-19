@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.WinchCommands.WinchMoveWithJoystick;
+import frc.robot.commands.WinchCommands.WinchStopCommand;
 import frc.robot.commands.WinchCommands.WinchTESTCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WinchSubsystem;
@@ -63,6 +64,7 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     m_driverController.L1().onTrue(new WinchTESTCommand(winchSubsystem));
+    m_driverController.cross().onTrue(new WinchStopCommand(winchSubsystem));
     m_driverController.circle().whileTrue(new WinchMoveWithJoystick(winchSubsystem, m_driverController));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is

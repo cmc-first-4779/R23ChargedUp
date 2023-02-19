@@ -20,9 +20,9 @@ public class WinchTESTCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double position = SmartDashboard.getNumber("Position", 165000);
-    double kF = SmartDashboard.getNumber("kF", 0.50);
-    double kP = SmartDashboard.getNumber("kP", 0.1);
+    double position = SmartDashboard.getNumber("Position", 10000);
+    double kF = SmartDashboard.getNumber("kF", 0.10);
+    double kP = SmartDashboard.getNumber("kP", 0.0);
     double kI = SmartDashboard.getNumber("kI", 0.00);
     double kD = SmartDashboard.getNumber("kD", 0.00);
     double cruiseVel = SmartDashboard.getNumber("Cruise Vel", 2500);
@@ -41,7 +41,7 @@ public class WinchTESTCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    winchSubsystem.stopMotor();
+    // winchSubsystem.stopMotor();
   }
 
   // Returns true when the command should end.
