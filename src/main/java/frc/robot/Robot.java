@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -108,6 +109,11 @@ public class Robot extends TimedRobot {
               kpTheta, 0, 0, Constants.kThetaControllerConstraints);
       thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
+      // System.out.println("Trajectory: ");
+      // for (State state : trajectory.getStates()) {
+      //   System.out.println(state);
+      // }
+      // System.out.println("Trajectory: " + trajectory.sample(1.2));
     DrivetrainSubsystem drive = m_robotContainer.getDriveSubsystem();
     return new SwerveControllerCommand(
         trajectory,
