@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -86,22 +87,22 @@ public class WinchSubsystem extends SubsystemBase {
     // Set factory defaults
     talon.configFactoryDefault();
     // Set Neutral Mode
-    talon.setNeutralMode(NeutralMode.Brake); // Neutral Mode is Brake
+    // talon.setNeutralMode(NeutralMode.Brake); // Neutral Mode is Brake
     // Netural the controller output and disable it until we call it later
-    talon.neutralOutput();
+    // talon.neutralOutput();
     // Config the neutral deadband
-    talon.configNeutralDeadband(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
-    talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-        Constants.kTimeoutMs);
-    talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-        Constants.kTimeoutMs);
+    // talon.configNeutralDeadband(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    // talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+        // Constants.kTimeoutMs);
+    // talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+        // Constants.kTimeoutMs);
     /* Set the peak and nominal outputs */
-    talon.configNominalOutputForward(Constants.WINCH_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
-    talon.configNominalOutputReverse(Constants.WINCH_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
-    talon.configPeakOutputForward(Constants.WINCH_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
-    talon.configPeakOutputReverse(Constants.WINCH_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    // talon.configNominalOutputForward(Constants.WINCH_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    // talon.configNominalOutputReverse(Constants.WINCH_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    // talon.configPeakOutputForward(Constants.WINCH_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    // talon.configPeakOutputReverse(Constants.WINCH_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
     // Set how many seconds that the motor can ramp from neutral to full
-    talon.configClosedloopRamp(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    // talon.configClosedloopRamp(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
     /**
      * Configure the current limits that will be used
      * Stator Current is the current that passes through the motor stators.
@@ -111,10 +112,10 @@ public class WinchSubsystem extends SubsystemBase {
      *
      * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
      */
-    talon.configStatorCurrentLimit(
-        new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
-            MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
-            MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
+    // talon.configStatorCurrentLimit(
+        // new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
+        //     MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
+        //     MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
   }
 
   // Resets our Encoder to ZERO
@@ -164,7 +165,7 @@ public class WinchSubsystem extends SubsystemBase {
     configPIDFValues(talon, Constants.WINCH_DEFAULT_P, Constants.WINCH_DEFAULT_I, Constants.WINCH_DEFAULT_D,
         Constants.WINCH_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
     configMotionCruiseAndAcceleration(talon, Constants.WINCH_MM_VELOCITY, Constants.WINCH_MM_ACCELERATION);
-    configAllowableError(talon, 0, 500);
+    configAllowableError(talon, 0, Constants.WINCH_ALLOWED_ERROR);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
   }
 
@@ -238,7 +239,7 @@ public class WinchSubsystem extends SubsystemBase {
    * Will hold last known setpoint
    */
   public void holdPostion(){
-    winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
+    //winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
 }

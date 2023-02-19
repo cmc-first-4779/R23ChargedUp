@@ -21,14 +21,16 @@ public class WinchTESTCommand extends CommandBase {
   @Override
   public void initialize() {
     double position = SmartDashboard.getNumber("Position", 10000);
-    double kF = SmartDashboard.getNumber("kF", 0.10);
-    double kP = SmartDashboard.getNumber("kP", 0.0);
+    double kF = SmartDashboard.getNumber("kF", 0.00);
+    double kP = SmartDashboard.getNumber("kP", 0.05);
     double kI = SmartDashboard.getNumber("kI", 0.00);
     double kD = SmartDashboard.getNumber("kD", 0.00);
-    double cruiseVel = SmartDashboard.getNumber("Cruise Vel", 2500);
-    double cruiseAccel = SmartDashboard.getNumber("Cruise Accel", 800);
+    double cruiseVel = SmartDashboard.getNumber("Cruise Vel", 8000);
+    double cruiseAccel = SmartDashboard.getNumber("Cruise Accel", 8000);
+    System.out.println("Inside init of Test Command.  Accel is:  "  + cruiseAccel);
     //  Call Motion Magic to set our Winch Position to the Ground
     winchSubsystem.testWinchMM(position, kF, kP, kI, kD, cruiseVel, cruiseAccel);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
