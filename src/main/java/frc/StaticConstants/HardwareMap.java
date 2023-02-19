@@ -6,5 +6,5 @@ package frc.StaticConstants;
 
 /** Add your docs here. */
 public class HardwareMap {
-    public static final int CAN_ADDRESS_INTAKE = 400;
+    public static final int CAN_ADDRESS_INTAKE = 46;
 }
