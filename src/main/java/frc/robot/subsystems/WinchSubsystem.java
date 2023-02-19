@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -152,7 +153,7 @@ public class WinchSubsystem extends SubsystemBase {
     talon.configAllowableClosedloopError(slot, allowedError, Constants.kTimeoutMs);
   }
 
-  //  Configure our Motion Magic PID Loop
+  // Configure our Motion Magic PID Loop
   private void configSimpleMM(WPI_TalonFX talon) {
     // Tell each talon to use Quad Encoder as their PID0
     talon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PID_CLOSED_LOOP,
@@ -164,7 +165,7 @@ public class WinchSubsystem extends SubsystemBase {
     configPIDFValues(talon, Constants.WINCH_DEFAULT_P, Constants.WINCH_DEFAULT_I, Constants.WINCH_DEFAULT_D,
         Constants.WINCH_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
     configMotionCruiseAndAcceleration(talon, Constants.WINCH_MM_VELOCITY, Constants.WINCH_MM_ACCELERATION);
-    configAllowableError(talon, 0, 500);
+    configAllowableError(talon, 0, Constants.WINCH_ALLOWED_ERROR);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
   }
 
@@ -185,7 +186,7 @@ public class WinchSubsystem extends SubsystemBase {
     }
   }
 
-  //  Method to test the winch with the SmartDashboard and get PID values
+  // Method to test the winch with the SmartDashboard and get PID values
   public void testWinchMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
       double cruiseAccel) {
     configPIDFValues(winchMotorMaster, kP, kI, kD, kF, 0);
@@ -193,15 +194,15 @@ public class WinchSubsystem extends SubsystemBase {
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     this.setPoint = setPoint;
-    System.out.println("Setpoint  " +setPoint);
-    System.out.println("kF  " +kF);
-    System.out.println("kP  " +kP);
-    System.out.println("Velocity  " +cruiseVel);
-    System.out.println("Acceleration  " +cruiseAccel);
+    System.out.println("Setpoint  " + setPoint);
+    System.out.println("kF  " + kF);
+    System.out.println("kP  " + kP);
+    System.out.println("Velocity  " + cruiseVel);
+    System.out.println("Acceleration  " + cruiseAccel);
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
-  //   Joystick method to move the winch manually
+  // Joystick method to move the winch manually
   public void moveWinch(double speed) {
     if (Math.abs(speed) > .1) {
       if (safeToMoveArm()) {
@@ -212,7 +213,7 @@ public class WinchSubsystem extends SubsystemBase {
     }
   }
 
-  //  Method to check whether we are in a safe range to move the arm
+  // Method to check whether we are in a safe range to move the arm
   public boolean safeToMoveArm() {
     if ((winchMasterPosition >= Constants.WINCH_POSITION_MIN)
         && (winchMasterPosition <= Constants.WINCH_POSITION_MAX)) {
@@ -222,10 +223,9 @@ public class WinchSubsystem extends SubsystemBase {
     }
   }
 
-  //  Method to check whether we are in a safe range to extend the
-  //   Extender and flip the wrist
-  public boolean safeToExtendAndWrist()
-  {
+  // Method to check whether we are in a safe range to extend the
+  // Extender and flip the wrist
+  public boolean safeToExtendAndWrist() {
     if ((winchMasterPosition >= Constants.WINCH_POSITION_MIN)
         && (winchMasterPosition <= Constants.WINCH_POSITION_SAFE_TO_EXTEND)) {
       return false;
@@ -237,8 +237,23 @@ public class WinchSubsystem extends SubsystemBase {
   /**
    * Will hold last known setpoint
    */
-  public void holdPostion(){
+  public void holdPostion() {
     winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
+  }
+
+  //  Return kF based on trig for the arm
+  public double calculateKf(double targetPos) {
+    int kMeasuredPosHorizontal = 45000; // Position measured when arm is horizontal
+    double kTicksPerDegree = 2048 * 192 / 360; // Enoder is 2489 ticks.  192 = Gear reduction and sprockets
+    double currentPos = winchMotorMaster.getSelectedSensorPosition();
+    double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
+    double radians = java.lang.Math.toRadians(degrees);
+    double cosineScalar = java.lang.Math.cos(radians);
+    double maxGravityFF = 0.07;
+    return maxGravityFF * cosineScalar;
+    // winchMotorMaster.set(TalonFXControlMode.MotionMagic, targetPos,
+    // DemandType.ArbitraryFeedForward,
+    // maxGravityFF * cosineScalar);
   }
 
 }
