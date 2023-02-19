@@ -32,13 +32,14 @@ public class WinchMoveWithJoystick extends CommandBase {
   public void execute() {
         // Put the encoder value of the Master Motor to the Dashboard
         SmartDashboard.putNumber("WinchEffort", joystick.getLeftY());
-        winchSubsystem.moveWinch(joystick.getLeftY());
+        winchSubsystem.moveWinch(-joystick.getLeftY());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     //winchSubsystem.stopMotor();
+    winchSubsystem.holdPostion();
   }
 
   // Returns true when the command should end.

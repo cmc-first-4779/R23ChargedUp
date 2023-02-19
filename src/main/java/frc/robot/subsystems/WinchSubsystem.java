@@ -39,6 +39,8 @@ public class WinchSubsystem extends SubsystemBase {
   // Encoder Position
   double winchMasterPosition, winchSlavePosition;
 
+  double setPoint;
+
   /** Creates a new WinchPulleySubsystem. */
   public WinchSubsystem() {
     // Address our controllers
@@ -48,8 +50,8 @@ public class WinchSubsystem extends SubsystemBase {
     initMotorController(winchMotorSlave);
     initMotorController(winchMotorMaster);
     // Invert motors (if needed)
-    winchMotorSlave.setInverted(true);
-    winchMotorMaster.setInverted(false);
+    winchMotorSlave.setInverted(false);
+    winchMotorMaster.setInverted(true);
     // Have the left motor follow the right motor
     winchMotorSlave.follow(winchMotorMaster);
     // Reset the encoders
@@ -176,6 +178,7 @@ public class WinchSubsystem extends SubsystemBase {
     winchMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     if (safeToMoveArm()) {
+      this.setPoint = setPoint;
       winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
     } else {
       stopMotor();
@@ -223,6 +226,10 @@ public class WinchSubsystem extends SubsystemBase {
     } else {
       return true;
     }
+  }
+
+  public void holdPostion(){
+    winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
 }
