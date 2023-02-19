@@ -29,7 +29,7 @@ public final class Constants {
   public static final double WINCH_NOMINAL_OUTPUT_REVERSE = 0.0; 
   public static final double WINCH_PEAK_OUTPUT_FORWARD = 1.0; 
   public static final double WINCH_PEAK_OUTPUT_REVERSE = -1.0; 
-  public static final double WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = 3; // Dummy variable - Test this!
+  public static final double WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = 0; // Dummy variable - Test this!
   public static final double WINCH_NEUTRAL_DEADBAND_PERCENT = 0.04;  // 0.04 is the default
   public static final double WINCH_ALLOWED_ERROR = 250;
   public static final double WINCH_DEFAULT_P = 0.05;// Dummy variable - Test this!
