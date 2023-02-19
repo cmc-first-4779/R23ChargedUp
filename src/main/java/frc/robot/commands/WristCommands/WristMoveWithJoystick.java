@@ -4,18 +4,21 @@
 
 package frc.robot.commands.WristCommands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import frc.robot.subsystems.WristSubsystem;
 
-public class WristMidConeCommand extends CommandBase {
+public class WristMoveWithJoystick extends CommandBase {
   // Declare our subsystem
   WristSubsystem wristSubsystem;
+  CommandPS4Controller joystick;
 
-  /** Creates a new WristStopCommand. */
-  public WristMidConeCommand(WristSubsystem wristSubsystem) {
+  /** Creates a new WristGroundCommand. */
+  public WristMoveWithJoystick(WristSubsystem wristSubsystem, CommandPS4Controller joystick) {
     this.wristSubsystem = wristSubsystem;
+    this.joystick = joystick;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(wristSubsystem);
   }
@@ -23,25 +26,24 @@ public class WristMidConeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    wristSubsystem.setWristPosition(Constants.WRIST_POSITION_MID_CONE_NODE);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Put the encoder value of the Master Motor to the Dashboard
-    SmartDashboard.putString("Wrist Target Position", "MID CONE");
+    // Pass the left joystick's Y value to the wrist. 
+    wristSubsystem.moveWrist(joystick.getLeftY());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // wristSubsystem.stopMotor(); //Can't stop motor if you want it to get to position
+    wristSubsystem.stopMotor();  
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

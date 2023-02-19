@@ -27,8 +27,10 @@ public class WristSubsystem extends SubsystemBase {
   RobotContainer robotContainer;
 
   /**
-   * Constructor for the wrist subsystem.  Sets up the motor and pid controller
-   * @param robotContainer reference to the robot used to get information about other subystems
+   * Constructor for the wrist subsystem. Sets up the motor and pid controller
+   * 
+   * @param robotContainer reference to the robot used to get information about
+   *                       other subystems
    */
   public WristSubsystem(RobotContainer robotContainer) {
     // Address our motor
@@ -127,6 +129,18 @@ public class WristSubsystem extends SubsystemBase {
   // Stop our Wrist Motor
   public void stopMotor() {
     wristMotor.stopMotor();
+  }
+
+  /**
+   * Set ths motor to move at the provided speed
+   * @param speed
+   */
+  public void moveWrist(double speed) {
+    if (Math.abs(speed) > .1) {
+      wristMotor.set(speed);
+    } else {
+      wristMotor.set(0);
+    }
   }
 
   /**

@@ -6,8 +6,9 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.WristCommands.WristLower;
+import frc.robot.commands.WristCommands.WristMoveWithJoystick;
 import frc.robot.commands.WristCommands.WristRaise;
+import frc.robot.commands.WristCommands.WristLower;
 import frc.robot.commands.WristCommands.WristTESTCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -57,6 +58,7 @@ public class RobotContainer {
         m_driverController.cross().onTrue(new WristTESTCommand(wristSubsystem));
         m_driverController.L1().whileTrue(new WristLower(wristSubsystem));   
         m_driverController.R1().whileTrue(new WristRaise(wristSubsystem));   
+        m_driverController.R2().whileTrue(new WristMoveWithJoystick(wristSubsystem, m_driverController));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
