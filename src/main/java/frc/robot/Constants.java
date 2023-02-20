@@ -62,15 +62,9 @@ public final class Constants {
  public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(136.40); // DONE Measure and set back
                                                                                       // right steer offset
 
- // Distance between front and back wheels
- public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-         new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
-         new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2),
-         new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
-         new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2));
-
  public static final double kPXController = 0.077777;
  public static final double kPYController = 0.077777;
+ public static final double kPXYController = 0.077777;
  public static final double kPThetaController = 0.77777;
 
  // I'm not sure where these values come from, but this is what 0 to auto code is using. 

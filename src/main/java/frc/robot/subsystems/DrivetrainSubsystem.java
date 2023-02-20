@@ -182,27 +182,29 @@ public class DrivetrainSubsystem extends SubsystemBase {
      * 'forwards' direction.
      */
     public void zeroGyroscope() {
-    // // Inline construction of command goes here.
-    // // Subsystem::RunOnce implicitly requires `this` subsystem.
-//     return runOnce(
-//     () -> {
-//     gyroscope.setYaw(0.0);
-//     });
-    // Don't Remove following if you are using a Pigeon
-//     m_pigeon.setFusedHeading(0.0);
-    gyroscope.setYaw(0.0);
+        // // Inline construction of command goes here.
+        // // Subsystem::RunOnce implicitly requires `this` subsystem.
+        // return runOnce(
+        // () -> {
+        // gyroscope.setYaw(0.0);
+        // });
+        // Don't Remove following if you are using a Pigeon
+        // m_pigeon.setFusedHeading(0.0);
+        gyroscope.setYaw(0.0);
 
-    // // Uncomment Following if you are using a NavX
-    // // m_navx.zeroYaw();
+        // // Uncomment Following if you are using a NavX
+        // // m_navx.zeroYaw();
     }
 
-//     public void zeroGyroscope() {
-//         odometry.resetPosition(
-//                 Rotation2d.fromDegrees(gyroscope.getYaw()),
-//                 new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
-//                         backLeftModule.getPosition(), backRightModule.getPosition() },
-//                 new Pose2d(odometry.getPoseMeters().getTranslation(), Rotation2d.fromDegrees(0.0)));
-//     }
+    // public void zeroGyroscope() {
+    // odometry.resetPosition(
+    // Rotation2d.fromDegrees(gyroscope.getYaw()),
+    // new SwerveModulePosition[] { frontLeftModule.getPosition(),
+    // frontRightModule.getPosition(),
+    // backLeftModule.getPosition(), backRightModule.getPosition() },
+    // new Pose2d(odometry.getPoseMeters().getTranslation(),
+    // Rotation2d.fromDegrees(0.0)));
+    // }
 
     public Rotation2d getGyroscopeRotation() {
         // Don't Remove Follwoing if you are using a Pigeon
@@ -240,6 +242,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
      * @param states the states of the swerve modules
      */
     public void drive(SwerveModuleState[] states) {
+        System.out.println("In drive SwerveModule[0]: " + states[0]);
+        System.out.println("In drive SwerveModule[1]: " + states[1]);
+        System.out.println("In drive SwerveModule[2]: " + states[2]);
+        System.out.println("In drive SwerveModule[3]: " + states[3]);
         this.states = states;
     }
 
@@ -341,5 +347,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
         ;
         frontLeftModule.set(0, 45);
         ;
+    }
+
+    /**
+     * Gets the Kinematics of the drivetrain
+     * @return
+     */
+    public SwerveDriveKinematics geKinematics() {
+        return kinematics;
     }
 }

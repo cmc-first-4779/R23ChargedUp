@@ -144,9 +144,9 @@ eventMap.put("intakeDown", new PrintCommand("Event 2"));
 SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
   m_drivetrainSubsystem::getPose, // Pose2d supplier
   m_drivetrainSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
-  Constants.kDriveKinematics, // SwerveDriveKinematics
-    new PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-    new PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+  m_drivetrainSubsystem.geKinematics(), // SwerveDriveKinematics
+    new PIDConstants(Constants.kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+    new PIDConstants(Constants.kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
     m_drivetrainSubsystem::drive, // Module states consumer used to output to the drive subsystem
     eventMap,
     true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -162,7 +162,7 @@ return fullAuto;
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
         DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND_TRAJECTORY,
         DrivetrainSubsystem.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
-        .setKinematics(Constants.kDriveKinematics);
+        .setKinematics(m_drivetrainSubsystem.geKinematics());
 
     // 2. Generate trajectory
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -186,7 +186,7 @@ return fullAuto;
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
         trajectory,
         m_drivetrainSubsystem::getPose,
-        Constants.kDriveKinematics,
+        m_drivetrainSubsystem.geKinematics(),
         xController,
         yController,
         thetaController,
