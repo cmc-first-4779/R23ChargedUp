@@ -179,7 +179,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     if (safeToMoveShoulder()) {
       this.setPoint = setPoint;
-      shoulderMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
+      shoulderMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint, DemandType.ArbitraryFeedForward, calculateArbitraryFF(setPoint));
     } else {
       stopMotor();
     }
@@ -276,14 +276,14 @@ public class ShoulderSubsystem extends SubsystemBase {
   }
 
   // Return kF based on trig for the arm
-  public double calculateKf(double targetPos) {
+  public double calculateArbitraryFF(double targetPos) {
     int kMeasuredPosHorizontal = 45000; // Position measured when arm is horizontal
     double kTicksPerDegree = 2048 * 192 / 360; // Enoder is 2489 ticks. 192 = Gear reduction and sprockets
     double currentPos = shoulderMotorMaster.getSelectedSensorPosition();
     double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
     double radians = java.lang.Math.toRadians(degrees);
     double cosineScalar = java.lang.Math.cos(radians);
-    double maxGravityFF = 0.07;
+    double maxGravityFF = Constants.SHOULDER_MAX_GRAVITY_kF;
     return maxGravityFF * cosineScalar;
   }
 

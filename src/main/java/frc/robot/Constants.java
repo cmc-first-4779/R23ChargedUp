@@ -41,12 +41,12 @@ public final class Constants {
   public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 40000;  //  Safe distance where can extend the rest of the arm
   public static final double SHOULDER_POSITION_MAX = 90000;  // Max position of the arm
   public static final double SHOULDER_POSITION_STOW = 0;  // Dummy variable - Test this!
-  public static final double SHOULDER_POSITION_GROUND = 20000;   // Dummy variable - Test this!
-  public static final double SHOULDER_POSITION_LOW_CONE_NODE = 60000;  // Dummy variable - Test this!
-  public static final double SHOULDER_POSITION_MID_CONE_NODE = 110000;  // Dummy variable - Test this!
-  public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 160000;  // Dummy variable - Test this!
-  public static final double SHOULDER_POSITION_LOW_CUBE_NODE = 50000;  // Dummy variable - Test this!
-  public static final double SHOULDER_POSITION_MID_CUBE_NODE = 100000;  // Dummy variable - Test this!
-  public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 150000;  // Dummy variable - Test this!
-  public static final double SHOULDER_MOVEMENT_INCREMENT = 5000;
+  public static final double SHOULDER_POSITION_GROUND = 5000;   // Dummy variable - Test this!
+  public static final double SHOULDER_POSITION_LOW_CONE_NODE = 10000;  // Dummy variable - Test this!
+  public static final double SHOULDER_POSITION_MID_CONE_NODE = 25000;  // Dummy variable - Test this!
+  public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 70000;  // Dummy variable - Test this!
+  public static final double SHOULDER_POSITION_LOW_CUBE_NODE = 15000;  // Dummy variable - Test this!
+  public static final double SHOULDER_POSITION_MID_CUBE_NODE = 30000;  // Dummy variable - Test this!
+  public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 75000;  // Dummy variable - Test this!
+  public static final double SHOULDER_MOVEMENT_INCREMENT = 2500;
 }
