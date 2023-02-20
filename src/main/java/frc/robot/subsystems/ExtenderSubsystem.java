@@ -45,17 +45,22 @@ public class ExtenderSubsystem extends SubsystemBase {
     // Configure Smart Motion
     configureSmartMotion(extenderMotor, Constants.EXTENDER_SM_MAX_VEL, Constants.EXTENDER_SM_MIN_VEL,
         Constants.EXTENDER_SM_MAX_ACCEL, Constants.EXTENDER_SM_ALLOWED_ERR, Constants.EXTENDER_PID_SLOT);
-  //
-      // Add PID Fields to SmartDashboard
-      SmartDashboard.putNumber("Position", 0);
-      SmartDashboard.putNumber("kF", Constants.EXTENDER_kF);
-      SmartDashboard.putNumber("kP", Constants.EXTENDER_kP);
-      SmartDashboard.putNumber("kI", Constants.EXTENDER_kI);
-      SmartDashboard.putNumber("kD", Constants.EXTENDER_kD);
-      SmartDashboard.putNumber("Cruise Vel", Constants.EXTENDER_SM_MAX_VEL);
-      SmartDashboard.putNumber("Cruise Accel ", Constants.EXTENDER_SM_MAX_ACCEL);
+    //
+    kF = Constants.EXTENDER_kF;
+    kP = Constants.EXTENDER_kP;
+    kI = Constants.EXTENDER_kI;
+    kD = Constants.EXTENDER_kD;
 
-      }
+    // Add PID Fields to SmartDashboard
+    SmartDashboard.putNumber("Position", 0);
+    SmartDashboard.putNumber("kF", kF);
+    SmartDashboard.putNumber("kP", kP);
+    SmartDashboard.putNumber("kI", kI);
+    SmartDashboard.putNumber("kD", kD);
+    SmartDashboard.putNumber("Cruise Vel", Constants.EXTENDER_SM_MAX_VEL);
+    SmartDashboard.putNumber("Cruise Accel ", Constants.EXTENDER_SM_MAX_ACCEL);
+
+  }
 
   @Override
   public void periodic() {
@@ -125,10 +130,12 @@ public class ExtenderSubsystem extends SubsystemBase {
   }
 
   public void setExtenderPosition(double setpoint) {
-    // Declare our PID Controller
-    SparkMaxPIDController m_pidController = extenderMotor.getPIDController();
-    // send our setpoint to SmartMotion
-    m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+    if (setPointIsValid(setpoint)) {
+      // Declare our PID Controller
+      SparkMaxPIDController m_pidController = extenderMotor.getPIDController();
+      // send our setpoint to SmartMotion
+      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+    }
   }
 
   /**
@@ -154,7 +161,6 @@ public class ExtenderSubsystem extends SubsystemBase {
       double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
       int slot) {
     // Declare our PID Controller
-    //
     SparkMaxPIDController m_pidController = extenderMotor.getPIDController();
     // Configure the PID settings
     m_pidController.setFF(kF);
@@ -168,7 +174,11 @@ public class ExtenderSubsystem extends SubsystemBase {
     m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
     m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
     // send our setpoint to SmartMotion
-    m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+    if (setPointIsValid(setpoint)) {
+      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+    } else {
+      System.out.println("Setpoint: " + setpoint + " is not valid");
+    }
   }
 
   /**
@@ -179,7 +189,10 @@ public class ExtenderSubsystem extends SubsystemBase {
     // we
     // are not lower than the minimal position
     double newSetPoint = setPoint - Constants.EXTENDER_MOVEMENT_INCREMENT;
-    if (setPointIsValid(newSetPoint)) {
+    // if (setPointIsValid(newSetPoint)) {
+    // Since we are retracting, we only have to make sure the new setpoint is
+    // greater than the minimum.
+    if (newSetPoint > Constants.EXTENDER_MIN_POSTION) {
       setPoint = newSetPoint;
       setExtenderPosition(setPoint);
     } else {
@@ -191,15 +204,16 @@ public class ExtenderSubsystem extends SubsystemBase {
    * Extends the wrist by the WRIST_MOVEMENT_INCREMENT
    */
   public void extendExtender() {
-    // Lowering the wrist is moving it in a positive direction. Need to make sure we
-    // are not higher than the minimal position
+    // Extending the armis moving it in a positive direction. Need to make sure we
+    // are not greater than max allowed distance.
     double newSetPoint = setPoint + Constants.EXTENDER_MOVEMENT_INCREMENT;
     if (!safeToExtendExtender()) {
       System.out.println("Arm is not at safe position to extend wrist");
       return;
     }
-
-    if (setPointIsValid(newSetPoint)) {
+    // Check to see that we are not past max position already
+    // if (setPointIsValid(newSetPoint)) {
+    if (newSetPoint < Constants.EXTENDER_MAX_POSTION) {
       setPoint = newSetPoint;
       setExtenderPosition(setPoint);
     } else {
@@ -223,11 +237,28 @@ public class ExtenderSubsystem extends SubsystemBase {
     return false;
   }
 
+  /**
+   * Extends and retracts the arm based off of given speed.
+   * 
+   * @param speed
+   */
   public void moveExtender(double speed) {
     // Joystick method to move the extender manually
+    // Make sure joystick was actually moved enough to register
     if (Math.abs(speed) > .1) {
-      if (safeToExtendExtender()) {
-        extenderMotor.set(speed);
+      // Chekc to see if we are trying to extend
+      if (speed > 0) {
+        if (safeToExtendExtender() && extenderMotor.getEncoder().getPosition() < Constants.EXTENDER_MAX_POSTION) {
+          extenderMotor.set(speed);
+        } else {
+          stopMotor();
+        }
+      } else { // Attempting to retract
+        if (extenderMotor.getEncoder().getPosition() > Constants.EXTENDER_MIN_POSTION) {
+          extenderMotor.set(speed);
+        } else {
+          stopMotor();
+        }
       }
     } else {
       stopMotor();
