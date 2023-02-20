@@ -47,7 +47,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   public ShoulderSubsystem() {
     // Address our controllers
     shoulderMotorSlave = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_SHOULDER_MOTOR_LEFT);
-    shoulderMotorMaster = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_WINCH_MOTOR_RIGHT);
+    shoulderMotorMaster = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_SHOULDER_MOTOR_RIGHT);
     // Initiatize the settings
     initMotorController(shoulderMotorSlave);
     initMotorController(shoulderMotorMaster);
@@ -114,9 +114,9 @@ public class ShoulderSubsystem extends SubsystemBase {
      * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
      */
     // talon.configStatorCurrentLimit(
-        new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
-            MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
-            MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500);
+    new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
+        MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
+        MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500);
   }
 
   // Resets our Encoder to ZERO
@@ -133,7 +133,6 @@ public class ShoulderSubsystem extends SubsystemBase {
     talon.config_kI(slot, i);
     talon.config_kD(slot, d);
   }
-
 
   private void configMotionCruiseAndAcceleration(WPI_TalonFX talon, double velocity, double acceleration) {
     // Motion Magic needs a CruiseVelocity and Acceleration that needs to be set.
@@ -175,10 +174,10 @@ public class ShoulderSubsystem extends SubsystemBase {
   }
 
   // Use MotionMagic to set the winch to a specific Encoder Position.
-  public void setWinchPosition(double setPoint) {
+  public void setShoulderPosition(double setPoint) {
     shoulderMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
-    if (safeToMoveArm()) {
+    if (safeToMoveShoulder()) {
       this.setPoint = setPoint;
       shoulderMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
     } else {
@@ -187,7 +186,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   }
 
   // Method to test the winch with the SmartDashboard and get PID values
-  public void testWinchMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
+  public void testShoulderMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
       double cruiseAccel) {
     configPIDFValues(shoulderMotorMaster, kP, kI, kD, kF, 0);
     configMotionCruiseAndAcceleration(shoulderMotorMaster, cruiseVel, cruiseAccel);
@@ -203,9 +202,9 @@ public class ShoulderSubsystem extends SubsystemBase {
   }
 
   // Joystick method to move the winch manually
-  public void moveWinch(double speed) {
+  public void moveShoulder(double speed) {
     if (Math.abs(speed) > .1) {
-      if (safeToMoveArm()) {
+      if (safeToMoveShoulder()) {
         shoulderMotorMaster.set(TalonFXControlMode.PercentOutput, speed);
       }
     } else {
@@ -214,7 +213,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   }
 
   // Method to check whether we are in a safe range to move the arm
-  public boolean safeToMoveArm() {
+  public boolean safeToMoveShoulder() {
     if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN)
         && (shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX)) {
       return true;
@@ -234,66 +233,61 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
-
-    /**
-   * Retracts the wrist by the WRIST_MOVEMENT_INCREMENT
+  /**
+   * Lowers the Shoulder by the SHOULDER_MOVEMENT_INCREMENT
    */
-  public void retractWrist() {
+  public void lowerShoulder() {
     // Retracting the wrist is moving it in a negative direction. Need to make sure
     // we
     // are not lower than the minimal position
     double newSetPoint = setPoint - Constants.SHOULDER_MOVEMENT_INCREMENT;
     if (setPointIsValid(newSetPoint)) {
       setPoint = newSetPoint;
-      setWinchPosition(setPoint);
+      setShoulderPosition(setPoint);
     } else {
       System.out.println("Shoulder Setpoint at it's lower limit allready: " + setPoint);
     }
   }
-    /**
-   * Extends the wrist by the WRIST_MOVEMENT_INCREMENT
+
+  /**
+   * Raises the Shoulder by the SHOULDER_MOVEMENT_INCREMENT
    */
   public void raiseShoulder() {
     // Lowering the wrist is moving it in a positive direction. Need to make sure we
     // are not higher than the minimal position
     double newSetPoint = setPoint + Constants.SHOULDER_MOVEMENT_INCREMENT;
-    if (!safeToMoveArm()) {
-      System.out.println("Arm is not at safe position to raise");
+    if (!safeToMoveShoulder()) {
+      System.out.println("Shoulder is not at safe position to raise");
       return;
     }
     if (setPointIsValid(newSetPoint)) {
       setPoint = newSetPoint;
-      setWinchPosition(newSetPoint);
+      setShoulderPosition(newSetPoint);
     } else {
-      System.out.println("Arm Setpoint at it's higher limit allready: " + setPoint);
+      System.out.println("Shoulder Setpoint at it's higher limit allready: " + setPoint);
     }
   }
-
-
 
   /**
    * Will hold last known setpoint
    */
-  public void holdPostion(){
-    //winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
+  public void holdPostion() {
+    // winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
-  //  Return kF based on trig for the arm
+  // Return kF based on trig for the arm
   public double calculateKf(double targetPos) {
     int kMeasuredPosHorizontal = 45000; // Position measured when arm is horizontal
-    double kTicksPerDegree = 2048 * 192 / 360; // Enoder is 2489 ticks.  192 = Gear reduction and sprockets
+    double kTicksPerDegree = 2048 * 192 / 360; // Enoder is 2489 ticks. 192 = Gear reduction and sprockets
     double currentPos = shoulderMotorMaster.getSelectedSensorPosition();
     double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
     double radians = java.lang.Math.toRadians(degrees);
     double cosineScalar = java.lang.Math.cos(radians);
     double maxGravityFF = 0.07;
     return maxGravityFF * cosineScalar;
-    // winchMotorMaster.set(TalonFXControlMode.MotionMagic, targetPos,
-    // DemandType.ArbitraryFeedForward,
-    // maxGravityFF * cosineScalar);
   }
 
-   /**
+  /**
    * Checks to see if the provided setPoint within the legal bounds
    * 
    * @param setPoint
@@ -304,8 +298,9 @@ public class ShoulderSubsystem extends SubsystemBase {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
     } else {
-      System.out.println("Given position " + setPoint + " is outside legal bounderies of " + Constants.SHOULDER_POSITION_MIN
-          + " and " + Constants.SHOULDER_POSITION_MAX);
+      System.out
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.SHOULDER_POSITION_MIN
+              + " and " + Constants.SHOULDER_POSITION_MAX);
     }
     return false;
   }

@@ -29,7 +29,7 @@ public class ShoulderTESTCommand extends CommandBase {
     double cruiseAccel = SmartDashboard.getNumber("Cruise Accel", 8000);
     System.out.println("Inside init of Test Command.  Accel is:  "  + cruiseAccel);
     //  Call Motion Magic to set our Winch Position to the Ground
-    winchSubsystem.testWinchMM(position, kF, kP, kI, kD, cruiseVel, cruiseAccel);
+    winchSubsystem.testShoulderMM(position, kF, kP, kI, kD, cruiseVel, cruiseAccel);
 
   }
 

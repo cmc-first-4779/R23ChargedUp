@@ -22,7 +22,7 @@ public class ShoulderStowCommand extends CommandBase {
   @Override
   public void initialize() {
     //  Call Motion Magic to set our Winch Position to the Ground
-    shoulderSubsystem.setWinchPosition(Constants.SHOULDER_POSITION_STOW);
+    shoulderSubsystem.setShoulderPosition(Constants.SHOULDER_POSITION_STOW);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
