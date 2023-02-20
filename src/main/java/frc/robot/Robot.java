@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     // Get the names of all the autos and then add them to a chooser
-    AutonomousContainer.getInstance().getAutonomousNames().forEach(name -> autoChooser.addOption(name, name));
+    // AutonomousContainer.getInstance().getAutonomousNames().forEach(name -> autoChooser.addOption(name, name));
 
     // Ensure the second String is the name of the folder where your sided autos are
     // located
@@ -122,7 +122,8 @@ public class Robot extends TimedRobot {
         xController,
         yController,
         thetaController,
-        AutonomousContainer.getCommandTranslator()::getWantedRotation,
+        // AutonomousContainer.getCommandTranslator()::getWantedRotation,
+        drive::getDesiredRotation,
         drive::drive,
         drive // Make sure you add Drive as a requirement so that the controller doesn't
               // try to control the modules while
@@ -178,9 +179,9 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     // DrivetrainSubsystem drive = m_robotContainer.getDriveSubsystem();
     // drive.zeroGyroscope();
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    // // schedule the autonomous command (example)
+    // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.schedule();
     // }

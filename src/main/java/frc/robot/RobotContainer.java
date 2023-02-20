@@ -117,17 +117,17 @@ public class RobotContainer {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(0, 0, new Rotation2d(0)),
                 List.of(
-                        new Translation2d(0, 1)),
+                        new Translation2d(.25, 0)),
                         // new Translation2d(0, -1),
                         // new Translation2d(2, Rotation2d.fromDegrees(-90))),
-                new Pose2d(1, -1, Rotation2d.fromDegrees(180)),
+                new Pose2d(.5, 0, Rotation2d.fromDegrees(90)),
 
                 trajectoryConfig);
 
-                System.out.println("Trajectory: ");
-                for (State state : trajectory.getStates()) {
-                  System.out.println(state);
-                }
+                // System.out.println("Trajectory: ");
+                // for (State state : trajectory.getStates()) {
+                //   System.out.println(state);
+                // }
 
         // 3. Define PID controllers for tracking trajectory
         PIDController xController = new PIDController(Constants.kPXController, 0, 0);
