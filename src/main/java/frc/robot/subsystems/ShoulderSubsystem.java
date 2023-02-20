@@ -92,18 +92,18 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Netural the controller output and disable it until we call it later
     talon.neutralOutput();
     // Config the neutral deadband
-    talon.configNeutralDeadband(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    talon.configNeutralDeadband(Constants.SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
     talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
         Constants.kTimeoutMs);
     talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
         Constants.kTimeoutMs);
     /* Set the peak and nominal outputs */
-    talon.configNominalOutputForward(Constants.WINCH_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
-    talon.configNominalOutputReverse(Constants.WINCH_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
-    talon.configPeakOutputForward(Constants.WINCH_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
-    talon.configPeakOutputReverse(Constants.WINCH_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    talon.configNominalOutputForward(Constants.SHOULDER_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configNominalOutputReverse(Constants.SHOULDER_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    talon.configPeakOutputForward(Constants.SHOULDER_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configPeakOutputReverse(Constants.SHOULDER_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
     // Set how many seconds that the motor can ramp from neutral to full
-    talon.configClosedloopRamp(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    talon.configClosedloopRamp(Constants.SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
     /**
      * Configure the current limits that will be used
      * Stator Current is the current that passes through the motor stators.
@@ -165,7 +165,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     configPIDFValues(talon, Constants.SHOULDER_DEFAULT_P, Constants.SHOULDER_DEFAULT_I, Constants.SHOULDER_DEFAULT_D,
         Constants.SHOULDER_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
     configMotionCruiseAndAcceleration(talon, Constants.SHOULDER_MM_VELOCITY, Constants.SHOULDER_MM_ACCELERATION);
-    configAllowableError(talon, 0, Constants.WINCH_ALLOWED_ERROR);
+    configAllowableError(talon, 0, Constants.SHOULDER_ALLOWED_ERROR);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
   }
 
@@ -215,8 +215,8 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Method to check whether we are in a safe range to move the arm
   public boolean safeToMoveArm() {
-    if ((shoulderMasterPosition >= Constants.WINCH_POSITION_MIN)
-        && (shoulderMasterPosition <= Constants.WINCH_POSITION_MAX)) {
+    if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN)
+        && (shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX)) {
       return true;
     } else {
       return false;
@@ -226,8 +226,8 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Method to check whether we are in a safe range to extend the
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
-    if ((shoulderMasterPosition >= Constants.WINCH_POSITION_MIN)
-        && (shoulderMasterPosition <= Constants.WINCH_POSITION_SAFE_TO_EXTEND)) {
+    if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN)
+        && (shoulderMasterPosition <= Constants.SHOULDER_POSITION_SAFE_TO_EXTEND)) {
       return false;
     } else {
       return true;
