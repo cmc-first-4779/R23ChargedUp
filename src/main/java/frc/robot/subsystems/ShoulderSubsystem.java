@@ -234,6 +234,43 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
+
+    /**
+   * Retracts the wrist by the WRIST_MOVEMENT_INCREMENT
+   */
+  public void retractWrist() {
+    // Retracting the wrist is moving it in a negative direction. Need to make sure
+    // we
+    // are not lower than the minimal position
+    double newSetPoint = setPoint - Constants.SHOULDER_MOVEMENT_INCREMENT;
+    if (setPointIsValid(newSetPoint)) {
+      setPoint = newSetPoint;
+      setWinchPosition(setPoint);
+    } else {
+      System.out.println("Shoulder Setpoint at it's lower limit allready: " + setPoint);
+    }
+  }
+    /**
+   * Extends the wrist by the WRIST_MOVEMENT_INCREMENT
+   */
+  public void raiseShoulder() {
+    // Lowering the wrist is moving it in a positive direction. Need to make sure we
+    // are not higher than the minimal position
+    double newSetPoint = setPoint + Constants.SHOULDER_MOVEMENT_INCREMENT;
+    if (!safeToMoveArm()) {
+      System.out.println("Arm is not at safe position to raise");
+      return;
+    }
+    if (setPointIsValid(newSetPoint)) {
+      setPoint = newSetPoint;
+      setWinchPosition(newSetPoint);
+    } else {
+      System.out.println("Arm Setpoint at it's higher limit allready: " + setPoint);
+    }
+  }
+
+
+
   /**
    * Will hold last known setpoint
    */
@@ -254,6 +291,23 @@ public class ShoulderSubsystem extends SubsystemBase {
     // winchMotorMaster.set(TalonFXControlMode.MotionMagic, targetPos,
     // DemandType.ArbitraryFeedForward,
     // maxGravityFF * cosineScalar);
+  }
+
+   /**
+   * Checks to see if the provided setPoint within the legal bounds
+   * 
+   * @param setPoint
+   * @return true if it falls on or between min and max allowed values.
+   */
+  private boolean setPointIsValid(double setPoint) {
+    if (setPoint >= Constants.SHOULDER_POSITION_MIN && setPoint <= Constants.SHOULDER_POSITION_MAX) {
+      System.out.println("Setpoint is valid: " + setPoint);
+      return true;
+    } else {
+      System.out.println("Given position " + setPoint + " is outside legal bounderies of " + Constants.SHOULDER_POSITION_MIN
+          + " and " + Constants.SHOULDER_POSITION_MAX);
+    }
+    return false;
   }
 
 }

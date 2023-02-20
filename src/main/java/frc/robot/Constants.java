@@ -48,5 +48,5 @@ public final class Constants {
   public static final double SHOULDER_POSITION_LOW_CUBE_NODE = 50000;  // Dummy variable - Test this!
   public static final double SHOULDER_POSITION_MID_CUBE_NODE = 100000;  // Dummy variable - Test this!
   public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 150000;  // Dummy variable - Test this!
-
+  public static final double SHOULDER_MOVEMENT_INCREMENT = 5000;
 }
