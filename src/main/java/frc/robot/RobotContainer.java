@@ -7,7 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ShoulderCommands.ShoulderLower;
 import frc.robot.commands.ShoulderCommands.ShoulderMoveWithJoystick;
+import frc.robot.commands.ShoulderCommands.ShoulderRaise;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.commands.ShoulderCommands.ShoulderStopCommand;
 import frc.robot.commands.ShoulderCommands.ShoulderTESTCommand;
@@ -30,7 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ShoulderSubsystem winchSubsystem = new ShoulderSubsystem();
+  private final ShoulderSubsystem shoulderSubsystem = new ShoulderSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
@@ -64,10 +66,11 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-    m_driverController.L1().onTrue(new ShoulderTESTCommand(winchSubsystem));
-    m_driverController.cross().onTrue(new ShoulderStopCommand(winchSubsystem));
-    m_driverController.circle().whileTrue(new ShoulderMoveWithJoystick(winchSubsystem, m_driverController));
-    m_driverController.square().onTrue(new ShoulderSetPosition(winchSubsystem, 0));
+    m_driverController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
+    m_driverController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
+    m_driverController.cross().onTrue(new ShoulderStopCommand(shoulderSubsystem));
+    m_driverController.circle().whileTrue(new ShoulderMoveWithJoystick(shoulderSubsystem, m_driverController));
+    m_driverController.square().onTrue(new ShoulderSetPosition(shoulderSubsystem, 0));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
