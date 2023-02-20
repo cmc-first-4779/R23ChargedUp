@@ -23,6 +23,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -110,9 +111,8 @@ public class RobotContainer {
     new Trigger(m_driverController::getBButton).whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem,
         m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
     // Back button zeros the gyroscope
-    new Trigger(m_driverController::getXButton).onTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope));
-    new Trigger(m_driverController::getAButton).whileTrue(new balanceTest(m_drivetrainSubsystem)); // This button A on
-                                                                                                   // the controller
+    new Trigger(m_driverController::getXButton).whileTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope));
+    new Trigger(m_driverController::getAButton).whileTrue(new balanceTest(m_drivetrainSubsystem)); // This button A on the controller
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
@@ -151,12 +151,12 @@ SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
   m_drivetrainSubsystem::getPose, // Pose2d supplier
   m_drivetrainSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
   m_drivetrainSubsystem.geKinematics(), // SwerveDriveKinematics
-    new PIDConstants(Constants.kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-    new PIDConstants(Constants.kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-    m_drivetrainSubsystem::drive, // Module states consumer used to output to the drive subsystem
-    eventMap,
-    true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-    m_drivetrainSubsystem // The drive subsystem. Used to properly set the requirements of path following commands
+  new PIDConstants(Constants.kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+  new PIDConstants(Constants.kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+  m_drivetrainSubsystem::drive, // Module states consumer used to output to the drive subsystem
+  eventMap,
+  true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  m_drivetrainSubsystem // The drive subsystem. Used to properly set the requirements of path following commands
 );
 
 Command fullAuto = autoBuilder.fullAuto(pathGroup);
