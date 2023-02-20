@@ -64,10 +64,10 @@ public class ShoulderSubsystem extends SubsystemBase {
 
     // Add PID Fields to SmartDashboard
     SmartDashboard.putNumber("Position", 0);
-    SmartDashboard.putNumber("kF", Constants.SHOULDER_DEFAULT_F);
-    SmartDashboard.putNumber("kP", Constants.SHOULDER_DEFAULT_P);
-    SmartDashboard.putNumber("kI", Constants.SHOULDER_DEFAULT_I);
-    SmartDashboard.putNumber("kD", Constants.SHOULDER_DEFAULT_D);
+    SmartDashboard.putNumber("kF", Constants.SHOULDER_DEFAULT_kF);
+    SmartDashboard.putNumber("kP", Constants.SHOULDER_DEFAULT_kP);
+    SmartDashboard.putNumber("kI", Constants.SHOULDER_DEFAULT_kI);
+    SmartDashboard.putNumber("kD", Constants.SHOULDER_DEFAULT_kD);
     SmartDashboard.putNumber("Cruise Vel", Constants.SHOULDER_MM_VELOCITY);
     SmartDashboard.putNumber("Cruise Accel ", Constants.SHOULDER_MM_ACCELERATION);
 
@@ -162,8 +162,8 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Slot0
     talon.selectProfileSlot(0, 0);
     // Set up PID Values for the Winch
-    configPIDFValues(talon, Constants.SHOULDER_DEFAULT_P, Constants.SHOULDER_DEFAULT_I, Constants.SHOULDER_DEFAULT_D,
-        Constants.SHOULDER_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
+    configPIDFValues(talon, Constants.SHOULDER_DEFAULT_kP, Constants.SHOULDER_DEFAULT_kI, Constants.SHOULDER_DEFAULT_kD,
+        Constants.SHOULDER_DEFAULT_kF, 0); // STILL NEED TO GET THESE VALUES
     configMotionCruiseAndAcceleration(talon, Constants.SHOULDER_MM_VELOCITY, Constants.SHOULDER_MM_ACCELERATION);
     configAllowableError(talon, 0, Constants.SHOULDER_ALLOWED_ERROR);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);

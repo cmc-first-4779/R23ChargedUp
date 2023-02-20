@@ -32,10 +32,11 @@ public final class Constants {
   public static final double SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
   public static final double SHOULDER_NEUTRAL_DEADBAND_PERCENT = 0.04;  // 0.04 is the default
   public static final double SHOULDER_ALLOWED_ERROR = 250;
-  public static final double SHOULDER_DEFAULT_P = 0.05;// Dummy variable - Test this!
-  public static final double SHOULDER_DEFAULT_I = 0.00;// Dummy variable - Test this!
-  public static final double SHOULDER_DEFAULT_D = 0.00;// Dummy variable - Test this!
-  public static final double SHOULDER_DEFAULT_F = 0.00;// Dummy variable - Test this!
+  public static final double SHOULDER_DEFAULT_kP = 0.05;// Dummy variable - Test this!
+  public static final double SHOULDER_DEFAULT_kI = 0.00;// Dummy variable - Test this!
+  public static final double SHOULDER_DEFAULT_kD = 0.00;// Dummy variable - Test this!
+  public static final double SHOULDER_DEFAULT_kF = 0.00;// Dummy variable - Test this!
+  public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
   public static final double SHOULDER_POSITION_MIN = 0;  //  Min position of the arm
   public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 40000;  //  Safe distance where can extend the rest of the arm
   public static final double SHOULDER_POSITION_MAX = 90000;  // Max position of the arm
