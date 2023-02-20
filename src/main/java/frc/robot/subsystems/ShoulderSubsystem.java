@@ -29,47 +29,47 @@ import frc.robot.Constants;
  *   Using Motion Magic to drive the arm.
  */
 
-public class WinchSubsystem extends SubsystemBase {
+public class ShoulderSubsystem extends SubsystemBase {
 
   /** Creates a new ExtenderSubsystem. */
   // Declare our TalonFX Motor Controllers
-  WPI_TalonFX winchMotorSlave;
-  WPI_TalonFX winchMotorMaster;
+  WPI_TalonFX shoulderMotorSlave;
+  WPI_TalonFX shoulderMotorMaster;
   // Declare our Encoders
-  RelativeEncoder winchEncoderSlave;
-  RelativeEncoder winchEncoderMaster;
+  RelativeEncoder shoulderEncoderSlave;
+  RelativeEncoder shoulderEncoderMaster;
   // Encoder Position
-  double winchMasterPosition, winchSlavePosition;
+  double shoulderMasterPosition, shoulderSlavePosition;
 
   double setPoint;
 
   /** Creates a new WinchPulleySubsystem. */
-  public WinchSubsystem() {
+  public ShoulderSubsystem() {
     // Address our controllers
-    winchMotorSlave = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_WINCH_MOTOR_LEFT);
-    winchMotorMaster = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_WINCH_MOTOR_RIGHT);
+    shoulderMotorSlave = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_SHOULDER_MOTOR_LEFT);
+    shoulderMotorMaster = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_WINCH_MOTOR_RIGHT);
     // Initiatize the settings
-    initMotorController(winchMotorSlave);
-    initMotorController(winchMotorMaster);
+    initMotorController(shoulderMotorSlave);
+    initMotorController(shoulderMotorMaster);
     // Invert motors (if needed)
-    winchMotorSlave.setInverted(false);
-    winchMotorMaster.setInverted(true);
+    shoulderMotorSlave.setInverted(false);
+    shoulderMotorMaster.setInverted(true);
     // Have the left motor follow the right motor
-    winchMotorSlave.follow(winchMotorMaster);
+    shoulderMotorSlave.follow(shoulderMotorMaster);
     // Reset the encoders
-    resetEncoders(winchMotorMaster);
-    resetEncoders(winchMotorSlave);
+    resetEncoders(shoulderMotorMaster);
+    resetEncoders(shoulderMotorSlave);
     // Configure Motion Magic on the Motors
-    configSimpleMM(winchMotorMaster);
+    configSimpleMM(shoulderMotorMaster);
 
     // Add PID Fields to SmartDashboard
     SmartDashboard.putNumber("Position", 0);
-    SmartDashboard.putNumber("kF", Constants.WINCH_DEFAULT_F);
-    SmartDashboard.putNumber("kP", Constants.WINCH_DEFAULT_P);
-    SmartDashboard.putNumber("kI", Constants.WINCH_DEFAULT_I);
-    SmartDashboard.putNumber("kD", Constants.WINCH_DEFAULT_D);
-    SmartDashboard.putNumber("Cruise Vel", Constants.WINCH_MM_VELOCITY);
-    SmartDashboard.putNumber("Cruise Accel ", Constants.WINCH_MM_ACCELERATION);
+    SmartDashboard.putNumber("kF", Constants.SHOULDER_DEFAULT_F);
+    SmartDashboard.putNumber("kP", Constants.SHOULDER_DEFAULT_P);
+    SmartDashboard.putNumber("kI", Constants.SHOULDER_DEFAULT_I);
+    SmartDashboard.putNumber("kD", Constants.SHOULDER_DEFAULT_D);
+    SmartDashboard.putNumber("Cruise Vel", Constants.SHOULDER_MM_VELOCITY);
+    SmartDashboard.putNumber("Cruise Accel ", Constants.SHOULDER_MM_ACCELERATION);
 
   }
 
@@ -77,9 +77,9 @@ public class WinchSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put the encoder value of the Master Motor to the Dashboard
-    winchMasterPosition = winchMotorMaster.getSelectedSensorPosition();
-    winchSlavePosition = winchMotorSlave.getSelectedSensorPosition();
-    SmartDashboard.putNumber("Winch Encoder Position", winchMotorMaster.getSelectedSensorPosition());
+    shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
+    shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
+    SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
   }
 
   // Initialize a TalonFX Motor controller and set our default settings.
@@ -88,22 +88,22 @@ public class WinchSubsystem extends SubsystemBase {
     // Set factory defaults
     talon.configFactoryDefault();
     // Set Neutral Mode
-    // talon.setNeutralMode(NeutralMode.Brake); // Neutral Mode is Brake
+    talon.setNeutralMode(NeutralMode.Brake); // Neutral Mode is Brake
     // Netural the controller output and disable it until we call it later
-    // talon.neutralOutput();
+    talon.neutralOutput();
     // Config the neutral deadband
-    // talon.configNeutralDeadband(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
-    // talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-        // Constants.kTimeoutMs);
-    // talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-        // Constants.kTimeoutMs);
+    talon.configNeutralDeadband(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+        Constants.kTimeoutMs);
+    talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+        Constants.kTimeoutMs);
     /* Set the peak and nominal outputs */
-    // talon.configNominalOutputForward(Constants.WINCH_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
-    // talon.configNominalOutputReverse(Constants.WINCH_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
-    // talon.configPeakOutputForward(Constants.WINCH_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
-    // talon.configPeakOutputReverse(Constants.WINCH_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    talon.configNominalOutputForward(Constants.WINCH_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configNominalOutputReverse(Constants.WINCH_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    talon.configPeakOutputForward(Constants.WINCH_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configPeakOutputReverse(Constants.WINCH_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
     // Set how many seconds that the motor can ramp from neutral to full
-    // talon.configClosedloopRamp(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    talon.configClosedloopRamp(Constants.WINCH_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
     /**
      * Configure the current limits that will be used
      * Stator Current is the current that passes through the motor stators.
@@ -114,9 +114,9 @@ public class WinchSubsystem extends SubsystemBase {
      * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
      */
     // talon.configStatorCurrentLimit(
-        // new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
-        //     MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
-        //     MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
+        new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
+            MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
+            MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500);
   }
 
   // Resets our Encoder to ZERO
@@ -134,8 +134,7 @@ public class WinchSubsystem extends SubsystemBase {
     talon.config_kD(slot, d);
   }
 
-  // After our first event, we ended up deploying the intake arms via Motion
-  // Magic.
+
   private void configMotionCruiseAndAcceleration(WPI_TalonFX talon, double velocity, double acceleration) {
     // Motion Magic needs a CruiseVelocity and Acceleration that needs to be set.
     // The value is is sensor units/100ms. So a CIM Encoder has 80 units per
@@ -163,25 +162,25 @@ public class WinchSubsystem extends SubsystemBase {
     // Slot0
     talon.selectProfileSlot(0, 0);
     // Set up PID Values for the Winch
-    configPIDFValues(talon, Constants.WINCH_DEFAULT_P, Constants.WINCH_DEFAULT_I, Constants.WINCH_DEFAULT_D,
-        Constants.WINCH_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
-    configMotionCruiseAndAcceleration(talon, Constants.WINCH_MM_VELOCITY, Constants.WINCH_MM_ACCELERATION);
+    configPIDFValues(talon, Constants.SHOULDER_DEFAULT_P, Constants.SHOULDER_DEFAULT_I, Constants.SHOULDER_DEFAULT_D,
+        Constants.SHOULDER_DEFAULT_F, 0); // STILL NEED TO GET THESE VALUES
+    configMotionCruiseAndAcceleration(talon, Constants.SHOULDER_MM_VELOCITY, Constants.SHOULDER_MM_ACCELERATION);
     configAllowableError(talon, 0, Constants.WINCH_ALLOWED_ERROR);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
   }
 
   // Stop our motor(s)
   public void stopMotor() {
-    winchMotorMaster.stopMotor();
+    shoulderMotorMaster.stopMotor();
   }
 
   // Use MotionMagic to set the winch to a specific Encoder Position.
   public void setWinchPosition(double setPoint) {
-    winchMotorMaster.setSafetyEnabled(false);
+    shoulderMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     if (safeToMoveArm()) {
       this.setPoint = setPoint;
-      winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
+      shoulderMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
     } else {
       stopMotor();
     }
@@ -190,9 +189,9 @@ public class WinchSubsystem extends SubsystemBase {
   // Method to test the winch with the SmartDashboard and get PID values
   public void testWinchMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
       double cruiseAccel) {
-    configPIDFValues(winchMotorMaster, kP, kI, kD, kF, 0);
-    configMotionCruiseAndAcceleration(winchMotorMaster, cruiseVel, cruiseAccel);
-    winchMotorMaster.setSafetyEnabled(false);
+    configPIDFValues(shoulderMotorMaster, kP, kI, kD, kF, 0);
+    configMotionCruiseAndAcceleration(shoulderMotorMaster, cruiseVel, cruiseAccel);
+    shoulderMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     this.setPoint = setPoint;
     System.out.println("Setpoint  " + setPoint);
@@ -200,24 +199,24 @@ public class WinchSubsystem extends SubsystemBase {
     System.out.println("kP  " + kP);
     System.out.println("Velocity  " + cruiseVel);
     System.out.println("Acceleration  " + cruiseAccel);
-    winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
+    shoulderMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
   // Joystick method to move the winch manually
   public void moveWinch(double speed) {
     if (Math.abs(speed) > .1) {
       if (safeToMoveArm()) {
-        winchMotorMaster.set(TalonFXControlMode.PercentOutput, speed);
+        shoulderMotorMaster.set(TalonFXControlMode.PercentOutput, speed);
       }
     } else {
-      winchMotorMaster.set(TalonFXControlMode.PercentOutput, 0);
+      shoulderMotorMaster.set(TalonFXControlMode.PercentOutput, 0);
     }
   }
 
   // Method to check whether we are in a safe range to move the arm
   public boolean safeToMoveArm() {
-    if ((winchMasterPosition >= Constants.WINCH_POSITION_MIN)
-        && (winchMasterPosition <= Constants.WINCH_POSITION_MAX)) {
+    if ((shoulderMasterPosition >= Constants.WINCH_POSITION_MIN)
+        && (shoulderMasterPosition <= Constants.WINCH_POSITION_MAX)) {
       return true;
     } else {
       return false;
@@ -227,8 +226,8 @@ public class WinchSubsystem extends SubsystemBase {
   // Method to check whether we are in a safe range to extend the
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
-    if ((winchMasterPosition >= Constants.WINCH_POSITION_MIN)
-        && (winchMasterPosition <= Constants.WINCH_POSITION_SAFE_TO_EXTEND)) {
+    if ((shoulderMasterPosition >= Constants.WINCH_POSITION_MIN)
+        && (shoulderMasterPosition <= Constants.WINCH_POSITION_SAFE_TO_EXTEND)) {
       return false;
     } else {
       return true;
@@ -246,7 +245,7 @@ public class WinchSubsystem extends SubsystemBase {
   public double calculateKf(double targetPos) {
     int kMeasuredPosHorizontal = 45000; // Position measured when arm is horizontal
     double kTicksPerDegree = 2048 * 192 / 360; // Enoder is 2489 ticks.  192 = Gear reduction and sprockets
-    double currentPos = winchMotorMaster.getSelectedSensorPosition();
+    double currentPos = shoulderMotorMaster.getSelectedSensorPosition();
     double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
     double radians = java.lang.Math.toRadians(degrees);
     double cosineScalar = java.lang.Math.cos(radians);

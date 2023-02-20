@@ -7,14 +7,14 @@ package frc.robot.commands.WinchCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
-import frc.robot.subsystems.WinchSubsystem;
+import frc.robot.subsystems.ShoulderSubsystem;
 
 public class WinchMoveWithJoystick extends CommandBase {
-  WinchSubsystem winchSubsystem;
+  ShoulderSubsystem winchSubsystem;
   CommandPS4Controller joystick;
 
   /** Creates a new WinchGroundCommand. */
-  public WinchMoveWithJoystick(WinchSubsystem winchSubsystem, CommandPS4Controller joystick) {
+  public WinchMoveWithJoystick(ShoulderSubsystem winchSubsystem, CommandPS4Controller joystick) {
     this.winchSubsystem = winchSubsystem;
     this.joystick = joystick;
     // Use addRequirements() here to declare subsystem dependencies.

@@ -12,7 +12,7 @@ import frc.robot.commands.WinchCommands.WinchSetPosition;
 import frc.robot.commands.WinchCommands.WinchStopCommand;
 import frc.robot.commands.WinchCommands.WinchTESTCommand;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.WinchSubsystem;
+import frc.robot.subsystems.ShoulderSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final WinchSubsystem winchSubsystem = new WinchSubsystem();
+  private final ShoulderSubsystem winchSubsystem = new ShoulderSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =

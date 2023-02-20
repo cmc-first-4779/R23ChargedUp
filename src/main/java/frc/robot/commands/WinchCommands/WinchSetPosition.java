@@ -6,13 +6,13 @@ package frc.robot.commands.WinchCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.WinchSubsystem;
+import frc.robot.subsystems.ShoulderSubsystem;
 
 public class WinchSetPosition extends CommandBase {
-  WinchSubsystem winchSubsystem;
+  ShoulderSubsystem winchSubsystem;
   double setPoint;
   /** Creates a new WinchGroundCommand. */
-  public WinchSetPosition(WinchSubsystem winchSubsystem, double setPoint) {
+  public WinchSetPosition(ShoulderSubsystem winchSubsystem, double setPoint) {
     this.winchSubsystem = winchSubsystem;
     this.setPoint = setPoint;
     // Use addRequirements() here to declare subsystem dependencies.
