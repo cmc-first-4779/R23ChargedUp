@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,6 +23,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -61,6 +61,7 @@ public class RobotContainer {
   // new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
   private boolean usePathPlanner = true;
+  private boolean debugSwerve = false;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -80,6 +81,9 @@ public class RobotContainer {
 
     // Configure the trigger bindings
     configureBindings();
+
+    SmartDashboard.putBoolean("Use PathPlanner", true);
+    SmartDashboard.putBoolean("Debug Swerve", false);
   }
 
   /**
@@ -121,6 +125,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    usePathPlanner = SmartDashboard.getBoolean("Use PathPlanner", false);
     if (usePathPlanner) {
       return generateAutoWithPathPlanner();
     } else {
@@ -130,6 +135,7 @@ public class RobotContainer {
   }
 
   private Command generateAutoWithPathPlanner() {
+System.out.println("*****Using Path Planner*****");
 // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
 // for every path in the group
 List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
