@@ -6,45 +6,41 @@ package frc.robot.commands.WinchCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
+import frc.robot.Constants;
 import frc.robot.subsystems.ShoulderSubsystem;
 
-public class WinchMoveWithJoystick extends CommandBase {
-  ShoulderSubsystem winchSubsystem;
-  CommandPS4Controller joystick;
-
+public class ShoulderStowCommand extends CommandBase {
+  ShoulderSubsystem shoulderSubsystem;
   /** Creates a new WinchGroundCommand. */
-  public WinchMoveWithJoystick(ShoulderSubsystem winchSubsystem, CommandPS4Controller joystick) {
-    this.winchSubsystem = winchSubsystem;
-    this.joystick = joystick;
+  public ShoulderStowCommand(ShoulderSubsystem shoulderSubsystem) {
+    this.shoulderSubsystem = shoulderSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(winchSubsystem);
+    addRequirements(shoulderSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    //  Call Motion Magic to set our Winch Position to the Ground
+    shoulderSubsystem.setWinchPosition(Constants.SHOULDER_POSITION_STOW);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
         // Put the encoder value of the Master Motor to the Dashboard
-        SmartDashboard.putNumber("WinchEffort", joystick.getLeftY());
-        winchSubsystem.moveWinch(-joystick.getLeftY());
+        SmartDashboard.putString("Winch Target Position", "STOW");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //winchSubsystem.stopMotor();
-    winchSubsystem.holdPostion();
+    shoulderSubsystem.stopMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

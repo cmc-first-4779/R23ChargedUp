@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShoulderSubsystem;
 
-public class WinchTESTCommand extends CommandBase {
+public class ShoulderTESTCommand extends CommandBase {
   ShoulderSubsystem winchSubsystem;
   /** Creates a new WinchTESTommand. */
-  public WinchTESTCommand(ShoulderSubsystem winchSubsystem) {
+  public ShoulderTESTCommand(ShoulderSubsystem winchSubsystem) {
     this.winchSubsystem = winchSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(winchSubsystem);

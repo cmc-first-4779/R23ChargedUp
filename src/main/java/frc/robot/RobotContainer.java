@@ -7,10 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.WinchCommands.WinchMoveWithJoystick;
-import frc.robot.commands.WinchCommands.WinchSetPosition;
-import frc.robot.commands.WinchCommands.WinchStopCommand;
-import frc.robot.commands.WinchCommands.WinchTESTCommand;
+import frc.robot.commands.WinchCommands.ShoulderMoveWithJoystick;
+import frc.robot.commands.WinchCommands.ShoulderSetPosition;
+import frc.robot.commands.WinchCommands.ShoulderStopCommand;
+import frc.robot.commands.WinchCommands.ShoulderTESTCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -64,10 +64,10 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-    m_driverController.L1().onTrue(new WinchTESTCommand(winchSubsystem));
-    m_driverController.cross().onTrue(new WinchStopCommand(winchSubsystem));
-    m_driverController.circle().whileTrue(new WinchMoveWithJoystick(winchSubsystem, m_driverController));
-    m_driverController.square().onTrue(new WinchSetPosition(winchSubsystem, 0));
+    m_driverController.L1().onTrue(new ShoulderTESTCommand(winchSubsystem));
+    m_driverController.cross().onTrue(new ShoulderStopCommand(winchSubsystem));
+    m_driverController.circle().whileTrue(new ShoulderMoveWithJoystick(winchSubsystem, m_driverController));
+    m_driverController.square().onTrue(new ShoulderSetPosition(winchSubsystem, 0));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,

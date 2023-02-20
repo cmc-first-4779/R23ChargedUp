@@ -8,35 +8,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShoulderSubsystem;
 
-public class WinchSetPosition extends CommandBase {
-  ShoulderSubsystem winchSubsystem;
-  double setPoint;
-  /** Creates a new WinchGroundCommand. */
-  public WinchSetPosition(ShoulderSubsystem winchSubsystem, double setPoint) {
-    this.winchSubsystem = winchSubsystem;
-    this.setPoint = setPoint;
+public class ShoulderStopCommand extends CommandBase {
+  ShoulderSubsystem shoulderSubsystem;
+
+  /** Creates a new WinchStopCommand. */
+  public ShoulderStopCommand(ShoulderSubsystem shoulderSubsystem) {
+    this.shoulderSubsystem = shoulderSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(winchSubsystem);
+    addRequirements(shoulderSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //  Call Motion Magic to set our Winch Position to the Ground
-    winchSubsystem.setWinchPosition(setPoint);
+    shoulderSubsystem.stopMotor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        // Put the encoder value of the Master Motor to the Dashboard
-        SmartDashboard.putString("Winch Target Position", Double.toString(setPoint));
+    // Put the encoder value of the Master Motor to the Dashboard
+    SmartDashboard.putString("Winch Target Position", "STOP");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //winchSubsystem.stopMotor();
+    shoulderSubsystem.stopMotor();
   }
 
   // Returns true when the command should end.
