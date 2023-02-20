@@ -11,6 +11,7 @@ import frc.robot.commands.GetRobotPosition;
 import frc.robot.commands.LimeLight.GetLocationOfAprilTag;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -72,4 +73,6 @@ public class RobotContainer {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
   }
+  SendableChooser<String> allianceChooser = new SendableChooser<>();
+
 }
