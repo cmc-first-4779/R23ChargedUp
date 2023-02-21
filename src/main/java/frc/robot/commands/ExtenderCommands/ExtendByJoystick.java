@@ -32,7 +32,7 @@ public class ExtendByJoystick extends CommandBase {
   public void execute() {
     // Put the encoder value of the Master Motor to the Dashboard
     SmartDashboard.putNumber("ExtendEffort", joystick.getLeftY());
-    extenderSubsystem.moveExtender(joystick.getLeftY());
+    extenderSubsystem.moveExtender(-joystick.getLeftY());
   }
 
   // Called once the command ends or is interrupted.

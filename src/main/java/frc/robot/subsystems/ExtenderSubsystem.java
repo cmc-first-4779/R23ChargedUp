@@ -70,6 +70,8 @@ public class ExtenderSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
     SmartDashboard.putNumber("Extender Position", extenderMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("Extender Setpoint", setPoint);
+    SmartDashboard.putNumber("Extender Velocity", extenderMotor.getEncoder().getVelocity());
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.

@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ExtenderCommands.ExtendByJoystick;
 import frc.robot.commands.ExtenderCommands.ExtendExtender;
+import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
 import frc.robot.commands.ExtenderCommands.ExtenderStopCommand;
 import frc.robot.commands.ExtenderCommands.RetractExtender;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -59,10 +60,6 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
@@ -71,6 +68,10 @@ public class RobotContainer {
     m_driverController.L1().whileTrue(new RetractExtender(extenderSubsystem));
     m_driverController.R1().whileTrue(new ExtendExtender(extenderSubsystem));
     m_driverController.cross().onTrue(new ExtenderStopCommand(extenderSubsystem));
+    m_driverController.square().onTrue(new ExtenderSetPosition(extenderSubsystem, Constants.EXTENDER_POSITION_STOW));
+    m_driverController.triangle().onTrue(new ExtenderSetPosition(extenderSubsystem, Constants.EXTENDER_POSITION_MID_CUBE_NODE));
+    m_driverController.options().onTrue(new ExtenderSetPosition(extenderSubsystem, Constants.EXTENDER_POSITION_HIGH_CONE_NODE));
+    
   }
 
   /**
