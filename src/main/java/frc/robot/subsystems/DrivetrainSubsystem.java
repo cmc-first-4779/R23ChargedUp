@@ -270,8 +270,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // I'm 100% sure I have this method doing what we want. Need to test it.
     public void resetOdometry(Pose2d pose) {
         odometry.resetPosition(pose.getRotation(),
-                new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
-                        backLeftModule.getPosition(), backRightModule.getPosition() },
+                getPositions(),
                 pose);
     }
 
