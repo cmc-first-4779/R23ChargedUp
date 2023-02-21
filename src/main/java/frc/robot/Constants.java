@@ -37,9 +37,10 @@ public final class Constants {
   public static final double SHOULDER_DEFAULT_kD = 0.00;// Dummy variable - Test this!
   public static final double SHOULDER_DEFAULT_kF = 0.00;// Dummy variable - Test this!
   public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
+  public static final double SHOULDER_HORIZONTAL_POS = 85000;
   public static final double SHOULDER_POSITION_MIN = 0;  //  Min position of the arm
   public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 40000;  //  Safe distance where can extend the rest of the arm
-  public static final double SHOULDER_POSITION_MAX = 90000;  // Max position of the arm
+  public static final double SHOULDER_POSITION_MAX = 100000;  // Max position of the arm
   public static final double SHOULDER_POSITION_STOW = 0;  // Dummy variable - Test this!
   public static final double SHOULDER_POSITION_GROUND = 5000;   // Dummy variable - Test this!
   public static final double SHOULDER_POSITION_LOW_CONE_NODE = 10000;  // Dummy variable - Test this!

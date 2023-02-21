@@ -78,7 +78,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     // Put the encoder value of the Master Motor to the Dashboard
     shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
-    shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
+    //shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
     SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
   }
 
@@ -277,7 +277,7 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Return kF based on trig for the arm
   public double calculateArbitraryFF(double targetPos) {
-    int kMeasuredPosHorizontal = 45000; // Position measured when arm is horizontal
+    double kMeasuredPosHorizontal = Constants.SHOULDER_HORIZONTAL_POS; // Position measured when arm is horizontal
     double kTicksPerDegree = 2048 * 192 / 360; // Enoder is 2489 ticks. 192 = Gear reduction and sprockets
     double currentPos = shoulderMotorMaster.getSelectedSensorPosition();
     double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
