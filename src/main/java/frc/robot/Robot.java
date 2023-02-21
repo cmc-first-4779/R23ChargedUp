@@ -28,9 +28,14 @@ public class Robot extends TimedRobot {
     if (m_robotContainer.getAllianceChooseString() == "RED"){
       m_robotContainer.m_LimelightSubsystem.setPipeline(1);
       m_robotContainer.m_LimelightSubsystem.setPipeline(2);
+      m_robotContainer.m_LimelightSubsystem.setPipeline(3);
+      m_robotContainer.m_LimelightSubsystem.setPipeline(4);
     }
     else{
-     m_robotContainer.getLimelightSubsystem().setPipeline(kDefaultPeriod);
+     m_robotContainer.getLimelightSubsystem().setPipeline(5);
+     m_robotContainer.m_LimelightSubsystem.setPipeline(6);
+     m_robotContainer.m_LimelightSubsystem.setPipeline(7);
+     m_robotContainer.m_LimelightSubsystem.setPipeline(8);
     }
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
