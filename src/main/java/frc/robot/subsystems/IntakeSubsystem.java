@@ -22,7 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
     //  Address our Motor Controller
     intakeMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_INTAKE, MotorType.kBrushless);
     //  Initiatize our Motor Controller
-    initSparkMaxMotorController(intakeMotor, "NEO550");
+    initSparkMaxMotorController(intakeMotor, "NEO");
   }
 
   @Override

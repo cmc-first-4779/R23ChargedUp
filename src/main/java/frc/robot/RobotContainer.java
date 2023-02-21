@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
 import frc.robot.commands.IntakeCommands.IntakePickupCommand;
+import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -55,7 +56,8 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.cross().whileTrue(new IntakePickupCommand(intakeSubsystem));
+    m_driverController.triangle().whileTrue(new IntakePickupCommand(intakeSubsystem));
+    m_driverController.cross().whileTrue(new IntakeStopCommand(intakeSubsystem));
     m_driverController.square().whileTrue(new IntakeEjectCommand(intakeSubsystem));
   }
 
