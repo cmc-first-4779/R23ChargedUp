@@ -17,8 +17,14 @@ import frc.robot.commands.ExtenderCommands.ExtendExtender;
 import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
 import frc.robot.commands.ExtenderCommands.ExtenderStopCommand;
 import frc.robot.commands.ExtenderCommands.RetractExtender;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ExtenderSubsystem;
+import frc.robot.commands.ShoulderCommands.ShoulderLower;
+import frc.robot.commands.ShoulderCommands.ShoulderMoveWithJoystick;
+import frc.robot.commands.ShoulderCommands.ShoulderRaise;
+import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
+import frc.robot.commands.ShoulderCommands.ShoulderStopCommand;
+import frc.robot.commands.ShoulderCommands.ShoulderTESTCommand;
+import frc.robot.subsystems.ShoulderSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -38,15 +44,13 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem(this);
+  private final ShoulderSubsystem shoulderSubsystem = new ShoulderSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
   
  
-
-
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -70,18 +74,21 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    new Trigger(m_exampleSubsystem::exampleCondition)
+        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    m_driverController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
+    m_driverController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
+    m_driverController.cross().onTrue(new ShoulderStopCommand(shoulderSubsystem));
+    m_driverController.circle().whileTrue(new ShoulderMoveWithJoystick(shoulderSubsystem, m_driverController));
+    m_driverController.square().onTrue(new ShoulderSetPosition(shoulderSubsystem, 0));
+    m_driverController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
+    m_driverController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
-    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.circle().whileTrue(new ExtendByJoystick(extenderSubsystem, m_driverController));
-    m_driverController.L1().whileTrue(new RetractExtender(extenderSubsystem));
-    m_driverController.R1().whileTrue(new ExtendExtender(extenderSubsystem));
-    m_driverController.cross().onTrue(new ExtenderStopCommand(extenderSubsystem));
-    m_driverController.square().onTrue(new ExtenderSetPosition(extenderSubsystem, Constants.EXTENDER_POSITION_STOW));
-    m_driverController.triangle().onTrue(new ExtenderSetPosition(extenderSubsystem, Constants.EXTENDER_POSITION_MID_CUBE_NODE));
-    m_driverController.options().onTrue(new ExtenderSetPosition(extenderSubsystem, Constants.EXTENDER_POSITION_HIGH_CONE_NODE));
-    
+    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
   }
 
   /**

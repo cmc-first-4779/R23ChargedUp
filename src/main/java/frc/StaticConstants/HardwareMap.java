@@ -6,9 +6,11 @@ package frc.StaticConstants;
 
 /** Add your docs here. */
 public class HardwareMap {
-    
-//  CAN Network Addresses
-public static final int CAN_ADDRESS_EXTENDER_ARM = 44;
-public static final int CAN_ADDRESS_INTAKE = 46;
+
+    // CAN Network Addresses
+    public static final int CAN_ADDRESS_SHOULDER_MOTOR_LEFT = 13;
+    public static final int CAN_ADDRESS_SHOULDER_MOTOR_RIGHT = 12;
+    public static final int CAN_ADDRESS_EXTENDER_ARM = 44;
+    public static final int CAN_ADDRESS_INTAKE = 46;
 
 }
