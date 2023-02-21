@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public final LimelightSubsystem m_LimelightSubsystem = new LimelightSubsystem();
@@ -36,7 +37,7 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController = new CommandPS4Controller(
       OperatorConstants.kDriverControllerPort);
-
+      SendableChooser<String> allianceChooser = new SendableChooser<>();
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -85,7 +86,7 @@ public class RobotContainer {
     return Autos.exampleAuto(m_exampleSubsystem);
   }
 
-  SendableChooser<String> allianceChooser = new SendableChooser<>();
+  
 
  
 
@@ -93,9 +94,9 @@ public class RobotContainer {
     return m_LimelightSubsystem;
   }
 
-  public String getAllianceChooseString(){
-    return allianceChooser.getSelected();
-  }
+  // public String getAllianceChooseString(){
+  //   return allianceChooser.getSelected();
+  // }
 
 }
 

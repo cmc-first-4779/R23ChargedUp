@@ -25,21 +25,27 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    if (m_robotContainer.getAllianceChooseString() == "RED"){
-      m_robotContainer.m_LimelightSubsystem.setPipeline(1);
-      m_robotContainer.m_LimelightSubsystem.setPipeline(2);
-      m_robotContainer.m_LimelightSubsystem.setPipeline(3);
-      m_robotContainer.m_LimelightSubsystem.setPipeline(4);
-    }
-    else{
-     m_robotContainer.getLimelightSubsystem().setPipeline(5);
-     m_robotContainer.m_LimelightSubsystem.setPipeline(6);
-     m_robotContainer.m_LimelightSubsystem.setPipeline(7);
-     m_robotContainer.m_LimelightSubsystem.setPipeline(8);
-    }
+   
+    
+    
+   
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+   m_robotContainer = new RobotContainer();
+
+   if (m_robotContainer.allianceChooser.getSelected() == "RED"){
+    m_robotContainer.m_LimelightSubsystem.setPipeline(1);
+    m_robotContainer.m_LimelightSubsystem.setPipeline(2);
+    m_robotContainer.m_LimelightSubsystem.setPipeline(3);
+    m_robotContainer.m_LimelightSubsystem.setPipeline(4);
+  }
+  else{
+    System.out.println("Using Else");
+   m_robotContainer.getLimelightSubsystem().setPipeline(5);
+   m_robotContainer.m_LimelightSubsystem.setPipeline(6);
+   m_robotContainer.m_LimelightSubsystem.setPipeline(7);
+   m_robotContainer.m_LimelightSubsystem.setPipeline(8);
+  }
   }
 
   /**
@@ -68,6 +74,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+   
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -82,6 +89,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+  
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
