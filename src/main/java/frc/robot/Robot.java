@@ -122,8 +122,7 @@ public class Robot extends TimedRobot {
         xController,
         yController,
         thetaController,
-        // AutonomousContainer.getCommandTranslator()::getWantedRotation,
-        drive::getDesiredRotation,
+        AutonomousContainer.getCommandTranslator()::getWantedRotation,
         drive::drive,
         drive // Make sure you add Drive as a requirement so that the controller doesn't
               // try to control the modules while
