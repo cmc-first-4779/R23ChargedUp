@@ -123,13 +123,13 @@ public class LimelightSubsystem extends SubsystemBase {
   // Method that returns whether our crosshairs are right of the target
   public boolean isRightOfTarget() {
     double ts = getTS();
-    return ts <= Constants.LIMELIGHT_SKEW_CLOCKWISE_MAX && ts >= Constants.LIMELIGHT_SKEW_CLOCKWISE_MIN;
+    return ts <= LimelightConstants.LIMELIGHT_SKEW_CLOCKWISE_MAX && ts >= LimelightConstants.LIMELIGHT_SKEW_CLOCKWISE_MIN;
   }
 
   // Method that returns whether our crosshairs are left of the target
   public boolean isLeftOfTarget() {
     double ts = getTS();
-    return ts >= Constants.LIMELIGHT_SKEW_COUNTERCLOCKWISE_MAX && ts <= Constants.LIMELIGHT_SKEW_COUNTERCLOCKWISE_MIN;
+    return ts >= LimelightConstants.LIMELIGHT_SKEW_COUNTERCLOCKWISE_MAX && ts <= LimelightConstants.LIMELIGHT_SKEW_COUNTERCLOCKWISE_MIN;
   }
 
   // Setup our Initial Configuration settings for our Limelight. As the match goes
@@ -208,10 +208,10 @@ public class LimelightSubsystem extends SubsystemBase {
     //  Declare an array to store our crop values
     double[] cropValues = new double[4];
     // Populate the array with our Constant Values
-    cropValues[0] = Constants.LIMELIGHT_CROP_X0;  //X0
-    cropValues[1] = Constants.LIMELIGHT_CROP_X1;  //X1
-    cropValues[2] = Constants.LIMELIGHT_CROP_Y0;  //Y0
-    cropValues[3] = Constants.LIMELIGHT_CROP_Y1;  //Y1
+    cropValues[0] = LimelightConstants.LIMELIGHT_CROP_X0;  //X0
+    cropValues[1] = LimelightConstants.LIMELIGHT_CROP_X1;  //X1
+    cropValues[2] = LimelightConstants.LIMELIGHT_CROP_Y0;  //Y0
+    cropValues[3] = LimelightConstants.LIMELIGHT_CROP_Y1;  //Y1
     //  Push the array back ot the Limelight Network Table to set it.
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("crop").setDoubleArray(cropValues);
   }
