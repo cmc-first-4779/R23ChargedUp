@@ -134,6 +134,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     if (setPointIsValid(setpoint)) {
       // Declare our PID Controller
       SparkMaxPIDController m_pidController = extenderMotor.getPIDController();
+      System.out.println("P is:  " +m_pidController.getP());
       // send our setpoint to SmartMotion
       m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
     }
