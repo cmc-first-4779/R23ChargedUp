@@ -10,10 +10,12 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.LimelightConstants;
 import frc.robot.Constants;
+import frc.robot.commands.SetPipeline;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //  Our Limelight Subsystem is where all of our Vision Processing Takes place
 
 public class LimelightSubsystem extends SubsystemBase {
+
 
   // Declare the Network Table that our Limelight will broadcast its values on
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -216,6 +218,7 @@ public class LimelightSubsystem extends SubsystemBase {
     // Push the array back ot the Limelight Network Table to set it.
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("crop").setDoubleArray(cropValues);
   }
+  
 
   
 }
