@@ -27,6 +27,7 @@ public class ExtenderSubsystem extends SubsystemBase {
   public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
   double setPoint;
 
+  SparkMaxPIDController m_pidController;
   // Reference to robot container to access other subsystems
   RobotContainer robotContainer;
 
@@ -35,7 +36,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     // Address our motor
     extenderMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_EXTENDER_ARM, MotorType.kBrushless);
     this.robotContainer = robotContainer;
-
+    m_pidController = extenderMotor.getPIDController();
     // Initialize our SparkMax's to known settings
     initSparkMaxMotorController(extenderMotor, "NEO");
     // Reset our Encoder
@@ -93,7 +94,6 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void configPIDFValues(CANSparkMax sparkMax, double kP, double kI, double kD, double kF, double kMinOutput,
       double kMaxOutput) {
     // Declare our PID Controller
-    SparkMaxPIDController m_pidController = sparkMax.getPIDController();
     // Configure the PID settings
     m_pidController.setFF(kF);
     m_pidController.setP(kP);
@@ -118,7 +118,6 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void configureSmartMotion(CANSparkMax sparkMax, double maxVel, double minVel, double maxAccel,
       double allowedErr, int slot) {
     // Declare our PID Controller
-    SparkMaxPIDController m_pidController = sparkMax.getPIDController();
     m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
     m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
     m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
@@ -133,7 +132,6 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void setExtenderPosition(double setpoint) {
     if (setPointIsValid(setpoint)) {
       // Declare our PID Controller
-      SparkMaxPIDController m_pidController = extenderMotor.getPIDController();
       System.out.println("P is:  " +m_pidController.getP());
       // send our setpoint to SmartMotion
       m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
@@ -163,7 +161,6 @@ public class ExtenderSubsystem extends SubsystemBase {
       double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
       int slot) {
     // Declare our PID Controller
-    SparkMaxPIDController m_pidController = extenderMotor.getPIDController();
     // Configure the PID settings
     m_pidController.setFF(kF);
     m_pidController.setP(kP);
