@@ -31,9 +31,10 @@ public class ExtenderSubsystem extends SubsystemBase {
   RobotContainer robotContainer;
 
   /** Creates a new ExtenderArmSubsystem. */
-  public ExtenderSubsystem() {
+  public ExtenderSubsystem(RobotContainer robotContainer) {
     // Address our motor
     extenderMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_EXTENDER_ARM, MotorType.kBrushless);
+    this.robotContainer = robotContainer;
 
     // Initialize our SparkMax's to known settings
     initSparkMaxMotorController(extenderMotor, "NEO");
