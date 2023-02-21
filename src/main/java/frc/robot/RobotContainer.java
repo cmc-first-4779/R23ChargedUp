@@ -7,8 +7,13 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
+import frc.robot.commands.IntakeCommands.IntakePickupCommand;
+import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -21,10 +26,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandPS4Controller m_driverController =
+      new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -48,7 +55,10 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_driverController.triangle().whileTrue(new IntakePickupCommand(intakeSubsystem));
+    m_driverController.cross().whileTrue(new IntakeStopCommand(intakeSubsystem));
+    m_driverController.square().whileTrue(new IntakeEjectCommand(intakeSubsystem));
   }
 
   /**
