@@ -39,9 +39,9 @@ public final class Constants {
   public static final double EXTENDER_POSITION_MID_CUBE_NODE = 40; // Dummy variable - Test this!
   public static final double EXTENDER_POSITION_HIGH_CUBE_NODE = 80; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MAX_VEL = 2000; // Dummy variable - Test this!
-  public static final double EXTENDER_SM_MIN_VEL = 200; // Dummy variable - Test this!
-  public static final double EXTENDER_SM_MAX_ACCEL = 200; // Dummy variable - Test this!
-  public static final double EXTENDER_SM_ALLOWED_ERR = 5; // Dummy variable - Test this!
+  public static final double EXTENDER_SM_MIN_VEL = 0; // Dummy variable - Test this!
+  public static final double EXTENDER_SM_MAX_ACCEL = 1500; // Dummy variable - Test this!
+  public static final double EXTENDER_SM_ALLOWED_ERR = .25; // Dummy variable - Test this!
   public static final double EXTENDER_MAX_POSTION = 100; // Max forward rotation. Current gearing is xx to one so position of xx is one full rotation of output shaft.  Only need to go about 25%
   public static final double EXTENDER_MIN_POSTION = 0; // Min forward rotation. Assuming we are starting in our minimal position of 0.
   public static final double EXTENDER_MOVEMENT_INCREMENT = 2;
