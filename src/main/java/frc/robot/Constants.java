@@ -71,12 +71,12 @@ public final class Constants {
 
  public static final double kPXController = 0.077777;
  public static final double kPYController = 0.077777;
- public static final double kPThetaController = 0.077777;
+ public static final double kPThetaController = 10;
 
  // I'm not sure where these values come from, but this is what 0 to auto code is using. 
- public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI; // original values of 2 instead of 1.25
+ public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 1.25 * 1.25 * Math.PI; // original values of 2 instead of 1.25
  public static final double kMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 10;
- public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;    
+ public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 2;//original value of 4 not 2
 
  public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
          new TrapezoidProfile.Constraints(
