@@ -22,12 +22,12 @@ public class ExtenderSubsystem extends SubsystemBase {
 
   // Declare our SparkMax Motor Controller
   CANSparkMax extenderMotor;
+  SparkMaxPIDController m_pidController;
 
   // Declare the variables
   public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
   double setPoint;
 
-  SparkMaxPIDController m_pidController;
   // Reference to robot container to access other subsystems
   RobotContainer robotContainer;
 
@@ -35,23 +35,24 @@ public class ExtenderSubsystem extends SubsystemBase {
   public ExtenderSubsystem(RobotContainer robotContainer) {
     // Address our motor
     extenderMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_EXTENDER_ARM, MotorType.kBrushless);
-    this.robotContainer = robotContainer;
     m_pidController = extenderMotor.getPIDController();
+    this.robotContainer = robotContainer;
+    setPoint = 0;
+
+    kF = Constants.EXTENDER_kF;
+    kP = Constants.EXTENDER_kP;
+    kI = Constants.EXTENDER_kI;
+    kD = Constants.EXTENDER_kD;
     // Initialize our SparkMax's to known settings
     initSparkMaxMotorController(extenderMotor, "NEO");
     // Reset our Encoder
     resetEncoder(extenderMotor);
     // Config our PID Values
-    configPIDFValues(extenderMotor, Constants.EXTENDER_kP, Constants.EXTENDER_kI, Constants.EXTENDER_kD,
-        Constants.EXTENDER_kF, Constants.EXTENDER_kMinOutput, Constants.EXTENDER_kMaxOuput);
+    configPIDFValues(extenderMotor, kP, kI, kD, kF, Constants.EXTENDER_kMinOutput, Constants.EXTENDER_kMaxOuput);
     // Configure Smart Motion
     configureSmartMotion(extenderMotor, Constants.EXTENDER_SM_MAX_VEL, Constants.EXTENDER_SM_MIN_VEL,
         Constants.EXTENDER_SM_MAX_ACCEL, Constants.EXTENDER_SM_ALLOWED_ERR, Constants.EXTENDER_PID_SLOT);
     //
-    kF = Constants.EXTENDER_kF;
-    kP = Constants.EXTENDER_kP;
-    kI = Constants.EXTENDER_kI;
-    kD = Constants.EXTENDER_kD;
 
     // Add PID Fields to SmartDashboard
     SmartDashboard.putNumber("Position", 0);
@@ -93,7 +94,6 @@ public class ExtenderSubsystem extends SubsystemBase {
   // Configure our PID Values
   public void configPIDFValues(CANSparkMax sparkMax, double kP, double kI, double kD, double kF, double kMinOutput,
       double kMaxOutput) {
-    // Declare our PID Controller
     // Configure the PID settings
     m_pidController.setFF(kF);
     m_pidController.setP(kP);
@@ -117,7 +117,6 @@ public class ExtenderSubsystem extends SubsystemBase {
    */
   public void configureSmartMotion(CANSparkMax sparkMax, double maxVel, double minVel, double maxAccel,
       double allowedErr, int slot) {
-    // Declare our PID Controller
     m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
     m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
     m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
@@ -132,7 +131,8 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void setExtenderPosition(double setpoint) {
     if (setPointIsValid(setpoint)) {
       // Declare our PID Controller
-      System.out.println("P is:  " +m_pidController.getP());
+      System.out.println("P is:  " + m_pidController.getP());
+      System.out.println("Setpoint is:  " + setpoint);
       // send our setpoint to SmartMotion
       m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
     }
@@ -184,9 +184,8 @@ public class ExtenderSubsystem extends SubsystemBase {
    * Retracts the wrist by the WRIST_MOVEMENT_INCREMENT
    */
   public void retractExtender() {
-    // Retracting the wrist is moving it in a negative direction. Need to make sure
-    // we
-    // are not lower than the minimal position
+    // Retracting the arm is moving it in a negative direction. Need to make sure
+    // we are not lower than the minimal position
     double newSetPoint = setPoint - Constants.EXTENDER_MOVEMENT_INCREMENT;
     // if (setPointIsValid(newSetPoint)) {
     // Since we are retracting, we only have to make sure the new setpoint is
