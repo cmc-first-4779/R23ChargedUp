@@ -8,6 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ExtenderCommands.ExtendByJoystick;
+import frc.robot.commands.ExtenderCommands.ExtendExtender;
+import frc.robot.commands.ExtenderCommands.ExtenderStopCommand;
+import frc.robot.commands.ExtenderCommands.RetractExtender;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ExtenderSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -65,6 +68,9 @@ public class RobotContainer {
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_driverController.circle().whileTrue(new ExtendByJoystick(extenderSubsystem, m_driverController));
+    m_driverController.L1().whileTrue(new RetractExtender(extenderSubsystem));
+    m_driverController.R1().whileTrue(new ExtendExtender(extenderSubsystem));
+    m_driverController.cross().onTrue(new ExtenderStopCommand(extenderSubsystem));
   }
 
   /**
