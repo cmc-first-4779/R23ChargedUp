@@ -148,6 +148,7 @@ public class RobotContainer {
     // This will load the file "FullAuto.path" and generate it with a max velocity
     // of 4 m/s and a max acceleration of 3 m/s^2
     // for every path in the group
+    List<PathPlannerTrajectory> shortCubeTraj = PathPlanner.loadPathGroup("Short Cube", new PathConstraints(2, 2));
     List<PathPlannerTrajectory> TestPath = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
     List<PathPlannerTrajectory> Blue_Drop_Cone_And_Pickup = PathPlanner.loadPathGroup("Blue Drop Cone and Pickup",
         new PathConstraints(4, 3));
@@ -185,7 +186,8 @@ public class RobotContainer {
                               // commands
     );
 
-    Command fullAuto = autoBuilder.fullAuto(selectedAuto);
+    // Command fullAuto = autoBuilder.fullAuto(selectedAuto);
+    Command fullAuto = autoBuilder.fullAuto(TestPath);
     return fullAuto;
   }
 
