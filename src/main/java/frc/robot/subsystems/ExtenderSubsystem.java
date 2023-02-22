@@ -229,8 +229,8 @@ public class ExtenderSubsystem extends SubsystemBase {
    */
   private boolean safeToExtendExtender() {
     // Need to check with arm to make sure it's in a good space.
-    double armPosition = robotContainer.getArmPosition();
-    if (armPosition > Constants.EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND) {
+    double shoulderPosition = robotContainer.getShoulderPosition();
+    if (shoulderPosition > Constants.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       System.out.println("Arm is at safe position to extend Extender");
       return true;
     }

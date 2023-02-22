@@ -225,12 +225,15 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Method to check whether we are in a safe range to extend the
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
-    if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN)
-        && (shoulderMasterPosition <= Constants.SHOULDER_POSITION_SAFE_TO_EXTEND)) {
+    if (shoulderMasterPosition <= Constants.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       return false;
     } else {
       return true;
     }
+  }
+
+  public double getShoulderPos(){
+    return shoulderMasterPosition;
   }
 
   /**
