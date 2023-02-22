@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -93,9 +92,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
             new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
     Pigeon2 gyroscope = new Pigeon2(DRIVETRAIN_PIGEON_ID);
-    Double m_pigeonPitch;
-    Double m_pigeonYaw;
-    Double m_pigeonRoll;
 
     private final SwerveDriveOdometry odometry;
 
@@ -112,9 +108,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     private SwerveModuleState[] states;
 
+    /**
+     * Constructor for the Drivetrain 
+     */
     public DrivetrainSubsystem() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
         SmartDashboard.putData("Field", field);
+        zeroGyroscope();
 
         frontLeftModule = new MkSwerveModuleBuilder()
                 .withLayout(shuffleboardTab.getLayout("Front Left Module", BuiltInLayouts.kList)
@@ -162,7 +162,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         odometry = new SwerveDriveOdometry(
                 kinematics,
-                Rotation2d.fromDegrees(gyroscope.getYaw()), getPositions());
+                Rotation2d.fromDegrees(getHeading()), getPositions());
     }
 
     /**
@@ -232,13 +232,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_pigeonPitch = gyroscope.getPitch();
-        m_pigeonYaw = gyroscope.getYaw();
-        m_pigeonRoll = gyroscope.getRoll();
-        SmartDashboard.putNumber("Robot Pitch", m_pigeonPitch);
-        SmartDashboard.putNumber("Robot Yaw", m_pigeonYaw);
-        SmartDashboard.putNumber("Robot Roll", m_pigeonRoll);
-        SmartDashboard.updateValues();
+        SmartDashboard.putNumber("Robot Pitch", gyroscope.getPitch());
+        SmartDashboard.putNumber("Robot Yaw", gyroscope.getYaw());
+        SmartDashboard.putNumber("Robot Roll", gyroscope.getRoll());
+        SmartDashboard.updateValues();  // I'm not sure this is needed. 
 
         //need to update Odometry
         odometry.update(Rotation2d.fromDegrees(gyroscope.getYaw()), getPositions());
