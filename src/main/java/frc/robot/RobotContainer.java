@@ -87,6 +87,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
+    SmartDashboard.putData("Auto Chooser", autoChooser);
     SmartDashboard.putBoolean("Use PathPlanner", true);
     SmartDashboard.putBoolean("Debug Swerve", false);
     // SmartDashboard.putString("selectedAuto", selectedAuto);
