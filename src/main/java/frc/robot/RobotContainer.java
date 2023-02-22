@@ -64,10 +64,13 @@ public class RobotContainer {
   private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
   private boolean usePathPlanner = true;
   private boolean debugSwerve = false;
-  SendableChooser<List<PathPlannerTrajectory>> selected_Auto = new SendableChooser<>();
+  SendableChooser<List<PathPlannerTrajectory>> autoChooser = new SendableChooser<>();
+  SwerveAutoBuilder autoBuilder;
   List<PathPlannerTrajectory> selectedAuto;
   // String selectedAuto;
   // Trajectory chosenTrajectory;
+
+  HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -91,6 +94,10 @@ public class RobotContainer {
     SmartDashboard.putBoolean("Use PathPlanner", true);
     SmartDashboard.putBoolean("Debug Swerve", false);
     // SmartDashboard.putString("selectedAuto", selectedAuto);
+
+    generatePathPlannerPathGroups();
+    createAutoBuilder();
+
   }
 
   /**
@@ -141,36 +148,30 @@ public class RobotContainer {
 
   }
 
-  private Command generateAutoWithPathPlanner() {
-    // SendableChooser<String> selectedAuto = new SendableChooser<>();
-
-    System.out.println("*****Using Path Planner*****");
-    // This will load the file "FullAuto.path" and generate it with a max velocity
-    // of 4 m/s and a max acceleration of 3 m/s^2
-    // for every path in the group
-    List<PathPlannerTrajectory> shortCubeTraj = PathPlanner.loadPathGroup("Short Cube", new PathConstraints(2, 2));
-    List<PathPlannerTrajectory> TestPath = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
-    List<PathPlannerTrajectory> Blue_Drop_Cone_And_Pickup = PathPlanner.loadPathGroup("Blue Drop Cone and Pickup",
+  /**
+   * Generates the Path Planner Groups and add them to the AutoChooser
+   */
+  private void generatePathPlannerPathGroups() {
+    List<PathPlannerTrajectory> testSquareTraj = PathPlanner.loadPathGroup("SquareTest", new PathConstraints(2, 2));
+    List<PathPlannerTrajectory> testPathTraj = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
+    List<PathPlannerTrajectory> Blue_Drop_Cone_And_Pickuptraj = PathPlanner.loadPathGroup("Blue Drop Cone and Pickup",
         new PathConstraints(4, 3));
-    // List<PathPlannerTrajectory> ChooserTest =
-    // PathPlanner.loadPathGroup(selectedAuto, new PathConstraints(4, 3));
-    // selected_Auto.addOption(selectedAuto, ChooserTest);
-    selected_Auto.addOption("TestPath", TestPath);
-    selected_Auto.addOption("Blue_Drop_Cone_And_Pickup", Blue_Drop_Cone_And_Pickup);
 
-    selectedAuto = selected_Auto.getSelected();
+    autoChooser.setDefaultOption("Test Square", testSquareTraj);
+    autoChooser.addOption("TestPath", testPathTraj);
+    autoChooser.addOption("Blue_Drop_Cone_And_Pickup", Blue_Drop_Cone_And_Pickuptraj);
+  }
 
-    // This is just an example event map. It would be better to have a constant,
-    // global event map
-    // in your code that will be used by all path following commands.
-    HashMap<String, Command> eventMap = new HashMap<>();
-    eventMap.put("marker1", new PrintCommand("Passed marker 1"));
-    eventMap.put("intakeDown", new PrintCommand("Event 2"));
+  /**
+   * Creates the AutoBuilder
+   */
+  private void createAutoBuilder() {
 
-    // Create the AutoBuilder. This only needs to be created once when robot code
-    // starts, not every time you want to create an auto command. A good place to
-    // put this is in RobotContainer along with your subsystems.
-    SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+    pathPlannerEventMap = new HashMap<>();
+    pathPlannerEventMap.put("marker1", new PrintCommand("Passed marker 1"));
+    pathPlannerEventMap.put("intakeDown", new PrintCommand("Event 2"));
+    autoBuilder = new SwerveAutoBuilder(
+
         m_drivetrainSubsystem::getPose, // Pose2d supplier
         m_drivetrainSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
         m_drivetrainSubsystem.geKinematics(), // SwerveDriveKinematics
@@ -179,16 +180,16 @@ public class RobotContainer {
         new PIDConstants(Constants.kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to
                                                                  // create the rotation controller)
         m_drivetrainSubsystem::drive, // Module states consumer used to output to the drive subsystem
-        eventMap,
+        pathPlannerEventMap,
         true, // Should the path be automatically mirrored depending on alliance color.
               // Optional, defaults to true
         m_drivetrainSubsystem // The drive subsystem. Used to properly set the requirements of path following
                               // commands
     );
+  }
 
-    // Command fullAuto = autoBuilder.fullAuto(selectedAuto);
-    Command fullAuto = autoBuilder.fullAuto(TestPath);
-    return fullAuto;
+  private Command generateAutoWithPathPlanner() {
+    return autoBuilder.fullAuto(autoChooser.getSelected());
   }
 
   /**
