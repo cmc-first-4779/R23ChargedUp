@@ -112,7 +112,8 @@ public class RobotContainer {
         m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
     // Back button zeros the gyroscope
     new Trigger(m_driverController::getXButton).whileTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope));
-    new Trigger(m_driverController::getAButton).whileTrue(new balanceTest(m_drivetrainSubsystem)); // This button A on the controller
+    new Trigger(m_driverController::getAButton).whileTrue(new balanceTest(m_drivetrainSubsystem)); // This button A on
+                                                                                                   // the controller
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
@@ -135,34 +136,47 @@ public class RobotContainer {
   }
 
   private Command generateAutoWithPathPlanner() {
-System.out.println("*****Using Path Planner*****");
-// This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-// for every path in the group
-List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
+    System.out.println("*****Using Path Planner*****");
+    // This will load the file "FullAuto.path" and generate it with a max velocity
+    // of 4 m/s and a max acceleration of 3 m/s^2
+    // for every path in the group
+    List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
 
-// This is just an example event map. It would be better to have a constant, global event map
-// in your code that will be used by all path following commands.
-HashMap<String, Command> eventMap = new HashMap<>();
-eventMap.put("marker1", new PrintCommand("Passed marker 1"));
-eventMap.put("intakeDown", new PrintCommand("Event 2"));
+    // This is just an example event map. It would be better to have a constant,
+    // global event map
+    // in your code that will be used by all path following commands.
+    HashMap<String, Command> eventMap = new HashMap<>();
+    eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+    eventMap.put("intakeDown", new PrintCommand("Event 2"));
 
-// Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
-SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-  m_drivetrainSubsystem::getPose, // Pose2d supplier
-  m_drivetrainSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
-  m_drivetrainSubsystem.geKinematics(), // SwerveDriveKinematics
-  new PIDConstants(Constants.kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-  new PIDConstants(Constants.kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-  m_drivetrainSubsystem::drive, // Module states consumer used to output to the drive subsystem
-  eventMap,
-  true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  m_drivetrainSubsystem // The drive subsystem. Used to properly set the requirements of path following commands
-);
+    // Create the AutoBuilder. This only needs to be created once when robot code
+    // starts, not every time you want to create an auto command. A good place to
+    // put this is in RobotContainer along with your subsystems.
+    SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+        m_drivetrainSubsystem::getPose, // Pose2d supplier
+        m_drivetrainSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
+        m_drivetrainSubsystem.geKinematics(), // SwerveDriveKinematics
+        new PIDConstants(Constants.kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to
+                                                              // create the X and Y PID controllers)
+        new PIDConstants(Constants.kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to
+                                                                 // create the rotation controller)
+        m_drivetrainSubsystem::drive, // Module states consumer used to output to the drive subsystem
+        eventMap,
+        true, // Should the path be automatically mirrored depending on alliance color.
+              // Optional, defaults to true
+        m_drivetrainSubsystem // The drive subsystem. Used to properly set the requirements of path following
+                              // commands
+    );
 
-Command fullAuto = autoBuilder.fullAuto(pathGroup);
-return fullAuto;
+    Command fullAuto = autoBuilder.fullAuto(pathGroup);
+    return fullAuto;
   }
 
+  /**
+   * Creates a command that follows a manually generated path
+   * 
+   * @return
+   */
   private Command manuallyGenerateAuto() {
     // 1. Create trajectory settings
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
@@ -207,6 +221,12 @@ return fullAuto;
 
   }
 
+  /**
+   * Checks to make sure a setting is outside of our dedband range
+   * @param value the value to check
+   * @param deadband the range of our deadband
+   * @return 0 if inside the deadband, the value if outside the deadband normalized 
+   */
   private static double deadband(double value, double deadband) {
     if (Math.abs(value) > deadband) {
       if (value > 0.0) {
