@@ -32,14 +32,14 @@
         "y": 2.49989186307924
       },
       "nextControl": {
-        "x": 5.503659239935956,
-        "y": 2.49989186307924
+        "x": 5.496340760064044,
+        "y": 2.50010813692076
       },
       "holonomicAngle": -90.0,
-      "isReversal": true,
+      "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": true,
+      "isStopPoint": false,
       "stopEvent": {
         "names": [],
         "executionBehavior": "parallel",
