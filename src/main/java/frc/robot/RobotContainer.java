@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -63,6 +64,11 @@ public class RobotContainer {
   private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
   private boolean usePathPlanner = true;
   private boolean debugSwerve = false;
+  SendableChooser<List<PathPlannerTrajectory>> selected_Auto = new SendableChooser<>();
+  List<PathPlannerTrajectory> selectedAuto;
+//  String selectedAuto;
+//  Trajectory chosenTrajectory;
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -85,6 +91,7 @@ public class RobotContainer {
 
     SmartDashboard.putBoolean("Use PathPlanner", true);
     SmartDashboard.putBoolean("Debug Swerve", false);
+    // SmartDashboard.putString("selectedAuto", selectedAuto);
   }
 
   /**
@@ -135,10 +142,22 @@ public class RobotContainer {
   }
 
   private Command generateAutoWithPathPlanner() {
+  // SendableChooser<String> selectedAuto = new SendableChooser<>();
+
+  
+  
+  
 System.out.println("*****Using Path Planner*****");
 // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
 // for every path in the group
-List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
+List<PathPlannerTrajectory> TestPath = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
+List<PathPlannerTrajectory> Blue_Drop_Cone_And_Pickup = PathPlanner.loadPathGroup("Blue Drop Cone and Pickup", new PathConstraints(4, 3));
+// List<PathPlannerTrajectory> ChooserTest = PathPlanner.loadPathGroup(selectedAuto, new PathConstraints(4, 3));
+// selected_Auto.addOption(selectedAuto, ChooserTest);
+selected_Auto.addOption("TestPath", TestPath);
+selected_Auto.addOption("Blue_Drop_Cone_And_Pickup", Blue_Drop_Cone_And_Pickup);
+
+selectedAuto = selected_Auto.getSelected();
 
 // This is just an example event map. It would be better to have a constant, global event map
 // in your code that will be used by all path following commands.
@@ -159,7 +178,7 @@ SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
   m_drivetrainSubsystem // The drive subsystem. Used to properly set the requirements of path following commands
 );
 
-Command fullAuto = autoBuilder.fullAuto(pathGroup);
+Command fullAuto = autoBuilder.fullAuto(selectedAuto);
 return fullAuto;
   }
 
