@@ -235,7 +235,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        System.out.println("Inside periodic of drivetrain");
         m_pigeonPitch = gyroscope.getPitch();
         m_pigeonYaw = gyroscope.getYaw();
         m_pigeonRoll = gyroscope.getRoll();
