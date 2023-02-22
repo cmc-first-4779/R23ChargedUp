@@ -255,4 +255,11 @@ public class RobotContainer {
 
     return value;
   }
+
+  /**
+   * Gets the drive train subsystem
+   */
+  public DrivetrainSubsystem getDriveTrainSubsystem() {
+    return m_drivetrainSubsystem;
+  }
 }
