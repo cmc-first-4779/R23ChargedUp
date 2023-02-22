@@ -50,10 +50,6 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  SwerveModule m_frontLeftModule;
-  SwerveModule m_frontRightModule;
-  SwerveModule m_backLeftModule;
-  SwerveModule m_backRightModule;
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
@@ -115,22 +111,12 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // m_driverController.b().whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem,
-    // m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
-    // // Back button zeros the gyroscope
-    // m_driverController.back().onTrue(m_drivetrainSubsystem.zeroGyroscope());
-    // m_driverController.x().onTrue(new balanceTest(m_drivetrainSubsystem)); //
-    // This button X on the controller
-    new Trigger(m_driverController::getBButton).whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem,
-        m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
+    new Trigger(m_driverController::getBButton).whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem));
     // Back button zeros the gyroscope
     new Trigger(m_driverController::getXButton).whileTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope));
     new Trigger(m_driverController::getAButton).whileTrue(new balanceTest(m_drivetrainSubsystem)); // This button A on
                                                                                                    // the controller
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
   }
 
   /**

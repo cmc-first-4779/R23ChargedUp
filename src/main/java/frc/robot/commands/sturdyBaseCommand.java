@@ -11,19 +11,11 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class sturdyBaseCommand extends CommandBase {
   DrivetrainSubsystem m_drive;
-  SwerveModule m_frontLeftModule;
-  SwerveModule m_frontRightModule;
-  SwerveModule m_backLeftModule;
-  SwerveModule m_backRightModule;
+
   /** Creates a new sturdyBaseCommand. */
-  public sturdyBaseCommand(DrivetrainSubsystem drive, SwerveModule frontLeftModule, SwerveModule frontRightModule, SwerveModule backLeftModule, SwerveModule backRightModule) {
+  public sturdyBaseCommand(DrivetrainSubsystem drive) {
     m_drive = drive; 
-    m_frontLeftModule = frontLeftModule;
-    m_frontRightModule = frontRightModule;
-    m_backLeftModule = backLeftModule;
-    m_backRightModule = backRightModule;
-    
-    // Use addRequirements() here to declare subsystem dependencies.
+       // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drive);
   }
 
