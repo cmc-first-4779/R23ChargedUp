@@ -6,6 +6,7 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.MiscCommands.Wait;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
@@ -35,6 +36,8 @@ public class SafeSetToPositionSCG extends SequentialCommandGroup {
     addCommands(
       //  Move the shoulder up to the safe position to move the extender and the wrist
       new ShoulderSetPosition(shoulder, Constants.SHOULDER_POSITION_SAFE_TO_EXTEND),
+      //  Wait for the system to settle down (seconds)
+      new Wait(0.5),
       //  Move the shoulder, extender, and wrist the rest of the way to the setpoints
       new SetToPositionPCG(position, shoulder, extender)
     );
