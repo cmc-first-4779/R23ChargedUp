@@ -11,21 +11,9 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
 import frc.robot.commands.IntakeCommands.IntakePickupCommand;
-import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.commands.ExtenderCommands.ExtendByJoystick;
-import frc.robot.commands.ExtenderCommands.ExtendExtender;
-import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
-import frc.robot.commands.ExtenderCommands.ExtenderStopCommand;
-import frc.robot.commands.ExtenderCommands.RetractExtender;
 import frc.robot.subsystems.ExtenderSubsystem;
-import frc.robot.commands.ShoulderCommands.ShoulderLower;
-import frc.robot.commands.ShoulderCommands.ShoulderMoveWithJoystick;
-import frc.robot.commands.ShoulderCommands.ShoulderRaise;
-import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
-import frc.robot.commands.ShoulderCommands.ShoulderStopCommand;
-import frc.robot.commands.ShoulderCommands.ShoulderTESTCommand;
 import frc.robot.subsystems.ShoulderSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -49,10 +37,9 @@ public class RobotContainer {
   private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandPS4Controller m_driverController =
-      new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
-  
- 
+  private final CommandPS4Controller m_driverController = new CommandPS4Controller(
+      OperatorConstants.kDriverControllerPort);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
