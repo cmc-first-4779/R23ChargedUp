@@ -34,7 +34,8 @@ public final class Constants {
   public static final double EXTENDER_kMinOutput = -1;
   public static final double EXTENDER_MAX_RPM = 5700;
   public static final double EXTENDER_POSITION_STOW = 0; // Dummy variable - Test this!
-  public static final double EXTENDER_POSITION_GROUND = 0; // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_PICKUP_CUBE = 10; // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_PICKUP_CONE = 10; // Dummy variable - Test this!
   public static final double EXTENDER_POSITION_LOW_CONE_NODE = 20; // Dummy variable - Test this!
   public static final double EXTENDER_POSITION_MID_CONE_NODE = 40; // Dummy variable - Test this!
   public static final double EXTENDER_POSITION_HIGH_CONE_NODE = 80; // Dummy variable - Test this!
@@ -75,7 +76,8 @@ public final class Constants {
   public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 40000;  //  Safe distance where can extend the rest of the arm
   public static final double SHOULDER_POSITION_MAX = 100000;  // Max position of the arm
   public static final double SHOULDER_POSITION_STOW = 0;  // Dummy variable - Test this!
-  public static final double SHOULDER_POSITION_GROUND = 5000;   // Dummy variable - Test this!
+  public static final double SHOULDER_POSITION_PICKUP_CUBE = 5000;   // Dummy variable - Test this!
+  public static final double SHOULDER_POSITION_PICKUP_CONE = 5000;   // Dummy variable - Test this!
   public static final double SHOULDER_POSITION_LOW_CONE_NODE = 10000;  // Dummy variable - Test this!
   public static final double SHOULDER_POSITION_MID_CONE_NODE = 25000;  // Dummy variable - Test this!
   public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 70000;  // Dummy variable - Test this!

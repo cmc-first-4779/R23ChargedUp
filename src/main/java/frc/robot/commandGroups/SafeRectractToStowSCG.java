@@ -25,7 +25,7 @@ public class SafeRectractToStowSCG extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new RetractShoulderExtenderPCG(shoulder, extender),
-      new ShoulderSetPosition(shoulder, Constants.SHOULDER_POSITION_SAFE_TO_EXTEND)
+      new ShoulderSetPosition(shoulder, Constants.SHOULDER_POSITION_STOW)
     );
   }
 }

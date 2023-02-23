@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commandGroups.SafeSetToPositionSCG;
+import frc.robot.commandGroups.StopAllPCG;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
@@ -42,9 +44,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem(this);
-  private final ShoulderSubsystem shoulderSubsystem = new ShoulderSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
+  private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController =
@@ -77,13 +79,16 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-    m_driverController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
-    m_driverController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
-    m_driverController.cross().onTrue(new ShoulderStopCommand(shoulderSubsystem));
-    m_driverController.circle().whileTrue(new ShoulderMoveWithJoystick(shoulderSubsystem, m_driverController));
-    m_driverController.square().onTrue(new ShoulderSetPosition(shoulderSubsystem, 0));
-    m_driverController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
-    m_driverController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));
+    m_driverController.L1().whileTrue(new IntakeEjectCommand(intake));
+    m_driverController.R1().whileTrue(new IntakePickupCommand(intake));
+    m_driverController.povDown().onTrue(new StopAllPCG(shoulder, extender, intake));
+    m_driverController.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender));
+    m_driverController.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender));
+    m_driverController.square().onTrue(new SafeSetToPositionSCG("MID_CUBE", shoulder, extender));
+    m_driverController.triangle().onTrue(new SafeSetToPositionSCG("MID_CONE", shoulder, extender));
+    m_driverController.cross().onTrue(new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender));
+    m_driverController.circle().onTrue(new SafeSetToPositionSCG("LOW_CONE", shoulder, extender));
+    m_driverController.touchpad().onTrue(new SafeSetToPositionSCG("STOW", shoulder, extender));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
@@ -107,7 +112,7 @@ public class RobotContainer {
    * @return
    */
   public double getShoulderPosition() {
-    return shoulderSubsystem.getShoulderPos();
+    return shoulder.getShoulderPos();
   }
 
 }

@@ -13,17 +13,30 @@ import frc.robot.subsystems.ShoulderSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SafeShoulderExtendLowConeSCG extends SequentialCommandGroup {
+public class SafeSetToPositionSCG extends SequentialCommandGroup {
+
+  //  Declare our Subsystem
   ShoulderSubsystem shoulder;
   ExtenderSubsystem extender;
-  /** Creates a new SafeShoulderExtendLowConeSCG. */
-  public SafeShoulderExtendLowConeSCG(ShoulderSubsystem shoulder, ExtenderSubsystem extender) {
+
+  //  Declare our position
+  String position;
+
+  /** Creates a new SafeSetToPositionSCG. */
+  public SafeSetToPositionSCG(String position, ShoulderSubsystem shoulder, ExtenderSubsystem extender) {
+
+    //  Set our local variables to the pass-thru values
     this.shoulder = shoulder;
     this.extender = extender;
+    this.position = position;
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(      
-    new ShoulderSetPosition(shoulder, Constants.SHOULDER_POSITION_SAFE_TO_EXTEND),
-    new ShoulderExtenderLowConePCG(shoulder, extender));
+    addCommands(
+      //  Move the shoulder up to the safe position to move the extender and the wrist
+      new ShoulderSetPosition(shoulder, Constants.SHOULDER_POSITION_SAFE_TO_EXTEND),
+      //  Move the shoulder, extender, and wrist the rest of the way to the setpoints
+      new SetToPositionPCG(position, shoulder, extender)
+    );
   }
 }
