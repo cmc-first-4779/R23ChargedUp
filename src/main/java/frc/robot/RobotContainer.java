@@ -73,6 +73,9 @@ public class RobotContainer {
     m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 3));
     m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 4));
     m_driverController.triangle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 5));
+    m_driverController.circle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 6));
+    m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 7));
+    m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 0));
 
   }
 
