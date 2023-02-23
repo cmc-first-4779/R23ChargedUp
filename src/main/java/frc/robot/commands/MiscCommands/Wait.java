@@ -7,6 +7,10 @@ package frc.robot.commands.MiscCommands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+//  This command allows us to put short wait statements in between complicated movements
+//   By having the system wait before advancing to the next command, this will give the motors
+//   and pneumatics a chance to catch up and settle-down
+
 public class Wait extends CommandBase {
   // Declare our timer
   Timer timer = new Timer();
