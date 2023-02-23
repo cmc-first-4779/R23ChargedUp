@@ -56,12 +56,7 @@ public class ExtenderSubsystem extends SubsystemBase {
 
     // Add PID Fields to SmartDashboard
     SmartDashboard.putNumber("Position", 0);
-    SmartDashboard.putNumber("kF", kF);
-    SmartDashboard.putNumber("kP", kP);
-    SmartDashboard.putNumber("kI", kI);
-    SmartDashboard.putNumber("kD", kD);
-    SmartDashboard.putNumber("Cruise Vel", Constants.EXTENDER_SM_MAX_VEL);
-    SmartDashboard.putNumber("Cruise Accel ", Constants.EXTENDER_SM_MAX_ACCEL);
+
 
   }
 

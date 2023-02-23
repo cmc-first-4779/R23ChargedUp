@@ -79,11 +79,11 @@ public class RobotContainer {
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     m_driverController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
     m_driverController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
-    m_driverController.cross().onTrue(new ShoulderStopCommand(shoulderSubsystem));
-    m_driverController.circle().whileTrue(new ShoulderMoveWithJoystick(shoulderSubsystem, m_driverController));
-    m_driverController.square().onTrue(new ShoulderSetPosition(shoulderSubsystem, 0));
-    m_driverController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
-    m_driverController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));
+    m_driverController.touchpad().onTrue(new ShoulderStopCommand(shoulderSubsystem));
+    m_driverController.circle().whileTrue(new ExtendExtender(extenderSubsystem));
+    m_driverController.square().whileTrue(new RetractExtender(extenderSubsystem));
+    //m_driverController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
+    //m_driverController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.

@@ -173,7 +173,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderMotorMaster.stopMotor();
   }
 
-  // Use MotionMagic to set the winch to a specific Encoder Position.
+  // Use MotionMagic to set the shoulder to a specific Encoder Position.
   public void setShoulderPosition(double setPoint) {
     shoulderMotorMaster.setSafetyEnabled(false);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
@@ -185,7 +185,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
-  // Method to test the winch with the SmartDashboard and get PID values
+  // Method to test the shoulder with the SmartDashboard and get PID values
   public void testShoulderMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
       double cruiseAccel) {
     configPIDFValues(shoulderMotorMaster, kP, kI, kD, kF, 0);

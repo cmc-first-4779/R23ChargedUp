@@ -9,27 +9,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShoulderSubsystem;
 
 public class ShoulderTESTCommand extends CommandBase {
-  ShoulderSubsystem winchSubsystem;
+  ShoulderSubsystem shoulder;
   /** Creates a new WinchTESTommand. */
-  public ShoulderTESTCommand(ShoulderSubsystem winchSubsystem) {
-    this.winchSubsystem = winchSubsystem;
+  public ShoulderTESTCommand(ShoulderSubsystem shoulder) {
+    this.shoulder = shoulder;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(winchSubsystem);
+    addRequirements(shoulder);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     double position = SmartDashboard.getNumber("Position", 10000);
-    double kF = SmartDashboard.getNumber("kF", 0.00);
-    double kP = SmartDashboard.getNumber("kP", 0.05);
-    double kI = SmartDashboard.getNumber("kI", 0.00);
-    double kD = SmartDashboard.getNumber("kD", 0.00);
-    double cruiseVel = SmartDashboard.getNumber("Cruise Vel", 8000);
-    double cruiseAccel = SmartDashboard.getNumber("Cruise Accel", 8000);
-    System.out.println("Inside init of Test Command.  Accel is:  "  + cruiseAccel);
     //  Call Motion Magic to set our Winch Position to the Ground
-    winchSubsystem.testShoulderMM(position, kF, kP, kI, kD, cruiseVel, cruiseAccel);
+    shoulder.setShoulderPosition(position);
 
   }
 
