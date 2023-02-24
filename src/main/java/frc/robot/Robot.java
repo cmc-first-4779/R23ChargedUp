@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.lang.reflect.Field;
+import java.util.function.DoubleSupplier;
+
 import com.dacubeking.AutoBuilder.robot.reflection.ClassInformationSender;
 import com.dacubeking.AutoBuilder.robot.robotinterface.AutonomousContainer;
 import com.dacubeking.AutoBuilder.robot.robotinterface.CommandTranslator;
@@ -11,10 +14,9 @@ import com.dacubeking.AutoBuilder.robot.robotinterface.CommandTranslator;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -41,6 +43,8 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> autoChooser = new SendableChooser<>();
   private final SendableChooser<String> sideChooser = new SendableChooser<>();
 
+  Rotation2d lastRotation = new Rotation2d();
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -54,7 +58,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     // Get the names of all the autos and then add them to a chooser
-    // AutonomousContainer.getInstance().getAutonomousNames().forEach(name -> autoChooser.addOption(name, name));
+    // AutonomousContainer.getInstance().getAutonomousNames().forEach(name ->
+    // autoChooser.addOption(name, name));
 
     // Ensure the second String is the name of the folder where your sided autos are
     // located
@@ -84,7 +89,7 @@ public class Robot extends TimedRobot {
         this,
         m_robotContainer);
 
-            // Get the names of all the autos and then add them to a chooser
+    // Get the names of all the autos and then add them to a chooser
     AutonomousContainer.getInstance().getAutonomousNames().forEach(name -> autoChooser.addOption(name, name));
 
     // Ensure the second String is the name of the folder where your sided autos are
@@ -97,23 +102,22 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Red or Blue", sideChooser);
 
   }
-  
 
   public SwerveControllerCommand createSwerveControllerCommand(Trajectory trajectory) {
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
     PIDController yController = new PIDController(Constants.kPYController, 0, 0);
     double kpTheta = SmartDashboard.getNumber("kpTheta", .07777);
     // ProfiledPIDController thetaController = new ProfiledPIDController(
-    //         Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-            ProfiledPIDController thetaController = new ProfiledPIDController(
-              kpTheta, 0, 0, Constants.kThetaControllerConstraints);
-      thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    // Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+        kpTheta, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-      // System.out.println("Trajectory: ");
-      // for (State state : trajectory.getStates()) {
-      //   System.out.println(state);
-      // }
-      // System.out.println("Trajectory: " + trajectory.sample(1.2));
+    // System.out.println("Trajectory: ");
+    // for (State state : trajectory.getStates()) {
+    // System.out.println(state);
+    // }
+    // System.out.println("Trajectory: " + trajectory.sample(1.2));
     DrivetrainSubsystem drive = m_robotContainer.getDriveSubsystem();
     return new SwerveControllerCommand(
         trajectory,
@@ -159,6 +163,26 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    if (isAutonomous()) {
+      try {
+        var newRotation = AutonomousContainer.getCommandTranslator().getWantedRotation();
+
+        if (!newRotation.equals(lastRotation)) {
+          Field field = AutonomousContainer.getCommandTranslator().getClass()
+              .getDeclaredField("getTrajectoryElapsedTime");
+          field.setAccessible(true);
+          DoubleSupplier getTrajectoryElapsedTime = (DoubleSupplier) field
+              .get(AutonomousContainer.getCommandTranslator());
+          System.out.println(("New Rotation: " + newRotation + "at time: " + getTrajectoryElapsedTime.getAsDouble()));
+          lastRotation = newRotation;
+
+        }
+
+      } catch (NoSuchFieldException | IllegalAccessException e) {
+        throw new RuntimeException(e);
+      }
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -182,16 +206,22 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
+    // m_autonomousCommand.schedule();
     // }
 
-    //Run the autos for autobuilder
+    // Run the autos for autobuilder
     String autoName = autoChooser.getSelected();
     if (autoName == null) {
-        autoName = "Kevin"; // Default auto if none is selected
+      autoName = "Kevin"; // Default auto if none is selected
     }
     // // If it can't find a sided auto it will try to find a non-sided auto
-    AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
+    AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is
+                                                                                                // about allowing
+                                                                                                // network autos to run,
+                                                                                                // keep this set to true
+                                                                                                // unless you have a
+                                                                                                // reason to disable
+                                                                                                // them.
 
   }
 
