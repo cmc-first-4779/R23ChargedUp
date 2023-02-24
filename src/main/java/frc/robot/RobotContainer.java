@@ -50,10 +50,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem(this);
-  private final ShoulderSubsystem shoulderSubsystem = new ShoulderSubsystem();
-  private final WristSubsystem wristSubsystem = new WristSubsystem(this);
+  private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
+  private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
+  private final WristSubsystem wrist = new WristSubsystem(this);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController =
@@ -86,15 +86,17 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-    m_driverController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
-    m_driverController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
-    m_driverController.touchpad().onTrue(new ShoulderStopCommand(shoulderSubsystem));
-    m_driverController.circle().whileTrue(new ExtendExtender(extenderSubsystem));
-    m_driverController.square().whileTrue(new RetractExtender(extenderSubsystem));
-    //m_driverController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
-    //m_driverController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));
+    //new Trigger(m_exampleSubsystem::exampleCondition)
+    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
+    m_driverController.L2().whileTrue(new IntakePickupCommand(intake));
+    m_driverController.R2().whileTrue(new IntakeEjectCommand(intake));
+    m_driverController.cross().whileTrue(new ShoulderLower(shoulder));
+    m_driverController.triangle().whileTrue(new ShoulderRaise(shoulder));
+    m_driverController.touchpad().onTrue(new ShoulderStopCommand(shoulder));
+    m_driverController.circle().whileTrue(new ExtendExtender(extender));
+    m_driverController.square().whileTrue(new RetractExtender(extender));
+    m_driverController.L1().whileTrue(new WristRaise(wrist));
+    m_driverController.L2().whileTrue(new WristRaise(wrist));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
