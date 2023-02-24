@@ -25,6 +25,14 @@ import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.commands.ShoulderCommands.ShoulderStopCommand;
 import frc.robot.commands.ShoulderCommands.ShoulderTESTCommand;
 import frc.robot.subsystems.ShoulderSubsystem;
+import frc.robot.commands.WristCommands.WristMoveWithJoystick;
+import frc.robot.commands.WristCommands.WristRaise;
+import frc.robot.commands.WristCommands.WristSetPosition;
+import frc.robot.commands.WristCommands.WristLower;
+import frc.robot.commands.WristCommands.WristTESTCommand;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.WristSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -45,18 +53,21 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem(this);
   private final ShoulderSubsystem shoulderSubsystem = new ShoulderSubsystem();
+  private final WristSubsystem wristSubsystem = new WristSubsystem(this);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
   
  
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+
+
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+
   }
 
   /**
