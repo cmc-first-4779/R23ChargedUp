@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.MiscCommands.Wait;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
+import frc.robot.commands.WristCommands.WristSetPosition;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -18,12 +20,14 @@ public class SafeRectractToStowSCG extends SequentialCommandGroup {
   // Declare our subsystems
   ShoulderSubsystem shoulder;
   ExtenderSubsystem extender;
+  WristSubsystem wrist;
 
   /** Creates a new SafeRectractToStowSCG. */
-  public SafeRectractToStowSCG(ShoulderSubsystem shoulder, ExtenderSubsystem extender) {
+  public SafeRectractToStowSCG(ShoulderSubsystem shoulder, ExtenderSubsystem extender, WristSubsystem wrist) {
     //  Set our local variables to our passthrough variables
     this.shoulder = shoulder;
     this.extender = extender;
+    this.wrist = wrist;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -31,6 +35,8 @@ public class SafeRectractToStowSCG extends SequentialCommandGroup {
       new RetractShoulderExtenderPCG(shoulder, extender),
       //  Wait a little time for the system to settle down (seconds)
       new Wait(0.5),
+      // Retract the wrist last to avoid stripping off parts
+      new WristSetPosition(wrist, Constants.WRIST_POSITION_STOW),
       //  Put the shoulder in the STOW position
       new ShoulderSetPosition(shoulder, Constants.SHOULDER_POSITION_STOW)
     );
