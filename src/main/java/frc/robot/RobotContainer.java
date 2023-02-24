@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import java.sql.Driver;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -21,7 +23,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -61,6 +65,7 @@ public class RobotContainer {
   SendableChooser<List<PathPlannerTrajectory>> autoChooser = new SendableChooser<>();
   SwerveAutoBuilder autoBuilder;
   List<PathPlannerTrajectory> selectedAuto;
+  SendableChooser<String> AllianceChooser = new SendableChooser<>();
   // String selectedAuto;
   // Trajectory chosenTrajectory;
 
@@ -89,6 +94,7 @@ public class RobotContainer {
     SmartDashboard.putBoolean("Use PathPlanner", true);
     SmartDashboard.putBoolean("Debug Swerve", false);
     // SmartDashboard.putString("selectedAuto", selectedAuto);
+    
 
     generatePathPlannerPathGroups();
     createAutoBuilder();
@@ -138,9 +144,9 @@ public class RobotContainer {
    */
   private void generatePathPlannerPathGroups() {
     List<PathPlannerTrajectory> testSquareTraj = PathPlanner.loadPathGroup("SquareTest", new PathConstraints(2, 2));
-    List<PathPlannerTrajectory> testPathTraj = PathPlanner.loadPathGroup("TestPath", new PathConstraints(4, 3));
+    List<PathPlannerTrajectory> testPathTraj = PathPlanner.loadPathGroup("TestPath", new PathConstraints(2, 3));
     List<PathPlannerTrajectory> Blue_Drop_Cone_And_Pickuptraj = PathPlanner.loadPathGroup("Blue Drop Cone and Pickup",
-        new PathConstraints(4, 3));
+        new PathConstraints(2, 3));
 
     autoChooser.setDefaultOption("Test Square", testSquareTraj);
     autoChooser.addOption("TestPath", testPathTraj);
