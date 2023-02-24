@@ -4,36 +4,15 @@
 
 package frc.robot;
 
+import frc.StaticConstants.BlingConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.WristCommands.WristMoveWithJoystick;
-import frc.robot.commands.WristCommands.WristRaise;
-import frc.robot.commands.WristCommands.WristSetPosition;
-import frc.robot.commands.WristCommands.WristLower;
-import frc.robot.commands.WristCommands.WristTESTCommand;
-import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
-import frc.robot.commands.IntakeCommands.IntakePickupCommand;
-import frc.robot.commands.IntakeCommands.IntakeStopCommand;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.BlingCommands.BlingSetPattern;
+import frc.robot.subsystems.BlingSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.WristSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.commands.ExtenderCommands.ExtendByJoystick;
-import frc.robot.commands.ExtenderCommands.ExtendExtender;
-import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
-import frc.robot.commands.ExtenderCommands.ExtenderStopCommand;
-import frc.robot.commands.ExtenderCommands.RetractExtender;
-import frc.robot.subsystems.ExtenderSubsystem;
-import frc.robot.commands.ShoulderCommands.ShoulderLower;
-import frc.robot.commands.ShoulderCommands.ShoulderMoveWithJoystick;
-import frc.robot.commands.ShoulderCommands.ShoulderRaise;
-import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
-import frc.robot.commands.ShoulderCommands.ShoulderStopCommand;
-import frc.robot.commands.ShoulderCommands.ShoulderTESTCommand;
-import frc.robot.subsystems.ShoulderSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -48,10 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final WristSubsystem wristSubsystem = new WristSubsystem(this);
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem(this);
-  private final ShoulderSubsystem shoulderSubsystem = new ShoulderSubsystem();
+  private final BlingSubsystem bling = new BlingSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController =
@@ -86,17 +62,13 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-    m_driverController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
-    m_driverController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
-    m_driverController.cross().onTrue(new ShoulderStopCommand(shoulderSubsystem));
-    m_driverController.circle().whileTrue(new ShoulderMoveWithJoystick(shoulderSubsystem, m_driverController));
-    m_driverController.square().onTrue(new ShoulderSetPosition(shoulderSubsystem, 0));
-    m_driverController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
-    m_driverController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    //  Bling Violet / Purple for Cubes
+    m_driverController.L1().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
+    //  Bling Yellow for Cones
+    m_driverController.R1().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
+    //  Bling Party just because we like it
+    m_driverController.R2().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
+    
   }
 
   /**
@@ -107,6 +79,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
+    
   }
 
   /**

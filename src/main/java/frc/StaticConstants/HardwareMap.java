@@ -14,4 +14,7 @@ public class HardwareMap {
     public static final int CAN_ADDRESS_WRIST = 45;
     public static final int CAN_ADDRESS_INTAKE = 46;
 
+    // PWM Ports on the RoboRIO
+    public static final int PWM_PORT_BLING = 1;
+
 }
