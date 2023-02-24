@@ -232,7 +232,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
-  public double getShoulderPos(){
+  public double getShoulderPosition(){
     return shoulderMasterPosition;
   }
 

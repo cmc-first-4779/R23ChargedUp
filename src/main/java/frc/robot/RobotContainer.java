@@ -104,7 +104,25 @@ public class RobotContainer {
    * @return
    */
   public double getShoulderPosition() {
-    return shoulder.getShoulderPos();
+    return shoulder.getShoulderPosition();
+  }
+
+    /**
+   * Gets the current postion of the arm
+   * 
+   * @return
+   */
+  public double getExtenderPosition() {
+    return extender.getExtenderPos();
+  }
+
+    /**
+   * Gets the current postion of the arm
+   * 
+   * @return
+   */
+  public double getWristPosition() {
+    return wristSubsystem.getWristPosition();
   }
 
 }

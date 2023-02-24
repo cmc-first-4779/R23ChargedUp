@@ -266,4 +266,8 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
   }
 
+public double getExtenderPos() {
+    return extenderMotor.getEncoder().getPosition();
+}
+
 }

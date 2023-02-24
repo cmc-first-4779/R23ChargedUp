@@ -269,4 +269,8 @@ public class WristSubsystem extends SubsystemBase {
     return false;
   }
 
+  public double getWristPosition(){
+    return wristMotor.getEncoder().getPosition();
+  }
+
 }
