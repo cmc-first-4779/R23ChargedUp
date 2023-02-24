@@ -15,6 +15,8 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
+import frc.robot.subsystems.WristSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -35,6 +37,7 @@ public class RobotContainer {
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
   private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
+  private final WristSubsystem wristSubsystem = new WristSubsystem(this);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController = new CommandPS4Controller(
@@ -46,6 +49,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+
   }
 
   /**
