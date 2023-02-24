@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -31,7 +32,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
    m_robotContainer = new RobotContainer();
 
-   if (m_robotContainer.allianceChooser.getSelected() == "RED"){
+   if (m_robotContainer.getAlliance() == Alliance.Red){
     m_robotContainer.m_LimelightSubsystem.setPipeline(1);
     m_robotContainer.m_LimelightSubsystem.setPipeline(2);
     m_robotContainer.m_LimelightSubsystem.setPipeline(3);
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    m_robotContainer.setButtons();
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

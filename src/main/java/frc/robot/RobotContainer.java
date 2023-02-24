@@ -12,6 +12,9 @@ import frc.robot.commands.SetPipeline;
 import frc.robot.commands.LimeLight.GetLocationOfAprilTag;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -68,15 +71,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
-    m_driverController.triangle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 1));
-    m_driverController.circle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 2));
-    m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 3));
-    m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 4));
-    m_driverController.triangle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 5));
-    m_driverController.circle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 6));
-    m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 7));
-    m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 0));
-
+   
   }
 
   /**
@@ -97,9 +92,27 @@ public class RobotContainer {
     return m_LimelightSubsystem;
   }
 
+  public DriverStation.Alliance getAlliance(){ 
+    return DriverStation.getAlliance();
+}
+
   // public String getAllianceChooseString(){
   //   return allianceChooser.getSelected();
   // }
-
+  
+  public void setButtons() {
+    if (getAlliance() == Alliance.Red) {
+      m_driverController.triangle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 1));
+      m_driverController.circle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 2));
+      m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 3));
+      m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 4));
+      }
+      else {
+      m_driverController.triangle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 5));
+      m_driverController.circle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 6));
+      m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 7));
+      m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 0));
+      }
+  }
 }
 
