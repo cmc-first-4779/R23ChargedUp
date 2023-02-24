@@ -10,6 +10,7 @@ import frc.robot.commands.MiscCommands.Wait;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,16 +20,18 @@ public class SafeSetToPositionSCG extends SequentialCommandGroup {
   //  Declare our Subsystem
   ShoulderSubsystem shoulder;
   ExtenderSubsystem extender;
+  WristSubsystem wrist;
 
   //  Declare our position
   String position;
 
   /** Creates a new SafeSetToPositionSCG. */
-  public SafeSetToPositionSCG(String position, ShoulderSubsystem shoulder, ExtenderSubsystem extender) {
+  public SafeSetToPositionSCG(String position, ShoulderSubsystem shoulder, ExtenderSubsystem extender, WristSubsystem wrist) {
 
     //  Set our local variables to the pass-thru values
     this.shoulder = shoulder;
     this.extender = extender;
+    this.wrist = wrist;
     this.position = position;
 
     // Add your commands in the addCommands() call, e.g.
@@ -39,7 +42,7 @@ public class SafeSetToPositionSCG extends SequentialCommandGroup {
       //  Wait for the system to settle down (seconds)
       new Wait(0.5),
       //  Move the shoulder, extender, and wrist the rest of the way to the setpoints
-      new SetToPositionPCG(position, shoulder, extender)
+      new SetToPositionPCG(position, shoulder, extender, wrist)
     );
   }
 }

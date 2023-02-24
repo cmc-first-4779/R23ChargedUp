@@ -10,6 +10,7 @@ import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,20 +20,21 @@ public class SetToPositionPCG extends ParallelCommandGroup {
   // Declare our Subsystems
   ShoulderSubsystem shoulder;
   ExtenderSubsystem extender;
+  WristSubsystem wrist;
 
   // position is how we are positioning our subsystems
   String position;
 
   // Declare our positions
-  double shoulderPosition, extenderPosition, wristposition;
+  double shoulderPosition, extenderPosition, wristPosition;
 
   /** Creates a new SetToPositionPCG. */
-  public SetToPositionPCG(String position, ShoulderSubsystem shoulder, ExtenderSubsystem extender) {
+  public SetToPositionPCG(String position, ShoulderSubsystem shoulder, ExtenderSubsystem extender, WristSubsystem wrist) {
 
     // Set local variables to pass-thru variables
     this.shoulder = shoulder;
     this.extender = extender;
-    // NEED TO add WRIST
+    this.wrist = wrist;
     this.position = position;
 
     // Set up a switch statement to set our position values to the appropriate
@@ -44,57 +46,58 @@ public class SetToPositionPCG extends ParallelCommandGroup {
       case "HIGH_CUBE":
         shoulderPosition = Constants.SHOULDER_POSITION_HIGH_CUBE_NODE;
         extenderPosition = Constants.EXTENDER_POSITION_HIGH_CUBE_NODE;
-        // Need to set wrist position
+        wristPosition = Constants.WRIST_POSITION_HIGH_CUBE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to HIGH CONE
       case "HIGH_CONE":
         shoulderPosition = Constants.SHOULDER_POSITION_HIGH_CONE_NODE;
         extenderPosition = Constants.EXTENDER_POSITION_HIGH_CONE_NODE;
-        // Need to set wrist position
+        wristPosition = Constants.WRIST_POSITION_HIGH_CONE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to MID CUBE
       case "MID_CUBE":
         shoulderPosition = Constants.SHOULDER_POSITION_MID_CUBE_NODE;
         extenderPosition = Constants.EXTENDER_POSITION_MID_CUBE_NODE;
-        // Need to set wrist position
+        wristPosition = Constants.WRIST_POSITION_MID_CUBE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to MID CONE
       case "MID_CONE":
         shoulderPosition = Constants.SHOULDER_POSITION_MID_CONE_NODE;
         extenderPosition = Constants.EXTENDER_POSITION_MID_CONE_NODE;
-        // Need to set wrist position
+        wristPosition = Constants.WRIST_POSITION_MID_CONE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to LOW CUBE
       case "LOW_CUBE":
         shoulderPosition = Constants.SHOULDER_POSITION_LOW_CUBE_NODE;
         extenderPosition = Constants.EXTENDER_POSITION_LOW_CUBE_NODE;
+        wristPosition = Constants.WRIST_POSITION_LOW_CUBE_NODE;
         // Need to set wrist position
         break;
       case "LOW_CONE":
         // Set the values for the Shoulder, Extender, and Wrist Positions to LOW CONE
         shoulderPosition = Constants.SHOULDER_POSITION_LOW_CONE_NODE;
         extenderPosition = Constants.EXTENDER_POSITION_LOW_CONE_NODE;
-        // Need to set wrist position
+        wristPosition = Constants.WRIST_POSITION_LOW_CONE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to Pick a CUBE
       // from the ground
       case "PICKUP_CUBE":
         shoulderPosition = Constants.SHOULDER_POSITION_PICKUP_CUBE;
         extenderPosition = Constants.EXTENDER_POSITION_PICKUP_CUBE;
-        // Need to set wrist position
+        wristPosition = Constants.WRIST_POSITION_PICKUP_CUBE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to Pick a CONE
       // from the ground
       case "PICKUP_CONE":
         shoulderPosition = Constants.SHOULDER_POSITION_PICKUP_CONE;
         extenderPosition = Constants.EXTENDER_POSITION_PICKUP_CONE;
-        // Need to set wrist position
+        wristPosition = Constants.WRIST_POSITION_PICKUP_CONE;
         break;
       // Our DEFAULT POSITION WILL BE THE STOW POSITION
       default: // DEFAULT position is "STOW"
         shoulderPosition = Constants.SHOULDER_POSITION_STOW;
         extenderPosition = Constants.EXTENDER_POSITION_STOW;
-        // Need to set wrist position
+        wristPosition = Constants.WRIST_POSITION_STOW;
         break;
     }
 

@@ -96,10 +96,11 @@ public final class Constants {
     public static final double WRIST_kMinOutput = -1;
     public static final double WRIST_MAX_RPM = 5700;
     public static final double WRIST_POSITION_STOW = 0;  // Dummy variable - Test this!
-    public static final double WRIST_POSITION_GROUND = 7;   // Dummy variable - Test this!
+    public static final double WRIST_POSITION_PICKUP_CONE = 4;   // Dummy variable - Test this!
+    public static final double WRIST_POSITION_PICKUP_CUBE = 4;   // Dummy variable - Test this!
     public static final double WRIST_POSITION_LOW_CONE_NODE = 4;  // Dummy variable - Test this!
     public static final double WRIST_POSITION_MID_CONE_NODE = 4;  // Dummy variable - Test this!
-    public static final double WRIST_POSITION_HIGH_CONE_NODE = 4;  // Dummy variable - Test this!
+    public static final double WRIST_POSITION_HIGH_CONE_NODE =4;  // Dummy variable - Test this!
     public static final double WRIST_POSITION_LOW_CUBE_NODE = 7;  // Dummy variable - Test this!
     public static final double WRIST_POSITION_MID_CUBE_NODE = 7;  // Dummy variable - Test this!
     public static final double WRIST_POSITION_HIGH_CUBE_NODE = 55;  // Dummy variable - Test this!

@@ -37,7 +37,7 @@ public class RobotContainer {
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
   private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
-  private final WristSubsystem wristSubsystem = new WristSubsystem(this);
+  private final WristSubsystem wrist = new WristSubsystem(this);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController = new CommandPS4Controller(
@@ -74,13 +74,13 @@ public class RobotContainer {
     m_driverController.L1().whileTrue(new IntakeEjectCommand(intake));
     m_driverController.R1().whileTrue(new IntakePickupCommand(intake));
     m_driverController.povDown().onTrue(new StopAllPCG(shoulder, extender, intake));
-    m_driverController.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender));
-    m_driverController.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender));
-    m_driverController.square().onTrue(new SafeSetToPositionSCG("MID_CUBE", shoulder, extender));
-    m_driverController.triangle().onTrue(new SafeSetToPositionSCG("MID_CONE", shoulder, extender));
-    m_driverController.cross().onTrue(new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender));
-    m_driverController.circle().onTrue(new SafeSetToPositionSCG("LOW_CONE", shoulder, extender));
-    m_driverController.touchpad().onTrue(new SafeSetToPositionSCG("STOW", shoulder, extender));
+    m_driverController.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    m_driverController.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
+    m_driverController.square().onTrue(new SafeSetToPositionSCG("MID_CUBE", shoulder, extender, wrist));
+    m_driverController.triangle().onTrue(new SafeSetToPositionSCG("MID_CONE", shoulder, extender, wrist));
+    m_driverController.cross().onTrue(new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist));
+    m_driverController.circle().onTrue(new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
+    m_driverController.touchpad().onTrue(new SafeSetToPositionSCG("STOW", shoulder, extender, wrist));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
@@ -99,7 +99,7 @@ public class RobotContainer {
   }
 
   /**
-   * Gets the current postion of the arm
+   * Gets the current postion of the shoulder
    * 
    * @return
    */
@@ -108,7 +108,7 @@ public class RobotContainer {
   }
 
     /**
-   * Gets the current postion of the arm
+   * Gets the current postion of the extender
    * 
    * @return
    */
@@ -117,12 +117,12 @@ public class RobotContainer {
   }
 
     /**
-   * Gets the current postion of the arm
+   * Gets the current postion of the wrist
    * 
    * @return
    */
   public double getWristPosition() {
-    return wristSubsystem.getWristPosition();
+    return wrist.getWristPosition();
   }
 
 }
