@@ -65,6 +65,8 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller m_driverController =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
+    private final CommandPS4Controller m_operatorController =
+      new CommandPS4Controller(OperatorConstants.kOperatorControllerPort);
       // private final XboxController m_driverController =
       // new XboxController(OperatorConstants.kDriverControllerPort);
   
@@ -106,21 +108,17 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // m_driverController.b().whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem, m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
-    // // Back button zeros the gyroscope
-    // m_driverController.back().onTrue(m_drivetrainSubsystem.zeroGyroscope());
-    // m_driverController.x().onTrue(new balanceTest(m_drivetrainSubsystem)); // This button X on the controller
-  //  new Trigger(m_driverController::getBButton).whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem, m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
-    //// Back button zeros the gyroscope
-    // new Trigger(m_driverController::getXButton).onTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope));
-    // new Trigger(m_driverController::getAButton).whileTrue(new balanceTest(m_drivetrainSubsystem)); // This button A on the controller
-    m_driverController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
-    m_driverController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
-    m_driverController.cross().onTrue(new ShoulderStopCommand(shoulderSubsystem));
-    m_driverController.circle().whileTrue(new ShoulderMoveWithJoystick(shoulderSubsystem, m_driverController));
-    m_driverController.square().onTrue(new ShoulderSetPosition(shoulderSubsystem, 0));
-    m_driverController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
-    m_driverController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+ 
+    m_driverController.square().whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem, m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
+    m_driverController.cross().whileTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope, m_drivetrainSubsystem));
+    m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
+    m_operatorController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
+    m_operatorController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
+    m_operatorController.cross().onTrue(new ShoulderStopCommand(shoulderSubsystem));
+    m_operatorController.circle().whileTrue(new ShoulderMoveWithJoystick(shoulderSubsystem, m_driverController));
+    m_operatorController.square().onTrue(new ShoulderSetPosition(shoulderSubsystem, 0));
+    m_operatorController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
+    m_operatorController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
