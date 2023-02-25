@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
+import frc.robot.commands.WristCommands.WristSetPosition;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -109,6 +110,8 @@ public class SetToPositionPCG extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ShoulderSetPosition(shoulder, shoulderPosition),
-        new ExtenderSetPosition(extender, extenderPosition));
+        new ExtenderSetPosition(extender, extenderPosition),
+        new WristSetPosition(wrist, wristPosition)
+    );
   }
 }
