@@ -53,7 +53,7 @@ public final class Constants {
  public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 3; // DONE Set back left drive motor ID
  public static final int BACK_LEFT_MODULE_STEER_MOTOR = 13; // DONE Set back left steer motor ID
  public static final int BACK_LEFT_MODULE_STEER_ENCODER = 23; // DONE Set back left steer encoder ID
- public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(179.90); // DONE Measure and set back
+ public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(359.9); // DONE Measure and set back
                                                                                      // left steer offset
 
  public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 4; // DONE Set back right drive motor ID
