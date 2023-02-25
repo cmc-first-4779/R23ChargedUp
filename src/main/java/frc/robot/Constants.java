@@ -26,7 +26,7 @@ public final class Constants {
   *
   * Should be measured from center to center.
   */
- public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.5334; // DONE DONE Measure and set trackwidth
+ public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.4953; // DONE DONE Measure and set trackwidth
  /**
   * The front-to-back distance between the drivetrain wheels.
   *
@@ -34,7 +34,7 @@ public final class Constants {
   */
  public static final double PIGEON_DEADBAND_GOING_UP = .5;
  public static final double PIGEON_DEADBAND_GOING_DOWN = -.5;
- public static final double DRIVETRAIN_WHEELBASE_METERS = 0.5334; // DONE Measure and set wheelbase
+ public static final double DRIVETRAIN_WHEELBASE_METERS = 0.6096; // DONE Measure and set wheelbase
 
  public static final int DRIVETRAIN_PIGEON_ID = 5; // DONE Set Pigeon ID
 
@@ -62,7 +62,7 @@ public final class Constants {
  public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(136.40); // DONE Measure and set back
                                                                                       // right steer offset
 
- public static final double kPXController = 0.077777;
+ public static final double kPXController = 0.077777;//need to change for comp bot
  public static final double kPYController = 0.077777;
  public static final double kPXYController = 0.077777;
  public static final double kPThetaController = 0.77777;
