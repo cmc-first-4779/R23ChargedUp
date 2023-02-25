@@ -185,6 +185,10 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
+  public double getShoulderPosition(){
+    return shoulderMasterPosition;
+  }
+
   // Method to test the winch with the SmartDashboard and get PID values
   public void testShoulderMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
       double cruiseAccel) {

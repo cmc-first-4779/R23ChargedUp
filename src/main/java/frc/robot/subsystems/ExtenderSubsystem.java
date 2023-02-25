@@ -229,7 +229,7 @@ public class ExtenderSubsystem extends SubsystemBase {
    */
   private boolean safeToExtendExtender() {
     // Need to check with arm to make sure it's in a good space.
-    double armPosition = robotContainer.getArmPosition();
+    double armPosition = robotContainer.getShoulderPosition();
     if (armPosition > Constants.EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND) {
       System.out.println("Arm is at safe position to extend Extender");
       return true;
@@ -264,5 +264,9 @@ public class ExtenderSubsystem extends SubsystemBase {
       stopMotor();
     }
   }
+
+  public double getExtenderPosition() {
+    return extenderMotor.getEncoder().getPosition();
+}
 
 }

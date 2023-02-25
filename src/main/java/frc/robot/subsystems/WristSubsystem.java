@@ -261,12 +261,16 @@ public class WristSubsystem extends SubsystemBase {
    */
   private boolean safeToExtendWrist() {
     // Need to check with arm to make sure it's in a good space.
-    double armPosition = robotContainer.getArmPosition();
-    if (armPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
-      System.out.println("Arm is at safe position to extend wrist");
+    double shoulderPosition = robotContainer.getShoulderPosition();
+    if (shoulderPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
+      System.out.println("Shoulder is at safe position to extend wrist");
       return true;
     }
     return false;
+  }
+
+  public double getWristPosition(){
+    return wristMotor.getEncoder().getPosition();
   }
 
 }
