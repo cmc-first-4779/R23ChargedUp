@@ -30,17 +30,15 @@ public class RobotContainer {
   private final BlingSubsystem bling = new BlingSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandPS4Controller m_driverController =
-      new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
-  
- 
+  private final CommandPS4Controller m_driverController = new CommandPS4Controller(
+      OperatorConstants.kDriverControllerPort);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-
 
   }
 
@@ -62,13 +60,13 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-    //  Bling Violet / Purple for Cubes
-    m_driverController.L1().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
-    //  Bling Yellow for Cones
-    m_driverController.R1().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
-    //  Bling Party just because we like it
-    m_driverController.R2().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
-    
+    // Bling Violet / Purple for Cubes
+    m_driverController.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
+    // Bling Yellow for Cones
+    m_driverController.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
+    // Bling Party just because we like it
+    m_driverController.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_RAINBOW_PALETTE));
+   
   }
 
   /**
@@ -79,7 +77,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
-    
+
   }
 
   /**
