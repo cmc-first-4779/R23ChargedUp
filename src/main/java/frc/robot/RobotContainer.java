@@ -123,9 +123,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
  
-    m_driverController.square().whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem, m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
-    m_driverController.cross().whileTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope, m_drivetrainSubsystem));
-    m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
+    m_driverController.L3().whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem, m_frontLeftModule, m_frontRightModule, m_backLeftModule, m_backRightModule));
+    m_driverController.options().whileTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope, m_drivetrainSubsystem));
+    // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
     m_operatorController.L1().whileTrue(new ShoulderLower(shoulderSubsystem));
     m_operatorController.R1().whileTrue(new ShoulderRaise(shoulderSubsystem));
     m_operatorController.cross().onTrue(new ShoulderStopCommand(shoulderSubsystem));
