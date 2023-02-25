@@ -341,9 +341,9 @@ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFir
              traj, 
              this::getPose, // Pose supplier
              this.kinematics, // SwerveDriveKinematics
-             new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
-             new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(Constants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(Constants.kPXYController, 0, 0), // Y controller (usually the same values as X controller)
+             new PIDController(Constants.kPThetaController, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
              this::drive, // Module states consumer
              true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
              this // Requires this drive subsystem
