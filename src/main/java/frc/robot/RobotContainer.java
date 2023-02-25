@@ -7,20 +7,27 @@ package frc.robot;
 import java.util.List;
 
 import com.swervedrivespecialties.swervelib.SwerveModule;
+import edu.wpi.first.*;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.commands.GetRobotPosition;
+import frc.robot.commands.SetPipeline;
+import frc.robot.commands.LimeLight.GetLocationOfAprilTag;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.subsystems.LimelightSubsystem;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -50,12 +57,15 @@ import frc.robot.subsystems.WristSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  
   SwerveModule m_frontLeftModule;
   SwerveModule m_frontRightModule;
   SwerveModule m_backLeftModule;
   SwerveModule m_backRightModule;
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public final LimelightSubsystem m_LimelightSubsystem = new LimelightSubsystem();
+  private final SetPipeline setpipeline = new SetPipeline(m_LimelightSubsystem, 0);
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final WristSubsystem wristSubsystem = new WristSubsystem(this);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -63,6 +73,10 @@ public class RobotContainer {
   private final ShoulderSubsystem shoulderSubsystem = new ShoulderSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
+      SendableChooser<String> allianceChooser = new SendableChooser<>();
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   private final CommandPS4Controller m_driverController =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
     private final CommandPS4Controller m_operatorController =
@@ -119,10 +133,11 @@ public class RobotContainer {
     m_operatorController.square().onTrue(new ShoulderSetPosition(shoulderSubsystem, 0));
     m_operatorController.triangle().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_MID_CONE_NODE));
     m_operatorController.options().onTrue(new ShoulderSetPosition(shoulderSubsystem, Constants.SHOULDER_POSITION_HIGH_CUBE_NODE));    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    //
     // pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+   // 
   }
 
   /**
@@ -131,47 +146,47 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-        // 1. Create trajectory settings
-        TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-                DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND_TRAJECTORY,
-                DrivetrainSubsystem.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
-                        .setKinematics(Constants.kDriveKinematics);
+  //       // 1. Create trajectory settings
+  //       TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+  //               DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND_TRAJECTORY,
+  //               DrivetrainSubsystem.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+  //                       .setKinematics(Constants.kDriveKinematics);
 
-        // 2. Generate trajectory
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-                new Pose2d(0, 0, new Rotation2d(0)),
-                List.of(
-                        new Translation2d(1, 0),
-                        new Translation2d(0, -1)),
-                        // new Translation2d(2, Rotation2d.fromDegrees(-90))),
-                new Pose2d(1, -1, Rotation2d.fromDegrees(90)),
+  //       // 2. Generate trajectory
+  //       Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+  //               new Pose2d(0, 0, new Rotation2d(0)),
+  //               List.of(
+  //                       new Translation2d(1, 0),
+  //                       new Translation2d(0, -1)),
+  //                       // new Translation2d(2, Rotation2d.fromDegrees(-90))),
+  //               new Pose2d(1, -1, Rotation2d.fromDegrees(90)),
 
-                trajectoryConfig);
+  //               trajectoryConfig);
 
-        // 3. Define PID controllers for tracking trajectory
-        PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-        PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-        ProfiledPIDController thetaController = new ProfiledPIDController(
-                Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-        thetaController.enableContinuousInput(-Math.PI, Math.PI);
+  //       // 3. Define PID controllers for tracking trajectory
+  //       PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+  //       PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+  //       ProfiledPIDController thetaController = new ProfiledPIDController(
+  //               Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+  //       thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-        // 4. Construct command to follow trajectory
-        SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-                trajectory,
-                m_drivetrainSubsystem::getPose,
-                Constants.kDriveKinematics,
-                xController,
-                yController,
-                thetaController,
-                m_drivetrainSubsystem::drive,
-                m_drivetrainSubsystem);
+  //       // 4. Construct command to follow trajectory
+  //       SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+  //               trajectory,
+  //               m_drivetrainSubsystem::getPose,
+  //               Constants.kDriveKinematics,
+  //               xController,
+  //               yController,
+  //               thetaController,
+  //               m_drivetrainSubsystem::drive,
+  //               m_drivetrainSubsystem);
 
-        // 5. Add some init and wrap-up, and return everything
-        return new SequentialCommandGroup(
-                new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
-                swerveControllerCommand,
-                new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
-  
+  //       // 5. Add some init and wrap-up, and return everything
+  //       return new SequentialCommandGroup(
+  //               new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+  //               swerveControllerCommand,
+  //               new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
+  return null;
   }
 
   private static double deadband(double value, double deadband) {
@@ -206,4 +221,36 @@ public class RobotContainer {
               // value
   }
 
+  
+
+ 
+
+  public LimelightSubsystem getLimelightSubsystem() {
+    return m_LimelightSubsystem;
+  }
+
+  public DriverStation.Alliance getAlliance(){ 
+    return DriverStation.getAlliance();
+
 }
+
+  // public String getAllianceChooseString(){
+  //   return allianceChooser.getSelected();
+  // }
+  
+  public void setButtons() {
+    if (getAlliance() == Alliance.Red) {
+      m_driverController.triangle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 1));
+      m_driverController.circle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 2));
+      m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 3));
+      m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 4));
+      }
+      else {
+      m_driverController.triangle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 5));
+      m_driverController.circle().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 6));
+      m_driverController.cross().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 7));
+      m_driverController.square().onTrue(new GetLocationOfAprilTag(m_LimelightSubsystem, 0));
+      }
+  }
+}
+
