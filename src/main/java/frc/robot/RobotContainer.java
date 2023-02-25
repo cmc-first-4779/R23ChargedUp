@@ -7,8 +7,6 @@ package frc.robot;
 import java.util.List;
 
 import com.swervedrivespecialties.swervelib.SwerveModule;
-import edu.wpi.first.*;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
