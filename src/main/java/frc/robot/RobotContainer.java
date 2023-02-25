@@ -96,7 +96,7 @@ public class RobotContainer {
     m_driverController.circle().whileTrue(new ExtendExtender(extender));
     m_driverController.square().whileTrue(new RetractExtender(extender));
     m_driverController.L1().whileTrue(new WristRaise(wrist));
-    m_driverController.L2().whileTrue(new WristRaise(wrist));
+    m_driverController.R1().whileTrue(new WristLower(wrist));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
     // cancelling on release.
