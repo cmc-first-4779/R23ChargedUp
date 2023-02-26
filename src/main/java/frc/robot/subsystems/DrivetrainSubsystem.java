@@ -114,16 +114,19 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public DrivetrainSubsystem() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
         SmartDashboard.putData("Field", field);
-        zeroGyroscope();
+        // zeroGyroscope();
 
         frontLeftModule = new MkSwerveModuleBuilder()
                 .withLayout(shuffleboardTab.getLayout("Front Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(0, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
-                .withDriveMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_DRIVE_MOTOR, "CANivore")
-                .withSteerMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_STEER_MOTOR, "CANivore")
-                .withSteerEncoderPort(Constants.FRONT_LEFT_MODULE_STEER_ENCODER, "CANivore")
+                // .withDriveMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_DRIVE_MOTOR, "CANivore")
+                // .withSteerMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_STEER_MOTOR, "CANivore")
+                // .withSteerEncoderPort(Constants.FRONT_LEFT_MODULE_STEER_ENCODER, "CANivore")
+                .withDriveMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_STEER_MOTOR)
+                .withSteerEncoderPort(Constants.FRONT_LEFT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.FRONT_LEFT_MODULE_STEER_OFFSET)
                 .build();
 
@@ -132,9 +135,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         .withSize(2, 4)
                         .withPosition(2, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
-                .withDriveMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR, "CANivore")
-                .withSteerMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_STEER_MOTOR, "CANivore")
-                .withSteerEncoderPort(Constants.FRONT_RIGHT_MODULE_STEER_ENCODER, "CANivore")
+                // .withDriveMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR, "CANivore")
+                // .withSteerMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_STEER_MOTOR, "CANivore")
+                // .withSteerEncoderPort(Constants.FRONT_RIGHT_MODULE_STEER_ENCODER, "CANivore")
+                .withDriveMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_STEER_MOTOR)
+                .withSteerEncoderPort(Constants.FRONT_RIGHT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.FRONT_RIGHT_MODULE_STEER_OFFSET)
                 .build();
 
@@ -143,9 +149,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         .withSize(2, 4)
                         .withPosition(4, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
-                .withDriveMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_DRIVE_MOTOR, "CANivore")
-                .withSteerMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_STEER_MOTOR, "CANivore")
-                .withSteerEncoderPort(Constants.BACK_LEFT_MODULE_STEER_ENCODER, "CANivore")
+                // .withDriveMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_DRIVE_MOTOR, "CANivore")
+                // .withSteerMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_STEER_MOTOR, "CANivore")
+                // .withSteerEncoderPort(Constants.BACK_LEFT_MODULE_STEER_ENCODER, "CANivore")
+                .withDriveMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_STEER_MOTOR)
+                .withSteerEncoderPort(Constants.BACK_LEFT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.BACK_LEFT_MODULE_STEER_OFFSET)
                 .build();
 
@@ -154,9 +163,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         .withSize(2, 4)
                         .withPosition(6, 0))
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
-                .withDriveMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR, "CANivore")
-                .withSteerMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_STEER_MOTOR, "CANivore")
-                .withSteerEncoderPort(Constants.BACK_RIGHT_MODULE_STEER_ENCODER, "CANivore")
+                // .withDriveMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR, "CANivore")
+                // .withSteerMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_STEER_MOTOR, "CANivore")
+                // .withSteerEncoderPort(Constants.BACK_RIGHT_MODULE_STEER_ENCODER, "CANivore")
+                .withDriveMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_STEER_MOTOR)
+                .withSteerEncoderPort(Constants.BACK_RIGHT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.BACK_RIGHT_MODULE_STEER_OFFSET)
                 .build();
 
@@ -191,7 +203,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void drive(ChassisSpeeds chassisSpeeds) {
         m_chassisSpeeds = chassisSpeeds;
         states = kinematics.toSwerveModuleStates(m_chassisSpeeds);
-        
+
         SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
         frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
@@ -246,10 +258,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     private SwerveModulePosition[] getPositions() {
         SwerveModulePosition[] swervePositions = {
-            frontLeftModule.getPosition(),
-            frontRightModule.getPosition(),
-            backLeftModule.getPosition(),
-            backRightModule.getPosition()
+                frontLeftModule.getPosition(),
+                frontRightModule.getPosition(),
+                backLeftModule.getPosition(),
+                backRightModule.getPosition()
         };
         return swervePositions;
     }
@@ -327,27 +339,32 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return kinematics;
     }
 
-
-// Assuming this method is part of a drivetrain subsystem that provides the necessary methods
-public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
-    return new SequentialCommandGroup(
-         new InstantCommand(() -> {
-           // Reset odometry for the first path you run during auto
-           if(isFirstPath){
-               this.resetOdometry(traj.getInitialHolonomicPose());
-           }
-         }),
-         new PPSwerveControllerCommand(
-             traj, 
-             this::getPose, // Pose supplier
-             this.kinematics, // SwerveDriveKinematics
-             new PIDController(Constants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             new PIDController(Constants.kPXYController, 0, 0), // Y controller (usually the same values as X controller)
-             new PIDController(Constants.kPThetaController, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             this::drive, // Module states consumer
-             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-             this // Requires this drive subsystem
-         )
-     );
- }
+    // Assuming this method is part of a drivetrain subsystem that provides the
+    // necessary methods
+    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+        return new SequentialCommandGroup(
+                new InstantCommand(() -> {
+                    // Reset odometry for the first path you run during auto
+                    if (isFirstPath) {
+                        this.resetOdometry(traj.getInitialHolonomicPose());
+                    }
+                }),
+                new PPSwerveControllerCommand(
+                        traj,
+                        this::getPose, // Pose supplier
+                        this.kinematics, // SwerveDriveKinematics
+                        new PIDController(Constants.kPXController, 0, 0), // X controller. Tune these values for your
+                                                                          // robot. Leaving them 0 will only use
+                                                                          // feedforwards.
+                        new PIDController(Constants.kPXYController, 0, 0), // Y controller (usually the same values as X
+                                                                           // controller)
+                        new PIDController(Constants.kPThetaController, 0, 0), // Rotation controller. Tune these values
+                                                                              // for your robot. Leaving them 0 will
+                                                                              // only use feedforwards.
+                        this::drive, // Module states consumer
+                        true, // Should the path be automatically mirrored depending on alliance color.
+                              // Optional, defaults to true
+                        this // Requires this drive subsystem
+                ));
+    }
 }

@@ -41,25 +41,29 @@ public final class Constants {
  public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1; // DONE Set front left module drive motor ID
  public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 11; // DONE Set front left module steer motor ID
  public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 21; // DOne Set front left steer encoder ID
- public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(239.22); // DONE Measure and set front
+//  public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(239.22); // DONE Measure and set front
+ public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(236.16); // DONE Measure and set front
                                                                                       // left steer offset
 
  public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 2; // DONE Set front right drive motor ID
  public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 12; // DOne Set front right steer motor ID
  public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 22; // DONE Set front right steer encoder ID
- public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(56.25); // DONE Measure and set front
+//  public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(56.25); // DONE Measure and set front
+ public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(54.49); // DONE Measure and set front
                                                                                       // right steer offset
 
  public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 3; // DONE Set back left drive motor ID
  public static final int BACK_LEFT_MODULE_STEER_MOTOR = 13; // DONE Set back left steer motor ID
  public static final int BACK_LEFT_MODULE_STEER_ENCODER = 23; // DONE Set back left steer encoder ID
- public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(359.9); // DONE Measure and set back
+//  public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(359.9); // DONE Measure and set back
+ public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(2.11); // DONE Measure and set back
                                                                                      // left steer offset
 
  public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 4; // DONE Set back right drive motor ID
  public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 14; // DONE Set back right steer motor ID
  public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 24; // DONE Set back right steer encoder ID
- public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(136.40); // DONE Measure and set back
+//  public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(136.40); // DONE Measure and set back
+ public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(133.68); // DONE Measure and set back
                                                                                       // right steer offset
 
  public static final double kPXController = 0.077777;//need to change for comp bot
