@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.LimelightConstants;
 import frc.robot.Constants;
@@ -36,6 +37,10 @@ public class LimelightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("LimeLight tx", getTX());
+    SmartDashboard.putNumber("LimeLight ty", getTY());
+    SmartDashboard.putNumberArray("LimeLight Blue BotPos", getBotpose_WpiBlue());
+    SmartDashboard.putNumberArray("LimeLight Red BotPos", getBotpose_WpiRed());
   }
 
   // SET THE LIMELIGHT CAMERA MODE
