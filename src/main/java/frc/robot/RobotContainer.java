@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import java.sql.Driver;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
-import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -23,24 +21,33 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.balanceTest;
-import frc.robot.commands.sturdyBaseCommand;
+import frc.robot.commands.ExtenderCommands.ExtendExtender;
+import frc.robot.commands.ExtenderCommands.RetractExtender;
+import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
+import frc.robot.commands.IntakeCommands.IntakePickupCommand;
+import frc.robot.commands.ShoulderCommands.ShoulderLower;
+import frc.robot.commands.ShoulderCommands.ShoulderRaise;
+import frc.robot.commands.ShoulderCommands.ShoulderStopCommand;
+import frc.robot.commands.WristCommands.WristLower;
+import frc.robot.commands.WristCommands.WristRaise;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ExtenderSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShoulderSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -59,7 +66,6 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
   // new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
   private boolean usePathPlanner = true;
   private boolean debugSwerve = false;
   SendableChooser<List<PathPlannerTrajectory>> autoChooser = new SendableChooser<>();
@@ -68,6 +74,18 @@ public class RobotContainer {
   SendableChooser<String> AllianceChooser = new SendableChooser<>();
   // String selectedAuto;
   // Trajectory chosenTrajectory;
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
+  private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
+  private final WristSubsystem wrist = new WristSubsystem(this);
+
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  private final CommandPS4Controller m_driverController =
+      new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
+  
+ 
+
 
   HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
 
@@ -116,11 +134,22 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new Trigger(m_driverController::getBButton).whileTrue(new sturdyBaseCommand(m_drivetrainSubsystem));
-    // Back button zeros the gyroscope
-    new Trigger(m_driverController::getXButton).whileTrue(new RunCommand(m_drivetrainSubsystem::zeroGyroscope));
-    new Trigger(m_driverController::getAButton).whileTrue(new balanceTest(m_drivetrainSubsystem)); // This button A on
-                                                                                                   // the controller
+    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    //new Trigger(m_exampleSubsystem::exampleCondition)
+    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
+    m_driverController.L2().whileTrue(new IntakePickupCommand(intake));
+    m_driverController.R2().whileTrue(new IntakeEjectCommand(intake));
+    m_driverController.cross().whileTrue(new ShoulderLower(shoulder));
+    m_driverController.triangle().whileTrue(new ShoulderRaise(shoulder));
+    m_driverController.touchpad().onTrue(new ShoulderStopCommand(shoulder));
+    m_driverController.circle().whileTrue(new ExtendExtender(extender));
+    m_driverController.square().whileTrue(new RetractExtender(extender));
+    m_driverController.L1().whileTrue(new WristRaise(wrist));
+    m_driverController.R1().whileTrue(new WristLower(wrist));
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    // pressed,
+    // cancelling on release.
+    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
   }
 
@@ -268,4 +297,15 @@ public class RobotContainer {
   public DrivetrainSubsystem getDriveTrainSubsystem() {
     return m_drivetrainSubsystem;
   }
+
+  /**
+   * Gets the current postion of the arm
+   * 
+   * @return
+   */
+  public double getArmPosition() {
+    return 2; // Hardcoded for now, but eventually need to tie into winch subsystem for real
+              // value
+  }
+
 }

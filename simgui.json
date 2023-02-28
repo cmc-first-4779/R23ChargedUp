@@ -1,9 +1,24 @@
 {
+<<<<<<< HEAD
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
+=======
+  "HALProvider": {
+    "Other Devices": {
+      "SPARK MAX [17]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo"
+>>>>>>> ea82b4bdbd7e60e380f8001ec1262dca41fab191
     }
   }
 }
