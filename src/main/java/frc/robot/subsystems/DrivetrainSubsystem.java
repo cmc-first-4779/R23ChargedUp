@@ -246,10 +246,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
      * @param states the states of the swerve modules
      */
     public void drive(SwerveModuleState[] states) {
-        // System.out.println("In drive SwerveModule[0]: " + states[0]);
-        // System.out.println("In drive SwerveModule[1]: " + states[1]);
-        // System.out.println("In drive SwerveModule[2]: " + states[2]);
-        // System.out.println("In drive SwerveModule[3]: " + states[3]);
+        System.out.println("In drive SwerveModule[0]: " + states[0]);
+        System.out.println("In drive SwerveModule[1]: " + states[1]);
+        System.out.println("In drive SwerveModule[2]: " + states[2]);
+        System.out.println("In drive SwerveModule[3]: " + states[3]);
 
         this.states = states;
     }

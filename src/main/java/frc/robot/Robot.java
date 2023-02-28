@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
   public SwerveControllerCommand createSwerveControllerCommand(Trajectory trajectory) {
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
     PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    double kpTheta = SmartDashboard.getNumber("kpTheta", .07777);
+    double kpTheta = SmartDashboard.getNumber("kpTheta", 10);
     // ProfiledPIDController thetaController = new ProfiledPIDController(
     //         Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
             ProfiledPIDController thetaController = new ProfiledPIDController(
