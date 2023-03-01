@@ -57,7 +57,6 @@ public class ExtenderSubsystem extends SubsystemBase {
     // Add PID Fields to SmartDashboard
     SmartDashboard.putNumber("Position", 0);
 
-
   }
 
   @Override
@@ -141,17 +140,19 @@ public class ExtenderSubsystem extends SubsystemBase {
    * @param setPoint
    * @return true if it falls on or between min and max allowed values.
    */
-  private boolean setPointIsValid(double setPoint) {
-    // if (setPoint >= Constants.EXTENDER_MIN_POSTION && setPoint <= Constants.EXTENDER_MAX_POSTION) {
-    //   System.out.println("Setpoint is valid: " + setPoint);
-    //   return true;
-    // } else {
-    //   System.out
-    //       .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION
-    //           + " and " + Constants.EXTENDER_MAX_POSTION);
-    // }
-    // return false;
-    return true;
+  public boolean setPointIsValid(double setPoint) {
+    if ((setPoint >= Constants.EXTENDER_MIN_POSTION) && (extenderMotor.get() >= 0)) {
+      System.out.println("Setpoint is valid: " + setPoint);
+      return true;
+    } else if ((setPoint <= Constants.EXTENDER_MAX_POSTION) && extenderMotor.get() <= 0) {
+      System.out.println("Setpoint is valid: " + setPoint);
+      return true;
+    } else {
+      System.out
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION);
+      return false;
+    }
+
   }
 
   // Used for testing our PID settings for SmartMotion
@@ -226,9 +227,9 @@ public class ExtenderSubsystem extends SubsystemBase {
   private boolean safeToExtendExtender() {
     // // Need to check with arm to make sure it's in a good space.
     // double armPosition = robotContainer.getArmPosition();
-    // if (armPosition > Constants.EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND) {
-    //   System.out.println("Arm is at safe position to extend Extender");
-    //   return true;
+    // (armPosition > Constants.EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND) {
+    // System.out.println("Arm is at safe position to extend Extender");
+    // return true;
     // }
     // return false;
     return true;

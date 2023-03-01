@@ -78,7 +78,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     // Put the encoder value of the Master Motor to the Dashboard
     shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
-    //shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
+    // shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
     SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("Shoulder Target Pos", setPoint);
   }
@@ -180,7 +180,8 @@ public class ShoulderSubsystem extends SubsystemBase {
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     if (safeToMoveShoulder()) {
       this.setPoint = setPoint;
-      shoulderMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint, DemandType.ArbitraryFeedForward, calculateArbitraryFF(setPoint));
+      shoulderMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint, DemandType.ArbitraryFeedForward,
+          calculateArbitraryFF(setPoint));
     } else {
       stopMotor();
     }
@@ -216,10 +217,10 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Method to check whether we are in a safe range to move the arm
   public boolean safeToMoveShoulder() {
     // if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN) &&
-    //    (shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX))  {
-    //   return true;
+    // (shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX)) {
+    // return true;
     // } else {
-    //   return false;
+    // return false;
     // }
     return true;
   }
@@ -296,15 +297,17 @@ public class ShoulderSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double setPoint) {
-    if (setPoint >= Constants.SHOULDER_POSITION_MIN && setPoint <= Constants.SHOULDER_POSITION_MAX) {
+    if ((setPoint >= Constants.EXTENDER_MIN_POSTION) && (shoulderMotorMaster.get() >= 0)) {
+      System.out.println("Setpoint is valid: " + setPoint);
+      return true;
+    } else if ((setPoint <= Constants.EXTENDER_MAX_POSTION) && shoulderMotorMaster.get() <= 0) {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
     } else {
       System.out
-          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.SHOULDER_POSITION_MIN
-              + " and " + Constants.SHOULDER_POSITION_MAX);
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION);
+      return false;
     }
-    return false;
   }
 
 }
