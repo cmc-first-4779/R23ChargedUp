@@ -86,8 +86,8 @@ public final class Constants {
                  kMaxAngularAccelerationRadiansPerSecondSquared);
 
   // Intake Constants
-  public static final double INTAKE_SPEED = 1.00; // Dummy value. NEED TO TEST THIS!
-  public static final double EJECT_SPEED = -1.00; // Dummy value. NEED TO TEST THIS!
+  public static final double INTAKE_SPEED = 0.90; // Dummy value. NEED TO TEST THIS!
+  public static final double EJECT_SPEED = -0.90; // Dummy value. NEED TO TEST THIS!
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
   public static final double EXTENDER_kF = 0.0; // Dummy variable - Test this!
