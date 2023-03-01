@@ -215,12 +215,13 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Method to check whether we are in a safe range to move the arm
   public boolean safeToMoveShoulder() {
-    if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN) &&
-       (shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX))  {
-      return true;
-    } else {
-      return false;
-    }
+    // if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN) &&
+    //    (shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX))  {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return true;
   }
 
   // Method to check whether we are in a safe range to extend the

@@ -163,14 +163,15 @@ public class WristSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double setPoint) {
-    if (setPoint >= Constants.WRIST_MIN_POSTION && setPoint <= Constants.WRIST_MAX_POSTION) {
-      System.out.println("Setpoint is valid: " + setPoint);
-      return true;
-    } else {
-      System.out.println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION
-          + " and " + Constants.WRIST_MAX_POSTION);
-    }
-    return false;
+    // if (setPoint >= Constants.WRIST_MIN_POSTION && setPoint <= Constants.WRIST_MAX_POSTION) {
+    //   System.out.println("Setpoint is valid: " + setPoint);
+    //   return true;
+    // } else {
+    //   System.out.println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION
+    //       + " and " + Constants.WRIST_MAX_POSTION);
+    // }
+    // return false;
+    return true;
   }
 
   /**
@@ -260,13 +261,14 @@ public class WristSubsystem extends SubsystemBase {
    * @return true if arm position is greater than minimum distance set to extend
    */
   private boolean safeToExtendWrist() {
-    // Need to check with arm to make sure it's in a good space.
-    double armPosition = robotContainer.getArmPosition();
-    if (armPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
-      System.out.println("Arm is at safe position to extend wrist");
-      return true;
-    }
-    return false;
+    // // Need to check with arm to make sure it's in a good space.
+    // double armPosition = robotContainer.getArmPosition();
+    // if (armPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
+    //   System.out.println("Arm is at safe position to extend wrist");
+    //   return true;
+    // }
+    // return false;
+    return true;
   }
 
 }
