@@ -297,10 +297,10 @@ public class ShoulderSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double setPoint) {
-    if ((setPoint >= Constants.EXTENDER_MIN_POSTION) && (shoulderMotorMaster.get() >= 0)) {
+    if ((setPoint >= Constants.SHOULDER_POSITION_MIN) && (shoulderMotorMaster.get() >= 0)) {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
-    } else if ((setPoint <= Constants.EXTENDER_MAX_POSTION) && shoulderMotorMaster.get() <= 0) {
+    } else if ((setPoint <= Constants.SHOULDER_POSITION_MAX) && shoulderMotorMaster.get() <= 0) {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
     } else {
