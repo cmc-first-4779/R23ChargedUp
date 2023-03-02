@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
@@ -298,15 +297,17 @@ public class ShoulderSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double setPoint) {
-    if (setPoint >= Constants.SHOULDER_POSITION_MIN && setPoint <= Constants.SHOULDER_POSITION_MAX) {
+    if ((setPoint >= Constants.SHOULDER_POSITION_MIN) && (shoulderMotorMaster.get() >= 0)) {
+      System.out.println("Setpoint is valid: " + setPoint);
+      return true;
+    } else if ((setPoint <= Constants.SHOULDER_POSITION_MAX) && shoulderMotorMaster.get() <= 0) {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
     } else {
       System.out
-          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.SHOULDER_POSITION_MIN
-              + " and " + Constants.SHOULDER_POSITION_MAX);
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION);
+      return false;
     }
-    return false;
   }
 
 }
