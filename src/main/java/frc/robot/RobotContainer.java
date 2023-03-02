@@ -93,7 +93,7 @@ public class RobotContainer {
    */
   private final CommandPS4Controller driverStick =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
-    private final CommandPS4Controller operStick =
+  private final CommandPS4Controller operStick =
       new CommandPS4Controller(OperatorConstants.kOperatorControllerPort);
   
  
@@ -134,8 +134,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    //new Trigger(m_exampleSubsystem::exampleCondition)
+    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
  
@@ -147,20 +147,20 @@ public class RobotContainer {
     // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
     operStick.L1().whileTrue(new IntakeEjectCommand(intake));
     operStick.R1().whileTrue(new IntakePickupCommand(intake));
-    op.povDown().onTrue(new StopAllPCG(shoulder, extender, intake));
-    m_driverController.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
-    m_driverController.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
-    m_driverController.square().onTrue(new SafeSetToPositionSCG("MID_CUBE", shoulder, extender, wrist));
-    m_driverController.triangle().onTrue(new SafeSetToPositionSCG("MID_CONE", shoulder, extender, wrist));
-    m_driverController.cross().onTrue(new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist));
-    m_driverController.circle().onTrue(new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
-    m_driverController.touchpad().onTrue(new SafeSetToPositionSCG("STOW", shoulder, extender, wrist)); // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, intake));
+    operStick.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    operStick.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
+    operStick.square().onTrue(new SafeSetToPositionSCG("MID_CUBE", shoulder, extender, wrist));
+    operStick.triangle().onTrue(new SafeSetToPositionSCG("MID_CONE", shoulder, extender, wrist));
+    operStick.cross().onTrue(new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist));
+    operStick.circle().onTrue(new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
+    operStick.touchpad().onTrue(new SafeSetToPositionSCG("STOW", shoulder, extender, wrist)); // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     //
     // pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-=========
+
     //new Trigger(m_exampleSubsystem::exampleCondition)
     //    .onTrue(new ExampleCommand(m_exampleSubsystem));
 
@@ -169,7 +169,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
->>>>>>>>> Temporary merge branch 2
+
   }
 
   /**
@@ -253,14 +253,7 @@ public class RobotContainer {
     return shoulder.getShoulderPosition();
   }
 
-  /**
-   * Gets the current postion of the shoulder
-   * 
-   * @return
-   */
-  public double getShoulderPosition() {
-    return shoulder.getShoulderPosition();
-  }
+ 
 
     /**
    * Gets the current postion of the extender

@@ -235,9 +235,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
-  public double getShoulderPosition(){
-    return shoulderMasterPosition;
-  }
+
 
   /**
    * Lowers the Shoulder by the SHOULDER_MOVEMENT_INCREMENT
