@@ -25,6 +25,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -175,6 +176,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
         odometry = new SwerveDriveOdometry(
                 kinematics,
                 Rotation2d.fromDegrees(getHeading()), getPositions());
+
+        //Potential fix to wheels not aligning properly
+        Timer.delay(1.0);
+                frontLeftModule.resetToAbsolute();
+                frontRightModule.resetToAbsolute();
+                backLeftModule.resetToAbsolute();
+                backRightModule.resetToAbsolute();
     }
 
     /**
