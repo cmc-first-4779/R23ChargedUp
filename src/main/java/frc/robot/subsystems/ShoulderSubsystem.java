@@ -311,4 +311,11 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
+  //  Quick method to put the TalonFX in a different Control Mode, just in case MotionMagic goes wonky after two
+  //   Motion Magic calls in succession.
+  public void resetMotionMagic(){
+    shoulderMotorMaster.set(0);
+    shoulderMotorSlave.set(0);
+  }
+
 }
