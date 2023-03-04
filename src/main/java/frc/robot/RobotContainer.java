@@ -137,9 +137,9 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     driveTrain.setDefaultCommand(new DefaultDriveCommand(
         driveTrain,
-        () -> -modifyAxis(driverStick.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(driverStick.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(driverStick.getRightX())
+        () -> -modifyAxis(driverStick.getLeftY() * .8) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driverStick.getLeftX() * .8) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driverStick.getRightX() * .8)
             * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
 
     // Configure the trigger bindings
@@ -245,8 +245,22 @@ public class RobotContainer {
   private void createAutoBuilder() {
 
     pathPlannerEventMap = new HashMap<>();
-    pathPlannerEventMap.put("marker1", new PrintCommand("Passed marker 1"));
-    pathPlannerEventMap.put("intakeDown", new PrintCommand("Event 2"));
+    // pathPlannerEventMap.put("marker1", new PrintCommand("Passed marker 1"));
+    // pathPlannerEventMap.put("intakeDown", new PrintCommand("Event 2"));
+    pathPlannerEventMap.put("Cone High", new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube High", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cone Mid", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Mid", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cone Low", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Low", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cone Pickup", new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));    
+    pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
+    pathPlannerEventMap.put("Eject Cone", new IntakeEjectCommand(intake));
+    pathPlannerEventMap.put("Eject Cube", new IntakePickupCommand(intake));
+    pathPlannerEventMap.put("Pickup Cone", new IntakePickupCommand(intake));
+    pathPlannerEventMap.put("Pickup Cube", new IntakeEjectCommand(intake));
+    pathPlannerEventMap.put("Balance Test", new balanceTest(driveTrain));
     autoBuilder = new SwerveAutoBuilder(
 
         driveTrain::getPose, // Pose2d supplier
