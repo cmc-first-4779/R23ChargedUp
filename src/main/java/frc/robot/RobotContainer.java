@@ -196,7 +196,7 @@ public class RobotContainer {
     // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
     operStick.L1().whileTrue(new IntakeEjectCommand(intake));
     operStick.R1().whileTrue(new IntakePickupCommand(intake));
-    operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, intake));
+    operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
     operStick.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
     operStick.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
     operStick.square().onTrue(new SafeSetToPositionSCG("MID_CUBE", shoulder, extender, wrist));

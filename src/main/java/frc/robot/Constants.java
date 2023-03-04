@@ -99,16 +99,7 @@ public final class Constants {
   public static final double EXTENDER_kMaxOuput = 1;
   public static final double EXTENDER_kMinOutput = -1;
   public static final double EXTENDER_MAX_RPM = 5700;
-  public static final double EXTENDER_POSITION_STOW = 0; 
-  public static final double EXTENDER_POSITION_PICKUP_CONE = 16.07; 
-  public static final double EXTENDER_POSITION_PICKUP_CUBE = 14.64; 
-  public static final double EXTENDER_POSITION_LOW_CONE_NODE = 2.60; 
-  public static final double EXTENDER_POSITION_MID_CONE_NODE = 1.83; 
-  public static final double EXTENDER_POSITION_HIGH_CONE_NODE = 49.05; 
-  public static final double EXTENDER_POSITION_LOW_CUBE_NODE = 9.07; 
-  public static final double EXTENDER_POSITION_MID_CUBE_NODE = 23.00; 
-  public static final double EXTENDER_POSITION_HIGH_CUBE_NODE = 75.43; 
-  public static final double EXTENDER_POSITION_HUMAN_PLAYER_STATION = 5.0;
+  
   public static final double EXTENDER_SM_MAX_VEL = 4000; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MIN_VEL = 0; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MAX_ACCEL = 8000; // Dummy variable - Test this!
@@ -140,18 +131,8 @@ public final class Constants {
   public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
   public static final double SHOULDER_HORIZONTAL_POS = 85000;
   public static final double SHOULDER_POSITION_MIN = 0;  //  Min position of the arm
-  public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 20000;  //  Safe distance where can extend the rest of the arm
   public static final double SHOULDER_POSITION_MAX = 92500;  // Max position of the arm
-  public static final double SHOULDER_POSITION_STOW = 0; 
-  public static final double SHOULDER_POSITION_PICKUP_CONE = 32500;   
-  public static final double SHOULDER_POSITION_PICKUP_CUBE = 35000;  
-  public static final double SHOULDER_POSITION_LOW_CONE_NODE = 42500; 
-  public static final double SHOULDER_POSITION_MID_CONE_NODE = 77500;  
-  public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 92500;  
-  public static final double SHOULDER_POSITION_LOW_CUBE_NODE = 42500;  
-  public static final double SHOULDER_POSITION_MID_CUBE_NODE = 52500;  
-  public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 75000;  
-  public static final double SHOULDER_POSITION_HUMAN_PLAYER_STATION = 75000;
+ 
   public static final double SHOULDER_MOVEMENT_INCREMENT = 2500;
 
     // Wrist Constants
@@ -163,16 +144,7 @@ public final class Constants {
     public static final double WRIST_kMaxOuput = 1;
     public static final double WRIST_kMinOutput = -1;
     public static final double WRIST_MAX_RPM = 5700;
-    public static final double WRIST_POSITION_STOW = 0;  
-    public static final double WRIST_POSITION_PICKUP_CONE = 43.48;   
-    public static final double WRIST_POSITION_PICKUP_CUBE = 43.07;   
-    public static final double WRIST_POSITION_LOW_CONE_NODE = 56.07;  
-    public static final double WRIST_POSITION_MID_CONE_NODE = 53.07;  
-    public static final double WRIST_POSITION_HIGH_CONE_NODE = 48.07;  
-    public static final double WRIST_POSITION_LOW_CUBE_NODE = 13.95; 
-    public static final double WRIST_POSITION_MID_CUBE_NODE = 27.07;  
-    public static final double WRIST_POSITION_HIGH_CUBE_NODE = 35.00; 
-    public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = 10.0;
+    
     public static final double WRIST_SM_MAX_VEL = 4000;  // Dummy variable - Test this!
     public static final double WRIST_SM_MIN_VEL = 0;  // Dummy variable - Test this!
     public static final double WRIST_SM_MAX_ACCEL = 3000;  // Dummy variable - Test this!

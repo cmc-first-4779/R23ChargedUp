@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.HardwareMap;
 import frc.StaticConstants.MaxMotorAmpsConstants;
 import frc.robot.Constants;
+import frc.robot.PositionValues;
 
 /*  This Subsystem is for our Winch that raises and lowers the arm to certain 
  *  set positions.
@@ -232,7 +233,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Method to check whether we are in a safe range to extend the
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
-    if (shoulderMasterPosition <= Constants.SHOULDER_POSITION_SAFE_TO_EXTEND) {
+    if (shoulderMasterPosition <= PositionValues.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       return false;
     } else {
       return true;

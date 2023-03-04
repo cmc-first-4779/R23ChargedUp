@@ -5,7 +5,7 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.Constants;
+import frc.robot.PositionValues;
 import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.subsystems.ExtenderSubsystem;
@@ -25,8 +25,8 @@ public class RetractShoulderExtenderPCG extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ExtenderSetPosition(extender, Constants.EXTENDER_POSITION_STOW),
-        new ShoulderSetPosition(shoulder, Constants.SHOULDER_POSITION_SAFE_TO_EXTEND)
+        new ExtenderSetPosition(extender, PositionValues.EXTENDER_POSITION_STOW),
+        new ShoulderSetPosition(shoulder, PositionValues.SHOULDER_POSITION_SAFE_TO_EXTEND)
 
     );
   }

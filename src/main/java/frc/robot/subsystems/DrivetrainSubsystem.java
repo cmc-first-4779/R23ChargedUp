@@ -92,7 +92,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
             // Back right
             new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
-    Pigeon2 gyroscope = new Pigeon2(DRIVETRAIN_PIGEON_ID);
+    Pigeon2 gyroscope = new Pigeon2(DRIVETRAIN_PIGEON_ID, "CANivore");
 
     private final SwerveDriveOdometry odometry;
 

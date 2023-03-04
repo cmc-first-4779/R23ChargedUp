@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.HardwareMap;
 import frc.StaticConstants.MaxMotorAmpsConstants;
 import frc.robot.Constants;
+import frc.robot.PositionValues;
 import frc.robot.RobotContainer;
 
 //  This Subsystem is for our Extender Arm and will be powered by one Spark Neo550;
@@ -226,7 +227,7 @@ public class ExtenderSubsystem extends SubsystemBase {
   private boolean safeToExtendExtender() {
     // Need to check with arm to make sure it's in a good space.
     double shoulderPosition = robotContainer.getShoulderPosition();
-    if (shoulderPosition > Constants.SHOULDER_POSITION_SAFE_TO_EXTEND) {
+    if (shoulderPosition > PositionValues.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       System.out.println("Shoulder is at safe position to extend Extender:  " +shoulderPosition);
       return true;
     }
