@@ -180,15 +180,15 @@ public class RobotContainer {
     // driverStick.touchpad().onTrue(new ShoulderStopCommand(shoulder));
     // driverStick.circle().whileTrue(new ExtendExtender(extender));
     // driverStick.square().whileTrue(new RetractExtender(extender));
-    // driverStick.L1().whileTrue(new WristRaise(wrist));
-    // driverStick.R1().whileTrue(new WristLower(wrist));
+    driverStick.L1().whileTrue(new WristRaise(wrist));
+    driverStick.R1().whileTrue(new WristLower(wrist));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
  
     driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.options().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
+    driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
     operStick.L1().whileTrue(new IntakeEjectCommand(intake));
     operStick.R1().whileTrue(new IntakePickupCommand(intake));
