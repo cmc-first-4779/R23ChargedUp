@@ -60,17 +60,17 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commandGroups.SafeRectractToStowSCG;
 import frc.robot.commandGroups.SafeSetToPositionSCG;
 import frc.robot.commandGroups.StopAllPCG;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+//import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
 import frc.robot.commands.IntakeCommands.IntakePickupCommand;
+import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
 import frc.robot.commands.ShoulderCommands.ShoulderRaise;
 import frc.robot.commands.ShoulderCommands.ShoulderStopCommand;
 import frc.robot.commands.WristCommands.WristLower;
 import frc.robot.commands.WristCommands.WristRaise;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
+//import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
@@ -107,7 +107,7 @@ public class RobotContainer {
   SendableChooser<String> AllianceChooser = new SendableChooser<>();
   // String selectedAuto;
   // Trajectory chosenTrajectory;
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
   private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
@@ -137,10 +137,12 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     driveTrain.setDefaultCommand(new DefaultDriveCommand(
         driveTrain,
-        () -> -modifyAxis(driverStick.getLeftY() * .8) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(driverStick.getLeftX() * .8) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(driverStick.getRightX() * .8)
+        () -> -modifyAxis(driverStick.getLeftY() * Constants.DRIVETRAIN_THROTTLE) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driverStick.getLeftX() * Constants.DRIVETRAIN_THROTTLE) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driverStick.getRightX() * Constants.DRIVETRAIN_THROTTLE)
             * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+
+    intake.setDefaultCommand(new IntakeStopCommand(intake));
 
     // Configure the trigger bindings
     configureBindings();
@@ -189,6 +191,8 @@ public class RobotContainer {
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
+    driverStick.L2().whileTrue(new IntakeEjectCommand(intake));
+    driverStick.R2().whileTrue(new IntakePickupCommand(intake));
     // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
     operStick.L1().whileTrue(new IntakeEjectCommand(intake));
     operStick.R1().whileTrue(new IntakePickupCommand(intake));

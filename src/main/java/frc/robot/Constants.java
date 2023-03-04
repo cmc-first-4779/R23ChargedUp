@@ -37,6 +37,7 @@ public final class Constants {
   *
   * Should be measured from center to center.
   */
+ public static final double DRIVETRAIN_THROTTLE = 0.9;  //  Drivetrain throttle
  public static final double PIGEON_DEADBAND_GOING_UP = .5;
  public static final double PIGEON_DEADBAND_GOING_DOWN = -.5;
  public static final double DRIVETRAIN_WHEELBASE_METERS = 0.6096; // DONE Measure and set wheelbase
