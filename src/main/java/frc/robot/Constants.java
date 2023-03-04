@@ -107,6 +107,7 @@ public final class Constants {
   public static final double EXTENDER_POSITION_LOW_CUBE_NODE = 9.07; 
   public static final double EXTENDER_POSITION_MID_CUBE_NODE = 23.00; 
   public static final double EXTENDER_POSITION_HIGH_CUBE_NODE = 75.43; 
+  public static final double EXTENDER_POSITION_HUMAN_PLAYER_STATION = 5.0;
   public static final double EXTENDER_SM_MAX_VEL = 4000; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MIN_VEL = 0; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MAX_ACCEL = 8000; // Dummy variable - Test this!
@@ -149,6 +150,7 @@ public final class Constants {
   public static final double SHOULDER_POSITION_LOW_CUBE_NODE = 42500;  
   public static final double SHOULDER_POSITION_MID_CUBE_NODE = 52500;  
   public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 75000;  
+  public static final double SHOULDER_POSITION_HUMAN_PLAYER_STATION = 75000;
   public static final double SHOULDER_MOVEMENT_INCREMENT = 2500;
 
     // Wrist Constants
@@ -169,6 +171,7 @@ public final class Constants {
     public static final double WRIST_POSITION_LOW_CUBE_NODE = 13.95; 
     public static final double WRIST_POSITION_MID_CUBE_NODE = 27.07;  
     public static final double WRIST_POSITION_HIGH_CUBE_NODE = 35.00; 
+    public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = 10.0;
     public static final double WRIST_SM_MAX_VEL = 4000;  // Dummy variable - Test this!
     public static final double WRIST_SM_MIN_VEL = 0;  // Dummy variable - Test this!
     public static final double WRIST_SM_MAX_ACCEL = 3000;  // Dummy variable - Test this!

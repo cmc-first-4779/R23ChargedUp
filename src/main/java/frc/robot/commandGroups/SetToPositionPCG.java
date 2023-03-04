@@ -94,6 +94,11 @@ public class SetToPositionPCG extends ParallelCommandGroup {
         extenderPosition = Constants.EXTENDER_POSITION_PICKUP_CONE;
         wristPosition = Constants.WRIST_POSITION_PICKUP_CONE;
         break;
+      case "HUMAN_PLAYER_STATION":
+        shoulderPosition = Constants.SHOULDER_POSITION_HUMAN_PLAYER_STATION;
+        extenderPosition = Constants.EXTENDER_POSITION_HUMAN_PLAYER_STATION;
+        wristPosition = Constants.WRIST_POSITION_HUMAN_PLAYER_STATION;
+        break;
       // Our DEFAULT POSITION WILL BE THE STOW POSITION
       default: // DEFAULT position is "STOW"
         shoulderPosition = Constants.SHOULDER_POSITION_STOW;
