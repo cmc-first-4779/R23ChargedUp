@@ -88,8 +88,9 @@ public final class Constants {
                  kMaxAngularAccelerationRadiansPerSecondSquared);
 
   // Intake Constants
-  public static final double INTAKE_SPEED = 0.90; // Dummy value. NEED TO TEST THIS!
-  public static final double EJECT_SPEED = -0.90; // Dummy value. NEED TO TEST THIS!
+  public static final double INTAKE_CONE_SPEED = 0.80; // Dummy value. NEED TO TEST THIS!
+  public static final double INTAKE_CUBE_SPEED = -0.80; // Dummy value. NEED TO TEST THIS!
+
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
   public static final double EXTENDER_kF = 0.0; // Dummy variable - Test this!
@@ -99,8 +100,7 @@ public final class Constants {
   public static final double EXTENDER_kMaxOuput = 1;
   public static final double EXTENDER_kMinOutput = -1;
   public static final double EXTENDER_MAX_RPM = 5700;
-  
-  public static final double EXTENDER_SM_MAX_VEL = 4000; // Dummy variable - Test this!
+  public static final double EXTENDER_SM_MAX_VEL = 5000; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MIN_VEL = 0; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MAX_ACCEL = 8000; // Dummy variable - Test this!
   public static final double EXTENDER_SM_ALLOWED_ERR = .25; // Dummy variable - Test this!
@@ -115,8 +115,8 @@ public final class Constants {
   public static final int kTimeoutMs = 30;
 
   // Shoulder Constants
-  public static final double SHOULDER_MM_VELOCITY = 8000; // Dummy variable - Test this!
-  public static final double SHOULDER_MM_ACCELERATION = 8000; // Dummy variable - Test this!
+  public static final double SHOULDER_MM_VELOCITY = 10000; // Dummy variable - Test this!
+  public static final double SHOULDER_MM_ACCELERATION = 9000; // Dummy variable - Test this!
   public static final double SHOULDER_NOMINAL_OUTPUT_FORWARD = 0.0;
   public static final double SHOULDER_NOMINAL_OUTPUT_REVERSE = 0.0;
   public static final double SHOULDER_PEAK_OUTPUT_FORWARD = 1.0;
@@ -132,7 +132,6 @@ public final class Constants {
   public static final double SHOULDER_HORIZONTAL_POS = 85000;
   public static final double SHOULDER_POSITION_MIN = 0;  //  Min position of the arm
   public static final double SHOULDER_POSITION_MAX = 92500;  // Max position of the arm
- 
   public static final double SHOULDER_MOVEMENT_INCREMENT = 2500;
 
     // Wrist Constants
@@ -144,12 +143,10 @@ public final class Constants {
     public static final double WRIST_kMaxOuput = 1;
     public static final double WRIST_kMinOutput = -1;
     public static final double WRIST_MAX_RPM = 5700;
-    
-    public static final double WRIST_SM_MAX_VEL = 4000;  // Dummy variable - Test this!
+    public static final double WRIST_SM_MAX_VEL = 5000;  // Dummy variable - Test this!
     public static final double WRIST_SM_MIN_VEL = 0;  // Dummy variable - Test this!
-    public static final double WRIST_SM_MAX_ACCEL = 3000;  // Dummy variable - Test this!
+    public static final double WRIST_SM_MAX_ACCEL = 4000;  // Dummy variable - Test this!
     public static final double WRIST_SM_ALLOWED_ERR = .05;  // Dummy variable - Test this!
-
     public static final double WRIST_MAX_POSTION = 84.8; // Max forward rotation. Current gearing is 31.25 to one so position of 31.25 is one full rotation of output shaft.  Only need to go about 25%
     public static final double WRIST_MIN_POSTION = -10; // Min forward rotation. Assuming we are starting in our minimal position of 0.
     public static final double WRIST_MOVEMENT_INCREMENT = 0.5;  // Amount to move wrist postion at one time.

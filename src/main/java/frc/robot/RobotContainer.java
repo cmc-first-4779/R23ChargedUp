@@ -61,8 +61,8 @@ import frc.robot.commandGroups.SafeRectractToStowSCG;
 import frc.robot.commandGroups.SafeSetToPositionSCG;
 import frc.robot.commandGroups.StopAllPCG;
 //import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
-import frc.robot.commands.IntakeCommands.IntakePickupCommand;
+import frc.robot.commands.IntakeCommands.IntakeCubeCommand;
+import frc.robot.commands.IntakeCommands.IntakeConeCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
 import frc.robot.commands.ShoulderCommands.ShoulderRaise;
@@ -191,11 +191,11 @@ public class RobotContainer {
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
-    driverStick.L2().whileTrue(new IntakeEjectCommand(intake));
-    driverStick.R2().whileTrue(new IntakePickupCommand(intake));
+    driverStick.L2().whileTrue(new IntakeCubeCommand(intake));
+    driverStick.R2().whileTrue(new IntakeConeCommand(intake));
     // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
-    operStick.L1().whileTrue(new IntakeEjectCommand(intake));
-    operStick.R1().whileTrue(new IntakePickupCommand(intake));
+    operStick.L1().whileTrue(new IntakeCubeCommand(intake));
+    operStick.R1().whileTrue(new IntakeConeCommand(intake));
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
     operStick.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
     operStick.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
@@ -261,10 +261,10 @@ public class RobotContainer {
     pathPlannerEventMap.put("Cone Pickup", new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));    
     pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
-    pathPlannerEventMap.put("Eject Cone", new IntakeEjectCommand(intake));
-    pathPlannerEventMap.put("Eject Cube", new IntakePickupCommand(intake));
-    pathPlannerEventMap.put("Pickup Cone", new IntakePickupCommand(intake));
-    pathPlannerEventMap.put("Pickup Cube", new IntakeEjectCommand(intake));
+    pathPlannerEventMap.put("Eject Cone", new IntakeCubeCommand(intake));
+    pathPlannerEventMap.put("Eject Cube", new IntakeConeCommand(intake));
+    pathPlannerEventMap.put("Pickup Cone", new IntakeConeCommand(intake));
+    pathPlannerEventMap.put("Pickup Cube", new IntakeCubeCommand(intake));
     pathPlannerEventMap.put("Balance Test", new balanceTest(driveTrain));
     autoBuilder = new SwerveAutoBuilder(
 

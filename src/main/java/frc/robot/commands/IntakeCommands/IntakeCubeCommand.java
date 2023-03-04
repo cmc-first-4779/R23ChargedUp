@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeEjectCommand extends CommandBase {
+public class IntakeCubeCommand extends CommandBase {
   // Declare our Subsystem
   IntakeSubsystem intakeSubsystem;
 
   /** Creates a new IntakeEjectCommand. */
-  public IntakeEjectCommand(IntakeSubsystem intakeSubsystem) {
+  public IntakeCubeCommand(IntakeSubsystem intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intakeSubsystem);
@@ -23,7 +23,7 @@ public class IntakeEjectCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeSubsystem.intakeRun(Constants.EJECT_SPEED);
+    intakeSubsystem.intakeRun(Constants.INTAKE_CUBE_SPEED);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

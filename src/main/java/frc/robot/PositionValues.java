@@ -15,7 +15,7 @@ public class PositionValues {
     public static final double SHOULDER_POSITION_MAX = 92500; // Max position of the arm
 
     // Position for the Shoulder to be set to move everything else
-    public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 30000; // Safe distance where can extend the rest of
+    public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 31000; // Safe distance where can extend the rest of
                                                                          // the arm
 
     // STOW Position for each Subsystem
@@ -25,12 +25,12 @@ public class PositionValues {
 
     // PICKUP_CONE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CONE = 37500;
-    public static final double EXTENDER_POSITION_PICKUP_CONE = 15.3;
+    public static final double EXTENDER_POSITION_PICKUP_CONE = 18.5;
     public static final double WRIST_POSITION_PICKUP_CONE = 42.75;
 
     // PICKUP_CUBE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CUBE = 38000;
-    public static final double EXTENDER_POSITION_PICKUP_CUBE = 25.5;
+    public static final double EXTENDER_POSITION_PICKUP_CUBE = 31.5;
     public static final double WRIST_POSITION_PICKUP_CUBE = 42.47;
 
     // Position for each LOW_CONE_NODE subsystem
