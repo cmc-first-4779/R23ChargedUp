@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
@@ -187,6 +186,11 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
+  public double getShoulderPosition(){
+    return shoulderMasterPosition;
+  }
+
+
   // Method to test the shoulder with the SmartDashboard and get PID values
   public void testShoulderMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
       double cruiseAccel) {
@@ -228,13 +232,14 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Method to check whether we are in a safe range to extend the
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
-    if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN)
-        && (shoulderMasterPosition <= Constants.SHOULDER_POSITION_SAFE_TO_EXTEND)) {
+    if (shoulderMasterPosition <= Constants.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       return false;
     } else {
       return true;
     }
   }
+
+
 
   /**
    * Lowers the Shoulder by the SHOULDER_MOVEMENT_INCREMENT
@@ -308,6 +313,13 @@ public class ShoulderSubsystem extends SubsystemBase {
           .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION);
       return false;
     }
+  }
+
+  //  Quick method to put the TalonFX in a different Control Mode, just in case MotionMagic goes wonky after two
+  //   Motion Magic calls in succession.
+  public void resetMotionMagic(){
+    shoulderMotorMaster.set(0);
+    shoulderMotorSlave.set(0);
   }
 
 }

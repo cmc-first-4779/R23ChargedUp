@@ -12,29 +12,55 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
-
+import com.swervedrivespecialties.swervelib.SwerveModule;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.commands.GetRobotPosition;
+import frc.robot.commands.SetPipeline;
+import frc.robot.commands.LimeLight.GetLocationOfAprilTag;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.LimelightSubsystem;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.StaticConstants.BlingConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.balanceTest;
+import frc.robot.commands.sturdyBaseCommand;
+import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.ExtenderCommands.ExtendExtender;
 import frc.robot.commands.ExtenderCommands.RetractExtender;
+import frc.robot.commands.ShoulderCommands.ShoulderLower;
+import frc.robot.commands.ShoulderCommands.ShoulderMoveWithJoystick;
+import frc.robot.commands.ShoulderCommands.ShoulderRaise;
+import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
+import frc.robot.commands.ShoulderCommands.ShoulderStopCommand;
+import frc.robot.subsystems.BlingSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.ExtenderSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commandGroups.SafeSetToPositionSCG;
+import frc.robot.commandGroups.StopAllPCG;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCommands.IntakeEjectCommand;
 import frc.robot.commands.IntakeCommands.IntakePickupCommand;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
@@ -59,9 +85,15 @@ import frc.robot.subsystems.WristSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  
+
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  private final DrivetrainSubsystem driveTrain = new DrivetrainSubsystem();
+  SwerveModule m_frontLeftModule;
+  SwerveModule m_frontRightModule;
+  SwerveModule m_backLeftModule;
+  SwerveModule m_backRightModule;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
@@ -79,10 +111,14 @@ public class RobotContainer {
   private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
   private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
   private final WristSubsystem wrist = new WristSubsystem(this);
+  private final BlingSubsystem bling = new BlingSubsystem();
+  private final LimelightSubsystem limelight = new LimelightSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandPS4Controller m_driverController =
+  private final CommandPS4Controller driverStick =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
+  private final CommandPS4Controller operStick =
+      new CommandPS4Controller(OperatorConstants.kOperatorControllerPort);
   
  
 
@@ -98,11 +134,11 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-        m_drivetrainSubsystem,
-        () -> -modifyAxis(m_driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(m_driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(m_driverController.getRightX())
+    driveTrain.setDefaultCommand(new DefaultDriveCommand(
+        driveTrain,
+        () -> -modifyAxis(driverStick.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driverStick.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driverStick.getRightX())
             * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
 
     // Configure the trigger bindings
@@ -113,7 +149,6 @@ public class RobotContainer {
     SmartDashboard.putBoolean("Debug Swerve", false);
     // SmartDashboard.putString("selectedAuto", selectedAuto);
     
-
     generatePathPlannerPathGroups();
     createAutoBuilder();
 
@@ -137,16 +172,34 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     //new Trigger(m_exampleSubsystem::exampleCondition)
     //    .onTrue(new ExampleCommand(m_exampleSubsystem));
-    m_driverController.L2().whileTrue(new IntakePickupCommand(intake));
-    m_driverController.R2().whileTrue(new IntakeEjectCommand(intake));
-    m_driverController.cross().whileTrue(new ShoulderLower(shoulder));
-    m_driverController.triangle().whileTrue(new ShoulderRaise(shoulder));
-    m_driverController.touchpad().onTrue(new ShoulderStopCommand(shoulder));
-    m_driverController.circle().whileTrue(new ExtendExtender(extender));
-    m_driverController.square().whileTrue(new RetractExtender(extender));
-    m_driverController.L1().whileTrue(new WristRaise(wrist));
-    m_driverController.R1().whileTrue(new WristLower(wrist));
+    driverStick.L2().whileTrue(new IntakePickupCommand(intake));
+    driverStick.R2().whileTrue(new IntakeEjectCommand(intake));
+    driverStick.cross().whileTrue(new ShoulderLower(shoulder));
+    driverStick.triangle().whileTrue(new ShoulderRaise(shoulder));
+    driverStick.touchpad().onTrue(new ShoulderStopCommand(shoulder));
+    driverStick.circle().whileTrue(new ExtendExtender(extender));
+    driverStick.square().whileTrue(new RetractExtender(extender));
+    driverStick.L1().whileTrue(new WristRaise(wrist));
+    driverStick.R1().whileTrue(new WristLower(wrist));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+ 
+    driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
+    driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
+    driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
+    driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
+    driverStick.options().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
+    // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
+    operStick.L1().whileTrue(new IntakeEjectCommand(intake));
+    operStick.R1().whileTrue(new IntakePickupCommand(intake));
+    operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, intake));
+    operStick.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    operStick.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
+    operStick.square().onTrue(new SafeSetToPositionSCG("MID_CUBE", shoulder, extender, wrist));
+    operStick.triangle().onTrue(new SafeSetToPositionSCG("MID_CONE", shoulder, extender, wrist));
+    operStick.cross().onTrue(new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist));
+    operStick.circle().onTrue(new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
+    operStick.touchpad().onTrue(new SafeSetToPositionSCG("STOW", shoulder, extender, wrist)); // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    //
     // pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
@@ -192,18 +245,18 @@ public class RobotContainer {
     pathPlannerEventMap.put("intakeDown", new PrintCommand("Event 2"));
     autoBuilder = new SwerveAutoBuilder(
 
-        m_drivetrainSubsystem::getPose, // Pose2d supplier
-        m_drivetrainSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
-        m_drivetrainSubsystem.geKinematics(), // SwerveDriveKinematics
+        driveTrain::getPose, // Pose2d supplier
+        driveTrain::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
+        driveTrain.geKinematics(), // SwerveDriveKinematics
         new PIDConstants(Constants.kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to
                                                               // create the X and Y PID controllers)
         new PIDConstants(Constants.kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to
                                                                  // create the rotation controller)
-        m_drivetrainSubsystem::drive, // Module states consumer used to output to the drive subsystem
+        driveTrain::drive, // Module states consumer used to output to the drive subsystem
         pathPlannerEventMap,
         true, // Should the path be automatically mirrored depending on alliance color.
               // Optional, defaults to true
-        m_drivetrainSubsystem // The drive subsystem. Used to properly set the requirements of path following
+        driveTrain // The drive subsystem. Used to properly set the requirements of path following
                               // commands
     );
   }
@@ -222,7 +275,7 @@ public class RobotContainer {
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
         DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND_TRAJECTORY,
         DrivetrainSubsystem.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
-        .setKinematics(m_drivetrainSubsystem.geKinematics());
+        .setKinematics(driveTrain.geKinematics());
 
     // 2. Generate trajectory
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -245,19 +298,19 @@ public class RobotContainer {
     // 4. Construct command to follow trajectory
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
         trajectory,
-        m_drivetrainSubsystem::getPose,
-        m_drivetrainSubsystem.geKinematics(),
+        driveTrain::getPose,
+        driveTrain.geKinematics(),
         xController,
         yController,
         thetaController,
-        m_drivetrainSubsystem::drive,
-        m_drivetrainSubsystem);
+        driveTrain::drive,
+        driveTrain);
 
     // 5. Add some init and wrap-up, and return everything
     return new SequentialCommandGroup(
-        new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+        new InstantCommand(() -> driveTrain.resetOdometry(trajectory.getInitialPose())),
         swerveControllerCommand,
-        new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
+        new InstantCommand(() -> driveTrain.stopModules()));
 
   }
 
@@ -289,23 +342,81 @@ public class RobotContainer {
     value = Math.copySign(value * value, value);
 
     return value;
+
   }
 
   /**
    * Gets the drive train subsystem
    */
   public DrivetrainSubsystem getDriveTrainSubsystem() {
-    return m_drivetrainSubsystem;
+    return driveTrain;
   }
 
   /**
-   * Gets the current postion of the arm
+   * Gets the drive train subsystem
+   */
+
+
+ /**
+   * Gets the current postion of the shoulder
    * 
    * @return
    */
-  public double getArmPosition() {
-    return 2; // Hardcoded for now, but eventually need to tie into winch subsystem for real
-              // value
+  public double getShoulderPosition() {
+    return shoulder.getShoulderPosition();
   }
 
+ 
+
+    /**
+   * Gets the current postion of the extender
+   * 
+   * @return
+   */
+  public double getExtenderPosition() {
+    return extender.getExtenderPosition();
+  }
+
+    /**
+   * Gets the current postion of the wrist
+   * 
+   * @return
+   */
+  public double getWristPosition() {
+    return wrist.getWristPosition();
+  }
+
+
+  
+
+ 
+
+  public LimelightSubsystem getLimelightSubsystem() {
+    return limelight;
+  }
+
+  public DriverStation.Alliance getAlliance(){ 
+    return DriverStation.getAlliance();
+
 }
+
+  // public String getAllianceChooseString(){
+  //   return allianceChooser.getSelected();
+  // }
+  
+  public void setButtons() {
+    if (getAlliance() == Alliance.Red) {
+      driverStick.triangle().onTrue(new GetLocationOfAprilTag(limelight, 1));
+      driverStick.circle().onTrue(new GetLocationOfAprilTag(limelight, 2));
+      driverStick.cross().onTrue(new GetLocationOfAprilTag(limelight, 3));
+      driverStick.square().onTrue(new GetLocationOfAprilTag(limelight, 4));
+      }
+      else {
+      driverStick.triangle().onTrue(new GetLocationOfAprilTag(limelight, 5));
+      driverStick.circle().onTrue(new GetLocationOfAprilTag(limelight, 6));
+      driverStick.cross().onTrue(new GetLocationOfAprilTag(limelight, 7));
+      driverStick.square().onTrue(new GetLocationOfAprilTag(limelight, 0));
+      }
+  }
+}
+

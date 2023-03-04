@@ -23,6 +23,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
   }
   
     /**
@@ -97,24 +98,21 @@ public final class Constants {
   public static final double EXTENDER_kMaxOuput = 1;
   public static final double EXTENDER_kMinOutput = -1;
   public static final double EXTENDER_MAX_RPM = 5700;
-  public static final double EXTENDER_POSITION_STOW = 0; // Dummy variable - Test this!
+  public static final double EXTENDER_POSITION_STOW = 0; 
   public static final double EXTENDER_POSITION_PICKUP_CONE = 16.07; 
   public static final double EXTENDER_POSITION_PICKUP_CUBE = 14.64; 
-  public static final double EXTENDER_POSITION_LOW_CONE_NODE = 2.60;
+  public static final double EXTENDER_POSITION_LOW_CONE_NODE = 2.60; 
   public static final double EXTENDER_POSITION_MID_CONE_NODE = 1.83; 
-  public static final double EXTENDER_POSITION_HIGH_CONE_NODE = 49.07; 
+  public static final double EXTENDER_POSITION_HIGH_CONE_NODE = 49.05; 
   public static final double EXTENDER_POSITION_LOW_CUBE_NODE = 9.07; 
-  public static final double EXTENDER_POSITION_MID_CUBE_NODE = 23.0; 
+  public static final double EXTENDER_POSITION_MID_CUBE_NODE = 23.00; 
   public static final double EXTENDER_POSITION_HIGH_CUBE_NODE = 75.43; 
   public static final double EXTENDER_SM_MAX_VEL = 4000; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MIN_VEL = 0; // Dummy variable - Test this!
   public static final double EXTENDER_SM_MAX_ACCEL = 8000; // Dummy variable - Test this!
   public static final double EXTENDER_SM_ALLOWED_ERR = .25; // Dummy variable - Test this!
-  public static final double EXTENDER_MAX_POSTION = 83; // Max forward rotation. Current gearing is xx to one so
-                                                         // position of xx is one full rotation of output shaft. Only
-                                                         // need to go about 25%
-  public static final double EXTENDER_MIN_POSTION = -10; // Min forward rotation. Assuming we are starting in our
-                                                         // minimal position of 0.
+  public static final double EXTENDER_MAX_POSTION = 85.00; // Max forward rotation. Current gearing is xx to one so position of xx is one full rotation of output shaft.  Only need to go about 25%
+  public static final double EXTENDER_MIN_POSTION = -10; // Min forward rotation. Assuming we are starting in our minimal position of 0.
   public static final double EXTENDER_MOVEMENT_INCREMENT = .2;
   public static final int EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
 
@@ -136,52 +134,49 @@ public final class Constants {
   public static final double SHOULDER_DEFAULT_kP = 0.051;// Dummy variable - Test this!
   public static final double SHOULDER_DEFAULT_kI = 0.00;// Dummy variable - Test this!
   public static final double SHOULDER_DEFAULT_kD = 0.00;// Dummy variable - Test this!
-  public static final double SHOULDER_DEFAULT_kF = 0.00;// Dummy variable - Test this!
+  public static final double SHOULDER_DEFAULT_kF = 0.00;
   public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
   public static final double SHOULDER_HORIZONTAL_POS = 85000;
-  public static final double SHOULDER_POSITION_MIN = 0; // Min position of the arm
-  public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 20000; // Safe distance where can extend the rest of the
-                                                                       // arm
-  public static final double SHOULDER_POSITION_MAX = 92500; // Max position of the arm
+  public static final double SHOULDER_POSITION_MIN = 0;  //  Min position of the arm
+  public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 20000;  //  Safe distance where can extend the rest of the arm
+  public static final double SHOULDER_POSITION_MAX = 92500;  // Max position of the arm
   public static final double SHOULDER_POSITION_STOW = 0; 
-  public static final double SHOULDER_POSITION_PICKUP_CUBE = 35000; 
-  public static final double SHOULDER_POSITION_PICKUP_CONE = 32500; 
+  public static final double SHOULDER_POSITION_PICKUP_CONE = 32500;   
+  public static final double SHOULDER_POSITION_PICKUP_CUBE = 35000;  
   public static final double SHOULDER_POSITION_LOW_CONE_NODE = 42500; 
-  public static final double SHOULDER_POSITION_MID_CONE_NODE = 82500; 
-  public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 92500; 
-  public static final double SHOULDER_POSITION_LOW_CUBE_NODE = 42500; 
-  public static final double SHOULDER_POSITION_MID_CUBE_NODE = 52500; 
-  public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 75000; 
+  public static final double SHOULDER_POSITION_MID_CONE_NODE = 77500;  
+  public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 92500;  
+  public static final double SHOULDER_POSITION_LOW_CUBE_NODE = 42500;  
+  public static final double SHOULDER_POSITION_MID_CUBE_NODE = 52500;  
+  public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 75000;  
   public static final double SHOULDER_MOVEMENT_INCREMENT = 2500;
 
-  // Wrist Constants
-  public static final int WRIST_PID_SLOT = 0;
-  public static final double WRIST_kF = 0.0; // Dummy variable - Test this!
-  public static final double WRIST_kP = 0.0005; // Dummy variable - Test this!
-  public static final double WRIST_kI = 0.0; // Dummy variable - Test this!
-  public static final double WRIST_kD = 0.0; // Dummy variable - Test this!
-  public static final double WRIST_kMaxOuput = 1;
-  public static final double WRIST_kMinOutput = -1;
-  public static final double WRIST_MAX_RPM = 5700;
-  public static final double WRIST_POSITION_STOW = 0; 
-  public static final double WRIST_POSITION_PICKUP_CONE = 43.48; 
-  public static final double WRIST_POSITION_PICKUP_CUBE = 43.07; 
-  public static final double WRIST_POSITION_LOW_CONE_NODE = 56.07; 
-  public static final double WRIST_POSITION_MID_CONE_NODE = 53.07; 
-  public static final double WRIST_POSITION_HIGH_CONE_NODE = 48.07; 
-  public static final double WRIST_POSITION_LOW_CUBE_NODE = 13.95; 
-  public static final double WRIST_POSITION_MID_CUBE_NODE = 53.07; 
-  public static final double WRIST_POSITION_HIGH_CUBE_NODE = 35.00; 
-  public static final double WRIST_SM_MAX_VEL = 4000; // Dummy variable - Test this!
-  public static final double WRIST_SM_MIN_VEL = 0; // Dummy variable - Test this!
-  public static final double WRIST_SM_MAX_ACCEL = 3000; // Dummy variable - Test this!
-  public static final double WRIST_SM_ALLOWED_ERR = .05; // Dummy variable - Test this!
-  public static final double WRIST_MAX_POSTION = 60; // Max forward rotation. Current gearing is 31.25 to one so
-                                                     // position of 31.25 is one full rotation of output shaft. Only
-                                                     // need to go about 25%
-  public static final double WRIST_MIN_POSTION = -10; // Min forward rotation. Assuming we are starting in our minimal
-                                                      // position of 0.
-  public static final double WRIST_MOVEMENT_INCREMENT = 0.5; // Amount to move wrist postion at one time.
-  public static final int WRIST_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
+    // Wrist Constants
+    public static final int WRIST_PID_SLOT = 0;
+    public static final double WRIST_kF = 0.0;  // Dummy variable - Test this!
+    public static final double WRIST_kP = 0.0005;  // Dummy variable - Test this!
+    public static final double WRIST_kI = 0.0;  // Dummy variable - Test this!
+    public static final double WRIST_kD = 0.0;  // Dummy variable - Test this!
+    public static final double WRIST_kMaxOuput = 1;
+    public static final double WRIST_kMinOutput = -1;
+    public static final double WRIST_MAX_RPM = 5700;
+    public static final double WRIST_POSITION_STOW = 0;  
+    public static final double WRIST_POSITION_PICKUP_CONE = 43.48;   
+    public static final double WRIST_POSITION_PICKUP_CUBE = 43.07;   
+    public static final double WRIST_POSITION_LOW_CONE_NODE = 56.07;  
+    public static final double WRIST_POSITION_MID_CONE_NODE = 53.07;  
+    public static final double WRIST_POSITION_HIGH_CONE_NODE = 48.07;  
+    public static final double WRIST_POSITION_LOW_CUBE_NODE = 13.95; 
+    public static final double WRIST_POSITION_MID_CUBE_NODE = 27.07;  
+    public static final double WRIST_POSITION_HIGH_CUBE_NODE = 35.00; 
+    public static final double WRIST_SM_MAX_VEL = 4000;  // Dummy variable - Test this!
+    public static final double WRIST_SM_MIN_VEL = 0;  // Dummy variable - Test this!
+    public static final double WRIST_SM_MAX_ACCEL = 3000;  // Dummy variable - Test this!
+    public static final double WRIST_SM_ALLOWED_ERR = .05;  // Dummy variable - Test this!
 
+    public static final double WRIST_MAX_POSTION = 84.8; // Max forward rotation. Current gearing is 31.25 to one so position of 31.25 is one full rotation of output shaft.  Only need to go about 25%
+    public static final double WRIST_MIN_POSTION = -10; // Min forward rotation. Assuming we are starting in our minimal position of 0.
+    public static final double WRIST_MOVEMENT_INCREMENT = 0.5;  // Amount to move wrist postion at one time.
+    public static final int WRIST_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
+    
 }

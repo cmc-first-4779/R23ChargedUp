@@ -11,10 +11,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.StaticConstants.LimelightConstants;
 import frc.robot.Constants;
-
+import frc.robot.commands.SetPipeline;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //  Our Limelight Subsystem is where all of our Vision Processing Takes place
 
 public class LimelightSubsystem extends SubsystemBase {
+
 
   // Declare the Network Table that our Limelight will broadcast its values on
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -112,10 +114,10 @@ public class LimelightSubsystem extends SubsystemBase {
     setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
   }
 
-  // Set the Snapshot mode.  Allows users to take snapshots during a match
-  // 0 ...  Resets snapshot mode
-  // 1 ...  Take exactly one snapshot
-  public void setSnapshotMode(double snapshotMode){
+  // Set the Snapshot mode. Allows users to take snapshots during a match
+  // 0 ... Resets snapshot mode
+  // 1 ... Take exactly one snapshot
+  public void setSnapshotMode(double snapshotMode) {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("snapshot").setNumber(snapshotMode);
     setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
   }
@@ -209,8 +211,8 @@ public class LimelightSubsystem extends SubsystemBase {
         .getDoubleArray(new double[6]);
   }
 
-  public void setCropValues(){
-    //  Declare an array to store our crop values
+  public void setCropValues() {
+    // Declare an array to store our crop values
     double[] cropValues = new double[4];
     // Populate the array with our Constant Values
     cropValues[0] = LimelightConstants.LIMELIGHT_CROP_X0;  //X0
@@ -220,5 +222,7 @@ public class LimelightSubsystem extends SubsystemBase {
     //  Push the array back ot the Limelight Network Table to set it.
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("crop").setDoubleArray(cropValues);
   }
+  
 
+  
 }

@@ -140,7 +140,7 @@ public class ExtenderSubsystem extends SubsystemBase {
    * @param setPoint
    * @return true if it falls on or between min and max allowed values.
    */
-  public boolean setPointIsValid(double setPoint) {
+  private boolean setPointIsValid(double setPoint) {
     if ((setPoint >= Constants.EXTENDER_MIN_POSTION) && (extenderMotor.get() >= 0)) {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
@@ -152,7 +152,6 @@ public class ExtenderSubsystem extends SubsystemBase {
           .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION);
       return false;
     }
-
   }
 
   // Used for testing our PID settings for SmartMotion
@@ -225,14 +224,14 @@ public class ExtenderSubsystem extends SubsystemBase {
    * @return true if arm position is greater than minimum distance set to extend
    */
   private boolean safeToExtendExtender() {
-    // // Need to check with arm to make sure it's in a good space.
-    // double armPosition = robotContainer.getArmPosition();
-    // (armPosition > Constants.EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND) {
-    // System.out.println("Arm is at safe position to extend Extender");
-    // return true;
-    // }
-    // return false;
-    return true;
+    // Need to check with arm to make sure it's in a good space.
+    double shoulderPosition = robotContainer.getShoulderPosition();
+    if (shoulderPosition > Constants.SHOULDER_POSITION_SAFE_TO_EXTEND) {
+      System.out.println("Shoulder is at safe position to extend Extender:  " +shoulderPosition);
+      return true;
+    }
+    System.out.println("Shoulder is NOT at safe position to extend Extender:  "+shoulderPosition);
+    return false;
   }
 
   /**
@@ -262,5 +261,9 @@ public class ExtenderSubsystem extends SubsystemBase {
       stopMotor();
     }
   }
+
+  public double getExtenderPosition() {
+    return extenderMotor.getEncoder().getPosition();
+}
 
 }

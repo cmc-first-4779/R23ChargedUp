@@ -171,7 +171,7 @@ public class WristSubsystem extends SubsystemBase {
       return true;
     } else {
       System.out
-          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION);
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION);
       return false;
     }
   }
@@ -263,14 +263,17 @@ public class WristSubsystem extends SubsystemBase {
    * @return true if arm position is greater than minimum distance set to extend
    */
   private boolean safeToExtendWrist() {
-    // // Need to check with arm to make sure it's in a good space.
-    // double armPosition = robotContainer.getArmPosition();
-    // if (armPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
-    //   System.out.println("Arm is at safe position to extend wrist");
-    //   return true;
-    // }
-    // return false;
-    return true;
+    // Need to check with arm to make sure it's in a good space.
+    double shoulderPosition = robotContainer.getShoulderPosition();
+    if (shoulderPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
+      System.out.println("Shoulder is at safe position to extend wrist");
+      return true;
+    }
+    return false;
+  }
+
+  public double getWristPosition(){
+    return wristMotor.getEncoder().getPosition();
   }
 
 }
