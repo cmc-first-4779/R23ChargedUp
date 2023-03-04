@@ -25,7 +25,7 @@ public class PositionValues {
 
     // PICKUP_CONE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CONE = 37500;
-    public static final double EXTENDER_POSITION_PICKUP_CONE = 18.5;
+    public static final double EXTENDER_POSITION_PICKUP_CONE = 18.75;
     public static final double WRIST_POSITION_PICKUP_CONE = 42.75;
 
     // PICKUP_CUBE Position for each subsystem
