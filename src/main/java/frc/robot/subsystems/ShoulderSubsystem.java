@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -52,10 +54,15 @@ public class ShoulderSubsystem extends SubsystemBase {
     initMotorController(shoulderMotorSlave);
     initMotorController(shoulderMotorMaster);
     // Invert motors (if needed)
-    shoulderMotorSlave.setInverted(false);
+    // shoulderMotorSlave.setInverted(false);
+    // shoulderMotorMaster.setInverted(true);
+    //shoulderMotorSlave.setInverted(true);
     shoulderMotorMaster.setInverted(true);
+    shoulderMotorSlave.setInverted(InvertType.OpposeMaster);
+    shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
     // Have the left motor follow the right motor
-    shoulderMotorSlave.follow(shoulderMotorMaster);
+    //shoulderMotorSlave.follow(shoulderMotorMaster);
+    // shoulderMotorMaster.follow(shoulderMotorSlave);
     // Reset the encoders
     resetEncoders(shoulderMotorMaster);
     resetEncoders(shoulderMotorSlave);
@@ -320,7 +327,6 @@ public class ShoulderSubsystem extends SubsystemBase {
   //   Motion Magic calls in succession.
   public void resetMotionMagic(){
     shoulderMotorMaster.set(0);
-    shoulderMotorSlave.set(0);
   }
 
 }

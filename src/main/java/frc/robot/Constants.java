@@ -124,7 +124,7 @@ public final class Constants {
   public static final double SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
   public static final double SHOULDER_NEUTRAL_DEADBAND_PERCENT = 0.04; // 0.04 is the default
   public static final double SHOULDER_ALLOWED_ERROR = 250;
-  public static final double SHOULDER_DEFAULT_kP = 0.051;// Dummy variable - Test this!
+  public static final double SHOULDER_DEFAULT_kP = 0.050;// Dummy variable - Test this!
   public static final double SHOULDER_DEFAULT_kI = 0.00;// Dummy variable - Test this!
   public static final double SHOULDER_DEFAULT_kD = 0.00;// Dummy variable - Test this!
   public static final double SHOULDER_DEFAULT_kF = 0.00;
