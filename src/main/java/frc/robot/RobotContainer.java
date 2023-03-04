@@ -57,6 +57,7 @@ import frc.robot.subsystems.BlingSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commandGroups.SafeRectractToStowSCG;
 import frc.robot.commandGroups.SafeSetToPositionSCG;
 import frc.robot.commandGroups.StopAllPCG;
 import frc.robot.commands.Autos;
@@ -172,15 +173,15 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     //new Trigger(m_exampleSubsystem::exampleCondition)
     //    .onTrue(new ExampleCommand(m_exampleSubsystem));
-    driverStick.L2().whileTrue(new IntakePickupCommand(intake));
-    driverStick.R2().whileTrue(new IntakeEjectCommand(intake));
-    driverStick.cross().whileTrue(new ShoulderLower(shoulder));
-    driverStick.triangle().whileTrue(new ShoulderRaise(shoulder));
-    driverStick.touchpad().onTrue(new ShoulderStopCommand(shoulder));
-    driverStick.circle().whileTrue(new ExtendExtender(extender));
-    driverStick.square().whileTrue(new RetractExtender(extender));
-    driverStick.L1().whileTrue(new WristRaise(wrist));
-    driverStick.R1().whileTrue(new WristLower(wrist));
+    // driverStick.L2().whileTrue(new IntakePickupCommand(intake));
+    // driverStick.R2().whileTrue(new IntakeEjectCommand(intake));
+    // driverStick.cross().whileTrue(new ShoulderLower(shoulder));
+    // driverStick.triangle().whileTrue(new ShoulderRaise(shoulder));
+    // driverStick.touchpad().onTrue(new ShoulderStopCommand(shoulder));
+    // driverStick.circle().whileTrue(new ExtendExtender(extender));
+    // driverStick.square().whileTrue(new RetractExtender(extender));
+    // driverStick.L1().whileTrue(new WristRaise(wrist));
+    // driverStick.R1().whileTrue(new WristLower(wrist));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
  
     driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
@@ -198,7 +199,10 @@ public class RobotContainer {
     operStick.triangle().onTrue(new SafeSetToPositionSCG("MID_CONE", shoulder, extender, wrist));
     operStick.cross().onTrue(new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist));
     operStick.circle().onTrue(new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
-    operStick.touchpad().onTrue(new SafeSetToPositionSCG("STOW", shoulder, extender, wrist)); // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    operStick.L3().onTrue(new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
+    operStick.R3().onTrue(new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
+    operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist) ); // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    
     //
     // pressed,
     // cancelling on release.
