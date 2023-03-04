@@ -6,7 +6,6 @@ package frc.robot.commands.WristCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.PositionValues;
 import frc.robot.subsystems.WristSubsystem;
 
