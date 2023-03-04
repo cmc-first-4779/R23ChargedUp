@@ -42,7 +42,7 @@ public class SafeSetToPositionSCG extends SequentialCommandGroup {
         // Move the shoulder up to the safe position to move the extender and the wrist
         new ShoulderSetPosition(shoulder, Constants.SHOULDER_POSITION_SAFE_TO_EXTEND),
         // Wait for the system to settle down (seconds)
-        new Wait(0.25),
+        new Wait(0.75),
         // Disengage Motion Magic to prevent wonkiness from two successive calls.
         new ResetShoulderMM(shoulder),
         // Wait for the system to settle down (seconds)
