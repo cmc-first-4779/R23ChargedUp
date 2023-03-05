@@ -12,7 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.PositionValues;
+import frc.robot.PositionSetpoints;
 import frc.robot.RobotContainer;
 import frc.robot.StaticConstants.HardwareMap;
 import frc.robot.StaticConstants.MaxMotorAmpsConstants;
@@ -227,7 +227,7 @@ public class ExtenderSubsystem extends SubsystemBase {
   private boolean safeToExtendExtender() {
     // Need to check with arm to make sure it's in a good space.
     double shoulderPosition = robotContainer.getShoulderPosition();
-    if (shoulderPosition > PositionValues.SHOULDER_POSITION_SAFE_TO_EXTEND) {
+    if (shoulderPosition > PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       System.out.println("Shoulder is at safe position to extend Extender:  " +shoulderPosition);
       return true;
     }

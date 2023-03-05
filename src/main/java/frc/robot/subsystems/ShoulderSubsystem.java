@@ -20,7 +20,7 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.PositionValues;
+import frc.robot.PositionSetpoints;
 import frc.robot.StaticConstants.HardwareMap;
 import frc.robot.StaticConstants.MaxMotorAmpsConstants;
 
@@ -241,7 +241,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Method to check whether we are in a safe range to extend the
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
-    if (shoulderMasterPosition <= PositionValues.SHOULDER_POSITION_SAFE_TO_EXTEND) {
+    if (shoulderMasterPosition <= PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       return false;
     } else {
       return true;

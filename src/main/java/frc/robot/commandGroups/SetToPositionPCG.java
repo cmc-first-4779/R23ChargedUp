@@ -5,7 +5,7 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.PositionValues;
+import frc.robot.PositionSetpoints;
 import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.commands.WristCommands.WristSetPosition;
@@ -45,65 +45,65 @@ public class SetToPositionPCG extends ParallelCommandGroup {
     switch (position) {
       // Set the values for the Shoulder, Extender, and Wrist Positions to HIGH CUBE
       case "HIGH_CUBE":
-        shoulderPosition = PositionValues.SHOULDER_POSITION_HIGH_CUBE_NODE;
-        extenderPosition = PositionValues.EXTENDER_POSITION_HIGH_CUBE_NODE;
-        wristPosition = PositionValues.WRIST_POSITION_HIGH_CUBE_NODE;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_HIGH_CUBE_NODE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_HIGH_CUBE_NODE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_HIGH_CUBE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to HIGH CONE
       case "HIGH_CONE":
-        shoulderPosition = PositionValues.SHOULDER_POSITION_HIGH_CONE_NODE;
-        extenderPosition = PositionValues.EXTENDER_POSITION_HIGH_CONE_NODE;
-        wristPosition = PositionValues.WRIST_POSITION_HIGH_CONE_NODE;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_HIGH_CONE_NODE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_HIGH_CONE_NODE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_HIGH_CONE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to MID CUBE
       case "MID_CUBE":
-        shoulderPosition = PositionValues.SHOULDER_POSITION_MID_CUBE_NODE;
-        extenderPosition = PositionValues.EXTENDER_POSITION_MID_CUBE_NODE;
-        wristPosition = PositionValues.WRIST_POSITION_MID_CUBE_NODE;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_MID_CUBE_NODE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_MID_CUBE_NODE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_MID_CUBE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to MID CONE
       case "MID_CONE":
-        shoulderPosition = PositionValues.SHOULDER_POSITION_MID_CONE_NODE;
-        extenderPosition = PositionValues.EXTENDER_POSITION_MID_CONE_NODE;
-        wristPosition = PositionValues.WRIST_POSITION_MID_CONE_NODE;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_MID_CONE_NODE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_MID_CONE_NODE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_MID_CONE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to LOW CUBE
       case "LOW_CUBE":
-        shoulderPosition = PositionValues.SHOULDER_POSITION_LOW_CUBE_NODE;
-        extenderPosition = PositionValues.EXTENDER_POSITION_LOW_CUBE_NODE;
-        wristPosition = PositionValues.WRIST_POSITION_LOW_CUBE_NODE;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_LOW_CUBE_NODE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_LOW_CUBE_NODE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_LOW_CUBE_NODE;
         // Need to set wrist position
         break;
       case "LOW_CONE":
         // Set the values for the Shoulder, Extender, and Wrist Positions to LOW CONE
-        shoulderPosition = PositionValues.SHOULDER_POSITION_LOW_CONE_NODE;
-        extenderPosition = PositionValues.EXTENDER_POSITION_LOW_CONE_NODE;
-        wristPosition = PositionValues.WRIST_POSITION_LOW_CONE_NODE;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_LOW_CONE_NODE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_LOW_CONE_NODE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_LOW_CONE_NODE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to Pick a CUBE
       // from the ground
       case "PICKUP_CUBE":
-        shoulderPosition = PositionValues.SHOULDER_POSITION_PICKUP_CUBE;
-        extenderPosition = PositionValues.EXTENDER_POSITION_PICKUP_CUBE;
-        wristPosition = PositionValues.WRIST_POSITION_PICKUP_CUBE;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_PICKUP_CUBE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_PICKUP_CUBE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_PICKUP_CUBE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to Pick a CONE
       // from the ground
       case "PICKUP_CONE":
-        shoulderPosition = PositionValues.SHOULDER_POSITION_PICKUP_CONE;
-        extenderPosition = PositionValues.EXTENDER_POSITION_PICKUP_CONE;
-        wristPosition = PositionValues.WRIST_POSITION_PICKUP_CONE;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_PICKUP_CONE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_PICKUP_CONE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_PICKUP_CONE;
         break;
       case "HUMAN_PLAYER_STATION":
-        shoulderPosition = PositionValues.SHOULDER_POSITION_HUMAN_PLAYER_STATION;
-        extenderPosition = PositionValues.EXTENDER_POSITION_HUMAN_PLAYER_STATION;
-        wristPosition = PositionValues.WRIST_POSITION_HUMAN_PLAYER_STATION;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_HUMAN_PLAYER_STATION;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_HUMAN_PLAYER_STATION;
+        wristPosition = PositionSetpoints.WRIST_POSITION_HUMAN_PLAYER_STATION;
         break;
       // Our DEFAULT POSITION WILL BE THE STOW POSITION
       default: // DEFAULT position is "STOW"
-        shoulderPosition = PositionValues.SHOULDER_POSITION_STOW;
-        extenderPosition = PositionValues.EXTENDER_POSITION_STOW;
-        wristPosition = PositionValues.WRIST_POSITION_STOW;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_STOW;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_STOW;
+        wristPosition = PositionSetpoints.WRIST_POSITION_STOW;
         break;
     }
 
