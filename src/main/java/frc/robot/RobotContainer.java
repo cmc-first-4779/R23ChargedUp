@@ -49,9 +49,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commandGroups.SafeRectractToStowSCG;
 import frc.robot.commandGroups.SafeSetToPositionSCG;
 import frc.robot.commandGroups.StopAllPCG;
-//import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.IntakeCommands.IntakeCubeCommand;
-import frc.robot.commands.IntakeCommands.IntakeConeCommand;
+import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
+import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
 import frc.robot.commands.WristCommands.WristLower;
@@ -90,7 +89,7 @@ public class RobotContainer {
   SendableChooser<String> AllianceChooser = new SendableChooser<>();
   // String selectedAuto;
   // Trajectory chosenTrajectory;
-  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+ 
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
   private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
@@ -98,7 +97,9 @@ public class RobotContainer {
   private final BlingSubsystem bling = new BlingSubsystem();
   private final LimelightSubsystem limelight = new LimelightSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  // Declare our two PS4 Controllers
+  //  DriverStick on USB Port 0
+  //  OperStick on USB Port 1
   private final CommandPS4Controller driverStick =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
   private final CommandPS4Controller operStick =
@@ -174,11 +175,11 @@ public class RobotContainer {
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
-    driverStick.L2().whileTrue(new IntakeCubeCommand(intake));
-    driverStick.R2().whileTrue(new IntakeConeCommand(intake));
+    driverStick.L2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    driverStick.R2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
-    operStick.L1().whileTrue(new IntakeCubeCommand(intake));
-    operStick.R1().whileTrue(new IntakeConeCommand(intake));
+    operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
     operStick.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
     operStick.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
@@ -244,10 +245,10 @@ public class RobotContainer {
     pathPlannerEventMap.put("Cone Pickup", new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));    
     pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
-    pathPlannerEventMap.put("Eject Cone", new IntakeCubeCommand(intake));
-    pathPlannerEventMap.put("Eject Cube", new IntakeConeCommand(intake));
-    pathPlannerEventMap.put("Pickup Cone", new IntakeConeCommand(intake));
-    pathPlannerEventMap.put("Pickup Cube", new IntakeCubeCommand(intake));
+    pathPlannerEventMap.put("Eject Cone", new AutoIntakeSetSpeed(intake, "EJECT_CONE"));
+    pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
+    pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
+    pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
     pathPlannerEventMap.put("Balance Test", new balanceTest(driveTrain));
     autoBuilder = new SwerveAutoBuilder(
 
