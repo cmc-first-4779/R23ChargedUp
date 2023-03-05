@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -272,8 +273,14 @@ public class WristSubsystem extends SubsystemBase {
     return false;
   }
 
+  //  Return the position of the wrist
   public double getWristPosition(){
     return wristMotor.getEncoder().getPosition();
+  }
+
+  //  Return the encoder
+  public RelativeEncoder getWristEncoder(){
+    return wristMotor.getEncoder();
   }
 
 }
