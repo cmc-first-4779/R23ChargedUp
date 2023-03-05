@@ -13,12 +13,14 @@ public class BlingSubsystem extends SubsystemBase {
 
   // Declare our Bling Controller as a Spark. (Same libraries from REV Robotics)
   Spark blingController;
+  Spark blingController2;
 
   double pattern;
 
   public BlingSubsystem() {
     // Initiate the blingController object
     blingController = new Spark(HardwareMap.PWM_PORT_BLING);
+    blingController2 = new Spark(HardwareMap.PWM_PORT_BLING2);
   }
 
   @Override
@@ -31,5 +33,6 @@ public class BlingSubsystem extends SubsystemBase {
   // * All of our patterns are in the StaticConstants folder under BlingConstants
   public void setBlingPattern(double pattern) {
     blingController.set(pattern);
+    blingController2.set(pattern);
   }
 }

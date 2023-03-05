@@ -18,5 +18,6 @@ public class HardwareMap {
 
     // PWM Ports on the RoboRIO
     public static final int PWM_PORT_BLING = 0;
+    public static final int PWM_PORT_BLING2 = 1;
 
 }
