@@ -9,11 +9,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.StaticConstants.LimelightConstants;
-//import frc.robot.Constants;
-//import frc.robot.commands.SetPipeline;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//  Our Limelight Subsystem is where all of our Vision Processing Takes place
+import frc.robot.StaticConstants.LimelightConstants;
 
 public class LimelightSubsystem extends SubsystemBase {
 

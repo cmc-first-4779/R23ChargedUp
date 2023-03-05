@@ -11,10 +11,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.StaticConstants.HardwareMap;
-import frc.StaticConstants.MaxMotorAmpsConstants;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.StaticConstants.HardwareMap;
+import frc.robot.StaticConstants.MaxMotorAmpsConstants;
 
 public class WristSubsystem extends SubsystemBase {
 

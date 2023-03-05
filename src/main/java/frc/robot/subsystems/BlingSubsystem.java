@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.StaticConstants.HardwareMap;
+import frc.robot.StaticConstants.HardwareMap;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class BlingSubsystem extends SubsystemBase {
