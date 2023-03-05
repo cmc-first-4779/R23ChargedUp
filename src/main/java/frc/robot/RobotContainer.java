@@ -53,7 +53,7 @@ import frc.robot.commandGroups.StopAllPCG;
 import frc.robot.commands.IntakeCommands.IntakeCubeCommand;
 import frc.robot.commands.IntakeCommands.IntakeConeCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-import frc.robot.commands.LimeLightCommands.GetLocationOfAprilTag;
+import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
 import frc.robot.commands.WristCommands.WristLower;
 import frc.robot.commands.WristCommands.WristRaise;
 import frc.robot.subsystems.ShoulderSubsystem;
