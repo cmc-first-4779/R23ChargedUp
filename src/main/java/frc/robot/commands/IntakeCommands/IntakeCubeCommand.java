@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 
+//  THIS COMMAND CAN INTAKE A CUBE OR EJECT A CONE
+
 public class IntakeCubeCommand extends CommandBase {
   // Declare our Subsystem
   IntakeSubsystem intakeSubsystem;
