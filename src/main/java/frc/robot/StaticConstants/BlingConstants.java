@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.StaticConstants;
+package frc.robot.StaticConstants;
 
 /**
  * Table for all of the available colors and palettes on the Blinkin' LED Driver.
