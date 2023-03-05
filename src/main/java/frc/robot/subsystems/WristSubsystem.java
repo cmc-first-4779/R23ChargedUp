@@ -36,6 +36,7 @@ public class WristSubsystem extends SubsystemBase {
   public WristSubsystem(RobotContainer robotContainer) {
     // Address our motor
     wristMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_WRIST, MotorType.kBrushless);
+
     m_pidController = wristMotor.getPIDController();
     this.robotContainer = robotContainer;
 
@@ -46,6 +47,8 @@ public class WristSubsystem extends SubsystemBase {
     // Reset our Encoder
     resetEncoder(wristMotor);
     m_pidController = wristMotor.getPIDController();
+    wristMotor.setInverted(true);
+
     // Config our PID Values
     configPIDFValues(wristMotor, Constants.WRIST_kP, Constants.WRIST_kI, Constants.WRIST_kD,
         Constants.WRIST_kF, Constants.WRIST_kMinOutput, Constants.WRIST_kMaxOuput);

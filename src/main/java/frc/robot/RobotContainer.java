@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -40,6 +41,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.StaticConstants.BlingConstants;
 import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
+import frc.robot.commands.DriveTrainCommands.ResetGyro;
 import frc.robot.commands.DriveTrainCommands.balanceTest;
 import frc.robot.commands.DriveTrainCommands.sturdyBaseCommand;
 import frc.robot.subsystems.BlingSubsystem;
@@ -174,6 +176,7 @@ public class RobotContainer {
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
+    driverStick.R3().whileTrue(new balanceTest(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     driverStick.L2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     driverStick.R2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
@@ -218,14 +221,14 @@ public class RobotContainer {
    * Generates the Path Planner Groups and add them to the AutoChooser
    */
   private void generatePathPlannerPathGroups() {
-    List<PathPlannerTrajectory> testSquareTraj = PathPlanner.loadPathGroup("SquareTest", new PathConstraints(2, 2));
-    List<PathPlannerTrajectory> testPathTraj = PathPlanner.loadPathGroup("TestPath", new PathConstraints(2, 3));
-    List<PathPlannerTrajectory> Blue_Drop_Cone_And_Pickuptraj = PathPlanner.loadPathGroup("Blue Drop Cone and Pickup",
+    List<PathPlannerTrajectory> Station_2_Engage = PathPlanner.loadPathGroup("Station 2 Engage", new PathConstraints(2, 2));
+    List<PathPlannerTrajectory> Station_1_Cube_and_Pickuptraj = PathPlanner.loadPathGroup("Station 1 Cube and Pickup", new PathConstraints(2, 3));
+    List<PathPlannerTrajectory> Station_1_Drop_Cone_And_Pickuptraj = PathPlanner.loadPathGroup("Station 1 Drop Cone and Pickup",
         new PathConstraints(2, 3));
 
-    autoChooser.setDefaultOption("Test Square", testSquareTraj);
-    autoChooser.addOption("TestPath", testPathTraj);
-    autoChooser.addOption("Blue_Drop_Cone_And_Pickup", Blue_Drop_Cone_And_Pickuptraj);
+    autoChooser.setDefaultOption("Station 2 Engage", Station_2_Engage);
+    autoChooser.addOption("Station 1 Cube and Pickup", Station_1_Cube_and_Pickuptraj);
+    autoChooser.addOption("Station 1 Drop Cone And Pickup", Station_1_Drop_Cone_And_Pickuptraj);
   }
 
   /**
@@ -249,7 +252,9 @@ public class RobotContainer {
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
     pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
     pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
+    pathPlannerEventMap.put("Wait", new WaitCommand(1));
     pathPlannerEventMap.put("Balance Test", new balanceTest(driveTrain));
+    pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
     autoBuilder = new SwerveAutoBuilder(
 
         driveTrain::getPose, // Pose2d supplier
