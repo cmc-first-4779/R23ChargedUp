@@ -184,6 +184,8 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Use MotionMagic to set the shoulder to a specific Encoder Position.
   public void setShoulderPosition(double setPoint) {
     shoulderMotorMaster.setSafetyEnabled(false);
+    //  Added this command to make sure the slave is following the master each and everytime
+    //    we move the shoulder.  (The slave kept unfollowing during testing)
     shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     if (safeToMoveShoulder()) {
