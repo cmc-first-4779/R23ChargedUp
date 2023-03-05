@@ -88,15 +88,17 @@ public final class Constants {
                  kMaxAngularAccelerationRadiansPerSecondSquared);
 
   // Intake Constants
-  public static final double INTAKE_CONE_SPEED = 0.80; // Dummy value. NEED TO TEST THIS!
-  public static final double INTAKE_CUBE_SPEED = -0.80; // Dummy value. NEED TO TEST THIS!
+  public static final double INTAKE_CONE_SPEED = 0.80; 
+  public static final double INTAKE_CUBE_SPEED = -0.80; 
+  public static final double INTAKE_CONE_AUTON_TIMER = 0.25;  //Timer for Intake Cone in Auton
+  public static final double INTAKE_CUBE_AUTON_TIMER = 0.25;  //Timer for Intake Cube in Auton
 
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
-  public static final double EXTENDER_kF = 0.0; // Dummy variable - Test this!
-  public static final double EXTENDER_kP = 0.0005; // Dummy variable - Test this!
-  public static final double EXTENDER_kI = 0.0; // Dummy variable - Test this!
-  public static final double EXTENDER_kD = 0.0; // Dummy variable - Test this!
+  public static final double EXTENDER_kF = 0.0; 
+  public static final double EXTENDER_kP = 0.0005; 
+  public static final double EXTENDER_kI = 0.0; 
+  public static final double EXTENDER_kD = 0.0; 
   public static final double EXTENDER_kMaxOuput = 1;
   public static final double EXTENDER_kMinOutput = -1;
   public static final double EXTENDER_MAX_RPM = 5700;
@@ -124,9 +126,9 @@ public final class Constants {
   public static final double SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
   public static final double SHOULDER_NEUTRAL_DEADBAND_PERCENT = 0.04; // 0.04 is the default
   public static final double SHOULDER_ALLOWED_ERROR = 250;
-  public static final double SHOULDER_DEFAULT_kP = 0.050;// Dummy variable - Test this!
-  public static final double SHOULDER_DEFAULT_kI = 0.00;// Dummy variable - Test this!
-  public static final double SHOULDER_DEFAULT_kD = 0.00;// Dummy variable - Test this!
+  public static final double SHOULDER_DEFAULT_kP = 0.050;
+  public static final double SHOULDER_DEFAULT_kI = 0.00;
+  public static final double SHOULDER_DEFAULT_kD = 0.00;
   public static final double SHOULDER_DEFAULT_kF = 0.00;
   public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
   public static final double SHOULDER_HORIZONTAL_POS = 85000;
