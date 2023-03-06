@@ -4,18 +4,17 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,7 +30,7 @@ public class ExtenderSubsystem extends SubsystemBase {
 
   // Declare our SparkMax Motor Controller
   WPI_TalonFX extenderMotor;
-  SparkMaxPIDController m_pidController;
+ 
 
   // Declare the variables
   public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
@@ -171,10 +170,11 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void setExtenderPosition(double setpoint) {
     if (setPointIsValid(setpoint)) {
       // Declare our PID Controller
-      System.out.println("P is:  " + m_pidController.getP());
+     // System.out.println("P is:  " + extenderMotor.getP
       System.out.println("Setpoint is:  " + setpoint);
       // send our setpoint to SmartMotion
-      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+      extenderMotor.setSafetyEnabled(false);
+      extenderMotor.set(TalonFXControlMode.MotionMagic, setPoint);
     }
   }
 
@@ -198,29 +198,29 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
   }
 
-  // Used for testing our PID settings for SmartMotion
-  public void testExtenderPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
-      double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
-      int slot) {
-    // Declare our PID Controller
-    // Configure the PID settings
-    m_pidController.setFF(kF);
-    m_pidController.setP(kP);
-    m_pidController.setIZone(kI);
-    m_pidController.setD(kD);
-    m_pidController.setOutputRange(kMinOutput, kMaxOutput);
-    // Set our crusing velocities, accell, and error.
-    m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
-    m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
-    m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
-    m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
-    // send our setpoint to SmartMotion
-    if (setPointIsValid(setpoint)) {
-      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
-    } else {
-      System.out.println("Setpoint: " + setpoint + " is not valid");
-    }
-  }
+  // // Used for testing our PID settings for SmartMotion
+  // public void testExtenderPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
+  //     double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
+  //     int slot) {
+  //   // Declare our PID Controller
+  //   // Configure the PID settings
+  //   m_pidController.setFF(kF);
+  //   m_pidController.setP(kP);
+  //   m_pidController.setIZone(kI);
+  //   m_pidController.setD(kD);
+  //   m_pidController.setOutputRange(kMinOutput, kMaxOutput);
+  //   // Set our crusing velocities, accell, and error.
+  //   m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
+  //   m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
+  //   m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
+  //   m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
+  //   // send our setpoint to SmartMotion
+  //   if (setPointIsValid(setpoint)) {
+  //     m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+  //   } else {
+  //     System.out.println("Setpoint: " + setpoint + " is not valid");
+  //   }
+  // }
 
   /**
    * Retracts the wrist by the WRIST_MOVEMENT_INCREMENT
