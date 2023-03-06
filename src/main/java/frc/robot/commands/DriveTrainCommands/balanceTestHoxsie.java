@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
@@ -23,9 +24,9 @@ public class balanceTestHoxsie extends CommandBase {
   private final double maxOutput = 0.5;
 
   private double currentAngle;
-  //private double error;
+  // private double error;
   private double output;
-  
+
   /** Creates a new balanceTestHoxsie. */
   public balanceTestHoxsie(DrivetrainSubsystem driveTrain) {
     this.driveTrain = driveTrain;
@@ -39,7 +40,7 @@ public class balanceTestHoxsie extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //  Set our PID Setpoint to 0 for the pitch
+    // Set our PID Setpoint to 0 for the pitch
     forwardController.setSetpoint(0);
   }
 
@@ -48,9 +49,9 @@ public class balanceTestHoxsie extends CommandBase {
   public void execute() {
     currentAngle = driveTrain.getPitch();
     output = MathUtil.clamp(forwardController.calculate(currentAngle, 0), maxOutput, maxOutput);
-
-    //driveTrain.drive(new Translation2d(output, 0), 0, true, true);
-  }
+    System.out.println("balanceTest Output" + output);
+    //driveTrain.drive(new ChassisSpeeds(output,0,0));
+    }
 
   // Called once the command ends or is interrupted.
   @Override
