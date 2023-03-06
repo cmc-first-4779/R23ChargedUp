@@ -44,6 +44,8 @@ import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
 import frc.robot.commands.DriveTrainCommands.balanceTest;
 import frc.robot.commands.DriveTrainCommands.sturdyBaseCommand;
+import frc.robot.commands.ExtenderCommands.ExtendExtender;
+import frc.robot.commands.ExtenderCommands.RetractExtender;
 import frc.robot.subsystems.BlingSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExtenderSubsystem;
@@ -171,16 +173,16 @@ public class RobotContainer {
     // driverStick.square().whileTrue(new RetractExtender(extender));
     driverStick.L1().whileTrue(new WristRaise(wrist));
     driverStick.R1().whileTrue(new WristLower(wrist));
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
- 
+    driverStick.L2().whileTrue (new ExtendExtender(extender));
+    driverStick.R2().whileTrue (new RetractExtender(extender));
     driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.R3().whileTrue(new balanceTest(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
-    driverStick.L2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
-    driverStick.R2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    // driverStick.L2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    // driverStick.R2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
     operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
@@ -226,10 +228,13 @@ public class RobotContainer {
     List<PathPlannerTrajectory> Station_1_Cube_and_Pickuptraj = PathPlanner.loadPathGroup("Station 1 Cube and Pickup", new PathConstraints(2, 3));
     List<PathPlannerTrajectory> Station_1_Drop_Cone_And_Pickuptraj = PathPlanner.loadPathGroup("Station 1 Drop Cone and Pickup",
         new PathConstraints(2, 3));
+    List<PathPlannerTrajectory> Station_3_Engage = PathPlanner.loadPathGroup("Station 3 Engage",
+        new PathConstraints(2, 2));    
 
     autoChooser.setDefaultOption("Station 2 Engage", Station_2_Engage);
     autoChooser.addOption("Station 1 Cube and Pickup", Station_1_Cube_and_Pickuptraj);
     autoChooser.addOption("Station 1 Drop Cone And Pickup", Station_1_Drop_Cone_And_Pickuptraj);
+    autoChooser.addOption("Station 3 Engage", Station_3_Engage );
   }
 
   /**
@@ -256,6 +261,7 @@ public class RobotContainer {
     pathPlannerEventMap.put("Wait", new WaitCommand(1));
     pathPlannerEventMap.put("Balance Test", new balanceTest(driveTrain));
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
+    pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));
     autoBuilder = new SwerveAutoBuilder(
 
         driveTrain::getPose, // Pose2d supplier
