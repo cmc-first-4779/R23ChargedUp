@@ -88,18 +88,18 @@ public class ExtenderSubsystem extends SubsystemBase {
     // Netural the controller output and disable it until we call it later
     talon.neutralOutput();
     // Config the neutral deadband
-    talon.configNeutralDeadband(Constants.SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    talon.configNeutralDeadband(Constants.EXTENDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
     talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
         Constants.kTimeoutMs);
     talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
         Constants.kTimeoutMs);
     /* Set the peak and nominal outputs */
-    talon.configNominalOutputForward(Constants.SHOULDER_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
-    talon.configNominalOutputReverse(Constants.SHOULDER_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
-    talon.configPeakOutputForward(Constants.SHOULDER_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
-    talon.configPeakOutputReverse(Constants.SHOULDER_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    talon.configNominalOutputForward(Constants.EXTENDER_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configNominalOutputReverse(Constants.EXTENDER_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    talon.configPeakOutputForward(Constants.EXTENDER_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configPeakOutputReverse(Constants.EXTENDER_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
     // Set how many seconds that the motor can ramp from neutral to full
-    talon.configClosedloopRamp(Constants.SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    talon.configClosedloopRamp(Constants.EXTENDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
     /**
      * Configure the current limits that will be used
      * Stator Current is the current that passes through the motor stators.

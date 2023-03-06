@@ -105,6 +105,12 @@ public final class Constants {
   public static final double EXTENDER_kD = 0.0; 
   public static final double EXTENDER_kMaxOuput = 1;
   public static final double EXTENDER_kMinOutput = -1;
+  public static final double EXTENDER_NOMINAL_OUTPUT_FORWARD = 0.0;
+  public static final double EXTENDER_NOMINAL_OUTPUT_REVERSE = 0.0;
+  public static final double EXTENDER_PEAK_OUTPUT_FORWARD = 1.0;
+  public static final double EXTENDER_PEAK_OUTPUT_REVERSE = -1.0;
+  public static final double EXTENDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
+  public static final double EXTENDER_NEUTRAL_DEADBAND_PERCENT = 0.04; // 0.04 is the default
   public static final double EXTENDER_MAX_RPM = 5700;
   public static final double EXTENDER_MM_MAX_VEL = 5000; // Dummy variable - Test this!
   public static final double EXTENDER_MM_MIN_VEL = 0; // Dummy variable - Test this!
