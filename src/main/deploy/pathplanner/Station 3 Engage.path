@@ -1,0 +1,107 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.8504582771877414,
+        "y": 4.913919658347791
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.8998118674203455,
+        "y": 4.891274867295497
+      },
+      "holonomicAngle": 0.06851854757087318,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.300159718963506,
+        "y": 4.84598528519091
+      },
+      "prevControl": {
+        "x": 5.779329524760745,
+        "y": 3.781680105733093
+      },
+      "nextControl": {
+        "x": 5.779329524760745,
+        "y": 3.781680105733093
+      },
+      "holonomicAngle": -17.281498371816603,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.8998118674203455,
+        "y": 2.762664508379865
+      },
+      "prevControl": {
+        "x": 7.545623226839674,
+        "y": 2.4003478515431613
+      },
+      "nextControl": null,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": [
+    {
+      "position": 0.09090909090909091,
+      "names": [
+        "Wait",
+        "Cube High",
+        "Eject Cube",
+        "Wait"
+      ]
+    },
+    {
+      "position": 0.1272727272727273,
+      "names": [
+        "Safe Retract",
+        "Wait",
+        "Wait"
+      ]
+    },
+    {
+      "position": 0.8,
+      "names": [
+        "Cone Pickup",
+        "Wait",
+        "Wait",
+        "Pickup Cone"
+      ]
+    },
+    {
+      "position": 1.3090909090909075,
+      "names": [
+        "Safe Retract"
+      ]
+    }
+  ]
+}
