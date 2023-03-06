@@ -106,13 +106,13 @@ public final class Constants {
   public static final double EXTENDER_kMaxOuput = 1;
   public static final double EXTENDER_kMinOutput = -1;
   public static final double EXTENDER_MAX_RPM = 5700;
-  public static final double EXTENDER_SM_MAX_VEL = 5000; // Dummy variable - Test this!
-  public static final double EXTENDER_SM_MIN_VEL = 0; // Dummy variable - Test this!
-  public static final double EXTENDER_SM_MAX_ACCEL = 8000; // Dummy variable - Test this!
-  public static final double EXTENDER_SM_ALLOWED_ERR = .25; // Dummy variable - Test this!
+  public static final double EXTENDER_MM_MAX_VEL = 5000; // Dummy variable - Test this!
+  public static final double EXTENDER_MM_MIN_VEL = 0; // Dummy variable - Test this!
+  public static final double EXTENDER_MM_MAX_ACCEL = 8000; // Dummy variable - Test this!
+  public static final double EXTENDER_MM_ALLOWED_ERR = 250; // Dummy variable - Test this!
   public static final double EXTENDER_MAX_POSTION = 85.00; // Max forward rotation. Current gearing is xx to one so position of xx is one full rotation of output shaft.  Only need to go about 25%
   public static final double EXTENDER_MIN_POSTION = -10; // Min forward rotation. Assuming we are starting in our minimal position of 0.
-  public static final double EXTENDER_MOVEMENT_INCREMENT = .2;
+  public static final double EXTENDER_MOVEMENT_INCREMENT = 2000;
   public static final int EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
 
   // CTR PID Constants
