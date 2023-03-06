@@ -27,6 +27,7 @@ public class balanceTest extends CommandBase {
   @Override
   public void execute() {
     m_pigeonPitch = m_drive.getPitch();
+
     if (m_pigeonPitch <= Constants.PIGEON_DEADBAND_GOING_DOWN) {
       m_drive.driveBackwardsSlow();
     }

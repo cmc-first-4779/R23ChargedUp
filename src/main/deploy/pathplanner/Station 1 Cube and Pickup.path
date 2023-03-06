@@ -2,18 +2,18 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.8890906373301002,
+        "x": 1.8,
         "y": 0.8080221033435242
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8890906373300993,
-        "y": 0.8080221033435242
+        "x": 1.8970596556344907,
+        "y": 0.8034730985635884
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
-      "isLocked": true,
+      "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
@@ -26,90 +26,87 @@
     },
     {
       "anchorPoint": {
-        "x": 1.8858812003338294,
-        "y": 0.8016256032512075
+        "x": 2.1,
+        "y": 0.81
       },
       "prevControl": {
-        "x": 3.21715229144744,
-        "y": 0.8159403461664072
+        "x": 2.0965347073551266,
+        "y": 0.81
       },
       "nextControl": {
-        "x": 3.21715229144744,
-        "y": 0.8159403461664072
+        "x": 2.1034652926448736,
+        "y": 0.81
       },
-      "holonomicAngle": 180.0,
-      "isReversal": true,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
-          "Wait",
-          "Eject Cube"
-        ],
-        "executionBehavior": "sequential",
-        "waitBehavior": "none",
-        "waitTime": 2.0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 6.269731369060988,
-        "y": 0.5
-      },
-      "prevControl": {
-        "x": 5.83314243435524,
-        "y": 0.5295579517248489
-      },
-      "nextControl": {
-        "x": 5.83314243435524,
-        "y": 0.5295579517248489
-      },
-      "holonomicAngle": 0,
-      "isReversal": true,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
-          "Pickup Cube",
-          "Wait",
-          "Cube High"
-        ],
-        "executionBehavior": "sequential",
-        "waitBehavior": "before",
-        "waitTime": 2.0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 1.8858812003338294,
-        "y": 0.8016256032512075
-      },
-      "prevControl": {
-        "x": 1.6105045207293176,
-        "y": 0.9543190458186623
-      },
-      "nextControl": null,
       "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
-      "isLocked": true,
-      "isStopPoint": false,
+      "isLocked": false,
+      "isStopPoint": true,
       "stopEvent": {
         "names": [
           "Wait",
-          "Eject Cube"
+          "Eject Cube",
+          "Safe Retract",
+          "Wait"
         ],
         "executionBehavior": "sequential",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "waitBehavior": "after",
+        "waitTime": 1.0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 2.563783533316569,
+        "y": 0.7909024628272608
+      },
+      "prevControl": {
+        "x": 2.5612921619475535,
+        "y": 0.7922839017769762
+      },
+      "nextControl": {
+        "x": 2.5612921619475535,
+        "y": 0.7922839017769762
+      },
+      "holonomicAngle": 0.01,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "Wait"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "after",
+        "waitTime": 1.0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.42,
+        "y": 1.23
+      },
+      "prevControl": {
+        "x": 6.00567715097587,
+        "y": 1.16517943321601
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "sequential",
+        "waitBehavior": "before",
+        "waitTime": 1.5
       }
     }
   ],
   "markers": [
     {
-      "position": 1.01,
+      "position": 2.181818181818178,
       "names": [
         "Cube Pickup"
       ]
