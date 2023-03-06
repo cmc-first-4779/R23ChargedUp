@@ -364,16 +364,7 @@ public class RobotContainer {
 
   }
 
-  /**
-   * Gets the drive train subsystem
-   */
-  public DrivetrainSubsystem getDriveTrainSubsystem() {
-    return driveTrain;
-  }
-
-  /**
-   * Gets the drive train subsystem
-   */
+ 
 
 
  /**
@@ -437,5 +428,22 @@ public class RobotContainer {
       driverStick.square().onTrue(new GetLocationOfAprilTag(limelight, 0));
       }
   }
+
+  public DrivetrainSubsystem getDrivetrainSubsystem(){
+    return driveTrain;
+  }
+
+  public ShoulderSubsystem getShoulderSubsystem(){
+    return shoulder;
+  }
+
+  public ExtenderSubsystem getExtenderSubsystem(){
+    return extender;
+  }
+
+  public WristSubsystem getWristSubsystem(){
+    return wrist;
+  }
+
 }
 

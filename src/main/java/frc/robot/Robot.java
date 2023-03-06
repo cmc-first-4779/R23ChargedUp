@@ -88,6 +88,11 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
+    //  Stop all motors and Motion Magic and Smart Motion
+    m_robotContainer.getDrivetrainSubsystem().stopModules();
+    m_robotContainer.getShoulderSubsystem().stopMotor();
+    m_robotContainer.getExtenderSubsystem().stopMotor();
+    m_robotContainer.getWristSubsystem().stopMotor();
   }
 
 
