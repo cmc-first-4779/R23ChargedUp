@@ -44,7 +44,7 @@ import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
 import frc.robot.commands.DriveTrainCommands.balanceTest;
-import frc.robot.commands.DriveTrainCommands.balanceTestHoxsie;
+import frc.robot.commands.DriveTrainCommands.balanceTestHoxsie2;
 import frc.robot.commands.DriveTrainCommands.sturdyBaseCommand;
 import frc.robot.commands.ExtenderCommands.ExtendExtender;
 import frc.robot.commands.ExtenderCommands.RetractExtender;
@@ -183,7 +183,7 @@ public class RobotContainer {
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.R3().whileTrue(new balanceTestHoxsie(driveTrain));
+    driverStick.options().whileTrue(new balanceTestHoxsie2(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     // driverStick.L2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     // driverStick.R2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
