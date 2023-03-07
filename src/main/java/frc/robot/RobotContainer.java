@@ -263,7 +263,7 @@ public class RobotContainer {
     pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
     pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
     pathPlannerEventMap.put("Wait", new WaitCommand(1));
-    pathPlannerEventMap.put("Balance Test", new balanceTest(driveTrain));
+    pathPlannerEventMap.put("Balance Test", new balanceTestHoxsie2(driveTrain));
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
     pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));
     autoBuilder = new SwerveAutoBuilder(
