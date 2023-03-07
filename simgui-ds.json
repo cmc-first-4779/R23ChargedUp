@@ -1,22 +1,15 @@
 {
-<<<<<<< HEAD
-=======
   "Keyboard 0 Settings": {
     "window": {
       "visible": true
     }
   },
->>>>>>> ea82b4bdbd7e60e380f8001ec1262dca41fab191
   "keyboardJoysticks": [
     {
       "axisConfig": [
+        {},
         {
-          "decKey": 65,
-          "incKey": 68
-        },
-        {
-          "decKey": 87,
-          "incKey": 83
+          "decKey": 87
         },
         {
           "decKey": 69,
@@ -26,22 +19,28 @@
         }
       ],
       "axisCount": 3,
-<<<<<<< HEAD
-      "buttonCount": 4,
-=======
-      "buttonCount": 6,
->>>>>>> ea82b4bdbd7e60e380f8001ec1262dca41fab191
+      "buttonCount": 20,
       "buttonKeys": [
         90,
         88,
         67,
-<<<<<<< HEAD
-        86
-=======
         86,
-        66,
-        78
->>>>>>> ea82b4bdbd7e60e380f8001ec1262dca41fab191
+        49,
+        65,
+        83,
+        68,
+        70,
+        71,
+        72,
+        265,
+        264,
+        263,
+        262,
+        85,
+        73,
+        79,
+        80,
+        76
       ],
       "povConfig": [
         {
@@ -60,11 +59,9 @@
     {
       "axisConfig": [
         {
-          "decKey": 74,
-          "incKey": 76
+          "decKey": 74
         },
         {
-          "decKey": 73,
           "incKey": 75
         }
       ],
@@ -79,16 +76,6 @@
       "povCount": 0
     },
     {
-      "axisConfig": [
-        {
-          "decKey": 263,
-          "incKey": 262
-        },
-        {
-          "decKey": 265,
-          "incKey": 264
-        }
-      ],
       "axisCount": 2,
       "buttonCount": 6,
       "buttonKeys": [
@@ -106,13 +93,10 @@
       "buttonCount": 0,
       "povCount": 0
     }
-<<<<<<< HEAD
-=======
   ],
   "robotJoysticks": [
     {
       "guid": "Keyboard0"
     }
->>>>>>> ea82b4bdbd7e60e380f8001ec1262dca41fab191
   ]
 }

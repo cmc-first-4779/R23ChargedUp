@@ -121,13 +121,13 @@ public final class Constants {
   public static final double EXTENDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
   public static final double EXTENDER_NEUTRAL_DEADBAND_PERCENT = 0.04; // 0.04 is the default
   public static final double EXTENDER_MAX_RPM = 5700;
-  public static final double EXTENDER_MM_MAX_VEL = 5000; // Dummy variable - Test this!
-  public static final double EXTENDER_MM_MAX_ACCEL = 4000; // Dummy variable - Test this!
+  public static final double EXTENDER_MM_MAX_VEL = 8000; // Dummy variable - Test this!
+  public static final double EXTENDER_MM_MAX_ACCEL = 6000; // Dummy variable - Test this!
   public static final double EXTENDER_MM_ALLOWED_ERR = 250; // Dummy variable - Test this!
   public static final double EXTENDER_MAX_POSTION = 174000; // Max forward rotation. Current gearing is xx to one so
                                                             // position of xx is one full rotation of output shaft. Only
                                                             // need to go about 25%
-  public static final double EXTENDER_MIN_POSTION = -20000; // Min forward rotation. Assuming we are starting in our
+  public static final double EXTENDER_MIN_POSTION = -2000; // Min forward rotation. Assuming we are starting in our
                                                             // minimal position of 0.
   public static final double EXTENDER_MOVEMENT_INCREMENT = 2000;
   public static final int EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
@@ -154,6 +154,10 @@ public final class Constants {
   public static final double SHOULDER_DEFAULT_kI = 0.00;
   public static final double SHOULDER_DEFAULT_kD = 0.00;
   public static final double SHOULDER_DEFAULT_kF = 0.00;
+  public static final double SHOULDER_DEFAULT_kP_slot1 = 0.030;
+  public static final double SHOULDER_DEFAULT_kI_slot1 = 0.00;
+  public static final double SHOULDER_DEFAULT_kD_slot1 = 0.00;
+  public static final double SHOULDER_DEFAULT_kF_slot1 = 0.00;
   public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
   public static final double SHOULDER_HORIZONTAL_POS = 85000;
   public static final double SHOULDER_POSITION_MIN = 0; // Min position of the arm
@@ -169,9 +173,9 @@ public final class Constants {
   public static final double WRIST_kMaxOuput = 1;
   public static final double WRIST_kMinOutput = -1;
   public static final double WRIST_MAX_RPM = 5700;
-  public static final double WRIST_SM_MAX_VEL = 5000; // Dummy variable - Test this!
+  public static final double WRIST_SM_MAX_VEL = 7500; // Dummy variable - Test this!
   public static final double WRIST_SM_MIN_VEL = 0; // Dummy variable - Test this!
-  public static final double WRIST_SM_MAX_ACCEL = 4000; // Dummy variable - Test this!
+  public static final double WRIST_SM_MAX_ACCEL = 6000; // Dummy variable - Test this!
   public static final double WRIST_SM_ALLOWED_ERR = .05; // Dummy variable - Test this!
   public static final double WRIST_MAX_POSTION = 84.8; // Max forward rotation. Current gearing is 31.25 to one so
                                                        // position of 31.25 is one full rotation of output shaft. Only

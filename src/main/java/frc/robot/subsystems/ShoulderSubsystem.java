@@ -168,9 +168,13 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Talons have 4 slots of PID variables and 2 PID indexes. Set the PID0 to use
     // Slot0
     talon.selectProfileSlot(0, 0);
-    // Set up PID Values for the Winch
+    // Set up PID Values for Slot 0, going up
     configPIDFValues(talon, Constants.SHOULDER_DEFAULT_kP, Constants.SHOULDER_DEFAULT_kI, Constants.SHOULDER_DEFAULT_kD,
-        Constants.SHOULDER_DEFAULT_kF, 0); // STILL NEED TO GET THESE VALUES
+        Constants.SHOULDER_DEFAULT_kF, 0); 
+    //  Set up PID Values for Slot 1, going down    
+    configPIDFValues(talon, Constants.SHOULDER_DEFAULT_kP_slot1, Constants.SHOULDER_DEFAULT_kI_slot1, Constants.SHOULDER_DEFAULT_kD_slot1,
+        Constants.SHOULDER_DEFAULT_kF_slot1, 1); 
+
     configMotionCruiseAndAcceleration(talon, Constants.SHOULDER_MM_VELOCITY, Constants.SHOULDER_MM_ACCELERATION);
     configAllowableError(talon, 0, Constants.SHOULDER_ALLOWED_ERROR);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
@@ -183,6 +187,8 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Use MotionMagic to set the shoulder to a specific Encoder Position.
   public void setShoulderPosition(double setPoint) {
+    //  Configure our Vel, AccL, and SLOT whether we are going up or down.
+    manageMotion(setPoint);
     shoulderMotorMaster.setSafetyEnabled(false);
     // Added this command to make sure the slave is following the master each and
     // everytime
@@ -347,8 +353,7 @@ public class ShoulderSubsystem extends SubsystemBase {
       // set accel and velocity for going up
       shoulderMotorMaster.configMotionAcceleration(Constants.SHOULDER_MM_ACCELERATION);
       shoulderMotorMaster.configMotionCruiseVelocity(Constants.SHOULDER_MM_VELOCITY);
-
-      // Select the Up Gains
+            // Select the Up Gains
       shoulderMotorMaster.selectProfileSlot(0, 0);
     } else {
 
