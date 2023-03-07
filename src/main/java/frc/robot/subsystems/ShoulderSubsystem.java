@@ -56,12 +56,12 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Invert motors (if needed)
     // shoulderMotorSlave.setInverted(false);
     // shoulderMotorMaster.setInverted(true);
-    //shoulderMotorSlave.setInverted(true);
+    // shoulderMotorSlave.setInverted(true);
     shoulderMotorMaster.setInverted(true);
     shoulderMotorSlave.setInverted(InvertType.OpposeMaster);
     shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
     // Have the left motor follow the right motor
-    //shoulderMotorSlave.follow(shoulderMotorMaster);
+    // shoulderMotorSlave.follow(shoulderMotorMaster);
     // shoulderMotorMaster.follow(shoulderMotorSlave);
     // Reset the encoders
     resetEncoders(shoulderMotorMaster);
@@ -184,8 +184,9 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Use MotionMagic to set the shoulder to a specific Encoder Position.
   public void setShoulderPosition(double setPoint) {
     shoulderMotorMaster.setSafetyEnabled(false);
-    //  Added this command to make sure the slave is following the master each and everytime
-    //    we move the shoulder.  (The slave kept unfollowing during testing)
+    // Added this command to make sure the slave is following the master each and
+    // everytime
+    // we move the shoulder. (The slave kept unfollowing during testing)
     shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
     // distance = SmartDashboard.getNumber("MM Distance", 1000);
     if (safeToMoveShoulder()) {
@@ -197,10 +198,9 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
-  public double getShoulderPosition(){
+  public double getShoulderPosition() {
     return shoulderMasterPosition;
   }
-
 
   // Method to test the shoulder with the SmartDashboard and get PID values
   public void testShoulderMM(double setPoint, double kF, double kP, double kI, double kD, double cruiseVel,
@@ -249,8 +249,6 @@ public class ShoulderSubsystem extends SubsystemBase {
       return true;
     }
   }
-
-
 
   /**
    * Lowers the Shoulder by the SHOULDER_MOVEMENT_INCREMENT
@@ -326,14 +324,42 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
-  //  Quick method to put the TalonFX in a different Control Mode, just in case MotionMagic goes wonky after two
-  //   Motion Magic calls in succession.
-  public void resetMotionMagic(){
+  // Quick method to put the TalonFX in a different Control Mode, just in case
+  // MotionMagic goes wonky after two
+  // Motion Magic calls in succession.
+  public void resetMotionMagic() {
     shoulderMotorMaster.set(0);
   }
 
-  public void slaveFollowMaster(){
+  public void slaveFollowMaster() {
     shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
+  }
+
+  // Trying a new method to use two slots on the TalonFX.
+  // Slot 0 for up motion
+  // Slot 1 for down motion
+  public void manageMotion(double targetPosition) {
+    // Get our current position
+    double currentPosition = shoulderMasterPosition;
+
+    // going up
+    if (currentPosition < targetPosition) {
+      // set accel and velocity for going up
+      shoulderMotorMaster.configMotionAcceleration(Constants.SHOULDER_MM_ACCELERATION);
+      shoulderMotorMaster.configMotionCruiseVelocity(Constants.SHOULDER_MM_VELOCITY);
+
+      // Select the Up Gains
+      shoulderMotorMaster.selectProfileSlot(0, 0);
+    } else {
+
+      // set accel and velocity for going down
+      shoulderMotorMaster.configMotionAcceleration(Constants.SHOULDER_MM_ACCELERATION_DOWN);
+      shoulderMotorMaster.configMotionCruiseVelocity(Constants.SHOULDER_MM_VELOCITY_DOWN);
+
+      // Select the Down Gains
+      shoulderMotorMaster.selectProfileSlot(1, 0);
+
+    }
   }
 
 }
