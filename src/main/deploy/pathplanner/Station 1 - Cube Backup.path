@@ -1,0 +1,65 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.8617806727138881,
+        "y": 1.0416603884055233
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2240973295505917,
+        "y": 1.0529827839316697
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.356771696594241,
+        "y": 0.9284364331440529
+      },
+      "prevControl": {
+        "x": 6.7077659579047975,
+        "y": 0.8944692465656127
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": true,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": [
+    {
+      "position": 0.15454545454545457,
+      "names": [
+        "event",
+        "Wait",
+        "Eject Cube",
+        "Wait"
+      ]
+    },
+    {
+      "position": 0.2090909090909091,
+      "names": [
+        "Safe Retract"
+      ]
+    }
+  ]
+}

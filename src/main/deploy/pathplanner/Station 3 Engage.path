@@ -2,15 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.8504582771877414,
-        "y": 4.913919658347791
+        "x": 1.8391358816615944,
+        "y": 4.404411859671177
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8998118674203455,
-        "y": 4.891274867295497
+        "x": 4.499898830306136,
+        "y": 5.400782665972112
       },
-      "holonomicAngle": 0.06851854757087318,
+      "holonomicAngle": 0.7345210342548022,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -24,16 +24,16 @@
     },
     {
       "anchorPoint": {
-        "x": 6.300159718963506,
-        "y": 4.84598528519091
+        "x": 5.530236823185511,
+        "y": 4.959209240452379
       },
       "prevControl": {
-        "x": 5.779329524760745,
-        "y": 3.781680105733093
+        "x": 5.46230245002863,
+        "y": 4.970531635978526
       },
       "nextControl": {
-        "x": 5.779329524760745,
-        "y": 3.781680105733093
+        "x": 5.46230245002863,
+        "y": 4.970531635978526
       },
       "holonomicAngle": -17.281498371816603,
       "isReversal": true,
@@ -49,30 +49,35 @@
     },
     {
       "anchorPoint": {
-        "x": 3.8998118674203455,
-        "y": 2.762664508379865
+        "x": 4.488576434779989,
+        "y": 2.785309299432159
       },
       "prevControl": {
-        "x": 7.545623226839674,
-        "y": 2.4003478515431613
+        "x": 7.421076876052057,
+        "y": 2.581506179961513
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "Balance Test"
+        ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     }
   ],
+  "maxVelocity": 3.0,
+  "maxAcceleration": 2.0,
+  "isReversed": null,
   "markers": [
     {
-      "position": 0.09090909090909091,
+      "position": 0.04,
       "names": [
         "Wait",
         "Cube High",
