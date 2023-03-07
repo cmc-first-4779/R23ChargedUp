@@ -46,11 +46,10 @@
         "names": [
           "Wait",
           "Eject Cube",
-          "Safe Retract",
-          "Wait"
+          "Safe Retract"
         ],
         "executionBehavior": "sequential",
-        "waitBehavior": "after",
+        "waitBehavior": "none",
         "waitTime": 1.0
       }
     },
@@ -97,7 +96,10 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "Wait",
+          "Pickup Cube"
+        ],
         "executionBehavior": "sequential",
         "waitBehavior": "before",
         "waitTime": 1.5

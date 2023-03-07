@@ -100,7 +100,7 @@ public final class Constants {
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
   public static final double EXTENDER_kF = 0.0; 
-  public static final double EXTENDER_kP = 0.0005; 
+  public static final double EXTENDER_kP = 0.055; 
   public static final double EXTENDER_kI = 0.0; 
   public static final double EXTENDER_kD = 0.0; 
   public static final double EXTENDER_kMaxOuput = 1;

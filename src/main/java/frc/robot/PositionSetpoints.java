@@ -28,15 +28,15 @@ public class PositionSetpoints {
 
     // PICKUP_CONE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CONE = 37500;
-    public static final double EXTENDER_POSITION_PICKUP_CONE = 45000;
-    public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 47000;
-    public static final double WRIST_POSITION_PICKUP_CONE = 33.5;  //  Old value:  42.75;
+    public static final double EXTENDER_POSITION_PICKUP_CONE = 67250;
+    public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 63750;
+    public static final double WRIST_POSITION_PICKUP_CONE = 32.25;  //  Old value:  42.75;
 
     // PICKUP_CUBE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CUBE = 38000;
-    public static final double EXTENDER_POSITION_PICKUP_CUBE = 75700;
-    public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 77800;
-    public static final double WRIST_POSITION_PICKUP_CUBE = 33.5;  //  Old Value:  42.47;
+    public static final double EXTENDER_POSITION_PICKUP_CUBE = 100725;
+    public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 96725;
+    public static final double WRIST_POSITION_PICKUP_CUBE = 34.0;  //  Old Value:  42.47;
 
     // Position for each LOW_CONE_NODE subsystem
     public static final double SHOULDER_POSITION_LOW_CONE_NODE = 42500;
@@ -69,8 +69,8 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_HIGH_CUBE_NODE = 28.00;  // Old Value:  35.00
 
     // HUMAN_PLAYER_STATION Position for each subsystem
-    public static final double SHOULDER_POSITION_HUMAN_PLAYER_STATION = 20500;
+    public static final double SHOULDER_POSITION_HUMAN_PLAYER_STATION = 10500;
     public static final double EXTENDER_POSITION_HUMAN_PLAYER_STATION = 0.0;
-    public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = 1.0;  //  Old Value:  8.5;
+    public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = .5;  //  Old Value:  8.5;
 
 }

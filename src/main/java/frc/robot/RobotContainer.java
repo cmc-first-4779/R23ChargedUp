@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.StaticConstants.BlingConstants;
+import frc.robot.StaticConstants.LimelightConstants;
 import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
@@ -59,6 +60,7 @@ import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
+import frc.robot.commands.LimelightCommands.LimelightSetLEDMode;
 import frc.robot.commands.WristCommands.WristLower;
 import frc.robot.commands.WristCommands.WristRaise;
 import frc.robot.subsystems.ShoulderSubsystem;
@@ -133,6 +135,7 @@ public class RobotContainer {
             * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
 
     intake.setDefaultCommand(new IntakeStopCommand(intake));
+    limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
 
     // Configure the trigger bindings
     configureBindings();
@@ -174,8 +177,8 @@ public class RobotContainer {
     // driverStick.square().whileTrue(new RetractExtender(extender));
     driverStick.L1().whileTrue(new WristRaise(wrist));
     driverStick.R1().whileTrue(new WristLower(wrist));
-    driverStick.L2().whileTrue (new ExtendExtender(extender));
-    driverStick.R2().whileTrue (new RetractExtender(extender));
+    driverStick.R2().whileTrue (new ExtendExtender(extender));
+    driverStick.L2().whileTrue (new RetractExtender(extender));
     driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));

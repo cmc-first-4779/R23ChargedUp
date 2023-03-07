@@ -168,13 +168,14 @@ public class ExtenderSubsystem extends SubsystemBase {
   }
 
   public void setExtenderPosition(double setpoint) {
+    
     if (setPointIsValid(setpoint)) {
       // Declare our PID Controller
      // System.out.println("P is:  " + extenderMotor.getP
       System.out.println("Setpoint is:  " + setpoint);
       // send our setpoint to SmartMotion
       extenderMotor.setSafetyEnabled(false);
-      extenderMotor.set(TalonFXControlMode.MotionMagic, setPoint);
+      extenderMotor.set(TalonFXControlMode.MotionMagic, setpoint);
     }
   }
 
@@ -257,7 +258,7 @@ public class ExtenderSubsystem extends SubsystemBase {
       setPoint = newSetPoint;
       setExtenderPosition(setPoint);
     } else {
-      System.out.println("Setpoint at it's higher limit allready: " + setPoint);
+      System.out.println("Setpoint at it's higher limit already: " + setPoint);
     }
 
   }
