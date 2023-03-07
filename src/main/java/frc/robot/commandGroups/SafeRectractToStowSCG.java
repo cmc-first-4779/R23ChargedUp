@@ -35,11 +35,11 @@ public class SafeRectractToStowSCG extends SequentialCommandGroup {
         // Retract the Shoulder, Extender, and Waist
         new RetractShoulderExtenderPCG(shoulder, extender),
         // Wait a little time for the system to settle down (seconds)
-        new Wait(0.5),
+        new Wait(0.25),
         // Retract the wrist last to avoid stripping off parts
         new WristSetPosition(wrist, PositionSetpoints.WRIST_POSITION_STOW),
         // Wait a little time for the system to settle down (seconds)
-        new Wait(0.6),
+        new Wait(0.45),
         // Disengage Motion Magic to prevent wonkiness from two successive calls.
         new ResetShoulderMM(shoulder),
         // Put the shoulder in the STOW position

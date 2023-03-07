@@ -18,7 +18,7 @@ public class PositionSetpoints {
     public static final double SHOULDER_POSITION_MAX = 92500; // Max position of the arm
 
     // Position for the Shoulder to be set to move everything else
-    public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 31000; // Safe distance where can extend the rest of
+    public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 35000; // Safe distance where can extend the rest of
                                                                          // the arm
 
     // STOW Position for each Subsystem
@@ -30,47 +30,52 @@ public class PositionSetpoints {
     public static final double SHOULDER_POSITION_PICKUP_CONE = 37500;
     public static final double EXTENDER_POSITION_PICKUP_CONE = 67250;
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 63750;
-    public static final double WRIST_POSITION_PICKUP_CONE = 32.25;  //  Old value:  42.75;
+    public static final double WRIST_POSITION_PICKUP_CONE = 30.25; // Old value: 42.75;
 
     // PICKUP_CUBE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CUBE = 38000;
     public static final double EXTENDER_POSITION_PICKUP_CUBE = 100725;
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 96725;
-    public static final double WRIST_POSITION_PICKUP_CUBE = 34.0;  //  Old Value:  42.47;
+    public static final double WRIST_POSITION_PICKUP_CUBE = 34.0; // Old Value: 42.47;
 
     // Position for each LOW_CONE_NODE subsystem
     public static final double SHOULDER_POSITION_LOW_CONE_NODE = 42500;
     public static final double EXTENDER_POSITION_LOW_CONE_NODE = 5300;
-    public static final double WRIST_POSITION_LOW_CONE_NODE = 44.86;  // Old Value:  56.07;
+    public static final double WRIST_POSITION_LOW_CONE_NODE = 44.86; // Old Value: 56.07;
 
     // MID_CONE_Position for each subsystem
     public static final double SHOULDER_POSITION_MID_CONE_NODE = 77500;
     public static final double EXTENDER_POSITION_MID_CONE_NODE = 3750;
-    public static final double WRIST_POSITION_MID_CONE_NODE = 42.46;  // Old Value:  53.07;
+    public static final double WRIST_POSITION_MID_CONE_NODE = 42.46; // Old Value: 53.07;
 
     // HIGH_CONE_NODE_Position for each subsystem
     public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 92500;
     public static final double EXTENDER_POSITION_HIGH_CONE_NODE = 100450;
-    public static final double WRIST_POSITION_HIGH_CONE_NODE = 38.46;  //  Old Value:  48.07;
+    public static final double WRIST_POSITION_HIGH_CONE_NODE = 38.46; // Old Value: 48.07;
 
     // LOW_CUBE_NODE_Position for each subsystem
     public static final double SHOULDER_POSITION_LOW_CUBE_NODE = 42500;
     public static final double EXTENDER_POSITION_LOW_CUBE_NODE = 18575;
-    public static final double WRIST_POSITION_LOW_CUBE_NODE = 11.16;  //Old Value: 13.95;
+    public static final double WRIST_POSITION_LOW_CUBE_NODE = 11.16; // Old Value: 13.95;
 
     // MID_CUBE_NODE_Position for each subsystem
     public static final double SHOULDER_POSITION_MID_CUBE_NODE = 57500;
     public static final double EXTENDER_POSITION_MID_CUBE_NODE = 47100;
-    public static final double WRIST_POSITION_MID_CUBE_NODE = 21.66;  //  Old Value:  27.07;
+    public static final double WRIST_POSITION_MID_CUBE_NODE = 21.66; // Old Value: 27.07;
 
     // HIGH_CUBE_NODE Position for each subsystem
     public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 80000;
     public static final double EXTENDER_POSITION_HIGH_CUBE_NODE = 154480;
-    public static final double WRIST_POSITION_HIGH_CUBE_NODE = 28.00;  // Old Value:  35.00
+    public static final double WRIST_POSITION_HIGH_CUBE_NODE = 28.00; // Old Value: 35.00
 
     // HUMAN_PLAYER_STATION Position for each subsystem
     public static final double SHOULDER_POSITION_HUMAN_PLAYER_STATION = 10500;
     public static final double EXTENDER_POSITION_HUMAN_PLAYER_STATION = 0.0;
-    public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = .5;  //  Old Value:  8.5;
+    public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = .5; // Old Value: 8.5;
+
+    // Double HUMAN PLAYER STATION
+    public static final double SHOULDER_POSITION_DOUBLE_HPS = 86725;
+    public static final double EXTENDER_POSITION_DOUBLE_HPS = 154480;
+    public static final double WRIST_POSITION_DOUBLE_HPS = 37.0; 
 
 }

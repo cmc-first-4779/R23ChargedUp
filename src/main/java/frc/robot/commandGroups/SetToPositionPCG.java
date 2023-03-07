@@ -30,7 +30,8 @@ public class SetToPositionPCG extends ParallelCommandGroup {
   double shoulderPosition, extenderPosition, wristPosition;
 
   /** Creates a new SetToPositionPCG. */
-  public SetToPositionPCG(String position, ShoulderSubsystem shoulder, ExtenderSubsystem extender, WristSubsystem wrist) {
+  public SetToPositionPCG(String position, ShoulderSubsystem shoulder, ExtenderSubsystem extender,
+      WristSubsystem wrist) {
 
     // Set local variables to pass-thru variables
     this.shoulder = shoulder;
@@ -99,6 +100,12 @@ public class SetToPositionPCG extends ParallelCommandGroup {
         extenderPosition = PositionSetpoints.EXTENDER_POSITION_HUMAN_PLAYER_STATION;
         wristPosition = PositionSetpoints.WRIST_POSITION_HUMAN_PLAYER_STATION;
         break;
+      // Double Human Player Station
+      case "DOUBLE_HPS":
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_DOUBLE_HPS;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_DOUBLE_HPS;
+        wristPosition = PositionSetpoints.WRIST_POSITION_DOUBLE_HPS;
+        break;
       // Our DEFAULT POSITION WILL BE THE STOW POSITION
       default: // DEFAULT position is "STOW"
         shoulderPosition = PositionSetpoints.SHOULDER_POSITION_STOW;
@@ -116,7 +123,6 @@ public class SetToPositionPCG extends ParallelCommandGroup {
     addCommands(
         new ShoulderSetPosition(shoulder, shoulderPosition),
         new ExtenderSetPosition(extender, extenderPosition),
-        new WristSetPosition(wrist, wristPosition)
-    );
+        new WristSetPosition(wrist, wristPosition));
   }
 }

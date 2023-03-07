@@ -109,7 +109,7 @@ public final class Constants {
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
   public static final double EXTENDER_kF = 0.0;
-  public static final double EXTENDER_kP = 0.055;
+  public static final double EXTENDER_kP = 0.075;
   public static final double EXTENDER_kI = 0.0;
   public static final double EXTENDER_kD = 0.0;
   public static final double EXTENDER_kMaxOuput = 1;
@@ -121,13 +121,13 @@ public final class Constants {
   public static final double EXTENDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
   public static final double EXTENDER_NEUTRAL_DEADBAND_PERCENT = 0.04; // 0.04 is the default
   public static final double EXTENDER_MAX_RPM = 5700;
-  public static final double EXTENDER_MM_MAX_VEL = 8000; // Dummy variable - Test this!
-  public static final double EXTENDER_MM_MAX_ACCEL = 6000; // Dummy variable - Test this!
+  public static final double EXTENDER_MM_MAX_VEL = 20000; // Dummy variable - Test this!
+  public static final double EXTENDER_MM_MAX_ACCEL = 20000; // Dummy variable - Test this!
   public static final double EXTENDER_MM_ALLOWED_ERR = 250; // Dummy variable - Test this!
-  public static final double EXTENDER_MAX_POSTION = 174000; // Max forward rotation. Current gearing is xx to one so
+  public static final double EXTENDER_MAX_POSTION = 179000; // Max forward rotation. Current gearing is xx to one so
                                                             // position of xx is one full rotation of output shaft. Only
                                                             // need to go about 25%
-  public static final double EXTENDER_MIN_POSTION = -2000; // Min forward rotation. Assuming we are starting in our
+  public static final double EXTENDER_MIN_POSTION = -0; // Min forward rotation. Assuming we are starting in our
                                                             // minimal position of 0.
   public static final double EXTENDER_MOVEMENT_INCREMENT = 2000;
   public static final int EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND = 0;

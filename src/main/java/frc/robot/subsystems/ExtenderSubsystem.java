@@ -156,7 +156,7 @@ public class ExtenderSubsystem extends SubsystemBase {
       // Slot0
       talon.selectProfileSlot(0, 0);
       // Set up PID Values for the Winch
-      configPIDFValues(talon, kP, kI, kD, kF, 0); // STILL NEED TO GET THESE VALUES
+      configPIDFValues(talon, 0.075, kI, kD, kF, 0); // STILL NEED TO GET THESE VALUES
       configMotionCruiseAndAcceleration(talon, Constants.EXTENDER_MM_MAX_VEL, Constants.EXTENDER_MM_MAX_ACCEL);
       configAllowableError(talon, 0, Constants.EXTENDER_MM_ALLOWED_ERR);
       talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
@@ -186,6 +186,7 @@ public class ExtenderSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double setPoint) {
+    System.out.println("Extender Current Pos:  " +extenderMotor.getSelectedSensorPosition());
     if ((setPoint >= Constants.EXTENDER_MIN_POSTION) && (extenderMotor.get() >= 0)) {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;

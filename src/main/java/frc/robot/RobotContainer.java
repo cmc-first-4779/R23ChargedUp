@@ -201,7 +201,7 @@ public class RobotContainer {
     operStick.L3().onTrue(new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
     operStick.L2().onTrue(new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist));
     operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist) ); // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    
+    operStick.povUp().onTrue(new SafeSetToPositionSCG("DOUBLE_HPS", shoulder, extender, wrist));
     //
     // pressed,
     // cancelling on release.
