@@ -43,6 +43,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Encoder Position
   double shoulderMasterPosition, shoulderSlavePosition;
 
+  // Our Setpoint for the Shoulder Position
   double setPoint;
 
   /** Creates a new WinchPulleySubsystem. */
@@ -54,18 +55,17 @@ public class ShoulderSubsystem extends SubsystemBase {
     initMotorController(shoulderMotorSlave);
     initMotorController(shoulderMotorMaster);
     // Invert motors (if needed)
-    // shoulderMotorSlave.setInverted(false);
-    // shoulderMotorMaster.setInverted(true);
-    // shoulderMotorSlave.setInverted(true);
+
     shoulderMotorMaster.setInverted(true);
     shoulderMotorSlave.setInverted(InvertType.OpposeMaster);
+
+    // Have the slave follow the master
     shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
-    // Have the left motor follow the right motor
-    // shoulderMotorSlave.follow(shoulderMotorMaster);
-    // shoulderMotorMaster.follow(shoulderMotorSlave);
+
     // Reset the encoders
     resetEncoders(shoulderMotorMaster);
     resetEncoders(shoulderMotorSlave);
+
     // Configure Motion Magic on the Motors
     configSimpleMM(shoulderMotorMaster);
 
@@ -86,8 +86,9 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Put the encoder value of the Master Motor to the Dashboard
     shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
     // shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
-    SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Shoulder Target Pos", setPoint);
+    // SmartDashboard.putNumber("Shoulder Encoder Position",
+    // shoulderMotorMaster.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("Shoulder Target Pos", setPoint);
   }
 
   // Initialize a TalonFX Motor controller and set our default settings.
@@ -135,7 +136,7 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Configure our PID Values
   public void configPIDFValues(WPI_TalonFX talon, double p, double i, double d, double f, int slot) {
-    // Configure the PID settings for Slot0
+    // Configure the PID settings for a slot
     talon.config_kF(slot, f);
     talon.config_kP(slot, p);
     talon.config_kI(slot, i);
@@ -170,10 +171,11 @@ public class ShoulderSubsystem extends SubsystemBase {
     talon.selectProfileSlot(0, 0);
     // Set up PID Values for Slot 0, going up
     configPIDFValues(talon, Constants.SHOULDER_DEFAULT_kP, Constants.SHOULDER_DEFAULT_kI, Constants.SHOULDER_DEFAULT_kD,
-        Constants.SHOULDER_DEFAULT_kF, 0); 
-    //  Set up PID Values for Slot 1, going down    
-    configPIDFValues(talon, Constants.SHOULDER_DEFAULT_kP_slot1, Constants.SHOULDER_DEFAULT_kI_slot1, Constants.SHOULDER_DEFAULT_kD_slot1,
-        Constants.SHOULDER_DEFAULT_kF_slot1, 1); 
+        Constants.SHOULDER_DEFAULT_kF, 0);
+    // Set up PID Values for Slot 1, going down
+    configPIDFValues(talon, Constants.SHOULDER_DEFAULT_kP_slot1, Constants.SHOULDER_DEFAULT_kI_slot1,
+        Constants.SHOULDER_DEFAULT_kD_slot1,
+        Constants.SHOULDER_DEFAULT_kF_slot1, 1);
 
     configMotionCruiseAndAcceleration(talon, Constants.SHOULDER_MM_VELOCITY, Constants.SHOULDER_MM_ACCELERATION);
     configAllowableError(talon, 0, Constants.SHOULDER_ALLOWED_ERROR);
@@ -187,7 +189,7 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Use MotionMagic to set the shoulder to a specific Encoder Position.
   public void setShoulderPosition(double setPoint) {
-    //  Configure our Vel, AccL, and SLOT whether we are going up or down.
+    // Configure our Vel, AccL, and SLOT whether we are going up or down.
     manageMotion(setPoint);
     shoulderMotorMaster.setSafetyEnabled(false);
     // Added this command to make sure the slave is following the master each and
@@ -204,6 +206,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
+  // Return the shoulder's position
   public double getShoulderPosition() {
     return shoulderMasterPosition;
   }
@@ -237,19 +240,27 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Method to check whether we are in a safe range to move the arm
   public boolean safeToMoveShoulder() {
-    // if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN) &&
-    // (shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX)) {
-    // return true;
-    // } else {
-    // return false;
-    // }
-    return true;
+    //  Get the current speed of the shoulder
+    double shoulderSpeed = shoulderMotorMaster.get();
+    //  If our position is greater than our Min Pos, and we want to lift the shoulder, then we are good
+    if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN) & (shoulderSpeed >= 0)) {
+      return true;
+    //  If our position is less than our Max Pos, and we want to lower the shoulder, then we are good  
+    } else if ((shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX) && (shoulderSpeed <= 0)) {
+      return true;
+    }
+    //  We are outside of oru range..  Not safe to move shoulder
+    else {
+      System.out.println("It is no longer safe to move the shoulder.  Shoulder Position:  " +shoulderMasterPosition);
+      return false;
+    }
   }
 
   // Method to check whether we are in a safe range to extend the
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
     if (shoulderMasterPosition <= PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
+      System.out.println("Shoulder is not in position to allow to extend or wrist.  Shoulder Position:  " +shoulderMasterPosition);
       return false;
     } else {
       return true;
@@ -298,7 +309,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     // winchMotorMaster.set(TalonFXControlMode.MotionMagic, setPoint);
   }
 
-  // Return kF based on trig for the arm
+  // Return Aribitrary Feed Forward based on trig for the arm
   public double calculateArbitraryFF(double targetPos) {
     double kMeasuredPosHorizontal = Constants.SHOULDER_HORIZONTAL_POS; // Position measured when arm is horizontal
     double kTicksPerDegree = 2048 * 192 / 360; // Enoder is 2489 ticks. 192 = Gear reduction and sprockets
@@ -337,11 +348,13 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderMotorMaster.set(0);
   }
 
+  //  Just in case we need to make the slave follow the master again
   public void slaveFollowMaster() {
     shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
   }
 
   // Trying a new method to use two slots on the TalonFX.
+  //  We used this to smooth out the arm motion due to gravity
   // Slot 0 for up motion
   // Slot 1 for down motion
   public void manageMotion(double targetPosition) {
@@ -353,14 +366,12 @@ public class ShoulderSubsystem extends SubsystemBase {
       // set accel and velocity for going up
       shoulderMotorMaster.configMotionAcceleration(Constants.SHOULDER_MM_ACCELERATION);
       shoulderMotorMaster.configMotionCruiseVelocity(Constants.SHOULDER_MM_VELOCITY);
-            // Select the Up Gains
+      // Select the Up Gains
       shoulderMotorMaster.selectProfileSlot(0, 0);
     } else {
-
       // set accel and velocity for going down
       shoulderMotorMaster.configMotionAcceleration(Constants.SHOULDER_MM_ACCELERATION_DOWN);
       shoulderMotorMaster.configMotionCruiseVelocity(Constants.SHOULDER_MM_VELOCITY_DOWN);
-
       // Select the Down Gains
       shoulderMotorMaster.selectProfileSlot(1, 0);
 
