@@ -64,9 +64,9 @@ public class AutoBalance extends CommandBase {
       // then go quarter throttle to correct
       yAxisRate = Math.sin(Math.toRadians(pitchAngleDegrees)) * (-1) * (Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE / 4);
     }
-    // Else if our pitch angle is eigth of our pitch deadzone
+    // Else if our pitch angle is eighth of our pitch deadzone
     else if (Math.abs(pitchAngleDegrees) >= (pitchDeadzone / 8)) {
-      // then go quarter throttle to correct
+      // then go eighth throttle to correct
       yAxisRate = Math.sin(Math.toRadians(pitchAngleDegrees)) * (-1) * (Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE / 8);
     } 
     //  Let's not go anywhere on the y-axis
@@ -84,24 +84,24 @@ public class AutoBalance extends CommandBase {
     // yAxisRate = 0;
     // }
 
-    // If the roll angle is >= our full pitch deadzone
+    // If the roll angle is >= our full roll deadzone
     if (Math.abs(rollAngleDegrees) >= rollDeadzone) {
       // then go full throttle to correct
       xAxisRate = Math.sin(Math.toRadians(rollAngleDegrees)) * (-1) * Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE;
     }
-    // Else if our roll angle is half of our pitch deadzone
+    // Else if our roll angle is half of our roll deadzone
     else if (Math.abs(rollAngleDegrees) >= (rollDeadzone / 2)) {
       // then go half throttle to correct
       xAxisRate = Math.sin(Math.toRadians(rollAngleDegrees)) * (-1) * (Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE / 2);
     }
-    // Else if our roll angle is half of our pitch deadzone
+    // Else if our roll angle is quarter  of our roll deadzone
     else if (Math.abs(rollAngleDegrees) >= (rollDeadzone / 4)) {
       // then go quarter throttle to correct
       xAxisRate = Math.sin(Math.toRadians(rollAngleDegrees)) * (-1) * (Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE / 4);
     }
-    // Else if our pitch angle is eigth of our pitch deadzone
+    // Else if our roll angle is one eighth of our roll deadzone
     else if (Math.abs(rollAngleDegrees) >= (rollDeadzone / 8)) {
-      // then go quarter throttle to correct
+      // then go eighth throttle to correct
       xAxisRate = Math.sin(Math.toRadians(rollAngleDegrees)) * (-1) * (Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE / 8);
     } 
     //  Else let's not go anywhere on the x-axis
