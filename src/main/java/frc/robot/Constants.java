@@ -177,7 +177,7 @@ public final class Constants {
   public static final double WRIST_SM_MAX_VEL = 7500; // Dummy variable - Test this!
   public static final double WRIST_SM_MIN_VEL = 0; // Dummy variable - Test this!
   public static final double WRIST_SM_MAX_ACCEL = 6000; // Dummy variable - Test this!
-  public static final double WRIST_SM_ALLOWED_ERR = .05; // Dummy variable - Test this!
+  public static final double WRIST_SM_ALLOWED_ERR = 0.5; // Dummy variable - Test this!
   public static final double WRIST_MAX_POSTION = 84.8; // Max forward rotation. Current gearing is 31.25 to one so
                                                        // position of 31.25 is one full rotation of output shaft. Only
                                                        // need to go about 25%
