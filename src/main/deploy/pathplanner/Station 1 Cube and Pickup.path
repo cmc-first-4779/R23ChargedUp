@@ -21,7 +21,7 @@
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "after",
-        "waitTime": 0.05
+        "waitTime": 0.03
       }
     },
     {
@@ -49,22 +49,22 @@
           "Safe Retract"
         ],
         "executionBehavior": "sequential",
-        "waitBehavior": "none",
-        "waitTime": 1.0
+        "waitBehavior": "after",
+        "waitTime": 2.0
       }
     },
     {
       "anchorPoint": {
-        "x": 2.563783533316569,
-        "y": 0.7909024628272608
+        "x": 3.045375376465039,
+        "y": 0.8016256032512075
       },
       "prevControl": {
-        "x": 2.5612921619475535,
-        "y": 0.7922839017769762
+        "x": 3.0428840050960235,
+        "y": 0.8030070422009228
       },
       "nextControl": {
-        "x": 2.5612921619475535,
-        "y": 0.7922839017769762
+        "x": 3.0428840050960235,
+        "y": 0.8030070422009228
       },
       "holonomicAngle": 0.01,
       "isReversal": true,
@@ -83,11 +83,11 @@
     {
       "anchorPoint": {
         "x": 6.42,
-        "y": 1.23
+        "y": 0.73
       },
       "prevControl": {
         "x": 6.00567715097587,
-        "y": 1.16517943321601
+        "y": 0.6651794332160099
       },
       "nextControl": null,
       "holonomicAngle": 0,

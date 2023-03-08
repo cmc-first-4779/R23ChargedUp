@@ -93,8 +93,9 @@ public final class Constants {
           kMaxAngularAccelerationRadiansPerSecondSquared);
 
   // Deadzone for auto balancing
-  public static final double DRIVETRAIN_kOffBalanceAngleThresholdDegrees = 10.0f;
-  public static final double DRIVETRAIN_kOonBalanceAngleThresholdDegrees = 5.0f;
+  public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_Y = 3.0;
+  public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_X = 3.0;
+  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 2.5;
 
   // Intake Constants
   public static final double INTAKE_CONE_SPEED = -0.80;

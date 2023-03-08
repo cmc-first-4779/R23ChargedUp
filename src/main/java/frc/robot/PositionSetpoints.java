@@ -76,6 +76,6 @@ public class PositionSetpoints {
     // Double HUMAN PLAYER STATION (HPS)
     public static final double SHOULDER_POSITION_DOUBLE_HPS = 86725;
     public static final double EXTENDER_POSITION_DOUBLE_HPS = 154480;
-    public static final double WRIST_POSITION_DOUBLE_HPS = 37.0; 
+    public static final double WRIST_POSITION_DOUBLE_HPS = 37.75; 
 
 }

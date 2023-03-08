@@ -7,13 +7,14 @@ package frc.robot.commands.DriveTrainCommands;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class balanceTestHoxsie2 extends CommandBase {
+public class AutoBalance extends CommandBase {
   DrivetrainSubsystem driveTrain;
   // Our deadzones for the pitch and roll
-  double pitchDeadzone = 3; // Degrees
-  double rollDeadzone = 3; // degrees
+  double pitchDeadzone = Constants.DRIVETRAIN_AUTOBALANCE_DEADZONE_Y; // Degrees
+  double rollDeadzone = Constants.DRIVETRAIN_AUTOBALANCE_DEADZONE_X; ; // degrees
   // Variables for our current pitch and roll.
   double pitchAngleDegrees;
   double rollAngleDegrees;
@@ -22,7 +23,7 @@ public class balanceTestHoxsie2 extends CommandBase {
   double yAxisRate;
 
   /** Creates a new balanceTestHoxsie2. */
-  public balanceTestHoxsie2(DrivetrainSubsystem driveTrain) {
+  public AutoBalance(DrivetrainSubsystem driveTrain) {
     this.driveTrain = driveTrain;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
@@ -48,17 +49,17 @@ public class balanceTestHoxsie2 extends CommandBase {
     // if our pitch is greater than our deadzone
     if (pitchDeadzone <= Math.abs(pitchAngleDegrees)) {
       // Setup a x-axis rate
-      xAxisRate = Math.sin(Math.toRadians(pitchAngleDegrees)) * -1;
+      yAxisRate = Math.sin(Math.toRadians(pitchAngleDegrees)) * -1* Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE;
     } else {
-      xAxisRate = 0;
+      yAxisRate = 0;
     }
 
     // if our roll is greater than our deadzone
     if (rollDeadzone <= Math.abs(rollAngleDegrees)) {
       // Setup a y-axis rate
-      yAxisRate = Math.sin(Math.toRadians(rollAngleDegrees)) * -1;
+      xAxisRate = Math.sin(Math.toRadians(rollAngleDegrees)) * -1 * Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE;
     } else {
-      yAxisRate = 0;
+      xAxisRate = 0;
     }
 
     //  Drive forward using our xAxis and yAxis rates

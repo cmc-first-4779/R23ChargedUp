@@ -44,7 +44,7 @@ import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
 import frc.robot.commands.DriveTrainCommands.balanceTest;
-import frc.robot.commands.DriveTrainCommands.balanceTestHoxsie2;
+import frc.robot.commands.DriveTrainCommands.AutoBalance;
 import frc.robot.commands.DriveTrainCommands.sturdyBaseCommand;
 import frc.robot.commands.ExtenderCommands.ExtendExtender;
 import frc.robot.commands.ExtenderCommands.RetractExtender;
@@ -183,7 +183,7 @@ public class RobotContainer {
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.options().whileTrue(new balanceTestHoxsie2(driveTrain));
+    driverStick.touchpad().whileTrue(new AutoBalance(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     // driverStick.L2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     // driverStick.R2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
@@ -263,7 +263,7 @@ public class RobotContainer {
     pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
     pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
     pathPlannerEventMap.put("Wait", new WaitCommand(1));
-    pathPlannerEventMap.put("Balance Test", new balanceTestHoxsie2(driveTrain));
+    pathPlannerEventMap.put("Auto Balance", new AutoBalance(driveTrain));
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
     pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));
     autoBuilder = new SwerveAutoBuilder(
