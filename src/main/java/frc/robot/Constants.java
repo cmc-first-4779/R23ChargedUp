@@ -139,10 +139,10 @@ public final class Constants {
   public static final int kTimeoutMs = 30;
 
   // Shoulder Constants
-  public static final double SHOULDER_MM_VELOCITY = 10000; // Dummy variable - Test this!
-  public static final double SHOULDER_MM_ACCELERATION = 9000; // Dummy variable - Test this!
-  public static final double SHOULDER_MM_VELOCITY_DOWN = 5000;
-  public static final double SHOULDER_MM_ACCELERATION_DOWN = 4000;
+  public static final double SHOULDER_MM_VELOCITY = 9830; // Dummy variable - Test this!
+  public static final double SHOULDER_MM_ACCELERATION = 9830; // Dummy variable - Test this!
+  public static final double SHOULDER_MM_VELOCITY_DOWN = 9830;
+  public static final double SHOULDER_MM_ACCELERATION_DOWN = 9830;
 
   public static final double SHOULDER_NOMINAL_OUTPUT_FORWARD = 0.0;
   public static final double SHOULDER_NOMINAL_OUTPUT_REVERSE = 0.0;
@@ -151,14 +151,14 @@ public final class Constants {
   public static final double SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
   public static final double SHOULDER_NEUTRAL_DEADBAND_PERCENT = 0.04; // 0.04 is the default
   public static final double SHOULDER_ALLOWED_ERROR = 250;
-  public static final double SHOULDER_DEFAULT_kP = 0.050;
+  public static final double SHOULDER_DEFAULT_kP = 0.093658;  // was 0.05
   public static final double SHOULDER_DEFAULT_kI = 0.00;
   public static final double SHOULDER_DEFAULT_kD = 0.00;
-  public static final double SHOULDER_DEFAULT_kF = 0.00;
-  public static final double SHOULDER_DEFAULT_kP_slot1 = 0.030;
+  public static final double SHOULDER_DEFAULT_kF = 0.056854;  //was 0.00;
+  public static final double SHOULDER_DEFAULT_kP_slot1 = 0.093658;  //was 0.03
   public static final double SHOULDER_DEFAULT_kI_slot1 = 0.00;
   public static final double SHOULDER_DEFAULT_kD_slot1 = 0.00;
-  public static final double SHOULDER_DEFAULT_kF_slot1 = 0.00;
+  public static final double SHOULDER_DEFAULT_kF_slot1 = 0.056854;  //was 0.00;
   public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
   public static final double SHOULDER_HORIZONTAL_POS = 85000;
   public static final double SHOULDER_POSITION_MIN = 0; // Min position of the arm
