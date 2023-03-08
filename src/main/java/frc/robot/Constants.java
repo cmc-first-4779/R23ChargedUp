@@ -93,9 +93,9 @@ public final class Constants {
           kMaxAngularAccelerationRadiansPerSecondSquared);
 
   // Deadzone for auto balancing
-  public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_Y = 8.0;
-  public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_X = 8.0;
-  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 2.75;
+  public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_Y = 7.0;
+  public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_X = 7.0;
+  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 2.15;
 
   // Intake Constants
   public static final double INTAKE_CONE_SPEED = -0.80;
