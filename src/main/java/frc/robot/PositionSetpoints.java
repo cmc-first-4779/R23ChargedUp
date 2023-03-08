@@ -68,7 +68,7 @@ public class PositionSetpoints {
     public static final double EXTENDER_POSITION_HIGH_CUBE_NODE = 154480;
     public static final double WRIST_POSITION_HIGH_CUBE_NODE = 28.00; // Old Value: 35.00
 
-    // HUMAN_PLAYER_STATION Position for each subsystem
+    // Single HUMAN_PLAYER_STATION Position for each subsystem
     public static final double SHOULDER_POSITION_HUMAN_PLAYER_STATION = 10500;
     public static final double EXTENDER_POSITION_HUMAN_PLAYER_STATION = 0.0;
     public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = .5; // Old Value: 8.5;

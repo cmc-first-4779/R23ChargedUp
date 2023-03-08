@@ -4,7 +4,7 @@
 
 package frc.robot.commands.IntakeCommands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -62,7 +62,7 @@ public class IntakeSetSpeed extends CommandBase {
 
   public void execute() {
     // Put the Intake Mode to the Dashboard
-    SmartDashboard.putString("Intake Mode", intakeMode);
+    //SmartDashboard.putString("Intake Mode", intakeMode);
   }
 
   // Called once the command ends or is interrupted.

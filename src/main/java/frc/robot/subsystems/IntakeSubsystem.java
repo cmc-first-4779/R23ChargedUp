@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.StaticConstants.HardwareMap;
 import frc.robot.StaticConstants.MaxMotorAmpsConstants;
 
+//  INTAKE SUBSYSTEM:  Used to pickup or eject a game piece
+
 public class IntakeSubsystem extends SubsystemBase {
   // Declare our motor
   CANSparkMax intakeMotor;

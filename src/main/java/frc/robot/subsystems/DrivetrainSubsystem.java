@@ -252,10 +252,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Robot Pitch", gyroscope.getPitch());
-        SmartDashboard.putNumber("Robot Yaw", gyroscope.getYaw());
-        SmartDashboard.putNumber("Robot Roll", gyroscope.getRoll());
-        SmartDashboard.updateValues();  // I'm not sure this is needed. 
+        // SmartDashboard.putNumber("Robot Pitch", gyroscope.getPitch());
+        // SmartDashboard.putNumber("Robot Yaw", gyroscope.getYaw());
+        // SmartDashboard.putNumber("Robot Roll", gyroscope.getRoll());
+        // SmartDashboard.updateValues();  // I'm not sure this is needed. 
 
         //need to update Odometry
         odometry.update(Rotation2d.fromDegrees(gyroscope.getYaw()), getPositions());

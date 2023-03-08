@@ -10,19 +10,23 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
+//  This command autobalances the robot on the charging station.  It takes 
+//   the pitch and yaw off of the gyro and feeds it into our swerve drive to 
+//   guide the robot onto the platform and level out.
+
 public class AutoBalance extends CommandBase {
   DrivetrainSubsystem driveTrain;
   // Our deadzones for the pitch and roll
   double pitchDeadzone = Constants.DRIVETRAIN_AUTOBALANCE_DEADZONE_Y; // Degrees
   double rollDeadzone = Constants.DRIVETRAIN_AUTOBALANCE_DEADZONE_X; ; // degrees
-  // Variables for our current pitch and roll.
+  // Variables for our current pitch and roll (in degrees)
   double pitchAngleDegrees;
   double rollAngleDegrees;
   // Drive speeds
   double xAxisRate;
   double yAxisRate;
 
-  /** Creates a new balanceTestHoxsie2. */
+  /** Creates a new AutoBalance */
   public AutoBalance(DrivetrainSubsystem driveTrain) {
     this.driveTrain = driveTrain;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -46,18 +50,18 @@ public class AutoBalance extends CommandBase {
     rollAngleDegrees = driveTrain.getRoll();
 
     // Calculate the y and x axis rates
-    // if our pitch is greater than our deadzone
+    // if our pitch is greater than our deadzone band
     if (pitchDeadzone <= Math.abs(pitchAngleDegrees)) {
-      // Setup a x-axis rate
-      yAxisRate = Math.sin(Math.toRadians(pitchAngleDegrees)) * -1* Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE;
+      // Setup a y-axis rate
+      yAxisRate = Math.sin(Math.toRadians(pitchAngleDegrees)) * (-1) * Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE;
     } else {
       yAxisRate = 0;
     }
 
-    // if our roll is greater than our deadzone
+    // if our roll is greater than our deadzone band
     if (rollDeadzone <= Math.abs(rollAngleDegrees)) {
-      // Setup a y-axis rate
-      xAxisRate = Math.sin(Math.toRadians(rollAngleDegrees)) * -1 * Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE;
+      // Setup a x-axis rate
+      xAxisRate = Math.sin(Math.toRadians(rollAngleDegrees)) * (-1) * Constants.DRIVETRAIN_AUTOBALANCE_THROTTLE;
     } else {
       xAxisRate = 0;
     }

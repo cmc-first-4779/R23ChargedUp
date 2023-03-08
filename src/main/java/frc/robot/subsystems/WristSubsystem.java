@@ -10,7 +10,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -57,14 +57,14 @@ public class WristSubsystem extends SubsystemBase {
         Constants.WRIST_SM_MAX_ACCEL, Constants.WRIST_SM_ALLOWED_ERR, Constants.WRIST_PID_SLOT);
 
             // Add PID Fields to SmartDashboard
-    SmartDashboard.putNumber("Position", 0);
-    SmartDashboard.putNumber("kF", Constants.WRIST_kF);
-    SmartDashboard.putNumber("kP", Constants.WRIST_kP);
-    SmartDashboard.putNumber("kI", Constants.WRIST_kI);
-    SmartDashboard.putNumber("kD", Constants.WRIST_kD);
-    SmartDashboard.putNumber("Max Vel", Constants.WRIST_SM_MAX_VEL);
-    SmartDashboard.putNumber("Min Vel", Constants.WRIST_SM_MIN_VEL);
-    SmartDashboard.putNumber("Max Accel", Constants.WRIST_SM_MAX_ACCEL);
+    // SmartDashboard.putNumber("Position", 0);
+    // SmartDashboard.putNumber("kF", Constants.WRIST_kF);
+    // SmartDashboard.putNumber("kP", Constants.WRIST_kP);
+    // SmartDashboard.putNumber("kI", Constants.WRIST_kI);
+    // SmartDashboard.putNumber("kD", Constants.WRIST_kD);
+    // SmartDashboard.putNumber("Max Vel", Constants.WRIST_SM_MAX_VEL);
+    // SmartDashboard.putNumber("Min Vel", Constants.WRIST_SM_MIN_VEL);
+    // SmartDashboard.putNumber("Max Accel", Constants.WRIST_SM_MAX_ACCEL);
 
   }
 
@@ -72,8 +72,8 @@ public class WristSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
-    SmartDashboard.putNumber("Wrist SetPoint", setPoint);
+    //SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
+    //SmartDashboard.putNumber("Wrist SetPoint", setPoint);
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.

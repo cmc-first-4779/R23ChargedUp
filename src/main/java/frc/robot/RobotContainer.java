@@ -43,7 +43,6 @@ import frc.robot.StaticConstants.LimelightConstants;
 import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
-import frc.robot.commands.DriveTrainCommands.balanceTest;
 import frc.robot.commands.DriveTrainCommands.AutoBalance;
 import frc.robot.commands.DriveTrainCommands.sturdyBaseCommand;
 import frc.robot.commands.ExtenderCommands.ExtendExtender;
@@ -86,9 +85,7 @@ public class RobotContainer {
   SwerveModule m_backLeftModule;
   SwerveModule m_backRightModule;
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  // private final CommandXboxController m_driverController =
-  // new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  //  Set to use Path Planner
   private boolean usePathPlanner = true;
   //private boolean debugSwerve = false;
   SendableChooser<List<PathPlannerTrajectory>> autoChooser = new SendableChooser<>();
@@ -98,6 +95,7 @@ public class RobotContainer {
   // String selectedAuto;
   // Trajectory chosenTrajectory;
  
+  //  Declare our other subsystems
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ExtenderSubsystem extender = new ExtenderSubsystem(this);
   private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
@@ -115,7 +113,7 @@ public class RobotContainer {
   
  
 
-
+  //  Init the HashMap for Path Planner Commands
   HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
 
   /**
@@ -134,17 +132,21 @@ public class RobotContainer {
         () -> -modifyAxis(driverStick.getRightX() * Constants.DRIVETRAIN_THROTTLE)
             * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
 
+    //  Default Command for the Intake is:  STOP
     intake.setDefaultCommand(new IntakeStopCommand(intake));
+    //  Turning the LimeLight Off for Now.
     limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
 
     // Configure the trigger bindings
     configureBindings();
 
+    //  Send our Auto Chooser options to the Dashboard
     SmartDashboard.putData("Auto Chooser", autoChooser);
     SmartDashboard.putBoolean("Use PathPlanner", true);
     SmartDashboard.putBoolean("Debug Swerve", false);
     // SmartDashboard.putString("selectedAuto", selectedAuto);
     
+    //  Generate Path Planner Groups
     generatePathPlannerPathGroups();
     createAutoBuilder();
 
@@ -165,16 +167,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(m_exampleSubsystem::exampleCondition)
-    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
-    // driverStick.L2().whileTrue(new IntakePickupCommand(intake));
-    // driverStick.R2().whileTrue(new IntakeEjectCommand(intake));
-    // driverStick.cross().whileTrue(new ShoulderLower(shoulder));
-    // driverStick.triangle().whileTrue(new ShoulderRaise(shoulder));
-    // driverStick.touchpad().onTrue(new ShoulderStopCommand(shoulder));
-    // driverStick.circle().whileTrue(new ExtendExtender(extender));
-    // driverStick.square().whileTrue(new RetractExtender(extender));
+    //  DriveStick Buttons
     driverStick.L1().whileTrue(new WristRaise(wrist));
     driverStick.R1().whileTrue(new WristLower(wrist));
     driverStick.R2().whileTrue (new ExtendExtender(extender));
@@ -185,9 +178,8 @@ public class RobotContainer {
     driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.touchpad().whileTrue(new AutoBalance(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
-    // driverStick.L2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
-    // driverStick.R2().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
-    // m_driverController.circle().whileTrue(new balanceTest(m_drivetrainSubsystem));
+
+    //OperStick Buttons
     operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
@@ -202,11 +194,6 @@ public class RobotContainer {
     operStick.L2().onTrue(new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist));
     operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist) ); // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     operStick.povUp().onTrue(new SafeSetToPositionSCG("DOUBLE_HPS", shoulder, extender, wrist));
-    //
-    // pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-
   }
 
   /**
@@ -400,24 +387,12 @@ public class RobotContainer {
     return wrist.getWristPosition();
   }
 
-
-  
-
- 
-
-  public LimelightSubsystem getLimelightSubsystem() {
-    return limelight;
-  }
-
+  //  Returns the alliance color that we are on
   public DriverStation.Alliance getAlliance(){ 
     return DriverStation.getAlliance();
-
 }
 
-  // public String getAllianceChooseString(){
-  //   return allianceChooser.getSelected();
-  // }
-  
+  //  Set the buttons up eventually for setting our pipelines for the lImelight  
   public void setButtons() {
     if (getAlliance() == Alliance.Red) {
       driverStick.triangle().onTrue(new GetLocationOfAprilTag(limelight, 1));
@@ -433,20 +408,34 @@ public class RobotContainer {
       }
   }
 
+  //  Returns the DriveTrain Subsystem to other classes
   public DrivetrainSubsystem getDrivetrainSubsystem(){
     return driveTrain;
   }
 
+  //  Returns the Shoulder Subsystem to other classes
   public ShoulderSubsystem getShoulderSubsystem(){
     return shoulder;
   }
 
+    //  Returns the Extender Subsystem to other classes
   public ExtenderSubsystem getExtenderSubsystem(){
     return extender;
   }
 
+    //  Returns the Wrist Subsystem to other classes
   public WristSubsystem getWristSubsystem(){
     return wrist;
+  }
+
+  //  Returns the Limelight Subsystem to other classes
+  public LimelightSubsystem getLimelightSubsystem() {
+    return limelight;
+  }
+
+    //  Returns the Bling Subsystem to other classes
+  public BlingSubsystem getBlingSubsystem(){
+    return bling;
   }
 
 }

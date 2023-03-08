@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.DemandType;
+
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -12,11 +12,10 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.PositionSetpoints;
@@ -64,7 +63,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     //
 
     // Add PID Fields to SmartDashboard
-    SmartDashboard.putNumber("Position", 0);
+   // SmartDashboard.putNumber("Position", 0);
 
   }
 
@@ -72,9 +71,9 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    SmartDashboard.putNumber("Extender Position", extenderMotor.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Extender Setpoint", setPoint);
-    SmartDashboard.putNumber("Extender Velocity", extenderMotor.getSelectedSensorVelocity());
+    //SmartDashboard.putNumber("Extender Position", extenderMotor.getSelectedSensorPosition());
+   // SmartDashboard.putNumber("Extender Setpoint", setPoint);
+    //SmartDashboard.putNumber("Extender Velocity", extenderMotor.getSelectedSensorVelocity());
   }
 
   // Initialize a TalonFX Motor controller and set our default settings.
@@ -166,7 +165,8 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void stopMotor() {
     extenderMotor.stopMotor();
   }
-
+  
+  //  Sets the Extender Position
   public void setExtenderPosition(double setpoint) {
     
     if (setPointIsValid(setpoint)) {
@@ -200,29 +200,6 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
   }
 
-  // // Used for testing our PID settings for SmartMotion
-  // public void testExtenderPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
-  //     double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
-  //     int slot) {
-  //   // Declare our PID Controller
-  //   // Configure the PID settings
-  //   m_pidController.setFF(kF);
-  //   m_pidController.setP(kP);
-  //   m_pidController.setIZone(kI);
-  //   m_pidController.setD(kD);
-  //   m_pidController.setOutputRange(kMinOutput, kMaxOutput);
-  //   // Set our crusing velocities, accell, and error.
-  //   m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
-  //   m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
-  //   m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
-  //   m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
-  //   // send our setpoint to SmartMotion
-  //   if (setPointIsValid(setpoint)) {
-  //     m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
-  //   } else {
-  //     System.out.println("Setpoint: " + setpoint + " is not valid");
-  //   }
-  // }
 
   /**
    * Retracts the wrist by the WRIST_MOVEMENT_INCREMENT
@@ -289,7 +266,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     // Joystick method to move the extender manually
     // Make sure joystick was actually moved enough to register
     if (Math.abs(speed) > .1) {
-      // Chekc to see if we are trying to extend
+      // Check to see if we are trying to extend
       if (speed > 0) {
         if (safeToExtendExtender() && extenderMotor.getSelectedSensorPosition() < Constants.EXTENDER_MAX_POSTION) {
           extenderMotor.set(speed);
@@ -308,6 +285,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
   }
 
+  //  Returns the Extender Position when called
   public double getExtenderPosition() {
     return extenderMotor.getSelectedSensorPosition();
   }

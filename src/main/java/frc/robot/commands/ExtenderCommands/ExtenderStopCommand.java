@@ -4,7 +4,7 @@
 
 package frc.robot.commands.ExtenderCommands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ExtenderSubsystem;
 
@@ -27,7 +27,7 @@ public class ExtenderStopCommand extends CommandBase {
   @Override
   public void execute() {
        // Put the encoder value of the Master Motor to the Dashboard
-       SmartDashboard.putString("Extender Target Position", "STOP");
+       //SmartDashboard.putString("Extender Target Position", "STOP");
   }
 
   // Called once the command ends or is interrupted.
