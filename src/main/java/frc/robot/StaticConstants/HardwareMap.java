@@ -23,5 +23,6 @@ public class HardwareMap {
     //  DIO Ports on the RoboRIO
     public static final int DIO_PORT_SHOULDER_ABSOLUTE_ENCODER = 0;
     public static final int DIO_PORT_WRIST_ABSOLUTE_ENCODER = 1;
+    
 
 }
