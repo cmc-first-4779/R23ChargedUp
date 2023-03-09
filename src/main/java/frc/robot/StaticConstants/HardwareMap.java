@@ -20,4 +20,8 @@ public class HardwareMap {
     public static final int PWM_PORT_BLING = 0;
     public static final int PWM_PORT_BLING2 = 1;
 
+    //  DIO Ports on the RoboRIO
+    public static final int DIO_PORT_SHOULDER_ABSOLUTE_ENCODER = 0;
+    public static final int DIO_PORT_WRIST_ABSOLUTE_ENCODER = 1;
+
 }
