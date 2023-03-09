@@ -17,10 +17,10 @@ public class SetPipeline extends CommandBase {
   /** Creates a new SetPipeline. */
   public SetPipeline(LimelightSubsystem limelight, int pipeline) {
     myLimelight = limelight;
-    int myPipeline = pipeline;
+    this.pipeline = pipeline;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(limelight);
+    addRequirements(myLimelight);
   }
 
   // Called when the command is initially scheduled.

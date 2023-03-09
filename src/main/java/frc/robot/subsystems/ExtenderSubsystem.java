@@ -147,15 +147,17 @@ public class ExtenderSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double setPoint) {
-    if (setPoint >= Constants.EXTENDER_MIN_POSTION && setPoint <= Constants.EXTENDER_MAX_POSTION) {
+    if ((setPoint >= Constants.EXTENDER_MIN_POSTION) && (extenderMotor.get() >= 0)) {
+      System.out.println("Setpoint is valid: " + setPoint);
+      return true;
+    } else if ((setPoint <= Constants.EXTENDER_MAX_POSTION) && extenderMotor.get() <= 0) {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
     } else {
       System.out
-          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION
-              + " and " + Constants.EXTENDER_MAX_POSTION);
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION);
+      return false;
     }
-    return false;
   }
 
   // Used for testing our PID settings for SmartMotion
