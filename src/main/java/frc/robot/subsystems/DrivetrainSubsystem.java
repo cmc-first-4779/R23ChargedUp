@@ -26,6 +26,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -283,12 +284,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
-    // I'm 100% sure I have this method doing what we want. Need to test it.
+    // I'm not 100% sure I have this method doing what we want. Need to test it.
     public void resetOdometry(Pose2d pose) {
-        odometry.resetPosition(pose.getRotation(),
+        odometry.resetPosition(Rotation2d.fromDegrees(gyroscope.getYaw()),
                 getPositions(),
                 pose);
-        gyroscope.setYaw(pose.getRotation().getDegrees());        
+   
     }
 
     public void stopModules() {
