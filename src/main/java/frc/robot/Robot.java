@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.StaticConstants.BlingConstants;
 
 
 /**
@@ -93,6 +94,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getShoulderSubsystem().stopMotor();
     m_robotContainer.getExtenderSubsystem().stopMotor();
     m_robotContainer.getWristSubsystem().stopMotor();
+    m_robotContainer.getBlingSubsystem().setBlingPattern(BlingConstants.BLING_COLOR1_2_BLEND);
   }
 
 
