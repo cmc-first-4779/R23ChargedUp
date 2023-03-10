@@ -8,7 +8,7 @@ import static frc.robot.Constants.DRIVETRAIN_PIGEON_ID;
 import static frc.robot.Constants.DRIVETRAIN_TRACKWIDTH_METERS;
 import static frc.robot.Constants.DRIVETRAIN_WHEELBASE_METERS;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
@@ -26,7 +26,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -93,7 +92,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
             // Back right
             new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
-    Pigeon2 gyroscope = new Pigeon2(DRIVETRAIN_PIGEON_ID, "CANivore");
+    WPI_Pigeon2 gyroscope = new WPI_Pigeon2(DRIVETRAIN_PIGEON_ID, "CANivore");
 
     private final SwerveDriveOdometry odometry;
 
@@ -286,7 +285,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     // I'm not 100% sure I have this method doing what we want. Need to test it.
     public void resetOdometry(Pose2d pose) {
-        odometry.resetPosition(Rotation2d.fromDegrees(gyroscope.getYaw()),
+        odometry.resetPosition(gyroscope.getRotation2d(),
                 getPositions(),
                 pose);
    
