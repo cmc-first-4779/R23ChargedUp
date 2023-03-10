@@ -95,8 +95,7 @@ public final class Constants {
   // Deadzone for auto balancing
   public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_Y = 7.0;
   public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_X = 7.0;
-  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 2.15;
-
+  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 1.75;
   // Intake Constants
   public static final double INTAKE_CONE_SPEED = -0.80;
   public static final double INTAKE_CUBE_SPEED = 0.60;
