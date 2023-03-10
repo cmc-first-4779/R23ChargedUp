@@ -288,6 +288,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         odometry.resetPosition(pose.getRotation(),
                 getPositions(),
                 pose);
+        gyroscope.setYaw(pose.getRotation().getDegrees());        
     }
 
     public void stopModules() {
