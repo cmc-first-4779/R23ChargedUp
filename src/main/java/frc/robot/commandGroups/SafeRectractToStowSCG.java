@@ -34,10 +34,10 @@ public class SafeRectractToStowSCG extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         // Retract the Shoulder, Extender, and Waist
-        // new RetractShoulderExtenderPCG(shoulder, extender),
-        new ExtenderSetPosition(extender, PositionSetpoints.EXTENDER_POSITION_STOW),
-        new Wait(0.45), 
-        new ShoulderSetPosition(shoulder, PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND),
+        new RetractShoulderExtenderPCG(shoulder, extender),
+        //new ExtenderSetPosition(extender, PositionSetpoints.EXTENDER_POSITION_STOW),
+        // new Wait(0.45), 
+        // new ShoulderSetPosition(shoulder, PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND),
         // Wait a little time for the system to settle down (seconds)
         new Wait(0.45),
         // Retract the wrist last to avoid stripping off parts
