@@ -28,15 +28,15 @@ public class PositionSetpoints {
 
     // PICKUP_CONE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CONE = 37500;
-    public static final double EXTENDER_POSITION_PICKUP_CONE = 68750;
+    public static final double EXTENDER_POSITION_PICKUP_CONE = 68250;
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 63750;
     public static final double WRIST_POSITION_PICKUP_CONE = 30.25; // Old value: 42.75;
 
     // PICKUP_CUBE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CUBE = 38000;
-    public static final double EXTENDER_POSITION_PICKUP_CUBE = 100725;
+    public static final double EXTENDER_POSITION_PICKUP_CUBE = 100525;
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 96725;
-    public static final double WRIST_POSITION_PICKUP_CUBE = 34.0; // Old Value: 42.47;
+    public static final double WRIST_POSITION_PICKUP_CUBE = 33.0; // Old Value: 42.47;
 
     // Position for each LOW_CONE_NODE subsystem
     public static final double SHOULDER_POSITION_LOW_CONE_NODE = 42500;
