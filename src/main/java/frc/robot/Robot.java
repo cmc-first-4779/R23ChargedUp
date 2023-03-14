@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    m_robotContainer.setButtons();
+
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
@@ -136,6 +136,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    // Setup limelight apriltag settings
+    m_robotContainer.setButtons(); 
   }
 
   /** This function is called periodically during operator control. */
