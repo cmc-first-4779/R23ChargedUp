@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.StaticConstants.HardwareMap;
 import frc.robot.StaticConstants.MaxMotorAmpsConstants;
 
@@ -21,9 +22,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
-    //  Address our Motor Controller
+    // Address our Motor Controller
     intakeMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_INTAKE, MotorType.kBrushless);
-    //  Initiatize our Motor Controller
+    // Initiatize our Motor Controller
     initSparkMaxMotorController(intakeMotor, "NEO550");
   }
 
@@ -44,7 +45,8 @@ public class IntakeSubsystem extends SubsystemBase {
     } else {
       sparkMax.setSmartCurrentLimit(MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_NEO); // Set the Amps limit
     }
-    //sparkMax.burnFlash(); // Burn these settings into the flash in case of an electrical issue.
+    // sparkMax.burnFlash(); // Burn these settings into the flash in case of an
+    // electrical issue.
   }
 
   // Stop the Intake motor
@@ -55,6 +57,18 @@ public class IntakeSubsystem extends SubsystemBase {
   // Set the Intake to a specific Speed to pick up something
   public void intakeRun(double speed) {
     intakeMotor.set(speed);
+  }
+
+  //  Method to check the current of the intake motor.
+  //  If it spikes above a specific value which the know is similar to the motor under load, we return a 
+  //   "true" boolean 
+  public boolean isIntakeMotorUnderLoad() {
+    double current = intakeMotor.getOutputCurrent();
+    if (current >= Constants.INTAKE_CURRENT_WITH_LOAD) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
