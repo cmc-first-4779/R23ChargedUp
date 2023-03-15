@@ -18,7 +18,7 @@ public class MaxMotorAmpsConstants {
     public static final double MAX_AMPS_STATOR_TRIGGER_FALCON500 = 40;
     // public static final double MAX_AMPS_STATOR_LIMIT_FALCON500 = 15;  //To protect falcons during testing
     // public static final double MAX_AMPS_STATOR_TRIGGER_FALCON500 = 20; //To protect falcons during testing
-    public static final double MAX_SECS_STATOR_THRESHOLDTIME_FALCON500 = 200;
+    public static final double MAX_SECS_STATOR_THRESHOLDTIME_FALCON500 = 1; // Number of seconds of exceeding current trigger threshold. 
     // Neo 550 Current Limit Settings
     public static final int MAX_AMPS_STATOR_LIMIT_NEO550 = 20;
     public static final int MAX_AMPS_STATOR_TRIGGER_NEO550 = 30;
