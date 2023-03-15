@@ -8,12 +8,15 @@ import static frc.robot.Constants.DRIVETRAIN_PIGEON_ID;
 import static frc.robot.Constants.DRIVETRAIN_TRACKWIDTH_METERS;
 import static frc.robot.Constants.DRIVETRAIN_WHEELBASE_METERS;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -22,12 +25,15 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -86,20 +92,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
             // Back right
             new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
-    // By default we use a Pigeon for our gyroscope. But if you use another
-    // gyroscope, like a NavX, you can change this.
-    // The important thing about how you configure your gyroscope is that rotating
-    // the robot counter-clockwise should
-    // cause the angle reading to increase until it wraps back over to zero.
-    // Don't Remove following if you are using a Pigeon
-    // private final PigeonIMU m_pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
-    Pigeon2 gyroscope = new Pigeon2(DRIVETRAIN_PIGEON_ID);
-    Double m_pigeonPitch;
-    Double m_pigeonYaw;
-    Double m_pigeonRoll;
-    // Uncomment following if you are using a NavX
-    // private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX
-    // connected over MXP
+    WPI_Pigeon2 gyroscope = new WPI_Pigeon2(DRIVETRAIN_PIGEON_ID, "CANivore");
 
     private final SwerveDriveOdometry odometry;
 
@@ -116,9 +109,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     private SwerveModuleState[] states;
 
+    /**
+     * Constructor for the Drivetrain 
+     */
     public DrivetrainSubsystem() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
         SmartDashboard.putData("Field", field);
+        // zeroGyroscope();
 
         frontLeftModule = new MkSwerveModuleBuilder()
                 .withLayout(shuffleboardTab.getLayout("Front Left Module", BuiltInLayouts.kList)
@@ -128,6 +125,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withDriveMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_DRIVE_MOTOR, "CANivore")
                 .withSteerMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_STEER_MOTOR, "CANivore")
                 .withSteerEncoderPort(Constants.FRONT_LEFT_MODULE_STEER_ENCODER, "CANivore")
+                // .withDriveMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_DRIVE_MOTOR)
+                // .withSteerMotor(MotorType.FALCON, Constants.FRONT_LEFT_MODULE_STEER_MOTOR)
+                // .withSteerEncoderPort(Constants.FRONT_LEFT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.FRONT_LEFT_MODULE_STEER_OFFSET)
                 .build();
 
@@ -139,6 +139,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withDriveMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR, "CANivore")
                 .withSteerMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_STEER_MOTOR, "CANivore")
                 .withSteerEncoderPort(Constants.FRONT_RIGHT_MODULE_STEER_ENCODER, "CANivore")
+                // .withDriveMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR)
+                // .withSteerMotor(MotorType.FALCON, Constants.FRONT_RIGHT_MODULE_STEER_MOTOR)
+                // .withSteerEncoderPort(Constants.FRONT_RIGHT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.FRONT_RIGHT_MODULE_STEER_OFFSET)
                 .build();
 
@@ -150,6 +153,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withDriveMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_DRIVE_MOTOR, "CANivore")
                 .withSteerMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_STEER_MOTOR, "CANivore")
                 .withSteerEncoderPort(Constants.BACK_LEFT_MODULE_STEER_ENCODER, "CANivore")
+                // .withDriveMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_DRIVE_MOTOR)
+                // .withSteerMotor(MotorType.FALCON, Constants.BACK_LEFT_MODULE_STEER_MOTOR)
+                // .withSteerEncoderPort(Constants.BACK_LEFT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.BACK_LEFT_MODULE_STEER_OFFSET)
                 .build();
 
@@ -160,20 +166,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withGearRatio(SdsModuleConfigurations.MK4_L1)
                 .withDriveMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR, "CANivore")
                 .withSteerMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_STEER_MOTOR, "CANivore")
-                .withSteerEncoderPort(Constants.BACK_RIGHT_MODULE_STEER_ENCODER,"CANivore")
+                .withSteerEncoderPort(Constants.BACK_RIGHT_MODULE_STEER_ENCODER, "CANivore")
+                // .withDriveMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR)
+                // .withSteerMotor(MotorType.FALCON, Constants.BACK_RIGHT_MODULE_STEER_MOTOR)
+                // .withSteerEncoderPort(Constants.BACK_RIGHT_MODULE_STEER_ENCODER)
                 .withSteerOffset(Constants.BACK_RIGHT_MODULE_STEER_OFFSET)
                 .build();
 
-        // odometery = new SwerveDriveOdometry(Constants.kDriveKinematics,
-        // new Rotation2d(0), new SwereModulePosition[] {
-        // m_frontLeftModule.getPosition(),
-
         odometry = new SwerveDriveOdometry(
                 kinematics,
-                Rotation2d.fromDegrees(gyroscope.getYaw()),
-                new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
-                        backLeftModule.getPosition(), backRightModule.getPosition() });
+                Rotation2d.fromDegrees(getHeading()), getPositions());
 
+        //Potential fix to wheels not aligning properly
+        Timer.delay(1.0);
+                frontLeftModule.resetToAbsolute();
+                frontRightModule.resetToAbsolute();
+                backLeftModule.resetToAbsolute();
+                backRightModule.resetToAbsolute();
     }
 
     /**
@@ -182,42 +191,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
      * 'forwards' direction.
      */
     public void zeroGyroscope() {
-    // // Inline construction of command goes here.
-    // // Subsystem::RunOnce implicitly requires `this` subsystem.
-//     return runOnce(
-//     () -> {
-//     gyroscope.setYaw(0.0);
-//     });
-    // Don't Remove following if you are using a Pigeon
-//     m_pigeon.setFusedHeading(0.0);
-    gyroscope.setYaw(0.0);
-
-    // // Uncomment Following if you are using a NavX
-    // // m_navx.zeroYaw();
+        gyroscope.setYaw(0.0);
     }
-
-//     public void zeroGyroscope() {
-//         odometry.resetPosition(
-//                 Rotation2d.fromDegrees(gyroscope.getYaw()),
-//                 new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
-//                         backLeftModule.getPosition(), backRightModule.getPosition() },
-//                 new Pose2d(odometry.getPoseMeters().getTranslation(), Rotation2d.fromDegrees(0.0)));
-//     }
 
     public Rotation2d getGyroscopeRotation() {
         // Don't Remove Follwoing if you are using a Pigeon
         // return Rotation2d.fromDegrees(m_pigeon.getFusedHeading());
         return Rotation2d.fromDegrees(gyroscope.getYaw());
-
-        // Uncomment following if you are using a NavX
-        // if (m_navx.isMagnetometerCalibrated()) {
-        // // We will only get valid fused headings if the magnetometer is calibrated
-        // return Rotation2d.fromDegrees(m_navx.getFusedHeading());
-        // }
-        //
-        // // We have to invert the angle of the NavX so that rotating the robot
-        // counter-clockwise makes the angle increase.
-        // return Rotation2d.fromDegrees(360.0 - m_navx.getYaw());
     }
 
     public Rotation2d getGyroscopePitch() {
@@ -231,37 +211,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void drive(ChassisSpeeds chassisSpeeds) {
         m_chassisSpeeds = chassisSpeeds;
         states = kinematics.toSwerveModuleStates(m_chassisSpeeds);
-    }
 
-    /**
-     * Drive method that can take in SwerveModuleState array. Needed for auton since
-     * we have to provide a consumer of SwerveModuleState[]
-     * 
-     * @param states the states of the swerve modules
-     */
-    public void drive(SwerveModuleState[] states) {
-        this.states = states;
-    }
-
-    @Override
-    public void periodic() {
-        m_pigeonPitch = gyroscope.getPitch();
-        m_pigeonYaw = gyroscope.getYaw();
-        m_pigeonRoll = gyroscope.getRoll();
-        SmartDashboard.putNumber("Robot Pitch", m_pigeonPitch);
-        SmartDashboard.putNumber("Robot Yaw", m_pigeonYaw);
-        SmartDashboard.putNumber("Robot Roll", m_pigeonRoll);
-        SmartDashboard.updateValues();
-        // Moving this line into the drive() method
-        // SwerveModuleState[] states =
-        // m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
-
-        // Trying update robot position on field image on dashboard
-        field.setRobotPose(odometry.getPoseMeters());
-
-        if (states == null) {
-            return;
-        }
         SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
         frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
@@ -275,6 +225,56 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     /**
+     * Drive method that can take in SwerveModuleState array. Needed for auton since
+     * we have to provide a consumer of SwerveModuleState[]
+     * 
+     * @param states the states of the swerve modules
+     */
+    public void drive(SwerveModuleState[] states) {
+        if (SmartDashboard.getBoolean("Debug Swerve", false)) {
+            System.out.println("In drive SwerveModule[0]: " + states[0]);
+            System.out.println("In drive SwerveModule[1]: " + states[1]);
+            System.out.println("In drive SwerveModule[2]: " + states[2]);
+            System.out.println("In drive SwerveModule[3]: " + states[3]);
+        }
+        // this.states = states;
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
+
+        frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[0].angle.getRadians());
+        frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[1].angle.getRadians());
+        backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[2].angle.getRadians());
+        backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[3].angle.getRadians());
+    }
+
+    @Override
+    public void periodic() {
+        // SmartDashboard.putNumber("Robot Pitch", gyroscope.getPitch());
+        // SmartDashboard.putNumber("Robot Yaw", gyroscope.getYaw());
+        // SmartDashboard.putNumber("Robot Roll", gyroscope.getRoll());
+        // SmartDashboard.updateValues();  // I'm not sure this is needed. 
+
+        //need to update Odometry
+        odometry.update(Rotation2d.fromDegrees(gyroscope.getYaw()), getPositions());
+
+        // Trying update robot position on field image on dashboard
+        field.setRobotPose(odometry.getPoseMeters());
+    }
+
+    private SwerveModulePosition[] getPositions() {
+        SwerveModulePosition[] swervePositions = {
+                frontLeftModule.getPosition(),
+                frontRightModule.getPosition(),
+                backLeftModule.getPosition(),
+                backRightModule.getPosition()
+        };
+        return swervePositions;
+    }
+
+    /**
      * Gets the current pose of the robot
      * 
      * @return
@@ -283,12 +283,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
-    // I'm 100% sure I have this method doing what we want. Need to test it.
+    // I'm not 100% sure I have this method doing what we want. Need to test it.
     public void resetOdometry(Pose2d pose) {
-        odometry.resetPosition(pose.getRotation(),
-                new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
-                        backLeftModule.getPosition(), backRightModule.getPosition() },
+        odometry.resetPosition(gyroscope.getRotation2d(),
+                getPositions(),
                 pose);
+   
     }
 
     public void stopModules() {
@@ -300,10 +300,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public double getHeading() {
         return Math.IEEEremainder(gyroscope.getYaw(), 360);
-    }
-
-    public Rotation2d getRotation2d() {
-        return Rotation2d.fromDegrees(getHeading());
     }
 
     public double getPitch() {
@@ -341,5 +337,43 @@ public class DrivetrainSubsystem extends SubsystemBase {
         ;
         frontLeftModule.set(0, 45);
         ;
+    }
+
+    /**
+     * Gets the Kinematics of the drivetrain
+     * 
+     * @return
+     */
+    public SwerveDriveKinematics geKinematics() {
+        return kinematics;
+    }
+
+    // Assuming this method is part of a drivetrain subsystem that provides the
+    // necessary methods
+    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+        return new SequentialCommandGroup(
+                new InstantCommand(() -> {
+                    // Reset odometry for the first path you run during auto
+                    if (isFirstPath) {
+                        this.resetOdometry(traj.getInitialHolonomicPose());
+                    }
+                }),
+                new PPSwerveControllerCommand(
+                        traj,
+                        this::getPose, // Pose supplier
+                        this.kinematics, // SwerveDriveKinematics
+                        new PIDController(Constants.kPXController, 0, 0), // X controller. Tune these values for your
+                                                                          // robot. Leaving them 0 will only use
+                                                                          // feedforwards.
+                        new PIDController(Constants.kPXYController, 0, 0), // Y controller (usually the same values as X
+                                                                           // controller)
+                        new PIDController(Constants.kPThetaController, 0, 0), // Rotation controller. Tune these values
+                                                                              // for your robot. Leaving them 0 will
+                                                                              // only use feedforwards.
+                        this::drive, // Module states consumer
+                        true, // Should the path be automatically mirrored depending on alliance color.
+                              // Optional, defaults to true
+                        this // Requires this drive subsystem
+                ));
     }
 }

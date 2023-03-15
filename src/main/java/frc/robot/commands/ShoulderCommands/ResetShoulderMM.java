@@ -4,28 +4,27 @@
 
 package frc.robot.commands.ShoulderCommands;
 
-//import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShoulderSubsystem;
 
-public class ShoulderLower extends CommandBase {
-  ShoulderSubsystem shoulderSubsystem;
-  /** Creates a new ShoulderLower. */
-  public ShoulderLower(ShoulderSubsystem shoulderSubsystem) {
-    this.shoulderSubsystem = shoulderSubsystem;
+public class ResetShoulderMM extends CommandBase {
+  ShoulderSubsystem shoulder;
+  /** Creates a new ResetShoulderMM. */
+  public ResetShoulderMM(ShoulderSubsystem shoulder) {
+    this.shoulder = shoulder;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shoulderSubsystem);
+    addRequirements(shoulder);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    shoulder.resetMotionMagic();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    shoulderSubsystem.lowerShoulder();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -34,6 +33,6 @@ public class ShoulderLower extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

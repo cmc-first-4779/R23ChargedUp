@@ -2,21 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.DriveTrainCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class balanceTest extends CommandBase {
+public class DriveStraightCommand extends CommandBase {
   DrivetrainSubsystem m_drive;
-  double m_pigeonPitch;
-
-  /** Creates a new balanceTest. */
-  public balanceTest(DrivetrainSubsystem drive) {
-   m_drive = drive;
-    addRequirements(drive);
+  /** Creates a new DriveStraightCommand. */
+  public DriveStraightCommand(DrivetrainSubsystem drive) {
+    m_drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.
@@ -26,23 +23,7 @@ public class balanceTest extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_pigeonPitch = m_drive.getPitch();
-    if (m_pigeonPitch <= Constants.PIGEON_DEADBAND_GOING_DOWN) {
-      m_drive.driveBackwardsSlow();
-    }
-    if (m_pigeonPitch >= Constants.PIGEON_DEADBAND_GOING_UP) {
-      m_drive.driveStraightSlow();
-    }
-    else {
-      m_drive.sturdyBase();
-      
-    }
-    // if (m_pigeonPitch <= Constants.PIGEON_DEADBAND_GOING_DOWN) {
-    //   m_drive.driveBackwardsSlow();
-    // }
-    // else {
-    //   m_drive.sturdyBase();
-    // }
+    // m_drive.driveStraightSlow();
   }
 
   // Called once the command ends or is interrupted.

@@ -6,7 +6,7 @@ package frc.robot.commands.ShoulderCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.PositionSetpoints;
 import frc.robot.subsystems.ShoulderSubsystem;
 
 public class ShoulderStowCommand extends CommandBase {
@@ -22,7 +22,7 @@ public class ShoulderStowCommand extends CommandBase {
   @Override
   public void initialize() {
     //  Call Motion Magic to set our Winch Position to the Ground
-    shoulderSubsystem.setShoulderPosition(Constants.SHOULDER_POSITION_STOW);
+    shoulderSubsystem.setShoulderPosition(PositionSetpoints.SHOULDER_POSITION_STOW);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

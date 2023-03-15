@@ -2,46 +2,48 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.IntakeCommands;
+package frc.robot.commands.LimelightCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 
-public class IntakeEjectCommand extends CommandBase {
-  // Declare our Subsystem
-  IntakeSubsystem intakeSubsystem;
+public class LimelightSetPipeline extends CommandBase {
+  boolean isDone = false;
+  LimelightSubsystem myLimelight;
+  int pipeline;
 
-  /** Creates a new IntakeEjectCommand. */
-  public IntakeEjectCommand(IntakeSubsystem intakeSubsystem) {
-    this.intakeSubsystem = intakeSubsystem;
+
+  /** Creates a new SetPipeline. */
+  public LimelightSetPipeline(LimelightSubsystem limelight, int pipeline) {
+    myLimelight = limelight;
+    this.pipeline = pipeline;
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intakeSubsystem);
+    addRequirements(myLimelight);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeSubsystem.intakeRun(Constants.EJECT_SPEED);
+    myLimelight.setPipeline(pipeline);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Put the encoder value of the Master Motor to the Dashboard
-    SmartDashboard.putString("Intake Mode", "EJECT");
+    SmartDashboard.putNumber("GetPipeline", pipeline);
+  
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    intakeSubsystem.stopMotor();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isDone;
   }
 }

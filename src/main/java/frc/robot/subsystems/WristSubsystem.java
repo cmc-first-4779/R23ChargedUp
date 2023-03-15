@@ -5,16 +5,17 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.StaticConstants.HardwareMap;
-import frc.StaticConstants.MaxMotorAmpsConstants;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.StaticConstants.HardwareMap;
+import frc.robot.StaticConstants.MaxMotorAmpsConstants;
 
 public class WristSubsystem extends SubsystemBase {
 
@@ -35,6 +36,7 @@ public class WristSubsystem extends SubsystemBase {
   public WristSubsystem(RobotContainer robotContainer) {
     // Address our motor
     wristMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_WRIST, MotorType.kBrushless);
+
     m_pidController = wristMotor.getPIDController();
     this.robotContainer = robotContainer;
 
@@ -45,6 +47,8 @@ public class WristSubsystem extends SubsystemBase {
     // Reset our Encoder
     resetEncoder(wristMotor);
     m_pidController = wristMotor.getPIDController();
+    wristMotor.setInverted(true);
+
     // Config our PID Values
     configPIDFValues(wristMotor, Constants.WRIST_kP, Constants.WRIST_kI, Constants.WRIST_kD,
         Constants.WRIST_kF, Constants.WRIST_kMinOutput, Constants.WRIST_kMaxOuput);
@@ -53,14 +57,14 @@ public class WristSubsystem extends SubsystemBase {
         Constants.WRIST_SM_MAX_ACCEL, Constants.WRIST_SM_ALLOWED_ERR, Constants.WRIST_PID_SLOT);
 
             // Add PID Fields to SmartDashboard
-    SmartDashboard.putNumber("Position", 0);
-    SmartDashboard.putNumber("kF", Constants.WRIST_kF);
-    SmartDashboard.putNumber("kP", Constants.WRIST_kP);
-    SmartDashboard.putNumber("kI", Constants.WRIST_kI);
-    SmartDashboard.putNumber("kD", Constants.WRIST_kD);
-    SmartDashboard.putNumber("Max Vel", Constants.WRIST_SM_MAX_VEL);
-    SmartDashboard.putNumber("Min Vel", Constants.WRIST_SM_MIN_VEL);
-    SmartDashboard.putNumber("Max Accel", Constants.WRIST_SM_MAX_ACCEL);
+    // SmartDashboard.putNumber("Position", 0);
+    // SmartDashboard.putNumber("kF", Constants.WRIST_kF);
+    // SmartDashboard.putNumber("kP", Constants.WRIST_kP);
+    // SmartDashboard.putNumber("kI", Constants.WRIST_kI);
+    // SmartDashboard.putNumber("kD", Constants.WRIST_kD);
+    // SmartDashboard.putNumber("Max Vel", Constants.WRIST_SM_MAX_VEL);
+    // SmartDashboard.putNumber("Min Vel", Constants.WRIST_SM_MIN_VEL);
+    // SmartDashboard.putNumber("Max Accel", Constants.WRIST_SM_MAX_ACCEL);
 
   }
 
@@ -68,8 +72,8 @@ public class WristSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
-    SmartDashboard.putNumber("Wrist SetPoint", setPoint);
+    //SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
+    //SmartDashboard.putNumber("Wrist SetPoint", setPoint);
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
@@ -272,8 +276,14 @@ public class WristSubsystem extends SubsystemBase {
     return false;
   }
 
+  //  Return the position of the wrist
   public double getWristPosition(){
     return wristMotor.getEncoder().getPosition();
+  }
+
+  //  Return the encoder
+  public RelativeEncoder getWristEncoder(){
+    return wristMotor.getEncoder();
   }
 
 }

@@ -2,38 +2,39 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.ExtenderCommands;
+package frc.robot.commands.WristCommands;
 
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ExtenderSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 
-public class ExtenderStopCommand extends CommandBase {
-  ExtenderSubsystem extenderSubsystem;
-  /** Creates a new ExtenderStopCommand. */
-  public ExtenderStopCommand(ExtenderSubsystem extenderSubsystem) {
-    this.extenderSubsystem = extenderSubsystem;
+public class WristResetEncoder extends CommandBase {
+  WristSubsystem wrist;
+  RelativeEncoder wristEncoder;
+  /** Creates a new WristResetEncoder. */
+  public WristResetEncoder(WristSubsystem wrist) {
+    this.wrist = wrist;
+    wristEncoder = wrist.getWristEncoder();
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(extenderSubsystem);
+    addRequirements(wrist);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    extenderSubsystem.stopMotor();
+    wristEncoder.setPosition(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-       // Put the encoder value of the Master Motor to the Dashboard
-       //SmartDashboard.putString("Extender Target Position", "STOP");
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    extenderSubsystem.stopMotor();
+    wristEncoder.setPosition(0);
   }
 
   // Returns true when the command should end.

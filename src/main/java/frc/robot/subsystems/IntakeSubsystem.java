@@ -10,8 +10,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.StaticConstants.HardwareMap;
-import frc.StaticConstants.MaxMotorAmpsConstants;
+import frc.robot.StaticConstants.HardwareMap;
+import frc.robot.StaticConstants.MaxMotorAmpsConstants;
+
+//  INTAKE SUBSYSTEM:  Used to pickup or eject a game piece
 
 public class IntakeSubsystem extends SubsystemBase {
   // Declare our motor
@@ -22,7 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
     //  Address our Motor Controller
     intakeMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_INTAKE, MotorType.kBrushless);
     //  Initiatize our Motor Controller
-    initSparkMaxMotorController(intakeMotor, "NEO");
+    initSparkMaxMotorController(intakeMotor, "NEO550");
   }
 
   @Override

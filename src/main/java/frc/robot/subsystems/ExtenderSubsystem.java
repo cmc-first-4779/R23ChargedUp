@@ -4,25 +4,32 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.StaticConstants.HardwareMap;
-import frc.StaticConstants.MaxMotorAmpsConstants;
 import frc.robot.Constants;
+import frc.robot.PositionSetpoints;
 import frc.robot.RobotContainer;
+import frc.robot.StaticConstants.HardwareMap;
+import frc.robot.StaticConstants.MaxMotorAmpsConstants;
 
 //  This Subsystem is for our Extender Arm and will be powered by one Spark Neo550;
 
 public class ExtenderSubsystem extends SubsystemBase {
 
   // Declare our SparkMax Motor Controller
-  CANSparkMax extenderMotor;
-  SparkMaxPIDController m_pidController;
+  WPI_TalonFX extenderMotor;
+ 
 
   // Declare the variables
   public double kF, kP, kI, kD, rotationsExtend, rotationsRetract;
@@ -34,8 +41,10 @@ public class ExtenderSubsystem extends SubsystemBase {
   /** Creates a new ExtenderArmSubsystem. */
   public ExtenderSubsystem(RobotContainer robotContainer) {
     // Address our motor
-    extenderMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_EXTENDER_ARM, MotorType.kBrushless);
-    m_pidController = extenderMotor.getPIDController();
+    // extenderMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_EXTENDER_ARM,
+    // MotorType.kBrushless);
+    extenderMotor = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_EXTENDER_ARM);
+    // m_pidController = extenderMotor.getPIDController();
     this.robotContainer = robotContainer;
     setPoint = 0;
 
@@ -44,24 +53,17 @@ public class ExtenderSubsystem extends SubsystemBase {
     kI = Constants.EXTENDER_kI;
     kD = Constants.EXTENDER_kD;
     // Initialize our SparkMax's to known settings
-    initSparkMaxMotorController(extenderMotor, "NEO");
+    initMotorController(extenderMotor);
     // Reset our Encoder
     resetEncoder(extenderMotor);
-    // Config our PID Values
-    configPIDFValues(extenderMotor, kP, kI, kD, kF, Constants.EXTENDER_kMinOutput, Constants.EXTENDER_kMaxOuput);
-    // Configure Smart Motion
-    configureSmartMotion(extenderMotor, Constants.EXTENDER_SM_MAX_VEL, Constants.EXTENDER_SM_MIN_VEL,
-        Constants.EXTENDER_SM_MAX_ACCEL, Constants.EXTENDER_SM_ALLOWED_ERR, Constants.EXTENDER_PID_SLOT);
+    configSimpleMM(extenderMotor);
+
+
+
     //
 
     // Add PID Fields to SmartDashboard
-    SmartDashboard.putNumber("Position", 0);
-    SmartDashboard.putNumber("kF", kF);
-    SmartDashboard.putNumber("kP", kP);
-    SmartDashboard.putNumber("kI", kI);
-    SmartDashboard.putNumber("kD", kD);
-    SmartDashboard.putNumber("Cruise Vel", Constants.EXTENDER_SM_MAX_VEL);
-    SmartDashboard.putNumber("Cruise Accel ", Constants.EXTENDER_SM_MAX_ACCEL);
+   // SmartDashboard.putNumber("Position", 0);
 
   }
 
@@ -69,74 +71,111 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    SmartDashboard.putNumber("Extender Position", extenderMotor.getEncoder().getPosition());
-    SmartDashboard.putNumber("Extender Setpoint", setPoint);
-    SmartDashboard.putNumber("Extender Velocity", extenderMotor.getEncoder().getVelocity());
+    //SmartDashboard.putNumber("Extender Position", extenderMotor.getSelectedSensorPosition());
+   // SmartDashboard.putNumber("Extender Setpoint", setPoint);
+    //SmartDashboard.putNumber("Extender Velocity", extenderMotor.getSelectedSensorVelocity());
   }
 
-  // Initialize a SparkMax Motor controller and set our default settings.
-  private static void initSparkMaxMotorController(CANSparkMax sparkMax, String Motortype) {
-    System.out.println("Initializing SparkMax: " + sparkMax);
-    sparkMax.restoreFactoryDefaults();
-    sparkMax.setIdleMode(IdleMode.kBrake); // kCoast is Coast... kBrake is Brake
-    if (Motortype == "NEO550") {
-      sparkMax.setSmartCurrentLimit(MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_NEO550); // Set the Amps limit
-    } else {
-      sparkMax.setSmartCurrentLimit(MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_NEO); // Set the Amps limit
-    }
-    // sparkMax.burnFlash(); // Burn these settings into the flash in case of an
-    // electrical issue.
+  // Initialize a TalonFX Motor controller and set our default settings.
+  private static void initMotorController(WPI_TalonFX talon) {
+    System.out.println("Initializing Falcon: " + talon);
+    // Set factory defaults
+    talon.configFactoryDefault();
+    // Set Neutral Mode
+    talon.setNeutralMode(NeutralMode.Brake); // Neutral Mode is Brake
+    // Netural the controller output and disable it until we call it later
+    talon.neutralOutput();
+    // Config the neutral deadband
+    talon.configNeutralDeadband(Constants.EXTENDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+        Constants.kTimeoutMs);
+    talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+        Constants.kTimeoutMs);
+    /* Set the peak and nominal outputs */
+    talon.configNominalOutputForward(Constants.EXTENDER_NOMINAL_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configNominalOutputReverse(Constants.EXTENDER_NOMINAL_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    talon.configPeakOutputForward(Constants.EXTENDER_PEAK_OUTPUT_FORWARD, Constants.kTimeoutMs);
+    talon.configPeakOutputReverse(Constants.EXTENDER_PEAK_OUTPUT_REVERSE, Constants.kTimeoutMs);
+    // Set how many seconds that the motor can ramp from neutral to full
+    talon.configClosedloopRamp(Constants.EXTENDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS, Constants.kTimeoutMs);
+    /**
+     * Configure the current limits that will be used
+     * Stator Current is the current that passes through the motor stators.
+     * Use stator current limits to limit rotor acceleration/heat production
+     * Supply Current is the current that passes into the controller from the supply
+     * Use supply current limits to prevent breakers from tripping
+     *
+     * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
+     */
+    talon.configStatorCurrentLimit(
+    new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
+        MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
+        MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
   }
 
-  // Reset our Encoder
-  public void resetEncoder(CANSparkMax sparkMax) {
-    sparkMax.getEncoder().setPosition(0);
+  // Resets our Encoder to ZERO
+  public void resetEncoder(WPI_TalonFX talon) {
+    talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
+    // System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
   }
 
   // Configure our PID Values
-  public void configPIDFValues(CANSparkMax sparkMax, double kP, double kI, double kD, double kF, double kMinOutput,
-      double kMaxOutput) {
-    // Configure the PID settings
-    m_pidController.setFF(kF);
-    m_pidController.setP(kP);
-    m_pidController.setIZone(kI);
-    m_pidController.setD(kD);
-    m_pidController.setOutputRange(kMinOutput, kMaxOutput);
+  public void configPIDFValues(WPI_TalonFX talon, double p, double i, double d, double f, int slot) {
+    // Configure the PID settings for Slot0
+    talon.config_kF(slot, f);
+    talon.config_kP(slot, p);
+    talon.config_kI(slot, i);
+    talon.config_kD(slot, d);
   }
 
-  // Configure our Smart Motion settings
-  /**
-   * Smart Motion coefficients are set on a SparkMaxPIDController object
-   * 
-   * - setSmartMotionMaxVelocity() will limit the velocity in RPM of
-   * the pid controller in Smart Motion mode
-   * - setSmartMotionMinOutputVelocity() will put a lower bound in
-   * RPM of the pid controller in Smart Motion mode
-   * - setSmartMotionMaxAccel() will limit the acceleration in RPM^2
-   * of the pid controller in Smart Motion mode
-   * - setSmartMotionAllowedClosedLoopError() will set the max allowed
-   * error for the pid controller in Smart Motion mode
-   */
-  public void configureSmartMotion(CANSparkMax sparkMax, double maxVel, double minVel, double maxAccel,
-      double allowedErr, int slot) {
-    m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
-    m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
-    m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
-    m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
+  private void configMotionCruiseAndAcceleration(WPI_TalonFX talon, double velocity, double acceleration) {
+    // Motion Magic needs a CruiseVelocity and Acceleration that needs to be set.
+    // The value is is sensor units/100ms. So a CIM Encoder has 80 units per
+    // rotation and an AM Mag Encoder has 4096 units per rotation so this value will
+    // be way differnent. A good way to figure this out is to use Phoenix Tuner to
+    // run the motor at 100% and do a selftest snapshot to get the velocity which
+    // will be in units/100ms. This is the max velocity the motor can do in it's
+    // current configuration.
+    talon.configMotionCruiseVelocity(velocity, Constants.kTimeoutMs);
+    talon.configMotionAcceleration(acceleration, Constants.kTimeoutMs);
   }
+
+  private void configAllowableError(WPI_TalonFX talon, int slot, double allowedError) {
+    // Configure the closeed loop error, which is how close the sensor has to be to
+    // target to be successful.
+    talon.configAllowableClosedloopError(slot, allowedError, Constants.kTimeoutMs);
+  }
+
+    // Configure our Motion Magic PID Loop
+    private void configSimpleMM(WPI_TalonFX talon) {
+      // Tell each talon to use Quad Encoder as their PID0
+      talon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PID_CLOSED_LOOP,
+          Constants.kTimeoutMs);
+      // Talons have 4 slots of PID variables and 2 PID indexes. Set the PID0 to use
+      // Slot0
+      talon.selectProfileSlot(0, 0);
+      // Set up PID Values for the Winch
+      configPIDFValues(talon, 0.075, kI, kD, kF, 0); // STILL NEED TO GET THESE VALUES
+      configMotionCruiseAndAcceleration(talon, Constants.EXTENDER_MM_MAX_VEL, Constants.EXTENDER_MM_MAX_ACCEL);
+      configAllowableError(talon, 0, Constants.EXTENDER_MM_ALLOWED_ERR);
+      talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
+    }
 
   // Stop our Extender Motor
   public void stopMotor() {
     extenderMotor.stopMotor();
   }
-
+  
+  //  Sets the Extender Position
   public void setExtenderPosition(double setpoint) {
+    
     if (setPointIsValid(setpoint)) {
       // Declare our PID Controller
-      System.out.println("P is:  " + m_pidController.getP());
+     // System.out.println("P is:  " + extenderMotor.getP
       System.out.println("Setpoint is:  " + setpoint);
       // send our setpoint to SmartMotion
-      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+      extenderMotor.setSafetyEnabled(false);
+      extenderMotor.set(TalonFXControlMode.MotionMagic, setpoint);
     }
   }
 
@@ -147,6 +186,7 @@ public class ExtenderSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double setPoint) {
+    System.out.println("Extender Current Pos:  " +extenderMotor.getSelectedSensorPosition());
     if ((setPoint >= Constants.EXTENDER_MIN_POSTION) && (extenderMotor.get() >= 0)) {
       System.out.println("Setpoint is valid: " + setPoint);
       return true;
@@ -160,29 +200,6 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
   }
 
-  // Used for testing our PID settings for SmartMotion
-  public void testExtenderPosition(double setpoint, double kF, double kP, double kI, double kD, double kMaxOutput,
-      double kMinOutput, double maxVel, double minVel, double maxAccel, double allowedErr,
-      int slot) {
-    // Declare our PID Controller
-    // Configure the PID settings
-    m_pidController.setFF(kF);
-    m_pidController.setP(kP);
-    m_pidController.setIZone(kI);
-    m_pidController.setD(kD);
-    m_pidController.setOutputRange(kMinOutput, kMaxOutput);
-    // Set our crusing velocities, accell, and error.
-    m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
-    m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
-    m_pidController.setSmartMotionMaxAccel(maxAccel, slot);
-    m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
-    // send our setpoint to SmartMotion
-    if (setPointIsValid(setpoint)) {
-      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
-    } else {
-      System.out.println("Setpoint: " + setpoint + " is not valid");
-    }
-  }
 
   /**
    * Retracts the wrist by the WRIST_MOVEMENT_INCREMENT
@@ -219,7 +236,7 @@ public class ExtenderSubsystem extends SubsystemBase {
       setPoint = newSetPoint;
       setExtenderPosition(setPoint);
     } else {
-      System.out.println("Setpoint at it's higher limit allready: " + setPoint);
+      System.out.println("Setpoint at it's higher limit already: " + setPoint);
     }
 
   }
@@ -231,11 +248,12 @@ public class ExtenderSubsystem extends SubsystemBase {
    */
   private boolean safeToExtendExtender() {
     // Need to check with arm to make sure it's in a good space.
-    double armPosition = robotContainer.getShoulderPosition();
-    if (armPosition > Constants.EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND) {
-      System.out.println("Arm is at safe position to extend Extender");
+    double shoulderPosition = robotContainer.getShoulderPosition();
+    if (shoulderPosition > PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
+      System.out.println("Shoulder is at safe position to extend Extender:  " + shoulderPosition);
       return true;
     }
+    System.out.println("Shoulder is NOT at safe position to extend Extender:  " + shoulderPosition);
     return false;
   }
 
@@ -248,15 +266,15 @@ public class ExtenderSubsystem extends SubsystemBase {
     // Joystick method to move the extender manually
     // Make sure joystick was actually moved enough to register
     if (Math.abs(speed) > .1) {
-      // Chekc to see if we are trying to extend
+      // Check to see if we are trying to extend
       if (speed > 0) {
-        if (safeToExtendExtender() && extenderMotor.getEncoder().getPosition() < Constants.EXTENDER_MAX_POSTION) {
+        if (safeToExtendExtender() && extenderMotor.getSelectedSensorPosition() < Constants.EXTENDER_MAX_POSTION) {
           extenderMotor.set(speed);
         } else {
           stopMotor();
         }
       } else { // Attempting to retract
-        if (extenderMotor.getEncoder().getPosition() > Constants.EXTENDER_MIN_POSTION) {
+        if (extenderMotor.getSelectedSensorPosition() > Constants.EXTENDER_MIN_POSTION) {
           extenderMotor.set(speed);
         } else {
           stopMotor();
@@ -267,8 +285,9 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
   }
 
+  //  Returns the Extender Position when called
   public double getExtenderPosition() {
-    return extenderMotor.getEncoder().getPosition();
-}
+    return extenderMotor.getSelectedSensorPosition();
+  }
 
 }

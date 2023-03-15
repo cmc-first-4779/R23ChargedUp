@@ -7,12 +7,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.StaticConstants.LimelightConstants;
-import frc.robot.Constants;
-import frc.robot.commands.SetPipeline;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//  Our Limelight Subsystem is where all of our Vision Processing Takes place
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.StaticConstants.LimelightConstants;
+
+//  LIMELIGHT:   Used for Vision sensing
 
 public class LimelightSubsystem extends SubsystemBase {
 
@@ -38,7 +37,10 @@ public class LimelightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-   
+    SmartDashboard.putNumber("LimeLight tx", getTX());
+    SmartDashboard.putNumber("LimeLight ty", getTY());
+    SmartDashboard.putNumberArray("LimeLight Blue BotPos", getBotpose_WpiBlue());
+    SmartDashboard.putNumberArray("LimeLight Red BotPos", getBotpose_WpiRed());
   }
 
   // SET THE LIMELIGHT CAMERA MODE

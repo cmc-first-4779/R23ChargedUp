@@ -6,7 +6,7 @@ package frc.robot.commands.WristCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.PositionSetpoints;
 import frc.robot.subsystems.WristSubsystem;
 
 public class WristStowCommand extends CommandBase {
@@ -23,7 +23,7 @@ public class WristStowCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    wristSubsystem.setWristPosition(Constants.WRIST_POSITION_STOW);
+    wristSubsystem.setWristPosition(PositionSetpoints.WRIST_POSITION_STOW);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
