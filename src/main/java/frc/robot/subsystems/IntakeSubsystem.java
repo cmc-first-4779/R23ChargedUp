@@ -59,16 +59,52 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(speed);
   }
 
-  //  Method to check the current of the intake motor.
-  //  If it spikes above a specific value which the know is similar to the motor under load, we return a 
-  //   "true" boolean 
+  // Method to check the current of the intake motor.
+  // If it spikes above a specific value which the know is similar to the motor
+  // under load, we return a
+  // "true" boolean
+  // We need five readings fo a spiked output current in a row to determine that
+  // we have a good signal
   public boolean isIntakeMotorUnderLoad() {
-    double current = intakeMotor.getOutputCurrent();
-    if (current >= Constants.INTAKE_CURRENT_WITH_LOAD) {
+    // Set our "now" current to the output current
+    double nowCurrent = intakeMotor.getOutputCurrent();
+    // declare boolean flags to hold the memory of the past two cycles
+    boolean isIntakeUnderLoad_now = false;
+    boolean isIntakeUnderLoad_oneCycleAgo = false;
+    boolean isIntakeUnderLoad_twoCyclesAgo = false;
+    boolean isIntakeUnderLoad_threeCyclesAgo = false;
+    boolean isIntakeUnderLoad_fourCyclesAgo = false;
+    // Our Counter starts at 0
+    int counter = 0;
+    // Start our while loop to check the Output current for a number of cycles
+    while (counter <= Constants.INTAKE_CURRENT_CHECK_COUNTER) {
+      // Set our boolean to the past few cycles for testing
+      isIntakeUnderLoad_fourCyclesAgo = isIntakeUnderLoad_threeCyclesAgo;
+      isIntakeUnderLoad_threeCyclesAgo = isIntakeUnderLoad_twoCyclesAgo;
+      isIntakeUnderLoad_twoCyclesAgo = isIntakeUnderLoad_oneCycleAgo;
+      isIntakeUnderLoad_oneCycleAgo = isIntakeUnderLoad_now;
+      // Get our "now" current
+      nowCurrent = intakeMotor.getOutputCurrent();
+      // check to see if the current is over our limit
+      if (nowCurrent >= Constants.INTAKE_CURRENT_WITH_CUBE) {
+        // Set the "now" flag to true
+        isIntakeUnderLoad_now = true;
+      } else {
+        // Set the "now" flag to false
+        isIntakeUnderLoad_now = false;
+      }
+      // increment our counter
+      counter++;
+    }
+    // if all of our isIntakeUnderLoad flags are true, then it's a good signal
+    if ((isIntakeUnderLoad_fourCyclesAgo == true) && (isIntakeUnderLoad_threeCyclesAgo == true)
+        && (isIntakeUnderLoad_twoCyclesAgo == true) && (isIntakeUnderLoad_oneCycleAgo == true)
+        && (isIntakeUnderLoad_now == true)) {
       return true;
     } else {
       return false;
     }
+
   }
 
 }
