@@ -95,7 +95,7 @@ public final class Constants {
   // Deadzone for auto balancing
   public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_Y = 7.0;
   public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_X = 7.0;
-  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 2.15;
+  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 1.75;
 
   // Intake Constants
   public static final double INTAKE_CONE_SPEED = -0.80;
@@ -106,6 +106,8 @@ public final class Constants {
   public static final double INTAKE_CUBE_AUTON_TIMER = 0.50; // Timer for Intake Cube in Auton
   public static final double EJECT_CONE_AUTON_TIMER = 0.50;
   public static final double EJECT_CUBE_AUTON_TIMER = 0.50;
+  public static final double INTAKE_CURRENT_WO_LOAD = 4.0;  //dummy value
+  public static final double INTAKE_CURRENT_WITH_LOAD = 8.0; //dummy value
 
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;

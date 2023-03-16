@@ -138,10 +138,10 @@ public class ShoulderSubsystem extends SubsystemBase {
      *
      * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
      */
-    // talon.configStatorCurrentLimit(
+    talon.configStatorCurrentLimit(
     new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
         MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
-        MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500);
+        MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
   }
 
   // Resets our Encoder to ZERO

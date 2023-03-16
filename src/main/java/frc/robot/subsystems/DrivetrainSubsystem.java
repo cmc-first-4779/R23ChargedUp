@@ -8,7 +8,7 @@ import static frc.robot.Constants.DRIVETRAIN_PIGEON_ID;
 import static frc.robot.Constants.DRIVETRAIN_TRACKWIDTH_METERS;
 import static frc.robot.Constants.DRIVETRAIN_WHEELBASE_METERS;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
@@ -92,7 +92,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
             // Back right
             new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
-    Pigeon2 gyroscope = new Pigeon2(DRIVETRAIN_PIGEON_ID, "CANivore");
+    WPI_Pigeon2 gyroscope = new WPI_Pigeon2(DRIVETRAIN_PIGEON_ID, "CANivore");
 
     private final SwerveDriveOdometry odometry;
 
@@ -283,11 +283,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
-    // I'm 100% sure I have this method doing what we want. Need to test it.
+    // I'm not 100% sure I have this method doing what we want. Need to test it.
     public void resetOdometry(Pose2d pose) {
-        odometry.resetPosition(pose.getRotation(),
+        odometry.resetPosition(gyroscope.getRotation2d(),
                 getPositions(),
                 pose);
+   
     }
 
     public void stopModules() {
