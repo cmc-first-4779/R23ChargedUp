@@ -109,7 +109,8 @@ public final class Constants {
   public static final double INTAKE_CURRENT_NO_LOAD = 9.0;  
   public static final double INTAKE_CURRENT_WITH_CUBE = 17.0; 
   public static final double INTAKE_CURRENT_WITH_CONE = 20.0;
-  public static final int INTAKE_CURRENT_CHECK_COUNTER = 4;
+  public static final int INTAKE_CURRENT_NUM_HIGH_SIGNALS_NEEDED = 3;
+  public static final int INTAKE_CURRENT_NUM_TOTAL_SIGNALS_READ = 5;
 
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
