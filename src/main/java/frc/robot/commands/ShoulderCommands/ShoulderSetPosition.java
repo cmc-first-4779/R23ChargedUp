@@ -42,6 +42,7 @@ public class ShoulderSetPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    //  End the command if limit switch is closed
+    return shoulderSubsystem.isForwardLimitSwitchClosed();
   }
 }

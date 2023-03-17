@@ -42,6 +42,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   RelativeEncoder shoulderEncoderMaster;
   // Encoder Position
   double shoulderMasterPosition, shoulderSlavePosition;
+  // Limit Switch
 
   // Our Setpoint for the Shoulder Position
   double setPoint;
@@ -54,8 +55,9 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Initiatize the settings
     initMotorController(shoulderMotorSlave);
     initMotorController(shoulderMotorMaster);
+    // Configure our Limit Switch
+    configLimitSwitch(shoulderMotorMaster);
     // Invert motors (if needed)
-
     shoulderMotorMaster.setInverted(true);
     shoulderMotorSlave.setInverted(InvertType.OpposeMaster);
 
@@ -123,9 +125,9 @@ public class ShoulderSubsystem extends SubsystemBase {
      * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
      */
     talon.configStatorCurrentLimit(
-    new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
-        MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
-        MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
+        new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
+            MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
+            MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
   }
 
   // Resets our Encoder to ZERO
@@ -180,6 +182,18 @@ public class ShoulderSubsystem extends SubsystemBase {
     configMotionCruiseAndAcceleration(talon, Constants.SHOULDER_MM_VELOCITY, Constants.SHOULDER_MM_ACCELERATION);
     configAllowableError(talon, 0, Constants.SHOULDER_ALLOWED_ERROR);
     talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
+  }
+
+  //Configure our Limit Switch on our TalonFX
+  public void configLimitSwitch(WPI_TalonFX talon) {
+    talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector,
+        LimitSwitchNormal.NormallyOpen,
+        Constants.kTimeoutMs);
+    talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector,
+        LimitSwitchNormal.NormallyOpen,
+        Constants.kTimeoutMs);
+    //  Send a message to our syslog
+    System.out.println("Limit Switch locally enabled." + talon);
   }
 
   // Stop our motor(s)
@@ -240,18 +254,20 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Method to check whether we are in a safe range to move the arm
   public boolean safeToMoveShoulder() {
-    //  Get the current speed of the shoulder
+    // Get the current speed of the shoulder
     double shoulderSpeed = shoulderMotorMaster.get();
-    //  If our position is greater than our Min Pos, and we want to lift the shoulder, then we are good
+    // If our position is greater than our Min Pos, and we want to lift the
+    // shoulder, then we are good
     if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN) & (shoulderSpeed >= 0)) {
       return true;
-    //  If our position is less than our Max Pos, and we want to lower the shoulder, then we are good  
+      // If our position is less than our Max Pos, and we want to lower the shoulder,
+      // then we are good
     } else if ((shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX) && (shoulderSpeed <= 0)) {
       return true;
     }
-    //  We are outside of oru range..  Not safe to move shoulder
+    // We are outside of oru range.. Not safe to move shoulder
     else {
-      System.out.println("It is no longer safe to move the shoulder.  Shoulder Position:  " +shoulderMasterPosition);
+      System.out.println("It is no longer safe to move the shoulder.  Shoulder Position:  " + shoulderMasterPosition);
       return false;
     }
   }
@@ -260,7 +276,8 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
     if (shoulderMasterPosition <= PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
-      System.out.println("Shoulder is not in position to allow to extend or wrist.  Shoulder Position:  " +shoulderMasterPosition);
+      System.out.println(
+          "Shoulder is not in position to allow to extend or wrist.  Shoulder Position:  " + shoulderMasterPosition);
       return false;
     } else {
       return true;
@@ -348,13 +365,13 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderMotorMaster.set(0);
   }
 
-  //  Just in case we need to make the slave follow the master again
+  // Just in case we need to make the slave follow the master again
   public void slaveFollowMaster() {
     shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
   }
 
   // Trying a new method to use two slots on the TalonFX.
-  //  We used this to smooth out the arm motion due to gravity
+  // We used this to smooth out the arm motion due to gravity
   // Slot 0 for up motion
   // Slot 1 for down motion
   public void manageMotion(double targetPosition) {
@@ -375,6 +392,30 @@ public class ShoulderSubsystem extends SubsystemBase {
       // Select the Down Gains
       shoulderMotorMaster.selectProfileSlot(1, 0);
 
+    }
+  }
+
+  //  Method to check whether the forward Limit Switch is closed.
+  //   If so, return TRUE
+  public boolean isForwardLimitSwitchClosed(){
+    int isClosed = shoulderMotorMaster.isFwdLimitSwitchClosed();
+    if (isClosed == 1){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  //  Method to check whether the reverse Limit Switch is closed.
+  //   If so, return TRUE
+  public boolean isReverseLimitSwitchClosed(){
+    int isClosed = shoulderMotorMaster.isRevLimitSwitchClosed();
+    if (isClosed == 1){
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
