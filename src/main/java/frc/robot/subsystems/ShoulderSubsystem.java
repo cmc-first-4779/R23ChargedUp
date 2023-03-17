@@ -46,9 +46,9 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Encoder Position
   double shoulderMasterPosition, shoulderSlavePosition;
-  
-  //  Absolute Position
-  double initialAbsolutePosition, referencePosition, relativeOffset; 
+
+  // Absolute Position
+  double initialAbsolutePosition, referencePosition, relativeOffset;
 
   // Our Setpoint for the Shoulder Position
   double setPoint;
@@ -76,11 +76,12 @@ public class ShoulderSubsystem extends SubsystemBase {
 
     // Reset the encoders
     resetEncoders(shoulderMotorMaster);
-    resetEncoders(shoulderMotorSlave);
+    // resetEncoders(shoulderMotorSlave); Shouldn't need to do on the slave since
+    // the slave should always be in follow mode.
 
     // Get the absolute position of the shoulder at RobotInit
     initialAbsolutePosition = absoluteEncoder.getAbsolutePosition();
-    referencePosition = initialAbsolutePosition;  //  Safe this also in another variable for later
+    referencePosition = initialAbsolutePosition; // Safe this also in another variable for later
 
     // Configure Motion Magic on the Motors
     configSimpleMM(shoulderMotorMaster);
@@ -139,16 +140,31 @@ public class ShoulderSubsystem extends SubsystemBase {
      * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
      */
     talon.configStatorCurrentLimit(
-    new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
-        MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
-        MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
+        new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
+            MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
+            MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
   }
 
   // Resets our Encoder to ZERO
   public void resetEncoders(WPI_TalonFX talon) {
-    talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
-    // System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
+    // Check to see if absolute encoder is present and use it's position if so.
+    if (absoluteEncoder.isConnected()) {
+      // Get the current distance of the shoulder calculated based off of absolute encoder.
+      double currentMotorPositon = getCurrentAbosoluteDistance();
+
+      // Check to make sure it's a reasonable number in case the encoder crossed over
+      // the 0 line i.e. is reading 0.99
+      if (currentMotorPositon < -300000) {
+        System.out.println("Encoder was giving an excessively high negative distance so normalizing");
+        currentMotorPositon = currentMotorPositon + (2048 * 192);
+      }
+      talon.getSensorCollection().setIntegratedSensorPosition(currentMotorPositon, Constants.kTimeoutMs);
+    } else {
+      talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
+    }
   }
+
+
 
   // Configure our PID Values
   public void configPIDFValues(WPI_TalonFX talon, double p, double i, double d, double f, int slot) {
@@ -400,34 +416,38 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Setup the Through Bore Encoder from REV's Specsheet:
   // https://docs.revrobotics.com/through-bore-encoder/specifications
   private void initAbsoluteEncoder(DutyCycleEncoder encoder) {
-    encoder.setDutyCycleRange(1 / 1024, 1); // PERIOD = 1025 for the Encoder
+    encoder.setDutyCycleRange(1.0 / 1024.0, 1023 / 1024); // PERIOD = 1025 for the Encoder
     encoder.setDistancePerRotation(2048 * 192); // 2048 talonfx ticks * 192:1 Gear/Sprocket Reduction
+    encoder.setPositionOffset(Constants.SHOULDER_ABSOLUTE_ENCODER_OFFSET);
   }
 
-  public void calibrateEncoders(){
-            // Move the mechanism to the reference position
-        // Read the position of both encoders at the reference position
-        double absolutePosition = absoluteEncoder.get();
-        double relativePosition = shoulderMotorMaster.getSelectedSensorPosition();
+  // public void calibrateEncoders(){
+  // // Move the mechanism to the reference position
+  // // Read the position of both encoders at the reference position
+  // double absolutePosition = absoluteEncoder.get();
+  // double relativePosition = shoulderMotorMaster.getSelectedSensorPosition();
 
-        // Calculate the offset between the absolute and relative encoders at the reference position
-        relativeOffset = absolutePosition - relativePosition;
+  // // Calculate the offset between the absolute and relative encoders at the
+  // reference position
+  // relativeOffset = absolutePosition - relativePosition;
 
-        // Adjust the readings of the relative encoder by the offset
-        shoulderMotorMaster.setSelectedSensorPosition(0);
-        //relativeEncoder.setReverseDirection(true);
-  }
- 
-  public double getCurrentAbsolutePosition(){
-    // Read the current position of the absolute and relative encoders
-    double absolutePosition = absoluteEncoder.get();
-    double relativePosition = shoulderMotorMaster.getSelectedSensorPosition();
+  // // Adjust the readings of the relative encoder by the offset
+  // shoulderMotorMaster.setSelectedSensorPosition(0);
+  // //relativeEncoder.setReverseDirection(true);
+  // }
 
-    // Calculate the current position of the mechanism
-    double currentAbsolutePosition = absolutePosition - relativeOffset;
-
-    // Use the current position to control other devices or perform other actions
-    return currentAbsolutePosition;
+  /**
+   * Gets the current position of the shoulder motors based on the readings of the
+   * Absolute encoder
+   * taking into account the original 0 location by having the Absolute encoder
+   * positionOffset set to
+   * the absolute position of the encoder when arm was at 0.
+   * 
+   * @return
+   */
+  public double getCurrentAbosoluteDistance() {
+    // Absolute ecoder is mounted inverted so negating the return value
+    return -absoluteEncoder.getDistance();
   }
 
 }
