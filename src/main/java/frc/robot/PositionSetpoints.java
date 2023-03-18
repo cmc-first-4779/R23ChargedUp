@@ -18,7 +18,7 @@ public class PositionSetpoints {
     public static final double SHOULDER_POSITION_MAX = 92500; // Max position of the arm
 
     // Position for the Shoulder to be set to move everything else
-    public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 35000; // Safe distance where can extend the rest of
+    public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 20000; // Safe distance where can extend the rest of
                                                                          // the arm
 
     // STOW Position for each Subsystem
@@ -27,16 +27,16 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_STOW = 0;
 
     // PICKUP_CONE Position for each subsystem
-    public static final double SHOULDER_POSITION_PICKUP_CONE = 37500;
-    public static final double EXTENDER_POSITION_PICKUP_CONE = 68250;
-    public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 63750;
-    public static final double WRIST_POSITION_PICKUP_CONE = 30.25; // Old value: 42.75;
+    public static final double SHOULDER_POSITION_PICKUP_CONE = 25412;
+    public static final double EXTENDER_POSITION_PICKUP_CONE = 57373;
+    public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 57373;
+    public static final double WRIST_POSITION_PICKUP_CONE = 18.25; // Old value: 42.75;
 
     // PICKUP_CUBE Position for each subsystem
-    public static final double SHOULDER_POSITION_PICKUP_CUBE = 38000;
-    public static final double EXTENDER_POSITION_PICKUP_CUBE = 100525;
-    public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 96725;
-    public static final double WRIST_POSITION_PICKUP_CUBE = 33.0; // Old Value: 42.47;
+    public static final double SHOULDER_POSITION_PICKUP_CUBE = 25087;
+    public static final double EXTENDER_POSITION_PICKUP_CUBE = 53380;
+    public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 53380;
+    public static final double WRIST_POSITION_PICKUP_CUBE = 25.523; // Old Value: 42.47;
 
     // Position for each LOW_CONE_NODE subsystem
     public static final double SHOULDER_POSITION_LOW_CONE_NODE = 42500;
@@ -74,8 +74,8 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = .5; // Old Value: 8.5;
 
     // Double HUMAN PLAYER STATION (HPS)
-    public static final double SHOULDER_POSITION_DOUBLE_HPS = 84525;
-    public static final double EXTENDER_POSITION_DOUBLE_HPS = 154480;
-    public static final double WRIST_POSITION_DOUBLE_HPS = 37.75; 
+    public static final double SHOULDER_POSITION_DOUBLE_HPS = 85583;
+    public static final double EXTENDER_POSITION_DOUBLE_HPS = 4088;
+    public static final double WRIST_POSITION_DOUBLE_HPS = 38.323; 
 
 }
