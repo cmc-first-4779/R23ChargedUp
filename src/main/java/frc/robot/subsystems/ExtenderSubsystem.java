@@ -14,7 +14,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -71,7 +71,7 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    //SmartDashboard.putNumber("Extender Position", extenderMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Extender Position", extenderMotor.getSelectedSensorPosition());
    // SmartDashboard.putNumber("Extender Setpoint", setPoint);
     //SmartDashboard.putNumber("Extender Velocity", extenderMotor.getSelectedSensorVelocity());
   }
