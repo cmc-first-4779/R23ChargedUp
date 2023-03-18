@@ -105,8 +105,8 @@ public class ShoulderSubsystem extends SubsystemBase {
     // shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
     // SmartDashboard.putNumber("Shoulder Encoder Position",
     // shoulderMotorMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Absolute Encoder Position", absoluteEncoder.getAbsolutePosition());
-    SmartDashboard.putNumber("Absolute Encoder Distance", absoluteEncoder.getDistance());
+    //SmartDashboard.putNumber("Absolute Encoder Position", absoluteEncoder.getAbsolutePosition());
+    //SmartDashboard.putNumber("Absolute Encoder Distance", absoluteEncoder.getDistance() * -1);
   }
 
   // Initialize a TalonFX Motor controller and set our default settings.
@@ -151,7 +151,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Check to see if absolute encoder is present and use it's position if so.
     if (absoluteEncoder.isConnected()) {
       // Get the current distance of the shoulder calculated based off of absolute encoder.
-      double currentMotorPositon = getCurrentAbosoluteDistance();
+      double currentMotorPositon = getCurrentAbosoluteDistance() * -1; // Negating to change phase
 
       // Check to make sure it's a reasonable number in case the encoder crossed over
       // the 0 line i.e. is reading 0.99
@@ -417,7 +417,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Setup the Through Bore Encoder from REV's Specsheet:
   // https://docs.revrobotics.com/through-bore-encoder/specifications
   private void initAbsoluteEncoder(DutyCycleEncoder encoder) {
-    encoder.setDutyCycleRange(1.0 / 1024.0, 1023 / 1024); // PERIOD = 1025 for the Encoder
+    encoder.setDutyCycleRange(1.0 / 1024.0, 1023.0 / 1024.0); // PERIOD = 1025 for the Encoder
     encoder.setDistancePerRotation(2048 * 192); // 2048 talonfx ticks * 192:1 Gear/Sprocket Reduction
     encoder.setPositionOffset(Constants.SHOULDER_ABSOLUTE_ENCODER_OFFSET);
   }

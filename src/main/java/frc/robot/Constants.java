@@ -166,7 +166,7 @@ public final class Constants {
   public static final double SHOULDER_POSITION_MIN = 0; // Min position of the arm
   public static final double SHOULDER_POSITION_MAX = 92500; // Max position of the arm
   public static final double SHOULDER_MOVEMENT_INCREMENT = 2500;
-  public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 0.05; // Absolute position of encoder when arm is at 0 between 0.0 and 1;
+  public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 0.769; // Absolute position of encoder when arm is at 0 between 0.0 and 1;
 
   // Wrist Constants
   public static final int WRIST_PID_SLOT = 0;
