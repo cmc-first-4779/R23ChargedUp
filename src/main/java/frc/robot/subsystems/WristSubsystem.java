@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -23,6 +24,8 @@ public class WristSubsystem extends SubsystemBase {
   CANSparkMax wristMotor;
   SparkMaxPIDController m_pidController;
   double setPoint;
+  SparkMaxLimitSwitch limitSwitch;
+
 
   // Reference to robot container to access other subsystems
   RobotContainer robotContainer;
@@ -48,6 +51,8 @@ public class WristSubsystem extends SubsystemBase {
     resetEncoder(wristMotor);
     m_pidController = wristMotor.getPIDController();
     wristMotor.setInverted(true);
+    //   Enable Limit Switch
+    limitSwitch.enableLimitSwitch(true);
 
     // Config our PID Values
     configPIDFValues(wristMotor, Constants.WRIST_kP, Constants.WRIST_kI, Constants.WRIST_kD,
@@ -284,6 +289,10 @@ public class WristSubsystem extends SubsystemBase {
   //  Return the encoder
   public RelativeEncoder getWristEncoder(){
     return wristMotor.getEncoder();
+  }
+
+  public boolean isLimitSwitchClosed(){
+    return limitSwitch.isPressed();
   }
 
 }
