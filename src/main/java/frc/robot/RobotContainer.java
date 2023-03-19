@@ -178,7 +178,7 @@ public class RobotContainer {
     driverStick.R3().whileTrue(new ShoulderLower(shoulder));
     //driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     //driverStick.touchpad().whileTrue(new AutoBalance(driveTrain));
-    driverStick.touchpad().whileTrue(new GetBotPoseforDPS(limelight));
+    driverStick.touchpad().onTrue(new GetBotPoseforDPS(limelight));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
 
     // OperStick Buttons
