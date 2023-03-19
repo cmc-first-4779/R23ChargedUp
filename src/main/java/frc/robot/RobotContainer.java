@@ -57,6 +57,8 @@ import frc.robot.commandGroups.SafeSetToPositionSCG;
 import frc.robot.commandGroups.StopAllPCG;
 import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
+import frc.robot.commands.IntakeCommands.IntakeConeDebounce;
+import frc.robot.commands.IntakeCommands.IntakeCubeDebounce;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
 import frc.robot.commands.LimelightCommands.LimelightSetLEDMode;
@@ -176,8 +178,10 @@ public class RobotContainer {
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
 
     // OperStick Buttons
-    operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
-    operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    // operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    // operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    operStick.L1().onTrue(new IntakeCubeDebounce());
+    operStick.R1().onTrue(new IntakeConeDebounce());
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
     operStick.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
     operStick.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));

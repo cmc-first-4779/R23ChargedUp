@@ -8,6 +8,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,6 +21,9 @@ import frc.robot.StaticConstants.MaxMotorAmpsConstants;
 public class IntakeSubsystem extends SubsystemBase {
   // Declare our motor
   CANSparkMax intakeMotor;
+  // Declare a variable for filering our outputcurrent
+  LinearFilter currentFilter = LinearFilter.movingAverage(Constants.INTAKE_FILTER_TAPS);
+  double filteredCurrent;
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
@@ -30,6 +35,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // Filter our Current to clean out the noisy signals.
+    filteredCurrent = currentFilter.calculate(getCurrent());
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Intake Encoder Velocity", intakeMotor.getEncoder().getVelocity());
   }
@@ -59,7 +66,8 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(speed);
   }
 
-  // Method to check the current of the intake motor and clean out backround noise.
+  // Method to check the current of the intake motor and clean out backround
+  // noise.
   // If it spikes above a specific value which the know is similar to the motor
   // under load, we return a true boolean
   public boolean isIntakeMotorUnderLoad(int numDesiredHighSignals, int numTotalSignalsToCheck) {
@@ -81,14 +89,52 @@ public class IntakeSubsystem extends SubsystemBase {
       // increment our counter
       counter++;
     }
-    // if all of our we found high signals >= to the number of signals we needed to find
+    // if all of our we found high signals >= to the number of signals we needed to
+    // find
     if (numFoundSignals >= numDesiredHighSignals) {
-      //  We are under load
+      // We are under load
       return true;
     } else {
-      //  We are not under load
+      // We are not under load
       return false;
     }
+  }
+
+  // Method to get the Intake Motor Output Current
+  public double getCurrent() {
+    return intakeMotor.getOutputCurrent();
+  }
+
+  public double getFilteredCurrent() {
+    return filteredCurrent;
+  }
+
+  public double getOutput() {
+    return intakeMotor.getAppliedOutput();
+  }
+
+  public void intakeCubeDebounce() {
+    // Declare our debouncer
+    Debouncer debounce = new Debouncer(Constants.INTAKE_DEBOUNCE_SECONDS, Debouncer.DebounceType.kRising);
+    // While our filtered current is less than the stall current with the cube
+    while (debounce.calculate(getFilteredCurrent() < Constants.INTAKE_CURRENT_WITH_CUBE)) {
+      // Turn our intake on to take in cubes
+      intakeRun(Constants.INTAKE_CUBE_SPEED);
+    }
+    // Stop the intake motor
+    stopMotor();
+  }
+
+  public void intakeConeDebounce() {
+    // Declare our debouncer and set it to look for a rising spike for a period of time
+    Debouncer debounce = new Debouncer(Constants.INTAKE_DEBOUNCE_SECONDS, Debouncer.DebounceType.kRising);
+    // While our filtered current is less than the stall current with the cube
+    while (debounce.calculate(getFilteredCurrent() < Constants.INTAKE_CURRENT_WITH_CONE)) {
+      // Turn our intake on to take in cubes
+      intakeRun(Constants.INTAKE_CONE_SPEED);
+    }
+    // Stop the intake motor
+    stopMotor();
   }
 
 }

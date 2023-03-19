@@ -111,6 +111,11 @@ public final class Constants {
   public static final double INTAKE_CURRENT_WITH_CONE = 20.0;
   public static final int INTAKE_CURRENT_NUM_HIGH_SIGNALS_NEEDED = 3;
   public static final int INTAKE_CURRENT_NUM_TOTAL_SIGNALS_READ = 5;
+  public static final double INTAKE_HOLD_CUBE_SPEED = 0.05;
+  public static final double INTAKE_HOLD_CONE_SPEED = -0.06;
+  public static final double INTAKE_DEBOUNCE_SECONDS = 0.5; // period of time we look at the current
+  public static final int INTAKE_FILTER_TAPS = 10;  //  Number of samples of our current needed
+  
 
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
