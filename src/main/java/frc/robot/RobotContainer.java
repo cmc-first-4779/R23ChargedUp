@@ -58,6 +58,7 @@ import frc.robot.commandGroups.StopAllPCG;
 import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
+import frc.robot.commands.LimelightCommands.GetBotPoseforDPS;
 import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
 import frc.robot.commands.LimelightCommands.LimelightSetLEDMode;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
@@ -176,7 +177,8 @@ public class RobotContainer {
     driverStick.L3().whileTrue(new ShoulderRaise(shoulder));
     driverStick.R3().whileTrue(new ShoulderLower(shoulder));
     //driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.touchpad().whileTrue(new AutoBalance(driveTrain));
+    //driverStick.touchpad().whileTrue(new AutoBalance(driveTrain));
+    driverStick.touchpad().whileTrue(new GetBotPoseforDPS(limelight));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
 
     // OperStick Buttons
