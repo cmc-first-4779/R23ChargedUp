@@ -62,6 +62,8 @@ import frc.robot.commands.IntakeCommands.IntakeCubeDebounce;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
 import frc.robot.commands.LimelightCommands.LimelightSetLEDMode;
+import frc.robot.commands.ShoulderCommands.ShoulderLower;
+import frc.robot.commands.ShoulderCommands.ShoulderRaise;
 import frc.robot.commands.WristCommands.WristLower;
 import frc.robot.commands.WristCommands.WristRaise;
 import frc.robot.subsystems.ShoulderSubsystem;
@@ -173,7 +175,9 @@ public class RobotContainer {
     driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
-    driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
+    driverStick.L3().whileTrue(new ShoulderRaise(shoulder));
+    driverStick.R3().whileTrue(new ShoulderLower(shoulder));
+    //driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.touchpad().whileTrue(new AutoBalance(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
 

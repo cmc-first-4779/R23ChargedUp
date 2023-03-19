@@ -17,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -40,8 +41,14 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Declare our Encoders
   RelativeEncoder shoulderEncoderSlave;
   RelativeEncoder shoulderEncoderMaster;
+  // Absolute Duty-Cycle Encoder
+  DutyCycleEncoder absoluteEncoder;
+
   // Encoder Position
   double shoulderMasterPosition, shoulderSlavePosition;
+
+  // Absolute Position
+  double initialAbsolutePosition, referencePosition, relativeOffset;
 
   // Our Setpoint for the Shoulder Position
   double setPoint;
@@ -51,6 +58,11 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Address our controllers
     shoulderMotorSlave = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_SHOULDER_MOTOR_LEFT);
     shoulderMotorMaster = new WPI_TalonFX(HardwareMap.CAN_ADDRESS_SHOULDER_MOTOR_RIGHT);
+    // Address our Absolute encoder
+    absoluteEncoder = new DutyCycleEncoder(HardwareMap.DIO_PORT_SHOULDER_ABSOLUTE_ENCODER);
+    // Init our settings for our encoder
+    initAbsoluteEncoder(absoluteEncoder);
+
     // Initiatize the settings
     initMotorController(shoulderMotorSlave);
     initMotorController(shoulderMotorMaster);
@@ -64,7 +76,12 @@ public class ShoulderSubsystem extends SubsystemBase {
 
     // Reset the encoders
     resetEncoders(shoulderMotorMaster);
-    resetEncoders(shoulderMotorSlave);
+    // resetEncoders(shoulderMotorSlave); Shouldn't need to do on the slave since
+    // the slave should always be in follow mode.
+
+    // Get the absolute position of the shoulder at RobotInit
+    initialAbsolutePosition = absoluteEncoder.getAbsolutePosition();
+    referencePosition = initialAbsolutePosition; // Safe this also in another variable for later
 
     // Configure Motion Magic on the Motors
     configSimpleMM(shoulderMotorMaster);
@@ -86,9 +103,9 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Put the encoder value of the Master Motor to the Dashboard
     shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
     // shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
-    // SmartDashboard.putNumber("Shoulder Encoder Position",
-    // shoulderMotorMaster.getSelectedSensorPosition());
-    // SmartDashboard.putNumber("Shoulder Target Pos", setPoint);
+    SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("Absolute Encoder Position", absoluteEncoder.getAbsolutePosition());
+    //SmartDashboard.putNumber("Absolute Encoder Distance", absoluteEncoder.getDistance() * -1);
   }
 
   // Initialize a TalonFX Motor controller and set our default settings.
@@ -123,16 +140,31 @@ public class ShoulderSubsystem extends SubsystemBase {
      * enabled | Limit(amp) | Trigger Threshold(amp) | Trigger Threshold Time(s)
      */
     talon.configStatorCurrentLimit(
-    new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
-        MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
-        MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
+        new StatorCurrentLimitConfiguration(true, MaxMotorAmpsConstants.MAX_AMPS_STATOR_LIMIT_FALCON500,
+            MaxMotorAmpsConstants.MAX_AMPS_STATOR_TRIGGER_FALCON500,
+            MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
   }
 
   // Resets our Encoder to ZERO
   public void resetEncoders(WPI_TalonFX talon) {
-    talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
-    // System.out.println("[Quadrature Encoders] All sensors are zeroed.\n");
+    // Check to see if absolute encoder is present and use it's position if so.
+    if (absoluteEncoder.isConnected()) {
+      // Get the current distance of the shoulder calculated based off of absolute encoder.
+      double currentMotorPositon = getCurrentAbosoluteDistance() * -1; // Negating to change phase
+
+      // Check to make sure it's a reasonable number in case the encoder crossed over
+      // the 0 line i.e. is reading 0.99
+      if (currentMotorPositon < -300000) {
+        System.out.println("Encoder was giving an excessively high negative distance so normalizing");
+        currentMotorPositon = currentMotorPositon + (2048 * 192);
+      }
+      talon.getSensorCollection().setIntegratedSensorPosition(currentMotorPositon, Constants.kTimeoutMs);
+    } else {
+      talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
+    }
   }
+
+
 
   // Configure our PID Values
   public void configPIDFValues(WPI_TalonFX talon, double p, double i, double d, double f, int slot) {
@@ -240,18 +272,20 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Method to check whether we are in a safe range to move the arm
   public boolean safeToMoveShoulder() {
-    //  Get the current speed of the shoulder
+    // Get the current speed of the shoulder
     double shoulderSpeed = shoulderMotorMaster.get();
-    //  If our position is greater than our Min Pos, and we want to lift the shoulder, then we are good
+    // If our position is greater than our Min Pos, and we want to lift the
+    // shoulder, then we are good
     if ((shoulderMasterPosition >= Constants.SHOULDER_POSITION_MIN) & (shoulderSpeed >= 0)) {
       return true;
-    //  If our position is less than our Max Pos, and we want to lower the shoulder, then we are good  
+      // If our position is less than our Max Pos, and we want to lower the shoulder,
+      // then we are good
     } else if ((shoulderMasterPosition <= Constants.SHOULDER_POSITION_MAX) && (shoulderSpeed <= 0)) {
       return true;
     }
-    //  We are outside of oru range..  Not safe to move shoulder
+    // We are outside of oru range.. Not safe to move shoulder
     else {
-      System.out.println("It is no longer safe to move the shoulder.  Shoulder Position:  " +shoulderMasterPosition);
+      System.out.println("It is no longer safe to move the shoulder.  Shoulder Position:  " + shoulderMasterPosition);
       return false;
     }
   }
@@ -260,7 +294,8 @@ public class ShoulderSubsystem extends SubsystemBase {
   // Extender and flip the wrist
   public boolean safeToExtendAndWrist() {
     if (shoulderMasterPosition <= PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
-      System.out.println("Shoulder is not in position to allow to extend or wrist.  Shoulder Position:  " +shoulderMasterPosition);
+      System.out.println(
+          "Shoulder is not in position to allow to extend or wrist.  Shoulder Position:  " + shoulderMasterPosition);
       return false;
     } else {
       return true;
@@ -348,13 +383,13 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderMotorMaster.set(0);
   }
 
-  //  Just in case we need to make the slave follow the master again
+  // Just in case we need to make the slave follow the master again
   public void slaveFollowMaster() {
     shoulderMotorSlave.follow(shoulderMotorMaster, FollowerType.PercentOutput);
   }
 
   // Trying a new method to use two slots on the TalonFX.
-  //  We used this to smooth out the arm motion due to gravity
+  // We used this to smooth out the arm motion due to gravity
   // Slot 0 for up motion
   // Slot 1 for down motion
   public void manageMotion(double targetPosition) {
@@ -376,6 +411,43 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderMotorMaster.selectProfileSlot(1, 0);
 
     }
+  }
+
+  // Setup the Through Bore Encoder from REV's Specsheet:
+  // https://docs.revrobotics.com/through-bore-encoder/specifications
+  private void initAbsoluteEncoder(DutyCycleEncoder encoder) {
+    encoder.setDutyCycleRange(1.0 / 1024.0, 1023.0 / 1024.0); // PERIOD = 1025 for the Encoder
+    encoder.setDistancePerRotation(2048 * 192); // 2048 talonfx ticks * 192:1 Gear/Sprocket Reduction
+    encoder.setPositionOffset(Constants.SHOULDER_ABSOLUTE_ENCODER_OFFSET);
+  }
+
+  // public void calibrateEncoders(){
+  // // Move the mechanism to the reference position
+  // // Read the position of both encoders at the reference position
+  // double absolutePosition = absoluteEncoder.get();
+  // double relativePosition = shoulderMotorMaster.getSelectedSensorPosition();
+
+  // // Calculate the offset between the absolute and relative encoders at the
+  // reference position
+  // relativeOffset = absolutePosition - relativePosition;
+
+  // // Adjust the readings of the relative encoder by the offset
+  // shoulderMotorMaster.setSelectedSensorPosition(0);
+  // //relativeEncoder.setReverseDirection(true);
+  // }
+
+  /**
+   * Gets the current position of the shoulder motors based on the readings of the
+   * Absolute encoder
+   * taking into account the original 0 location by having the Absolute encoder
+   * positionOffset set to
+   * the absolute position of the encoder when arm was at 0.
+   * 
+   * @return
+   */
+  public double getCurrentAbosoluteDistance() {
+    // Absolute ecoder is mounted inverted so negating the return value
+    return -absoluteEncoder.getDistance();
   }
 
 }
