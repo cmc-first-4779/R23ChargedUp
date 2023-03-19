@@ -141,8 +141,8 @@ public final class Constants {
   public static final int kTimeoutMs = 30;
 
   // Shoulder Constants
-  public static final double SHOULDER_MM_VELOCITY = 9830; // Dummy variable - Test this!
-  public static final double SHOULDER_MM_ACCELERATION = 9830; // Dummy variable - Test this!
+  public static final double SHOULDER_MM_VELOCITY = 13107; // Dummy variable - Test this!
+  public static final double SHOULDER_MM_ACCELERATION = 17476; // Dummy variable - Test this!
   public static final double SHOULDER_MM_VELOCITY_DOWN = 9830;
   public static final double SHOULDER_MM_ACCELERATION_DOWN = 9830;
 
