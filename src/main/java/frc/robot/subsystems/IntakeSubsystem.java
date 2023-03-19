@@ -38,7 +38,11 @@ public class IntakeSubsystem extends SubsystemBase {
     // Filter our Current to clean out the noisy signals.
     filteredCurrent = currentFilter.calculate(getCurrent());
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Intake Encoder Velocity", intakeMotor.getEncoder().getVelocity());
+    //SmartDashboard.putNumber("Intake Encoder Velocity", intakeMotor.getEncoder().getVelocity());
+    SmartDashboard.putNumber("Intake Filtered Current", filteredCurrent);
+    SmartDashboard.putNumber("Intake Current", getCurrent());
+    System.out.println("Intake Filtered Current:  " +filteredCurrent);
+    System.out.println("Intake Output Current:  " +getCurrent());
   }
 
   // This is a test line for training in Github
