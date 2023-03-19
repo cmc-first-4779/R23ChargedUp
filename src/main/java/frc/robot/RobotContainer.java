@@ -54,6 +54,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commandGroups.AutoSafeSetToPositionSCG;
 import frc.robot.commandGroups.SafeRectractToStowSCG;
 import frc.robot.commandGroups.SafeSetToPositionSCG;
+import frc.robot.commandGroups.SetToPositionPCG;
 import frc.robot.commandGroups.StopAllPCG;
 import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
@@ -183,10 +184,10 @@ public class RobotContainer {
     operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
-    operStick.share().onTrue(new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
-    operStick.options().onTrue(new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
-    operStick.square().onTrue(new SafeSetToPositionSCG("MID_CUBE", shoulder, extender, wrist));
-    operStick.triangle().onTrue(new SafeSetToPositionSCG("MID_CONE", shoulder, extender, wrist));
+    operStick.share().onTrue(new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
+    operStick.options().onTrue(new SetToPositionPCG("HIGH_CONE", shoulder, extender, wrist));
+    operStick.square().onTrue(new SetToPositionPCG("MID_CUBE", shoulder, extender, wrist));
+    operStick.triangle().onTrue(new SetToPositionPCG("MID_CONE", shoulder, extender, wrist));
     operStick.cross().onTrue(new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist));
     operStick.circle().onTrue(new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
     operStick.R3().onTrue(new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
@@ -196,7 +197,7 @@ public class RobotContainer {
                                                                                        // `exampleMethodCommand` when
                                                                                        // the Xbox controller's B button
                                                                                        // is
-    operStick.povUp().onTrue(new SafeSetToPositionSCG("DOUBLE_HPS", shoulder, extender, wrist));
+    operStick.povUp().onTrue(new SetToPositionPCG("DOUBLE_HPS", shoulder, extender, wrist));
   }
 
   /**
