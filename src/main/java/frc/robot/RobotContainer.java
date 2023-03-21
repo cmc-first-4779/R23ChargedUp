@@ -61,6 +61,7 @@ import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
 import frc.robot.commands.LimelightCommands.LimelightSetLEDMode;
+import frc.robot.commands.LimelightCommands.LimelightTargetConeDeploy;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
 import frc.robot.commands.ShoulderCommands.ShoulderRaise;
 import frc.robot.commands.WristCommands.WristLower;
@@ -133,7 +134,7 @@ public class RobotContainer {
     // Default Command for the Intake is: STOP
     intake.setDefaultCommand(new IntakeStopCommand(intake));
     // Turning the LimeLight Off for Now.
-    limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
+    //limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
 
     bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_FOREST_PALETTE));
     // Configure the trigger bindings
@@ -167,7 +168,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // DriveStick Buttons
-    driverStick.L1().whileTrue(new WristRaise(wrist));
+    //driverStick.L1().whileTrue(new WristRaise(wrist));
+    driverStick.L1().whileTrue(new LimelightTargetConeDeploy(limelight));
     driverStick.R1().whileTrue(new WristLower(wrist));
     driverStick.R2().whileTrue(new ExtendExtender(extender));
     driverStick.L2().whileTrue(new RetractExtender(extender));
