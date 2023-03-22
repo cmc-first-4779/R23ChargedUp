@@ -2,12 +2,12 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.8,
+        "x": 2.2,
         "y": 0.8080221033435242
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8970596556344907,
+        "x": 2.2970596556344907,
         "y": 0.8034730985635884
       },
       "holonomicAngle": 180.0,
@@ -17,53 +17,27 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Cube High"
-        ],
-        "executionBehavior": "sequential",
-        "waitBehavior": "after",
-        "waitTime": 0.03
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 2.1,
-        "y": 0.81
-      },
-      "prevControl": {
-        "x": 2.0965347073551266,
-        "y": 0.81
-      },
-      "nextControl": {
-        "x": 2.1034652926448736,
-        "y": 0.81
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
+          "Cube High",
           "Wait",
           "Eject Cube",
           "Safe Retract"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "after",
-        "waitTime": 2.0
+        "waitTime": 0.4
       }
     },
     {
       "anchorPoint": {
-        "x": 3.045375376465039,
+        "x": 3.75,
         "y": 0.8016256032512075
       },
       "prevControl": {
-        "x": 3.0428840050960235,
+        "x": 3.7475086286309844,
         "y": 0.8030070422009228
       },
       "nextControl": {
-        "x": 3.0428840050960235,
+        "x": 3.7475086286309844,
         "y": 0.8030070422009228
       },
       "holonomicAngle": 0.01,
@@ -73,24 +47,24 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "Wait"
+          "Cube Pickup"
         ],
         "executionBehavior": "sequential",
-        "waitBehavior": "after",
+        "waitBehavior": "none",
         "waitTime": 1.0
       }
     },
     {
       "anchorPoint": {
-        "x": 6.42,
-        "y": 0.73
+        "x": 6.92,
+        "y": 0.93
       },
       "prevControl": {
-        "x": 6.00567715097587,
-        "y": 0.6651794332160099
+        "x": 6.50567715097587,
+        "y": 0.86517943321601
       },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 0.01,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -106,12 +80,5 @@
       }
     }
   ],
-  "markers": [
-    {
-      "position": 2.181818181818178,
-      "names": [
-        "Cube Pickup"
-      ]
-    }
-  ]
+  "markers": []
 }

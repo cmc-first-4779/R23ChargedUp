@@ -245,10 +245,10 @@ public class RobotContainer {
     pathPlannerEventMap = new HashMap<>();
     // pathPlannerEventMap.put("marker1", new PrintCommand("Passed marker 1"));
     // pathPlannerEventMap.put("intakeDown", new PrintCommand("Event 2"));
-    pathPlannerEventMap.put("Cone High", new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cube High", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cone Mid", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cube Mid", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cone High", new SetToPositionPCG("HIGH_CONE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube High", new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cone Mid", new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Mid", new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cone Low", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cube Low", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cone Pickup", new AutoSafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
@@ -258,7 +258,7 @@ public class RobotContainer {
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
     pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
     pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
-    pathPlannerEventMap.put("Wait", new WaitCommand(1));
+    pathPlannerEventMap.put("Wait", new WaitCommand(2));
     pathPlannerEventMap.put("Auto Balance", new AutoBalance(driveTrain));
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
     pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));
