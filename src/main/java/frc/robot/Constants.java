@@ -37,7 +37,7 @@ public final class Constants {
    *
    * Should be measured from center to center.
    */
-  public static final double DRIVETRAIN_THROTTLE = 0.9; // Drivetrain throttle
+  public static final double DRIVETRAIN_THROTTLE = 1.0; // Drivetrain throttle
   public static final double PIGEON_DEADBAND_GOING_UP = .5;
   public static final double PIGEON_DEADBAND_GOING_DOWN = -.5;
   public static final double DRIVETRAIN_WHEELBASE_METERS = 0.6096; // DONE Measure and set wheelbase
@@ -95,7 +95,7 @@ public final class Constants {
   // Deadzone for auto balancing
   public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_Y = 7.0;
   public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_X = 7.0;
-  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 3.6;  // Old:  1.75;
+  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 3.0;  // Old:  1.75;
 
   // Intake Constants
   public static final double INTAKE_CONE_SPEED = -0.80;
