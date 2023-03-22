@@ -109,7 +109,7 @@ public class LimelightTargetDeploy extends CommandBase {
     double yError = limelight.getTY();
     if (yError > Constants.LIMELIGHT_Y_DRIVE_TOLERANCE) {
       yDrive = (pDistance * yError) + Constants.LIMELIGHT_MIN_MOVE;
-    } else if (yError < -Constants.LIMELIGHT_X_DRIVE_TOLERANCE) {
+    } else if (yError < -Constants.LIMELIGHT_Y_DRIVE_TOLERANCE) {
       yDrive = (pDistance * yError) - Constants.LIMELIGHT_MIN_MOVE;
     } else {
       yDrive = 0;
