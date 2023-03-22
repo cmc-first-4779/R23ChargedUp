@@ -24,7 +24,7 @@ public class LimelightTargetDeploy extends CommandBase {
 
   // Putting a counter so we end
   int counter;
-  int maxCycles = 3;
+  int maxCycles = 45;
 
   //  Which mode are we in
   String mode;
@@ -94,7 +94,7 @@ public class LimelightTargetDeploy extends CommandBase {
   }
 
   private double calculateXDrive() {
-    double xError = limelight.getTX();
+    double xError = limelight.getTY();
     if (xError > Constants.LIMELIGHT_X_DRIVE_TOLERANCE) {
       xDrive = (pDistance * xError) + Constants.LIMELIGHT_MIN_MOVE;
     } else if (xError < -Constants.LIMELIGHT_X_DRIVE_TOLERANCE) {
@@ -102,11 +102,11 @@ public class LimelightTargetDeploy extends CommandBase {
     } else {
       xDrive = 0;
     }
-    return xDrive;
+    return xDrive ;
   }
 
   private double calculateYDrive() {
-    double yError = limelight.getTY();
+    double yError = limelight.getTX();
     if (yError > Constants.LIMELIGHT_Y_DRIVE_TOLERANCE) {
       yDrive = (pDistance * yError) + Constants.LIMELIGHT_MIN_MOVE;
     } else if (yError < -Constants.LIMELIGHT_Y_DRIVE_TOLERANCE) {
@@ -114,7 +114,7 @@ public class LimelightTargetDeploy extends CommandBase {
     } else {
       yDrive = 0;
     }
-    return yDrive;
+    return yDrive * -1;
   }
 
 }
