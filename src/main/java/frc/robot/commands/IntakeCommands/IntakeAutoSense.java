@@ -44,11 +44,11 @@ public class IntakeAutoSense extends CommandBase {
     // Set our debounce to look for a rising spike for a period of time
     debounce = new Debouncer(Constants.INTAKE_DEBOUNCE_SECONDS, Debouncer.DebounceType.kRising);
     //  Set up our constants based on what we are trying to pick up
-    if (mode == "CONE"){
+    if (mode == "CONE"){  //Intaking up a CONE
       stallCurrent = Constants.INTAKE_CURRENT_WITH_CONE;
       speed = Constants.INTAKE_CONE_SPEED;
     }
-    else{
+    else{  //  Intaking up a CUBE
       stallCurrent = Constants.INTAKE_CURRENT_WITH_CUBE;
       speed = Constants.INTAKE_CUBE_SPEED;
     }
@@ -72,7 +72,7 @@ public class IntakeAutoSense extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //  Stop the Motor
+    //  Stop the Motor when the command ends
     intake.stopMotor();
   }
 
