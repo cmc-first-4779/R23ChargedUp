@@ -44,6 +44,7 @@ import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
 import frc.robot.commands.DriveTrainCommands.AutoBalance;
+import frc.robot.commands.DriveTrainCommands.AutoBalanceFaster;
 import frc.robot.commands.DriveTrainCommands.sturdyBaseCommand;
 import frc.robot.commands.ExtenderCommands.ExtendExtender;
 import frc.robot.commands.ExtenderCommands.RetractExtender;
@@ -179,7 +180,7 @@ public class RobotContainer {
     driverStick.L3().whileTrue(new ShoulderRaise(shoulder));
     driverStick.R3().whileTrue(new ShoulderLower(shoulder));
     //driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.touchpad().whileTrue(new AutoBalance(driveTrain));
+    driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
 
     // OperStick Buttons
