@@ -44,13 +44,12 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "Wait",
           "Eject Cone",
           "Safe Retract"
         ],
         "executionBehavior": "sequential",
-        "waitBehavior": "after",
-        "waitTime": 0.4
+        "waitBehavior": "before",
+        "waitTime": 0.5
       }
     },
     {
@@ -76,7 +75,7 @@
           "Cube Pickup",
           "Pickup Cube"
         ],
-        "executionBehavior": "sequential",
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -90,7 +89,10 @@
         "x": 6.847026874103002,
         "y": 0.9451232096625461
       },
-      "nextControl": null,
+      "nextControl": {
+        "x": 7.2929731258969985,
+        "y": 1.0148767903374538
+      },
       "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
@@ -104,7 +106,42 @@
         "waitBehavior": "none",
         "waitTime": 0
       }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.24,
+        "y": 1.25
+      },
+      "prevControl": {
+        "x": 1.1833084802007023,
+        "y": 1.243818630348435
+      },
+      "nextControl": null,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 3.5,
+      "names": [
+        "Cube High"
+      ]
+    },
+    {
+      "position": 3.163636363636358,
+      "names": [
+        "Safe Retract"
+      ]
+    }
+  ]
 }
