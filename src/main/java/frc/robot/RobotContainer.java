@@ -248,21 +248,25 @@ public class RobotContainer {
     // pathPlannerEventMap.put("intakeDown", new PrintCommand("Event 2"));
     pathPlannerEventMap.put("Cone High", new SetToPositionPCG("HIGH_CONE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cube High", new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cone Mid", new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cube Mid", new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cone Low", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cube Low", new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cone Pickup", new AutoSafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cube Pickup", new AutoSafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cone Mid", new SetToPositionPCG("MID_CONE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Mid", new SetToPositionPCG("MID_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cone Low", new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Low", new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist));
+    //pathPlannerEventMap.put("Cone Pickup", new AutoSafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
+    //pathPlannerEventMap.put("Cube Pickup", new AutoSafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cone Pickup", new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
     pathPlannerEventMap.put("Eject Cone", new AutoIntakeSetSpeed(intake, "EJECT_CONE"));
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
     pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
     pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
     pathPlannerEventMap.put("Wait", new WaitCommand(2));
-    pathPlannerEventMap.put("Auto Balance", new AutoBalance(driveTrain));
+    pathPlannerEventMap.put("Auto Balance", new AutoBalanceFaster(driveTrain));
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
     pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));
+    pathPlannerEventMap.put("LL Cube Deploy", new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
+    pathPlannerEventMap.put("LL Cone Deploy", new LimelightTargetDeploy(driveTrain, limelight, "CONE"));
     autoBuilder = new SwerveAutoBuilder(
 
         driveTrain::getPose, // Pose2d supplier
