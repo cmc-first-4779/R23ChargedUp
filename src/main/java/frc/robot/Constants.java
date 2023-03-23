@@ -106,8 +106,8 @@ public final class Constants {
   public static final double INTAKE_CUBE_AUTON_TIMER = 0.50; // Timer for Intake Cube in Auton
   public static final double EJECT_CONE_AUTON_TIMER = 0.50;
   public static final double EJECT_CUBE_AUTON_TIMER = 0.50;
-  public static final double INTAKE_CURRENT_WO_LOAD = 4.0;  //dummy value
-  public static final double INTAKE_CURRENT_WITH_LOAD = 8.0; //dummy value
+  public static final double INTAKE_CURRENT_WO_LOAD = 4.0; // dummy value
+  public static final double INTAKE_CURRENT_WITH_LOAD = 8.0; // dummy value
 
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
@@ -131,7 +131,7 @@ public final class Constants {
                                                             // position of xx is one full rotation of output shaft. Only
                                                             // need to go about 25%
   public static final double EXTENDER_MIN_POSTION = -0; // Min forward rotation. Assuming we are starting in our
-                                                            // minimal position of 0.
+                                                        // minimal position of 0.
   public static final double EXTENDER_MOVEMENT_INCREMENT = 2000;
   public static final int EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
 
@@ -153,20 +153,21 @@ public final class Constants {
   public static final double SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
   public static final double SHOULDER_NEUTRAL_DEADBAND_PERCENT = 0.04; // 0.04 is the default
   public static final double SHOULDER_ALLOWED_ERROR = 250;
-  public static final double SHOULDER_DEFAULT_kP = 0.093658;  // was 0.05
+  public static final double SHOULDER_DEFAULT_kP = 0.093658; // was 0.05
   public static final double SHOULDER_DEFAULT_kI = 0.00;
   public static final double SHOULDER_DEFAULT_kD = 0.00;
-  public static final double SHOULDER_DEFAULT_kF = 0.056854;  //was 0.00;
-  public static final double SHOULDER_DEFAULT_kP_slot1 = 0.093658;  //was 0.03
+  public static final double SHOULDER_DEFAULT_kF = 0.056854; // was 0.00;
+  public static final double SHOULDER_DEFAULT_kP_slot1 = 0.093658; // was 0.03
   public static final double SHOULDER_DEFAULT_kI_slot1 = 0.00;
   public static final double SHOULDER_DEFAULT_kD_slot1 = 0.00;
-  public static final double SHOULDER_DEFAULT_kF_slot1 = 0.056854;  //was 0.00;
+  public static final double SHOULDER_DEFAULT_kF_slot1 = 0.056854; // was 0.00;
   public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
   public static final double SHOULDER_HORIZONTAL_POS = 85000;
   public static final double SHOULDER_POSITION_MIN = 0; // Min position of the arm
   public static final double SHOULDER_POSITION_MAX = 92500; // Max position of the arm
   public static final double SHOULDER_MOVEMENT_INCREMENT = 2500;
-  public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 0.769; // Absolute position of encoder when arm is at 0 between 0.0 and 1;
+  public static final double SHOULDER_ABSOLUTE_ENCODER_OFFSET = 0.769; // Absolute position of encoder when arm is at 0
+                                                                       // between 0.0 and 1;
 
   // Wrist Constants
   public static final int WRIST_PID_SLOT = 0;
@@ -189,5 +190,12 @@ public final class Constants {
   public static final double WRIST_MOVEMENT_INCREMENT = 0.5; // Amount to move wrist postion at one time.
   public static final int WRIST_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
 
+  // LIMELIGHT Constants
+  // Tolerance of Degrees we can be off on the x-axis
+  public static final double LIMELIGHT_X_DRIVE_TOLERANCE = 0.10;
+  // Tolerance of Degrees we can be off on the y-axis
+  public static final double LIMELIGHT_Y_DRIVE_TOLERANCE = 0.30;
+  //  Minimum throttle it takes to move the robot.
+  public static final double LIMELIGHT_MIN_MOVE = 0.20;
 
 }
