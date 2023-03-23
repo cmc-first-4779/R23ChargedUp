@@ -106,8 +106,11 @@ public final class Constants {
   public static final double INTAKE_CUBE_AUTON_TIMER = 0.50; // Timer for Intake Cube in Auton
   public static final double EJECT_CONE_AUTON_TIMER = 0.50;
   public static final double EJECT_CUBE_AUTON_TIMER = 0.50;
-  public static final double INTAKE_CURRENT_WO_LOAD = 4.0; // dummy value
-  public static final double INTAKE_CURRENT_WITH_LOAD = 8.0; // dummy value
+  public static final double INTAKE_CURRENT_WO_LOAD = 4.0;  //dummy value
+  public static final double INTAKE_CURRENT_WITH_CUBE = 17.0; 
+  public static final double INTAKE_CURRENT_WITH_CONE = 20.0;
+  public static final double INTAKE_DEBOUNCE_SECONDS = 0.5; // period of time we look at the current
+  public static final int INTAKE_FILTER_TAPS = 50;  //  Number of samples of our current needed
 
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;

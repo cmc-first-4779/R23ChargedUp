@@ -7,8 +7,6 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.StaticConstants.HardwareMap;
@@ -30,8 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Intake Encoder Velocity", intakeMotor.getEncoder().getVelocity());
+
   }
 
   // This is a test line for training in Github
@@ -62,13 +59,18 @@ public class IntakeSubsystem extends SubsystemBase {
   //  Method to check the current of the intake motor.
   //  If it spikes above a specific value which the know is similar to the motor under load, we return a 
   //   "true" boolean 
-  public boolean isIntakeMotorUnderLoad() {
-    double current = intakeMotor.getOutputCurrent();
-    if (current >= Constants.INTAKE_CURRENT_WITH_LOAD) {
-      return true;
-    } else {
-      return false;
-    }
+  // public boolean isIntakeMotorUnderLoad() {
+  //   double current = intakeMotor.getOutputCurrent();
+  //   if (current >= Constants.INTAKE_CURRENT_WITH_LOAD) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  public double getCurrent(){
+    return intakeMotor.getOutputCurrent();
   }
+
 
 }
