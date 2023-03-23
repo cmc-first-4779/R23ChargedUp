@@ -269,7 +269,7 @@ public class RobotContainer {
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
     pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));
     pathPlannerEventMap.put("LL Cube Deploy", new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
-    pathPlannerEventMap.put("LL Cone Deploy", new LimelightTargetDeploy(driveTrain, limelight, "CONE"));
+    pathPlannerEventMap.put("LL Cone Deploy", new LimelightTargetDeploy(driveTrain, limelight, "AUTON_CONE"));
     autoBuilder = new SwerveAutoBuilder(
 
         driveTrain::getPose, // Pose2d supplier
