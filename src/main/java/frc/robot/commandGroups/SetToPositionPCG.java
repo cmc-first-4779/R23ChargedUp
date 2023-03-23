@@ -45,6 +45,11 @@ public class SetToPositionPCG extends ParallelCommandGroup {
     // "LOW CUBE", "LOW CONE", "GROUND", and "STOW"
     switch (position) {
       // Set the values for the Shoulder, Extender, and Wrist Positions to HIGH CUBE
+      case "AUTO_HIGH_CUBE":
+      shoulderPosition = PositionSetpoints.SHOULDER_POSITION_AUTO_HIGH_CUBE_NODE;
+      extenderPosition = PositionSetpoints.EXTENDER_POSITION_HIGH_CUBE_NODE;
+      wristPosition = PositionSetpoints.WRIST_POSITION_HIGH_CUBE_NODE;
+      break;
       case "HIGH_CUBE":
         shoulderPosition = PositionSetpoints.SHOULDER_POSITION_HIGH_CUBE_NODE;
         extenderPosition = PositionSetpoints.EXTENDER_POSITION_HIGH_CUBE_NODE;

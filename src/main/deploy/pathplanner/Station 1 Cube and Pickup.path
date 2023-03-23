@@ -47,7 +47,8 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "Cube Pickup"
+          "Cube Pickup",
+          "Pickup Cube"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -57,11 +58,11 @@
     {
       "anchorPoint": {
         "x": 7.07,
-        "y": 0.93
+        "y": 0.98
       },
       "prevControl": {
         "x": 6.655677150975871,
-        "y": 0.86517943321601
+        "y": 0.9151794332160099
       },
       "nextControl": null,
       "holonomicAngle": 0.01,

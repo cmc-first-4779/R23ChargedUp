@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.937970959275253,
-        "y": 0.5984357802048957
+        "x": 1.7713632570122286,
+        "y": 0.45807177328640375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9379709592752525,
-        "y": 0.5984357802048957
+        "x": 2.7713632570122275,
+        "y": 0.45807177328640375
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -17,9 +17,64 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Cone High",
+          "Cone High"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "after",
+        "waitTime": 0.03
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.7713632570122286,
+        "y": 0.46
+      },
+      "prevControl": {
+        "x": 2.0021815509781766,
+        "y": 0.4600000000000001
+      },
+      "nextControl": {
+        "x": 2.0021815509781766,
+        "y": 0.4600000000000001
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "Wait",
           "Eject Cone",
           "Safe Retract"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "after",
+        "waitTime": 0.4
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.75,
+        "y": 0.8
+      },
+      "prevControl": {
+        "x": 3.735249042446949,
+        "y": 0.8081799551882961
+      },
+      "nextControl": {
+        "x": 3.735249042446949,
+        "y": 0.8081799551882961
+      },
+      "holonomicAngle": 0.01,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "Cube Pickup",
+          "Pickup Cube"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -28,55 +83,24 @@
     },
     {
       "anchorPoint": {
-        "x": 6.355058642067472,
-        "y": 0.6304169973898998
+        "x": 7.07,
+        "y": 0.98
       },
       "prevControl": {
-        "x": 6.485440944144762,
-        "y": 0.6871049548148083
-      },
-      "nextControl": {
-        "x": 6.179387573427394,
-        "y": 0.5540382718942132
-      },
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
-          "Cone Pickup",
-          "Pickup Cone",
-          "Safe Retract"
-        ],
-        "executionBehavior": "sequential",
-        "waitBehavior": "none",
-        "waitTime": 2.0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 1.94,
-        "y": 0.6
-      },
-      "prevControl": {
-        "x": 2.4451692127193754,
-        "y": 0.6151100064104899
+        "x": 6.847026874103002,
+        "y": 0.9451232096625461
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Cone Mid",
-          "Eject Cone",
-          "Safe Retract"
+          "Pickup Cube"
         ],
-        "executionBehavior": "sequential",
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }

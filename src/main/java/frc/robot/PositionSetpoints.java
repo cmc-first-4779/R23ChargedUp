@@ -22,7 +22,7 @@ public class PositionSetpoints {
                                                                          // the arm
 
     // STOW Position for each Subsystem
-    public static final double SHOULDER_POSITION_STOW = 5000;  //was 0.  Moving to 5000 to prevent damage
+    public static final double SHOULDER_POSITION_STOW = 0;  //was 0.  Moving to 5000 to prevent damage
     public static final double EXTENDER_POSITION_STOW = 0;
     public static final double WRIST_POSITION_STOW = 0;
 
@@ -35,7 +35,7 @@ public class PositionSetpoints {
     // PICKUP_CUBE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CUBE = 25087;
     public static final double EXTENDER_POSITION_PICKUP_CUBE = 39380;
-    public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 39380;
+    public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 37380;
     public static final double WRIST_POSITION_PICKUP_CUBE = 24.523; // Old Value: 42.47;
 
     // Position for each LOW_CONE_NODE subsystem
@@ -65,6 +65,7 @@ public class PositionSetpoints {
 
     // HIGH_CUBE_NODE Position for each subsystem
     public static final double SHOULDER_POSITION_HIGH_CUBE_NODE = 80000;
+    public static final double SHOULDER_POSITION_AUTO_HIGH_CUBE_NODE = 85000;
     public static final double EXTENDER_POSITION_HIGH_CUBE_NODE = 154480;
     public static final double WRIST_POSITION_HIGH_CUBE_NODE = 28.00; // Old Value: 35.00
 

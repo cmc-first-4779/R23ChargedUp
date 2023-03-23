@@ -226,15 +226,15 @@ public class RobotContainer {
         new PathConstraints(2, 2));
     List<PathPlannerTrajectory> Station_1_Cube_and_Pickuptraj = PathPlanner.loadPathGroup("Station 1 Cube and Pickup",
         new PathConstraints(2, 3));
-    List<PathPlannerTrajectory> Station_1_Drop_Cone_And_Pickuptraj = PathPlanner.loadPathGroup(
-        "Station 1 Drop Cone and Pickup",
+    List<PathPlannerTrajectory> Station_1_Cone_And_Pickuptraj = PathPlanner.loadPathGroup(
+        "Station 1 Cone and Pickup",
         new PathConstraints(2, 3));
     List<PathPlannerTrajectory> Station_3_Engage = PathPlanner.loadPathGroup("Station 3 Engage",
         new PathConstraints(2, 2));
 
     autoChooser.setDefaultOption("Station 2 Engage", Station_2_Engage);
     autoChooser.addOption("Station 1 Cube and Pickup", Station_1_Cube_and_Pickuptraj);
-    autoChooser.addOption("Station 1 Drop Cone And Pickup", Station_1_Drop_Cone_And_Pickuptraj);
+    autoChooser.addOption("Station 1 Cone And Pickup", Station_1_Cone_And_Pickuptraj);
     autoChooser.addOption("Station 3 Engage", Station_3_Engage);
   }
 
@@ -247,7 +247,7 @@ public class RobotContainer {
     // pathPlannerEventMap.put("marker1", new PrintCommand("Passed marker 1"));
     // pathPlannerEventMap.put("intakeDown", new PrintCommand("Event 2"));
     pathPlannerEventMap.put("Cone High", new SetToPositionPCG("HIGH_CONE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cube High", new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube High", new SetToPositionPCG("AUTO_HIGH_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cone Mid", new SetToPositionPCG("MID_CONE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cube Mid", new SetToPositionPCG("MID_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cone Low", new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
