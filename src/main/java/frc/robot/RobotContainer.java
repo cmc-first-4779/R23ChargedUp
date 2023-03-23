@@ -187,8 +187,8 @@ public class RobotContainer {
     // OperStick Buttons
     // operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     // operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
-    operStick.L1().onTrue(new IntakeAutoSense(intake, "CUBE"));
-    operStick.R1().onTrue(new IntakeAutoSense(intake, "CONE"));
+    operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
+    operStick.R1().whileTrue(new IntakeAutoSense(intake, "CONE"));
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
     operStick.share().onTrue(new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
     operStick.options().onTrue(new SetToPositionPCG("HIGH_CONE", shoulder, extender, wrist));
