@@ -44,6 +44,7 @@ import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
 import frc.robot.commands.DriveTrainCommands.AutoBalance;
+import frc.robot.commands.DriveTrainCommands.AutoBalanceFaster;
 import frc.robot.commands.DriveTrainCommands.sturdyBaseCommand;
 import frc.robot.commands.ExtenderCommands.ExtendExtender;
 import frc.robot.commands.ExtenderCommands.RetractExtender;
@@ -63,6 +64,7 @@ import frc.robot.commands.IntakeCommands.IntakeCubeDebounce;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
 import frc.robot.commands.LimelightCommands.LimelightSetLEDMode;
+import frc.robot.commands.LimelightCommands.LimelightTargetDeploy;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
 import frc.robot.commands.ShoulderCommands.ShoulderRaise;
 import frc.robot.commands.WristCommands.WristLower;
@@ -135,7 +137,7 @@ public class RobotContainer {
     // Default Command for the Intake is: STOP
     intake.setDefaultCommand(new IntakeStopCommand(intake));
     // Turning the LimeLight Off for Now.
-    limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
+    //limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
 
     bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_FOREST_PALETTE));
     // Configure the trigger bindings
@@ -169,7 +171,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // DriveStick Buttons
-    driverStick.L1().whileTrue(new WristRaise(wrist));
+    //driverStick.L1().whileTrue(new WristRaise(wrist));
+    driverStick.L1().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "CONE"));
     driverStick.R1().whileTrue(new WristLower(wrist));
     driverStick.R2().whileTrue(new ExtendExtender(extender));
     driverStick.L2().whileTrue(new RetractExtender(extender));
@@ -179,7 +182,7 @@ public class RobotContainer {
     driverStick.L3().whileTrue(new ShoulderRaise(shoulder));
     driverStick.R3().whileTrue(new ShoulderLower(shoulder));
     //driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.touchpad().whileTrue(new AutoBalance(driveTrain));
+    driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
 
     // OperStick Buttons

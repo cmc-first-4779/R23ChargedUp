@@ -94,7 +94,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getShoulderSubsystem().stopMotor();
     m_robotContainer.getExtenderSubsystem().stopMotor();
     m_robotContainer.getWristSubsystem().stopMotor();
-    m_robotContainer.getBlingSubsystem().setBlingPattern(BlingConstants.BLING_COLOR1_2_BLEND);
+    m_robotContainer.getBlingSubsystem().setBlingPattern(BlingConstants.BLING_SKY_BLUE);
   }
 
 
