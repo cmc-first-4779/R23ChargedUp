@@ -262,8 +262,8 @@ public class RobotContainer {
     pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
     pathPlannerEventMap.put("Eject Cone", new AutoIntakeSetSpeed(intake, "EJECT_CONE"));
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
-    pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
-    pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
+    pathPlannerEventMap.put("Pickup Cone", new IntakeAutoSense(intake, "INTAKE_CONE"));
+    pathPlannerEventMap.put("Pickup Cube", new IntakeAutoSense(intake, "INTAKE_CUBE"));
     pathPlannerEventMap.put("Wait", new WaitCommand(2));
     pathPlannerEventMap.put("Auto Balance", new AutoBalanceFaster(driveTrain));
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
