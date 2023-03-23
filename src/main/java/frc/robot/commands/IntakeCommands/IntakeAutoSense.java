@@ -64,8 +64,8 @@ public class IntakeAutoSense extends CommandBase {
     // Filter our Current to clean out the noisy signals.
     filteredCurrent = currentFilter.calculate(outputcurrent);
     //  Output our values to the SmartDashboard
-    SmartDashboard.putNumber("Intake Filtered Current", filteredCurrent);
-    SmartDashboard.putNumber("Intake Current", outputcurrent);
+    //SmartDashboard.putNumber("Intake Filtered Current", filteredCurrent);
+    //SmartDashboard.putNumber("Intake Current", outputcurrent);
     
   }
 
