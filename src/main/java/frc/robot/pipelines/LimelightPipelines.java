@@ -6,9 +6,8 @@ package frc.robot.pipelines;
 
 /** THIS CLASS CONTAINS THE DEFINITIONS OF ALL OF OUR LIMELIGHT PIEPLINES */
 public class LimelightPipelines {
-    public static final double LIMELIGHT_PIPELINE_CONE_DEPLOY = 0;
-    public static final double LIMELIGHT_PIPELINE_CUBE_DEPLOY = 1;
-    public static final double LIMELIGHT_PICKUP_CONE = 2;
-    public static final double LIMELIGHT_PICKUP_CUBE = 3;
+    public static final double LIMELIGHT_PIPELINE_AUTON_CONE_DEPLOY = 0;
+    public static final double LIMELIGHT_PIPELINE_TELEOP_CONE_DEPLOY = 1;
+    public static final double LIMELIGHT_PIPELINE_CUBE_DEPLOY = 2;
     public static final double LIMELIGHT_HUMAN_PLAYER_STATION = 4;
 }

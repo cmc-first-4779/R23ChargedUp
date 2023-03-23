@@ -41,9 +41,13 @@ public class LimelightTargetDeploy extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (mode == "CONE"){
+    if (mode == "TELEOP_CONE"){
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
-      limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_CONE_DEPLOY);
+      limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_TELEOP_CONE_DEPLOY);
+    }
+    else if (mode == "AUTON_CONE"){
+      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
+      limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_CUBE_DEPLOY);
     }
     else if (mode == "CUBE"){
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
