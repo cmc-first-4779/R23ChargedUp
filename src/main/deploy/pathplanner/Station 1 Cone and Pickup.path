@@ -20,7 +20,7 @@
           "Cone High"
         ],
         "executionBehavior": "parallel",
-        "waitBehavior": "after",
+        "waitBehavior": "none",
         "waitTime": 0.03
       }
     },
@@ -45,11 +45,12 @@
       "stopEvent": {
         "names": [
           "Eject Cone",
-          "Safe Retract"
+          "Safe Retract",
+          "Wait"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "before",
-        "waitTime": 0.5
+        "waitTime": 0.75
       }
     },
     {
@@ -72,8 +73,7 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "Cube Pickup",
-          "Pickup Cube"
+          "Cube Pickup"
         ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
@@ -83,15 +83,15 @@
     {
       "anchorPoint": {
         "x": 7.07,
-        "y": 0.98
+        "y": 1.13
       },
       "prevControl": {
         "x": 6.847026874103002,
-        "y": 0.9451232096625461
+        "y": 1.095123209662546
       },
       "nextControl": {
         "x": 7.2929731258969985,
-        "y": 1.0148767903374538
+        "y": 1.1648767903374537
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -110,11 +110,11 @@
     {
       "anchorPoint": {
         "x": 1.77,
-        "y": 1.25
+        "y": 1.71
       },
       "prevControl": {
         "x": 1.7133084802007024,
-        "y": 1.243818630348435
+        "y": 1.703818630348435
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -124,8 +124,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "LL Cube Deploy",
-          "Cube High"
+          "Eject Cube"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "before",
@@ -144,6 +143,12 @@
       "position": 3.163636363636358,
       "names": [
         "Safe Retract"
+      ]
+    },
+    {
+      "position": 2.9381818181817687,
+      "names": [
+        "Pickup Cube"
       ]
     }
   ]

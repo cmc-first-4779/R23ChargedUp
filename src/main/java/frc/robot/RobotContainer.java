@@ -171,8 +171,8 @@ public class RobotContainer {
   private void configureBindings() {
     // DriveStick Buttons
     //driverStick.L1().whileTrue(new WristRaise(wrist));
-    driverStick.L1().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "CONE"));
-    driverStick.R1().whileTrue(new WristLower(wrist));
+    driverStick.L1().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
+    // driverStick.R1().whileTrue(new WristLower(wrist));
     driverStick.R2().whileTrue(new ExtendExtender(extender));
     driverStick.L2().whileTrue(new RetractExtender(extender));
     driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
@@ -262,9 +262,9 @@ public class RobotContainer {
     pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
     pathPlannerEventMap.put("Eject Cone", new AutoIntakeSetSpeed(intake, "EJECT_CONE"));
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
-    pathPlannerEventMap.put("Pickup Cone", new IntakeAutoSense(intake, "INTAKE_CONE"));
-    pathPlannerEventMap.put("Pickup Cube", new IntakeAutoSense(intake, "INTAKE_CUBE"));
-    pathPlannerEventMap.put("Wait", new WaitCommand(2));
+    pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake,"INTAKE_CONE"));
+    pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
+    pathPlannerEventMap.put("Wait", new WaitCommand(0.45));
     pathPlannerEventMap.put("Auto Balance", new AutoBalanceFaster(driveTrain));
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
     pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));
