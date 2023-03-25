@@ -58,7 +58,7 @@ public class WristSubsystem extends SubsystemBase {
     wristMotor.setInverted(true);
 
           // Address our Absolute encoder
-  absoluteEncoder=new DutyCycleEncoder(HardwareMap.DIO_PORT_SHOULDER_ABSOLUTE_ENCODER);
+  absoluteEncoder=new DutyCycleEncoder(HardwareMap.DIO_PORT_WRIST_ABSOLUTE_ENCODER);
 
   // Init our settings for our encoder
   initAbsoluteEncoder(absoluteEncoder);
