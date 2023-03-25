@@ -91,7 +91,7 @@ public class WristSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
     SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
-    SmartDashboard.putNumber("Wrist Absolute Distance", absoluteEncoder.getDistance());
+    SmartDashboard.putNumber("Wrist Absolute Position", absoluteEncoder.getAbsolutePosition());
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
