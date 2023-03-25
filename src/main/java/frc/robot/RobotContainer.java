@@ -232,13 +232,13 @@ public class RobotContainer {
     List<PathPlannerTrajectory> Station_1_Cone_And_Pickuptraj = PathPlanner.loadPathGroup(
         "Station 1 Cone and Pickup",
         new PathConstraints(2, 3));
-    List<PathPlannerTrajectory> Station_3_Engage = PathPlanner.loadPathGroup("Station 3 Engage",
+    List<PathPlannerTrajectory> Station_1_Cube_and_Engage = PathPlanner.loadPathGroup("Station 1 Cube and Engage",
         new PathConstraints(2, 2));
 
     autoChooser.setDefaultOption("Station 2 Engage", Station_2_Engage);
     autoChooser.addOption("Station 1 Cube and Pickup", Station_1_Cube_and_Pickuptraj);
     autoChooser.addOption("Station 1 Cone And Pickup", Station_1_Cone_And_Pickuptraj);
-    autoChooser.addOption("Station 3 Engage", Station_3_Engage);
+    autoChooser.addOption("Station 1 Cube and  Engage", Station_1_Cube_and_Engage);
   }
 
   /**
