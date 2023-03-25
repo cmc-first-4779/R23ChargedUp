@@ -10,6 +10,8 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,6 +28,12 @@ public class WristSubsystem extends SubsystemBase {
 
   // Reference to robot container to access other subsystems
   RobotContainer robotContainer;
+
+    // Absolute Position
+    double initialAbsolutePosition, referencePosition, relativeOffset;
+    DutyCycleEncoder absoluteEncoder;
+
+
 
   /**
    * Constructor for the wrist subsystem. Sets up the motor and pid controller
@@ -49,6 +57,16 @@ public class WristSubsystem extends SubsystemBase {
     m_pidController = wristMotor.getPIDController();
     wristMotor.setInverted(true);
 
+          // Address our Absolute encoder
+  absoluteEncoder=new DutyCycleEncoder(HardwareMap.DIO_PORT_SHOULDER_ABSOLUTE_ENCODER);
+
+  // Init our settings for our encoder
+  initAbsoluteEncoder(absoluteEncoder);
+
+    // Get the absolute position of the shoulder at RobotInit
+    initialAbsolutePosition = absoluteEncoder.getAbsolutePosition();
+    referencePosition = initialAbsolutePosition; // Safe this also in another variable for later
+
     // Config our PID Values
     configPIDFValues(wristMotor, Constants.WRIST_kP, Constants.WRIST_kI, Constants.WRIST_kD,
         Constants.WRIST_kF, Constants.WRIST_kMinOutput, Constants.WRIST_kMaxOuput);
@@ -56,7 +74,7 @@ public class WristSubsystem extends SubsystemBase {
     configureSmartMotion(wristMotor, Constants.WRIST_SM_MAX_VEL, Constants.WRIST_SM_MIN_VEL,
         Constants.WRIST_SM_MAX_ACCEL, Constants.WRIST_SM_ALLOWED_ERR, Constants.WRIST_PID_SLOT);
 
-            // Add PID Fields to SmartDashboard
+    // Add PID Fields to SmartDashboard
     // SmartDashboard.putNumber("Position", 0);
     // SmartDashboard.putNumber("kF", Constants.WRIST_kF);
     // SmartDashboard.putNumber("kP", Constants.WRIST_kP);
@@ -72,8 +90,8 @@ public class WristSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    //SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
-    //SmartDashboard.putNumber("Wrist SetPoint", setPoint);
+    SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("Wrist Absolute Distance", absoluteEncoder.getDistance());
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
@@ -137,6 +155,7 @@ public class WristSubsystem extends SubsystemBase {
 
   /**
    * Set ths motor to move at the provided speed
+   * 
    * @param speed
    */
   public void moveWrist(double speed) {
@@ -276,14 +295,55 @@ public class WristSubsystem extends SubsystemBase {
     return false;
   }
 
-  //  Return the position of the wrist
-  public double getWristPosition(){
+  // Return the position of the wrist
+  public double getWristPosition() {
     return wristMotor.getEncoder().getPosition();
   }
 
-  //  Return the encoder
-  public RelativeEncoder getWristEncoder(){
+  // Return the encoder
+  public RelativeEncoder getWristEncoder() {
     return wristMotor.getEncoder();
   }
+
+    // Setup the Through Bore Encoder from REV's Specsheet:
+  // https://docs.revrobotics.com/through-bore-encoder/specifications
+  private void initAbsoluteEncoder(DutyCycleEncoder encoder) {
+    encoder.setDutyCycleRange(1.0 / 1024.0, 1023.0 / 1024.0); // PERIOD = 1025 for the Encoder
+    encoder.setDistancePerRotation(2048 * 192); // 2048 talonfx ticks * 192:1 Gear/Sprocket Reduction
+    encoder.setPositionOffset(Constants.SHOULDER_ABSOLUTE_ENCODER_OFFSET);
+  }
+
+    /**
+   * Gets the current position of the shoulder motors based on the readings of the
+   * Absolute encoder
+   * taking into account the original 0 location by having the Absolute encoder
+   * positionOffset set to
+   * the absolute position of the encoder when arm was at 0.
+   * 
+   * @return
+   */
+  public double getCurrentAbosoluteDistance() {
+    // Absolute ecoder is mounted inverted so negating the return value
+    return -absoluteEncoder.getDistance();
+  }
+
+    // Resets our Encoder to ZERO
+    public void resetEncoders(CANSparkMax sparkMax) {
+      // Check to see if absolute encoder is present and use it's position if so.
+      if (absoluteEncoder.isConnected()) {
+        // Get the current distance of the shoulder calculated based off of absolute encoder.
+        double currentMotorPositon = getCurrentAbosoluteDistance() * -1; // Negating to change phase
+  
+        // Check to make sure it's a reasonable number in case the encoder crossed over
+        // the 0 line i.e. is reading 0.99
+        if (currentMotorPositon < -100) {
+          System.out.println("Encoder was giving an excessively high negative distance so normalizing");
+          currentMotorPositon = currentMotorPositon + (2048 * 192);
+        }
+        sparkMax.getEncoder().setPosition(currentMotorPositon);
+      } else {
+        sparkMax.getEncoder().setPosition(0);
+      }
+    }
 
 }
