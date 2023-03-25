@@ -109,11 +109,11 @@
     },
     {
       "anchorPoint": {
-        "x": 1.24,
+        "x": 1.77,
         "y": 1.25
       },
       "prevControl": {
-        "x": 1.1833084802007023,
+        "x": 1.7133084802007024,
         "y": 1.243818630348435
       },
       "nextControl": null,
@@ -123,10 +123,13 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "names": [
+          "LL Cube Deploy",
+          "Cube High"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "before",
+        "waitTime": 0.4
       }
     }
   ],

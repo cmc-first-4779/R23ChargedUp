@@ -85,18 +85,18 @@
     },
     {
       "anchorPoint": {
-        "x": 6.723259762309,
-        "y": 0.9844524952207816
+        "x": 5.447489691971866,
+        "y": 2.2702679991826162
       },
       "prevControl": {
-        "x": 7.466621850536934,
-        "y": 1.0346796633442898
+        "x": 6.1908517801998,
+        "y": 2.3204951673061247
       },
       "nextControl": {
-        "x": 5.979897674081065,
-        "y": 0.9342253270972734
+        "x": 4.704127603743931,
+        "y": 2.2200408310591078
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": -90.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -112,21 +112,23 @@
     },
     {
       "anchorPoint": {
-        "x": 1.77,
-        "y": 0.5123171148597955
+        "x": 3.910538347392485,
+        "y": 2.3405860345555283
       },
       "prevControl": {
-        "x": 1.98597682293109,
-        "y": 0.693134920104429
+        "x": 4.1265151703235725,
+        "y": 2.521403839800162
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": -89.3097228021349,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "Auto Balance"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -135,10 +137,9 @@
   ],
   "markers": [
     {
-      "position": 3.55,
+      "position": 2.35,
       "names": [
-        "High Cone",
-        "LL Cone Deploy"
+        "Safe Retract"
       ]
     }
   ]

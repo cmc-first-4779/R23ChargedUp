@@ -47,7 +47,7 @@ public class LimelightTargetDeploy extends CommandBase {
     }
     else if (mode == "AUTON_CONE"){
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
-      limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_CUBE_DEPLOY);
+      limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_AUTON_CONE_DEPLOY);
     }
     else if (mode == "CUBE"){
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
