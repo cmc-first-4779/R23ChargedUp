@@ -178,7 +178,7 @@ public class RobotContainer {
     driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
-    driverStick.L3().whileTrue(new ShoulderRaise(shoulder));
+    driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.R3().whileTrue(new ShoulderLower(shoulder));
     //driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
