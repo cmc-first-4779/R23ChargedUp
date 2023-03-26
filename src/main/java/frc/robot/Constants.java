@@ -102,6 +102,7 @@ public final class Constants {
   public static final double INTAKE_CUBE_SPEED = 0.60;
   public static final double EJECT_CONE_SPEED = 0.70;
   public static final double EJECT_CUBE_SPEED = -0.50;
+  public static final double EJECT_CUBE_SPEED_AUTON1 = 0.75;
   public static final double INTAKE_CONE_AUTON_TIMER = 0.25; // Timer for Intake Cone in Auton
   public static final double INTAKE_CUBE_AUTON_TIMER = 3.00; // Timer for Intake Cube in Auton
   public static final double EJECT_CONE_AUTON_TIMER = 0.50;
@@ -201,5 +202,6 @@ public final class Constants {
   public static final double LIMELIGHT_Y_DRIVE_TOLERANCE = 0.30;
   //  Minimum throttle it takes to move the robot.
   public static final double LIMELIGHT_MIN_MOVE = 0.20;
+
 
 }

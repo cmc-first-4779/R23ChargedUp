@@ -234,11 +234,14 @@ public class RobotContainer {
         new PathConstraints(2, 3));
     List<PathPlannerTrajectory> Station_1_Cube_and_Engage = PathPlanner.loadPathGroup("Station 1 Cube and Engage",
         new PathConstraints(2, 2));
+    List<PathPlannerTrajectory> Station_3_Cone_and_Pickup = PathPlanner.loadPathGroup("Station 3 Cone and Pickup",
+        new PathConstraints(2, 2));
 
     autoChooser.setDefaultOption("Station 2 Engage", Station_2_Engage);
     autoChooser.addOption("Station 1 Cube and Pickup", Station_1_Cube_and_Pickuptraj);
     autoChooser.addOption("Station 1 Cone And Pickup", Station_1_Cone_And_Pickuptraj);
-    autoChooser.addOption("Station 1 Cube and  Engage", Station_1_Cube_and_Engage);
+    autoChooser.addOption("Station 1 Cube and Engage", Station_1_Cube_and_Engage);
+    autoChooser.addOption("Station 3 Cone and Pickup", Station_3_Cone_and_Pickup);
   }
 
   /**
@@ -258,7 +261,7 @@ public class RobotContainer {
     //pathPlannerEventMap.put("Cone Pickup", new AutoSafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
     //pathPlannerEventMap.put("Cube Pickup", new AutoSafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cone Pickup", new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("AUTO_PICKUP_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
     pathPlannerEventMap.put("Eject Cone", new AutoIntakeSetSpeed(intake, "EJECT_CONE"));
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));

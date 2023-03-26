@@ -46,10 +46,10 @@ public class SetToPositionPCG extends ParallelCommandGroup {
     switch (position) {
       // Set the values for the Shoulder, Extender, and Wrist Positions to HIGH CUBE
       case "AUTO_HIGH_CUBE":
-      shoulderPosition = PositionSetpoints.SHOULDER_POSITION_AUTO_HIGH_CUBE_NODE;
-      extenderPosition = PositionSetpoints.EXTENDER_POSITION_HIGH_CUBE_NODE;
-      wristPosition = PositionSetpoints.WRIST_POSITION_HIGH_CUBE_NODE;
-      break;
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_AUTO_HIGH_CUBE_NODE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_HIGH_CUBE_NODE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_HIGH_CUBE_NODE;
+        break;
       case "HIGH_CUBE":
         shoulderPosition = PositionSetpoints.SHOULDER_POSITION_HIGH_CUBE_NODE;
         extenderPosition = PositionSetpoints.EXTENDER_POSITION_HIGH_CUBE_NODE;
@@ -85,6 +85,13 @@ public class SetToPositionPCG extends ParallelCommandGroup {
         shoulderPosition = PositionSetpoints.SHOULDER_POSITION_LOW_CONE_NODE;
         extenderPosition = PositionSetpoints.EXTENDER_POSITION_LOW_CONE_NODE;
         wristPosition = PositionSetpoints.WRIST_POSITION_LOW_CONE_NODE;
+        break;
+      // Set the values for the Shoulder, Extender, and Wrist Positions to Pick a CUBE
+      // from the ground
+      case "AUTO_PICKUP_CUBE":
+        shoulderPosition = PositionSetpoints.SHOULDER_POSITION_PICKUP_CUBE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_AUTO_PICKUP_CUBE;
+        wristPosition = PositionSetpoints.WRIST_POSITION_PICKUP_CUBE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to Pick a CUBE
       // from the ground
