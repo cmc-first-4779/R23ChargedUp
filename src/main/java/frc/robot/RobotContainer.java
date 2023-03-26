@@ -264,7 +264,8 @@ public class RobotContainer {
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
     pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake,"INTAKE_CONE"));
     pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
-    pathPlannerEventMap.put("Wait", new WaitCommand(0.45));
+    pathPlannerEventMap.put("Wait Short", new WaitCommand(0.45));
+    pathPlannerEventMap.put("Wait Long", new WaitCommand(1));
     pathPlannerEventMap.put("Auto Balance", new AutoBalanceFaster(driveTrain));
     pathPlannerEventMap.put("Reset Gyro", new ResetGyro(driveTrain));
     pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));

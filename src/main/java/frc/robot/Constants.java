@@ -103,9 +103,9 @@ public final class Constants {
   public static final double EJECT_CONE_SPEED = 0.70;
   public static final double EJECT_CUBE_SPEED = -0.50;
   public static final double INTAKE_CONE_AUTON_TIMER = 0.25; // Timer for Intake Cone in Auton
-  public static final double INTAKE_CUBE_AUTON_TIMER = 0.50; // Timer for Intake Cube in Auton
+  public static final double INTAKE_CUBE_AUTON_TIMER = 3.00; // Timer for Intake Cube in Auton
   public static final double EJECT_CONE_AUTON_TIMER = 0.50;
-  public static final double EJECT_CUBE_AUTON_TIMER = 3.0;
+  public static final double EJECT_CUBE_AUTON_TIMER = 0.5;
   public static final double INTAKE_CURRENT_WO_LOAD = 4.0;  //dummy value
   public static final double INTAKE_CURRENT_WITH_CUBE = 17.0; 
   public static final double INTAKE_CURRENT_WITH_CONE = 20.0;
