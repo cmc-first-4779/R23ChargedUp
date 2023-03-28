@@ -41,6 +41,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.StaticConstants.BlingConstants;
 import frc.robot.StaticConstants.LimelightConstants;
 import frc.robot.commands.BlingCommands.BlingSetPattern;
+import frc.robot.commands.BlingCommands.ToggleBling;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
 import frc.robot.commands.DriveTrainCommands.AutoBalance;
@@ -136,9 +137,9 @@ public class RobotContainer {
     // Default Command for the Intake is: STOP
     intake.setDefaultCommand(new IntakeStopCommand(intake));
     // Turning the LimeLight Off for Now.
-    //limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
-
-    bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_FOREST_PALETTE));
+    limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
+    //  Set our Bling Default Pattern
+    bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     // Configure the trigger bindings
     configureBindings();
 
@@ -170,19 +171,20 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // DriveStick Buttons
-    //driverStick.L1().whileTrue(new WristRaise(wrist));
-    driverStick.L1().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
-    // driverStick.R1().whileTrue(new WristLower(wrist));
-    driverStick.R2().whileTrue(new ExtendExtender(extender));
-    driverStick.L2().whileTrue(new RetractExtender(extender));
-    driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
-    driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
-    driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
-    driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.R3().whileTrue(new ShoulderLower(shoulder));
-    //driverStick.L3().whileTrue(new sturdyBaseCommand(driveTrain));
+    driverStick.L1().whileTrue(new WristRaise(wrist));
+    driverStick.R1().whileTrue(new WristLower(wrist));
+    driverStick.L2().whileTrue(new ShoulderRaise(shoulder));
+    driverStick.R2().whileTrue(new ShoulderLower(shoulder));
+    driverStick.L3().whileTrue(new ExtendExtender(extender));
+    driverStick.R3().whileTrue(new RetractExtender(extender));
+    driverStick.options().whileTrue(new sturdyBaseCommand(driveTrain));
+    driverStick.share().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
+    driverStick.povUp().onTrue(new ToggleBling(bling));
+    driverStick.povDown().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "DHS"));
+    driverStick.povLeft().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
+    driverStick.povRight().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
-    driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
+
 
     // OperStick Buttons
     // operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
@@ -199,10 +201,7 @@ public class RobotContainer {
     operStick.R3().onTrue(new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
     operStick.L3().onTrue(new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
     operStick.L2().onTrue(new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist));
-    operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist)); // Schedule
-                                                                                       // `exampleMethodCommand` when
-                                                                                       // the Xbox controller's B button
-                                                                                       // is
+    operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist)); 
     operStick.povUp().onTrue(new SetToPositionPCG("DOUBLE_HPS", shoulder, extender, wrist));
   }
 
@@ -258,14 +257,16 @@ public class RobotContainer {
     pathPlannerEventMap.put("Cube Mid", new SetToPositionPCG("MID_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cone Low", new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cube Low", new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist));
-    //pathPlannerEventMap.put("Cone Pickup", new AutoSafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
-    //pathPlannerEventMap.put("Cube Pickup", new AutoSafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
+    // pathPlannerEventMap.put("Cone Pickup", new
+    // AutoSafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
+    // pathPlannerEventMap.put("Cube Pickup", new
+    // AutoSafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cone Pickup", new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("AUTO_PICKUP_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
     pathPlannerEventMap.put("Eject Cone", new AutoIntakeSetSpeed(intake, "EJECT_CONE"));
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
-    pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake,"INTAKE_CONE"));
+    pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
     pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
     pathPlannerEventMap.put("Wait Short", new WaitCommand(0.45));
     pathPlannerEventMap.put("Wait Long", new WaitCommand(1));
@@ -452,5 +453,6 @@ public class RobotContainer {
   public BlingSubsystem getBlingSubsystem() {
     return bling;
   }
+
 
 }

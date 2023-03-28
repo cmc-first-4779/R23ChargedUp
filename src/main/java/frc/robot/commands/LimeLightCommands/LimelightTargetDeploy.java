@@ -42,20 +42,24 @@ public class LimelightTargetDeploy extends CommandBase {
   @Override
   public void initialize() {
     if (mode == "TELEOP_CONE"){
-      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_TELEOP_CONE_DEPLOY);
+      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
+      limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
     else if (mode == "AUTON_CONE"){
-      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_AUTON_CONE_DEPLOY);
+      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
+      limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
     else if (mode == "CUBE"){
-      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_CUBE_DEPLOY);
+      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
+      limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
-    else{
-      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
+    else{  //  Double Human Player Station
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_HUMAN_PLAYER_STATION);
+      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
+      limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
     //Set our counter to zero
     counter = 0;
@@ -88,6 +92,10 @@ public class LimelightTargetDeploy extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //  Set our LED Mode to OFF
+    limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
+    //  Set our Camera Mode to driver
+    limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_DRIVER);
   }
 
   // Returns true when the command should end.
@@ -97,6 +105,9 @@ public class LimelightTargetDeploy extends CommandBase {
     return counter >= maxCycles;
   }
 
+  //  Use our TY Error to control the x-position of the swerve.
+  //    Having the x and y swapped here is not an error..  
+  //    The Limelight's axis is different from field orientation for swerve
   private double calculateXDrive() {
     double xError = limelight.getTY();
     if (xError > Constants.LIMELIGHT_X_DRIVE_TOLERANCE) {
@@ -109,6 +120,9 @@ public class LimelightTargetDeploy extends CommandBase {
     return xDrive ;
   }
 
+    //  Use our TX Error to control the y-position of the swerve.
+  //    Having the x and y swapped here is not an error..  
+  //    The Limelight's axis is different from field orientation for swerve
   private double calculateYDrive() {
     double yError = limelight.getTX();
     if (yError > Constants.LIMELIGHT_Y_DRIVE_TOLERANCE) {

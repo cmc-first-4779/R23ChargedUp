@@ -39,4 +39,9 @@ public class BlingSubsystem extends SubsystemBase {
     blingController.set(pattern);
     blingController2.set(pattern);
   }
+
+  //  Return the current Bling pattern
+  public double getBlingPattern(){
+    return blingController.get();
+  }
 }
