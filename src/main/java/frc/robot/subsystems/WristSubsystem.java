@@ -309,8 +309,8 @@ public class WristSubsystem extends SubsystemBase {
   // https://docs.revrobotics.com/through-bore-encoder/specifications
   private void initAbsoluteEncoder(DutyCycleEncoder encoder) {
     encoder.setDutyCycleRange(1.0 / 1024.0, 1023.0 / 1024.0); // PERIOD = 1025 for the Encoder
-    encoder.setDistancePerRotation(2048 * 192); // 2048 talonfx ticks * 192:1 Gear/Sprocket Reduction
-    encoder.setPositionOffset(Constants.SHOULDER_ABSOLUTE_ENCODER_OFFSET);
+    encoder.setDistancePerRotation(125); // 125 Gear reduction ration
+    encoder.setPositionOffset(Constants.WRIST_ABSOLUTE_ENCODER_OFFSET);
   }
 
     /**
