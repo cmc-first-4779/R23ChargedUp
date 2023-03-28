@@ -195,4 +195,11 @@ public final class Constants {
 public static final double WRIST_ABSOLUTE_ENCODER_OFFSET = 0.3079;
 
 
+ // LIMELIGHT Constants
+  // Tolerance of Degrees we can be off on the x-axis
+  public static final double LIMELIGHT_X_DRIVE_TOLERANCE = 0.10;
+  // Tolerance of Degrees we can be off on the y-axis
+  public static final double LIMELIGHT_Y_DRIVE_TOLERANCE = 0.30;
+  //  Minimum throttle it takes to move the robot.
+  public static final double LIMELIGHT_MIN_MOVE = 0.20;
 }
