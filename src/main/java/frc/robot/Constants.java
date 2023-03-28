@@ -37,7 +37,7 @@ public final class Constants {
    *
    * Should be measured from center to center.
    */
-  public static final double DRIVETRAIN_THROTTLE = 0.9; // Drivetrain throttle
+  public static final double DRIVETRAIN_THROTTLE = 1.0; // Drivetrain throttle
   public static final double PIGEON_DEADBAND_GOING_UP = .5;
   public static final double PIGEON_DEADBAND_GOING_DOWN = -.5;
   public static final double DRIVETRAIN_WHEELBASE_METERS = 0.6096; // DONE Measure and set wheelbase
@@ -95,19 +95,23 @@ public final class Constants {
   // Deadzone for auto balancing
   public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_Y = 7.0;
   public static final double DRIVETRAIN_AUTOBALANCE_DEADZONE_X = 7.0;
-  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 1.75;
+  public static final double DRIVETRAIN_AUTOBALANCE_THROTTLE = 1.85;  // Old:  1.75;
 
   // Intake Constants
   public static final double INTAKE_CONE_SPEED = -0.80;
   public static final double INTAKE_CUBE_SPEED = 0.60;
   public static final double EJECT_CONE_SPEED = 0.70;
   public static final double EJECT_CUBE_SPEED = -0.50;
+  public static final double EJECT_CUBE_SPEED_AUTON1 = 0.75;
   public static final double INTAKE_CONE_AUTON_TIMER = 0.25; // Timer for Intake Cone in Auton
-  public static final double INTAKE_CUBE_AUTON_TIMER = 0.50; // Timer for Intake Cube in Auton
+  public static final double INTAKE_CUBE_AUTON_TIMER = 3.00; // Timer for Intake Cube in Auton
   public static final double EJECT_CONE_AUTON_TIMER = 0.50;
-  public static final double EJECT_CUBE_AUTON_TIMER = 0.50;
+  public static final double EJECT_CUBE_AUTON_TIMER = 0.5;
   public static final double INTAKE_CURRENT_WO_LOAD = 4.0;  //dummy value
-  public static final double INTAKE_CURRENT_WITH_LOAD = 8.0; //dummy value
+  public static final double INTAKE_CURRENT_WITH_CUBE = 17.0; 
+  public static final double INTAKE_CURRENT_WITH_CONE = 20.0;
+  public static final double INTAKE_DEBOUNCE_SECONDS = 0.5; // period of time we look at the current
+  public static final int INTAKE_FILTER_TAPS = 50;  //  Number of samples of our current needed
 
   // Extender Arm Constants
   public static final int EXTENDER_PID_SLOT = 0;
@@ -131,7 +135,7 @@ public final class Constants {
                                                             // position of xx is one full rotation of output shaft. Only
                                                             // need to go about 25%
   public static final double EXTENDER_MIN_POSTION = -0; // Min forward rotation. Assuming we are starting in our
-                                                            // minimal position of 0.
+                                                        // minimal position of 0.
   public static final double EXTENDER_MOVEMENT_INCREMENT = 2000;
   public static final int EXTENDER_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
 
@@ -141,8 +145,8 @@ public final class Constants {
   public static final int kTimeoutMs = 30;
 
   // Shoulder Constants
-  public static final double SHOULDER_MM_VELOCITY = 9830; // Dummy variable - Test this!
-  public static final double SHOULDER_MM_ACCELERATION = 9830; // Dummy variable - Test this!
+  public static final double SHOULDER_MM_VELOCITY = 16384; // Dummy variable - Test this!
+  public static final double SHOULDER_MM_ACCELERATION = 16384; // Dummy variable - Test this!
   public static final double SHOULDER_MM_VELOCITY_DOWN = 9830;
   public static final double SHOULDER_MM_ACCELERATION_DOWN = 9830;
 
@@ -153,14 +157,14 @@ public final class Constants {
   public static final double SHOULDER_CLOSED_LOOP_NEUTRAL_TO_FULL_SECS = .5; // Dummy variable - Test this!
   public static final double SHOULDER_NEUTRAL_DEADBAND_PERCENT = 0.04; // 0.04 is the default
   public static final double SHOULDER_ALLOWED_ERROR = 250;
-  public static final double SHOULDER_DEFAULT_kP = 0.093658;  // was 0.05
+  public static final double SHOULDER_DEFAULT_kP = 0.093658; // was 0.05
   public static final double SHOULDER_DEFAULT_kI = 0.00;
   public static final double SHOULDER_DEFAULT_kD = 0.00;
-  public static final double SHOULDER_DEFAULT_kF = 0.056854;  //was 0.00;
-  public static final double SHOULDER_DEFAULT_kP_slot1 = 0.093658;  //was 0.03
+  public static final double SHOULDER_DEFAULT_kF = 0.056854; // was 0.00;
+  public static final double SHOULDER_DEFAULT_kP_slot1 = 0.093658; // was 0.03
   public static final double SHOULDER_DEFAULT_kI_slot1 = 0.00;
   public static final double SHOULDER_DEFAULT_kD_slot1 = 0.00;
-  public static final double SHOULDER_DEFAULT_kF_slot1 = 0.056854;  //was 0.00;
+  public static final double SHOULDER_DEFAULT_kF_slot1 = 0.056854; // was 0.00;
   public static final double SHOULDER_MAX_GRAVITY_kF = 0.07;
   public static final double SHOULDER_HORIZONTAL_POS = 85000;
   public static final double SHOULDER_POSITION_MIN = 0; // Min position of the arm

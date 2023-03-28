@@ -103,10 +103,9 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Put the encoder value of the Master Motor to the Dashboard
     shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
     // shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
-    // SmartDashboard.putNumber("Shoulder Encoder Position",
-    // shoulderMotorMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Absolute Encoder Position", absoluteEncoder.getAbsolutePosition());
-    SmartDashboard.putNumber("Absolute Encoder Distance", absoluteEncoder.getDistance() * -1);
+    //SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("Absolute Encoder Position", absoluteEncoder.getAbsolutePosition());
+    //SmartDashboard.putNumber("Absolute Encoder Distance", absoluteEncoder.getDistance() * -1);
   }
 
   // Initialize a TalonFX Motor controller and set our default settings.

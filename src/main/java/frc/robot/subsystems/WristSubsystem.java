@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.PositionSetpoints;
 import frc.robot.RobotContainer;
 import frc.robot.StaticConstants.HardwareMap;
 import frc.robot.StaticConstants.MaxMotorAmpsConstants;
@@ -90,9 +91,8 @@ public class WristSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    //SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
-    SmartDashboard.putNumber("Wrist Absolute Position", absoluteEncoder.getAbsolutePosition());
-    SmartDashboard.putNumber("Wrist Absolute Distance", getCurrentAbosoluteDistance());
+    SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
+    //SmartDashboard.putNumber("Wrist SetPoint", setPoint);
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
@@ -195,7 +195,7 @@ public class WristSubsystem extends SubsystemBase {
       return true;
     } else {
       System.out
-          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION);
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION + " and " + Constants.WRIST_MAX_POSTION);
       return false;
     }
   }
@@ -276,7 +276,7 @@ public class WristSubsystem extends SubsystemBase {
       setPoint = newSetPoint;
       setWristPosition(setPoint);
     } else {
-      System.out.println("Setpoint at it's higher limit allready: " + setPoint);
+      System.out.println("Setpoint at it's higher limit already: " + setPoint);
     }
 
   }
@@ -289,11 +289,13 @@ public class WristSubsystem extends SubsystemBase {
   private boolean safeToExtendWrist() {
     // Need to check with arm to make sure it's in a good space.
     double shoulderPosition = robotContainer.getShoulderPosition();
-    if (shoulderPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
+    if (shoulderPosition > PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       System.out.println("Shoulder is at safe position to extend wrist");
       return true;
     }
+    else{
     return false;
+    }
   }
 
   // Return the position of the wrist
