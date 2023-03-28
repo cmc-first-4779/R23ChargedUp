@@ -150,7 +150,8 @@ public class ShoulderSubsystem extends SubsystemBase {
   public void resetEncoders(WPI_TalonFX talon) {
     // Check to see if absolute encoder is present and use it's position if so.
     if (absoluteEncoder.isConnected()) {
-      // Get the current distance of the shoulder calculated based off of absolute encoder.
+      // Get the current distance of the shoulder calculated based off of absolute
+      // encoder.
       double currentMotorPositon = getCurrentAbosoluteDistance() * -1; // Negating to change phase
 
       // Check to make sure it's a reasonable number in case the encoder crossed over
@@ -164,8 +165,6 @@ public class ShoulderSubsystem extends SubsystemBase {
       talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
     }
   }
-
-
 
   // Configure our PID Values
   public void configPIDFValues(WPI_TalonFX talon, double p, double i, double d, double f, int slot) {
@@ -451,4 +450,23 @@ public class ShoulderSubsystem extends SubsystemBase {
     return -absoluteEncoder.getDistance();
   }
 
+  // Resets our Encoder to ZERO
+  public void syncEncoders() {
+    // Check to see if absolute encoder is present and use it's position if so.
+    if (absoluteEncoder.isConnected()) {
+      // Get the current distance of the shoulder calculated based off of absolute
+      // encoder.
+      double currentMotorPositon = getCurrentAbosoluteDistance() * -1; // Negating to change phase
+
+      // Check to make sure it's a reasonable number in case the encoder crossed over
+      // the 0 line i.e. is reading 0.99
+      if (currentMotorPositon < -300000) {
+        System.out.println("Encoder was giving an excessively high negative distance so normalizing");
+        currentMotorPositon = currentMotorPositon + (2048 * 192);
+      }
+      shoulderMotorMaster.getSensorCollection().setIntegratedSensorPosition(currentMotorPositon, Constants.kTimeoutMs);
+    } else {
+      shoulderMotorMaster.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
+    }
+  }
 }

@@ -7,6 +7,7 @@ package frc.robot.commandGroups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.PositionSetpoints;
 import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
+import frc.robot.commands.MiscCommands.SyncEncoders;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.commands.WristCommands.WristSetPosition;
 import frc.robot.subsystems.ExtenderSubsystem;
@@ -121,6 +122,7 @@ public class SetToPositionPCG extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+        new SyncEncoders(shoulder, wrist),
         new ShoulderSetPosition(shoulder, shoulderPosition),
         new ExtenderSetPosition(extender, extenderPosition),
         new WristSetPosition(wrist, wristPosition));

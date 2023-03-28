@@ -90,8 +90,9 @@ public class WristSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
+    //SmartDashboard.putNumber("Wrist Position", wristMotor.getEncoder().getPosition());
     SmartDashboard.putNumber("Wrist Absolute Position", absoluteEncoder.getAbsolutePosition());
+    SmartDashboard.putNumber("Wrist Absolute Distance", getCurrentAbosoluteDistance());
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
@@ -323,27 +324,28 @@ public class WristSubsystem extends SubsystemBase {
    * @return
    */
   public double getCurrentAbosoluteDistance() {
-    // Absolute ecoder is mounted inverted so negating the return value
-    return -absoluteEncoder.getDistance();
+    return absoluteEncoder.getDistance() * -1;
   }
 
     // Resets our Encoder to ZERO
-    public void resetEncoders(CANSparkMax sparkMax) {
+    public void syncEncoders() {
       // Check to see if absolute encoder is present and use it's position if so.
       if (absoluteEncoder.isConnected()) {
         // Get the current distance of the shoulder calculated based off of absolute encoder.
-        double currentMotorPositon = getCurrentAbosoluteDistance() * -1; // Negating to change phase
+        double currentMotorPositon = getCurrentAbosoluteDistance();
   
         // Check to make sure it's a reasonable number in case the encoder crossed over
         // the 0 line i.e. is reading 0.99
         if (currentMotorPositon < -100) {
           System.out.println("Encoder was giving an excessively high negative distance so normalizing");
-          currentMotorPositon = currentMotorPositon + (2048 * 192);
+          currentMotorPositon = currentMotorPositon + (125);
         }
-        sparkMax.getEncoder().setPosition(currentMotorPositon);
+        wristMotor.getEncoder().setPosition(currentMotorPositon);
       } else {
-        sparkMax.getEncoder().setPosition(0);
+        wristMotor.getEncoder().setPosition(0);
       }
     }
+
+ 
 
 }
