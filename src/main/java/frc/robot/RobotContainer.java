@@ -63,6 +63,7 @@ import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeAutoSense;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.LimelightCommands.GetLocationOfAprilTag;
+import frc.robot.commands.LimelightCommands.LimelightInitForDriver;
 import frc.robot.commands.LimelightCommands.LimelightSetLEDMode;
 import frc.robot.commands.LimelightCommands.LimelightTargetDeploy;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
@@ -137,7 +138,7 @@ public class RobotContainer {
     // Default Command for the Intake is: STOP
     intake.setDefaultCommand(new IntakeStopCommand(intake));
     // Turning the LimeLight Off for Now.
-    limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
+    //limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
     //  Set our Bling Default Pattern
     bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     // Configure the trigger bindings
@@ -171,18 +172,22 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // DriveStick Buttons
-    driverStick.L1().whileTrue(new WristRaise(wrist));
-    driverStick.R1().whileTrue(new WristLower(wrist));
-    driverStick.L2().whileTrue(new ShoulderRaise(shoulder));
-    driverStick.R2().whileTrue(new ShoulderLower(shoulder));
-    driverStick.L3().whileTrue(new ExtendExtender(extender));
-    driverStick.R3().whileTrue(new RetractExtender(extender));
-    driverStick.options().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.share().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
-    driverStick.povUp().onTrue(new ToggleBling(bling));
-    driverStick.povDown().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "DHS"));
-    driverStick.povLeft().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
-    driverStick.povRight().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
+    // driverStick.L1().whileTrue(new WristRaise(wrist));
+    // driverStick.R1().whileTrue(new WristLower(wrist));
+    // driverStick.L2().whileTrue(new ShoulderRaise(shoulder));
+    // driverStick.R2().whileTrue(new ShoulderLower(shoulder));
+    // driverStick.L3().whileTrue(new ExtendExtender(extender));
+    // driverStick.R3().whileTrue(new RetractExtender(extender));
+    //driverStick.options().whileTrue(new sturdyBaseCommand(driveTrain));
+    driverStick.options().onTrue(new LimelightInitForDriver(limelight));
+    driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
+    driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
+    driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
+    driverStick.cross().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "DOUBLE_HPS"));
+    driverStick.square().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
+    driverStick.circle().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
+
+    //driverStick.povRight().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
 

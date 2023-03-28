@@ -20,7 +20,7 @@ public class LimelightTargetDeploy extends CommandBase {
   // Declare our drive variables
   double xDrive = 0;
   double yDrive = 0;
-  double pDistance = 0.05;
+  double pDistance = 1.0;
 
   // Putting a counter so we end
   int counter;
@@ -43,7 +43,7 @@ public class LimelightTargetDeploy extends CommandBase {
   public void initialize() {
     if (mode == "TELEOP_CONE"){
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_TELEOP_CONE_DEPLOY);
-      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
+      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
     else if (mode == "AUTON_CONE"){
@@ -83,6 +83,8 @@ public class LimelightTargetDeploy extends CommandBase {
     }
 
     // Drive forward using our xAxis and yAxis rates
+    System.out.println("Xdrive" + xDrive);
+    System.out.println("Ydrive" + yDrive*-1);
     drivetrain.drive(new ChassisSpeeds(xDrive, yDrive, 0));
     // Let the motor update
     Timer.delay(0.005);
@@ -93,9 +95,9 @@ public class LimelightTargetDeploy extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //  Set our LED Mode to OFF
-    limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
+    //limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
     //  Set our Camera Mode to driver
-    limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_DRIVER);
+    //limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_DRIVER);
   }
 
   // Returns true when the command should end.
@@ -117,6 +119,7 @@ public class LimelightTargetDeploy extends CommandBase {
     } else {
       xDrive = 0;
     }
+    
     return xDrive ;
   }
 
@@ -132,6 +135,7 @@ public class LimelightTargetDeploy extends CommandBase {
     } else {
       yDrive = 0;
     }
+    
     return yDrive * -1;
   }
 
