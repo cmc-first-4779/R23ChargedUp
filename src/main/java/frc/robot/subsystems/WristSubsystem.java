@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.PositionSetpoints;
 import frc.robot.RobotContainer;
 import frc.robot.StaticConstants.HardwareMap;
 import frc.robot.StaticConstants.MaxMotorAmpsConstants;
@@ -176,7 +177,7 @@ public class WristSubsystem extends SubsystemBase {
       return true;
     } else {
       System.out
-          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION);
+          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION + " and " + Constants.WRIST_MAX_POSTION);
       return false;
     }
   }
@@ -257,7 +258,7 @@ public class WristSubsystem extends SubsystemBase {
       setPoint = newSetPoint;
       setWristPosition(setPoint);
     } else {
-      System.out.println("Setpoint at it's higher limit allready: " + setPoint);
+      System.out.println("Setpoint at it's higher limit already: " + setPoint);
     }
 
   }
@@ -270,11 +271,13 @@ public class WristSubsystem extends SubsystemBase {
   private boolean safeToExtendWrist() {
     // Need to check with arm to make sure it's in a good space.
     double shoulderPosition = robotContainer.getShoulderPosition();
-    if (shoulderPosition > Constants.WRIST_MINIMUM_ARM_POSITION_TO_EXTEND) {
+    if (shoulderPosition > PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       System.out.println("Shoulder is at safe position to extend wrist");
       return true;
     }
+    else{
     return false;
+    }
   }
 
   //  Return the position of the wrist
