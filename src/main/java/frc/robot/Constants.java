@@ -188,6 +188,7 @@ public final class Constants {
                                                       // position of 0.
   public static final double WRIST_MOVEMENT_INCREMENT = 0.5; // Amount to move wrist postion at one time.
   public static final int WRIST_MINIMUM_ARM_POSITION_TO_EXTEND = 0;
+public static final double WRIST_ABSOLUTE_ENCODER_OFFSET = 0;
 
 
 }
