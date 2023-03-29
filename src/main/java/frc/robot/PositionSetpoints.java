@@ -15,7 +15,7 @@ public class PositionSetpoints {
     public static final double SHOULDER_POSITION_MIN = 0; // Min position of the arm
 
     // Max position for every subsystem
-    public static final double SHOULDER_POSITION_MAX = 92500; // Max position of the arm
+    public static final double SHOULDER_POSITION_MAX = 93500; // Max position of the arm
 
     // Position for the Shoulder to be set to move everything else
     public static final double SHOULDER_POSITION_SAFE_TO_EXTEND = 20000; // Safe distance where can extend the rest of

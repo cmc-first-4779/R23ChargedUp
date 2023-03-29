@@ -174,11 +174,11 @@ public class RobotContainer {
     // DriveStick Buttons
     driverStick.L1().whileTrue(new WristRaise(wrist));
     driverStick.R1().whileTrue(new WristLower(wrist));
-    // driverStick.L2().whileTrue(new ShoulderRaise(shoulder));
-    // driverStick.R2().whileTrue(new ShoulderLower(shoulder));
-    // driverStick.L3().whileTrue(new ExtendExtender(extender));
-    // driverStick.R3().whileTrue(new RetractExtender(extender));
-    //driverStick.options().whileTrue(new sturdyBaseCommand(driveTrain));
+    driverStick.L2().whileTrue(new ShoulderRaise(shoulder));
+    driverStick.R2().whileTrue(new ShoulderLower(shoulder));
+    driverStick.L3().whileTrue(new ExtendExtender(extender));
+    driverStick.R3().whileTrue(new RetractExtender(extender));
+    driverStick.options().whileTrue(new sturdyBaseCommand(driveTrain));
     driverStick.options().onTrue(new LimelightInitForDriver(limelight));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));

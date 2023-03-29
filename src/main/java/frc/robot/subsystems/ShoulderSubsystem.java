@@ -324,10 +324,6 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Lowering the wrist is moving it in a positive direction. Need to make sure we
     // are not higher than the minimal position
     double newSetPoint = setPoint + Constants.SHOULDER_MOVEMENT_INCREMENT;
-    if (!safeToMoveShoulder()) {
-      System.out.println("Shoulder is not at safe position to raise");
-      return;
-    }
     if (setPointIsValid(newSetPoint)) {
       setPoint = newSetPoint;
       setShoulderPosition(newSetPoint);
@@ -335,6 +331,7 @@ public class ShoulderSubsystem extends SubsystemBase {
       System.out.println("Shoulder Setpoint at it's higher limit allready: " + setPoint);
     }
   }
+
 
   /**
    * Will hold last known setpoint
@@ -358,19 +355,25 @@ public class ShoulderSubsystem extends SubsystemBase {
   /**
    * Checks to see if the provided setPoint within the legal bounds
    * 
-   * @param setPoint
+   * @param newSetPoint
    * @return true if it falls on or between min and max allowed values.
    */
-  private boolean setPointIsValid(double setPoint) {
-    if ((setPoint >= Constants.SHOULDER_POSITION_MIN) && (shoulderMotorMaster.get() >= 0)) {
-      System.out.println("Setpoint is valid: " + setPoint);
+  private boolean setPointIsValid(double newSetPoint) {
+    // System.out.println("New Setpoint: " + newSetPoint + " Current Setpoint: " + this.setPoint);
+    // If we are going down, we just have to make sure new setpoint is above our min
+    // position
+    if ((newSetPoint < this.setPoint) && (newSetPoint >= Constants.SHOULDER_POSITION_MIN)) {
+      // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
-    } else if ((setPoint <= Constants.SHOULDER_POSITION_MAX) && shoulderMotorMaster.get() <= 0) {
-      System.out.println("Setpoint is valid: " + setPoint);
+    }
+    // If we are going up, we just have to make sure new setpoint is below our max position
+    else if ((newSetPoint > this.setPoint) && (newSetPoint <= Constants.SHOULDER_POSITION_MAX)) {
+      // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
     } else {
       System.out
-          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.EXTENDER_MIN_POSTION);
+          .println("Given position " + newSetPoint + " is outside legal bounderies of " + Constants.SHOULDER_POSITION_MIN
+              + " and " + Constants.SHOULDER_POSITION_MAX);
       return false;
     }
   }
@@ -468,4 +471,6 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderMotorMaster.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
     }
   }
+
+
 }
