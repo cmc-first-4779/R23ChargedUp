@@ -136,8 +136,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    // Setup limelight apriltag settings
-    m_robotContainer.configureLimelightButtons(); 
+   
   }
 
   /** This function is called periodically during operator control. */

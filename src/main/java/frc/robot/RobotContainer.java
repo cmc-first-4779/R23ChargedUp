@@ -138,7 +138,7 @@ public class RobotContainer {
     // Default Command for the Intake is: STOP
     intake.setDefaultCommand(new IntakeStopCommand(intake));
     // Turning the LimeLight Off for Now.
-    limelight.setDefaultCommand(new LimelightInitForDriver(limelight));
+    //limelight.setDefaultCommand(new LimelightInitForDriver(limelight));
     //  Set our Bling Default Pattern
     bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_GLITTER_PALETTE));
     // Configure the trigger bindings
@@ -184,7 +184,8 @@ public class RobotContainer {
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
     driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
-    driverStick.cross().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "DOUBLE_HPS"));
+    driverStick.cross().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "DOUBLE_HPS_RIGHT"));
+    driverStick.triangle().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "DOUBLE_HPS_RIGHT"));
     driverStick.square().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
     driverStick.circle().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
 
@@ -415,20 +416,7 @@ public class RobotContainer {
     return DriverStation.getAlliance();
   }
 
-  // Set the buttons up eventually for setting our pipelines for the lImelight
-  public void configureLimelightButtons() {
-    if (getAlliance() == Alliance.Red) {
-      driverStick.triangle().onTrue(new GetLocationOfAprilTag(limelight, 1));
-      driverStick.circle().onTrue(new GetLocationOfAprilTag(limelight, 2));
-      driverStick.cross().onTrue(new GetLocationOfAprilTag(limelight, 3));
-      driverStick.square().onTrue(new GetLocationOfAprilTag(limelight, 4));
-    } else {
-      driverStick.triangle().onTrue(new GetLocationOfAprilTag(limelight, 5));
-      driverStick.circle().onTrue(new GetLocationOfAprilTag(limelight, 6));
-      driverStick.cross().onTrue(new GetLocationOfAprilTag(limelight, 7));
-      driverStick.square().onTrue(new GetLocationOfAprilTag(limelight, 0));
-    }
-  }
+
 
   // Returns the DriveTrain Subsystem to other classes
   public DrivetrainSubsystem getDrivetrainSubsystem() {

@@ -9,5 +9,6 @@ public class LimelightPipelines {
     public static final double LIMELIGHT_PIPELINE_AUTON_CONE_DEPLOY = 0;
     public static final double LIMELIGHT_PIPELINE_TELEOP_CONE_DEPLOY = 1;
     public static final double LIMELIGHT_PIPELINE_CUBE_DEPLOY = 2;
-    public static final double LIMELIGHT_HUMAN_PLAYER_STATION = 4;
+    public static final double LIMELIGHT_PIPELINE_DOUBLE_HPS_LEFT = 3;
+    public static final double LIMELIGHT_DOUBLE_HPS_RIGHT = 4;
 }

@@ -20,11 +20,11 @@ public class LimelightTargetDeploy extends CommandBase {
   // Declare our drive variables
   double xDrive = 0;
   double yDrive = 0;
-  double pDistance = 1.0;
+  double pDistance = 0.05;
 
   // Putting a counter so we end
   int counter;
-  int maxCycles = 45;
+  int maxCycles = 65;
 
   //  Which mode are we in
   String mode;
@@ -56,8 +56,13 @@ public class LimelightTargetDeploy extends CommandBase {
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
+    else if (mode == "DOUBLE_HPS_LEFT"){
+      limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_DOUBLE_HPS_LEFT);
+      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
+      limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
+    }
     else{  //  Double Human Player Station
-      limelight.setPipeline(LimelightPipelines.LIMELIGHT_HUMAN_PLAYER_STATION);
+      limelight.setPipeline(LimelightPipelines.LIMELIGHT_DOUBLE_HPS_RIGHT);
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
