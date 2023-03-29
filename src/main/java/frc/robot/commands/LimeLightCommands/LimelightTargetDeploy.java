@@ -24,9 +24,9 @@ public class LimelightTargetDeploy extends CommandBase {
 
   // Putting a counter so we end
   int counter;
-  int maxCycles = 85;
+  int maxCycles = 100;
 
-  //  Which mode are we in
+  // Which mode are we in
   String mode;
 
   /** Creates a new LimelightTargetConeDeploy. */
@@ -41,28 +41,25 @@ public class LimelightTargetDeploy extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (mode == "TELEOP_CONE"){
+    if (mode == "TELEOP_CONE") {
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_TELEOP_CONE_DEPLOY);
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
-  
-    }
-    else if (mode == "CUBE"){
+
+    } else if (mode == "CUBE") {
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_CUBE_DEPLOY);
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
-    }
-    else if (mode == "DOUBLE_HPS_LEFT"){
+    } else if (mode == "DOUBLE_HPS_LEFT") {
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_DOUBLE_HPS_LEFT);
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
-    }
-    else{  //  Double Human Player Station Right
+    } else { // Double Human Player Station Right
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_DOUBLE_HPS_RIGHT);
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
-    //Set our counter to zero
+    // Set our counter to zero
     counter = 0;
   }
 
@@ -73,44 +70,48 @@ public class LimelightTargetDeploy extends CommandBase {
     // Check to make sure we have a target on the Limelight
     boolean hasTarget = limelight.hasTarget();
 
-    //  If we have a target, calculate or drives on the x and y axes
+    // If we have a target, calculate or drives on the x and y axes
     if (hasTarget) {
-      //Calculate how much we have to move in the x direction
+      // Calculate how much we have to move in the x direction
       xDrive = calculateXDrive();
-      //Calculate how much we have to move in the y direction
+      // Calculate how much we have to move in the y direction
       yDrive = calculateYDrive();
-      // Increment our counter
-      counter++;
-    }
+    } 
+    // else {
+    //   xDrive = 0;
+    //   yDrive = 0;
+    // }
 
     // Drive forward using our xAxis and yAxis rates
-    System.out.println("Xdrive" + xDrive);
-    System.out.println("Ydrive" + yDrive*-1);
+    // System.out.println("Xdrive" + xDrive);
+    // System.out.println("Ydrive" + yDrive*-1);
     drivetrain.drive(new ChassisSpeeds(xDrive, yDrive, 0));
     // Let the motor update
     Timer.delay(0.005);
+    // Increment our counter
+    counter++;
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //  Set our LED Mode to OFF
-    limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
-    //  Set our Camera Mode to driver
-    limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_DRIVER);
+    // Set our LED Mode to OFF
+    // limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
+    // Set our Camera Mode to driver
+    // limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_DRIVER);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //  Finish until we have cycled through enough times
+    // Finish until we have cycled through enough times
     return counter >= maxCycles;
   }
 
-  //  Use our TY Error to control the x-position of the swerve.
-  //    Having the x and y swapped here is not an error..  
-  //    The Limelight's axis is different from field orientation for swerve
+  // Use our TY Error to control the x-position of the swerve.
+  // Having the x and y swapped here is not an error..
+  // The Limelight's axis is different from field orientation for swerve
   private double calculateXDrive() {
     double xError = limelight.getTY();
     if (xError > Constants.LIMELIGHT_X_DRIVE_TOLERANCE) {
@@ -120,13 +121,13 @@ public class LimelightTargetDeploy extends CommandBase {
     } else {
       xDrive = 0;
     }
-    
-    return xDrive ;
+
+    return xDrive;
   }
 
-    //  Use our TX Error to control the y-position of the swerve.
-  //    Having the x and y swapped here is not an error..  
-  //    The Limelight's axis is different from field orientation for swerve
+  // Use our TX Error to control the y-position of the swerve.
+  // Having the x and y swapped here is not an error..
+  // The Limelight's axis is different from field orientation for swerve
   private double calculateYDrive() {
     double yError = limelight.getTX();
     if (yError > Constants.LIMELIGHT_Y_DRIVE_TOLERANCE) {
@@ -136,7 +137,7 @@ public class LimelightTargetDeploy extends CommandBase {
     } else {
       yDrive = 0;
     }
-    
+
     return yDrive * -1;
   }
 

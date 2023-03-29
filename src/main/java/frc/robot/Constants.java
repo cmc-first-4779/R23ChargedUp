@@ -198,7 +198,7 @@ public final class Constants {
   // Tolerance of Degrees we can be off on the x-axis
   public static final double LIMELIGHT_X_DRIVE_TOLERANCE = 0.10;
   // Tolerance of Degrees we can be off on the y-axis
-  public static final double LIMELIGHT_Y_DRIVE_TOLERANCE = 0.30;
+  public static final double LIMELIGHT_Y_DRIVE_TOLERANCE = 0.10;
   //  Minimum throttle it takes to move the robot.
-  public static final double LIMELIGHT_MIN_MOVE = 0.20;
+  public static final double LIMELIGHT_MIN_MOVE = 0.18;
 }
