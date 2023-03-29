@@ -189,15 +189,20 @@ public class WristSubsystem extends SubsystemBase {
    */
   private boolean setPointIsValid(double newSetPoint) {
     // System.out.println("New Setpoint: " + newSetPoint + " Current Setpoint: " + this.setPoint);
-    if ((newSetPoint >= Constants.WRIST_MIN_POSTION) && (newSetPoint < this.setPoint)) {
+    // If we are going down, we just have to make sure new setpoint is above our min
+    // position
+    if ((newSetPoint < this.setPoint) && (newSetPoint >= Constants.WRIST_MIN_POSTION)) {
       // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
-    } else if ((newSetPoint <= Constants.WRIST_MAX_POSTION) && (newSetPoint > this.setPoint)) {
+    }
+    // If we are going up, we just have to make sure new setpoint is below our max position
+    else if ((newSetPoint > this.setPoint) && (newSetPoint <= Constants.WRIST_MAX_POSTION)) {
       // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
     } else {
       System.out
-          .println("Given position " + newSetPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION + " and " + Constants.WRIST_MAX_POSTION);
+          .println("Given position " + newSetPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION
+              + " and " + Constants.WRIST_MAX_POSTION);
       return false;
     }
   }
