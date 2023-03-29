@@ -140,7 +140,7 @@ public class RobotContainer {
     // Turning the LimeLight Off for Now.
     limelight.setDefaultCommand(new LimelightInitForDriver(limelight));
     //  Set our Bling Default Pattern
-    bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
+    bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_GLITTER_PALETTE));
     // Configure the trigger bindings
     configureBindings();
 
