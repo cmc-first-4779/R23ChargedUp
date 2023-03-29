@@ -28,13 +28,13 @@ public class PositionSetpoints {
 
     // PICKUP_CONE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CONE = 25412;
-    public static final double EXTENDER_POSITION_PICKUP_CONE = 54373;
+    public static final double EXTENDER_POSITION_PICKUP_CONE = 51373;
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 54373;
-    public static final double WRIST_POSITION_PICKUP_CONE = 22.25; // Old value: 42.75;
+    public static final double WRIST_POSITION_PICKUP_CONE = 20.25; // Old value: 42.75;
 
     // PICKUP_CUBE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CUBE = 25087;
-    public static final double EXTENDER_POSITION_PICKUP_CUBE = 39380;  //39380
+    public static final double EXTENDER_POSITION_PICKUP_CUBE = 37380;  //39380
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 47680;
     public static final double WRIST_POSITION_PICKUP_CUBE = 25.523; // Old Value: 42.47;
 
@@ -75,8 +75,8 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = .5; // Old Value: 8.5;
 
     // Double HUMAN PLAYER STATION (HPS)
-    public static final double SHOULDER_POSITION_DOUBLE_HPS = 87500;
+    public static final double SHOULDER_POSITION_DOUBLE_HPS = 89000;
     public static final double EXTENDER_POSITION_DOUBLE_HPS = 4088;
-    public static final double WRIST_POSITION_DOUBLE_HPS = 37.50; 
+    public static final double WRIST_POSITION_DOUBLE_HPS = 34.75; 
 
 }
