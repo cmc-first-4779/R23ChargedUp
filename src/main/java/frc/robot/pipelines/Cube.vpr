@@ -60,7 +60,7 @@ multigroup_max:7
 multigroup_min:1
 multigroup_rejector:0
 pipeline_led_enabled:1
-pipeline_led_power:0
+pipeline_led_power:20
 pipeline_res:0
 pipeline_type:3
 red_balance:1200

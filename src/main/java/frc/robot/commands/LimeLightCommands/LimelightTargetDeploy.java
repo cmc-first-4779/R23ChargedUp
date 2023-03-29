@@ -24,7 +24,7 @@ public class LimelightTargetDeploy extends CommandBase {
 
   // Putting a counter so we end
   int counter;
-  int maxCycles = 65;
+  int maxCycles = 85;
 
   //  Which mode are we in
   String mode;
@@ -45,11 +45,7 @@ public class LimelightTargetDeploy extends CommandBase {
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_TELEOP_CONE_DEPLOY);
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_ON);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
-    }
-    else if (mode == "AUTON_CONE"){
-      limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_AUTON_CONE_DEPLOY);
-      limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
-      limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
+  
     }
     else if (mode == "CUBE"){
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_PIPELINE_CUBE_DEPLOY);
@@ -61,7 +57,7 @@ public class LimelightTargetDeploy extends CommandBase {
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
     }
-    else{  //  Double Human Player Station
+    else{  //  Double Human Player Station Right
       limelight.setPipeline(LimelightPipelines.LIMELIGHT_DOUBLE_HPS_RIGHT);
       limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_PIPELINE_DEFAULT);
       limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_VISION);
@@ -100,9 +96,9 @@ public class LimelightTargetDeploy extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //  Set our LED Mode to OFF
-    //limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
+    limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
     //  Set our Camera Mode to driver
-    //limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_DRIVER);
+    limelight.setCameraMode(LimelightConstants.LIMELIGHT_CAMMODE_DRIVER);
   }
 
   // Returns true when the command should end.
