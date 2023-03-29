@@ -170,32 +170,34 @@ public class WristSubsystem extends SubsystemBase {
   /**
    * Uses SmartMotion to set the position of the wrist to the given position
    * 
-   * @param setpoint the desired position
+   * @param newSetPoint the desired position
    */
-  public void setWristPosition(double setpoint) {
+  public void setWristPosition(double newSetPoint) {
     // Check to make sure give position is within our allowed limits.
-    if (setPointIsValid(setpoint)) {
+    if (setPointIsValid(newSetPoint)) {
       // send our setpoint to SmartMotion
-      m_pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
+      setPoint = newSetPoint;
+      m_pidController.setReference(newSetPoint, CANSparkMax.ControlType.kSmartMotion);
     }
   }
 
   /**
    * Checks to see if the provided setPoint within the legal bounds
    * 
-   * @param setPoint
+   * @param newSetPoint
    * @return true if it falls on or between min and max allowed values.
    */
-  private boolean setPointIsValid(double setPoint) {
-    if ((setPoint >= Constants.WRIST_MIN_POSTION) && (wristMotor.get() >= 0)) {
-      System.out.println("Setpoint is valid: " + setPoint);
+  private boolean setPointIsValid(double newSetPoint) {
+    // System.out.println("New Setpoint: " + newSetPoint + " Current Setpoint: " + this.setPoint);
+    if ((newSetPoint >= Constants.WRIST_MIN_POSTION) && (newSetPoint < this.setPoint)) {
+      // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
-    } else if ((setPoint <= Constants.WRIST_MAX_POSTION) && wristMotor.get() <= 0) {
-      System.out.println("Setpoint is valid: " + setPoint);
+    } else if ((newSetPoint <= Constants.WRIST_MAX_POSTION) && (newSetPoint > this.setPoint)) {
+      // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
     } else {
       System.out
-          .println("Given position " + setPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION + " and " + Constants.WRIST_MAX_POSTION);
+          .println("Given position " + newSetPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION + " and " + Constants.WRIST_MAX_POSTION);
       return false;
     }
   }
@@ -252,12 +254,13 @@ public class WristSubsystem extends SubsystemBase {
     // we
     // are not lower than the minimal position
     double newSetPoint = setPoint - Constants.WRIST_MOVEMENT_INCREMENT;
-    if (setPointIsValid(newSetPoint)) {
-      setPoint = newSetPoint;
-      setWristPosition(setPoint);
-    } else {
-      System.out.println("Setpoint at it's lower limit allready: " + setPoint);
-    }
+    // if (setPointIsValid(newSetPoint)) {
+    //   setPoint = newSetPoint;
+    //   setWristPosition(setPoint);
+    // } else {
+    //   System.out.println("Setpoint at it's lower limit allready: " + setPoint);
+    // }
+      setWristPosition(newSetPoint);
   }
 
   /**
@@ -272,13 +275,13 @@ public class WristSubsystem extends SubsystemBase {
       return;
     }
 
-    if (setPointIsValid(newSetPoint)) {
-      setPoint = newSetPoint;
-      setWristPosition(setPoint);
-    } else {
-      System.out.println("Setpoint at it's higher limit already: " + setPoint);
-    }
-
+    // if (setPointIsValid(newSetPoint)) {
+    //   setPoint = newSetPoint;
+    //   setWristPosition(setPoint);
+    // } else {
+    //   System.out.println("Setpoint at it's higher limit already: " + setPoint);
+    // }
+      setWristPosition(newSetPoint);
   }
 
   /**

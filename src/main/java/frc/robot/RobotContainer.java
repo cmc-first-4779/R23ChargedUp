@@ -172,8 +172,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // DriveStick Buttons
-    // driverStick.L1().whileTrue(new WristRaise(wrist));
-    // driverStick.R1().whileTrue(new WristLower(wrist));
+    driverStick.L1().whileTrue(new WristRaise(wrist));
+    driverStick.R1().whileTrue(new WristLower(wrist));
     // driverStick.L2().whileTrue(new ShoulderRaise(shoulder));
     // driverStick.R2().whileTrue(new ShoulderLower(shoulder));
     // driverStick.L3().whileTrue(new ExtendExtender(extender));
