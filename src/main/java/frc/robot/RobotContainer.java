@@ -138,9 +138,9 @@ public class RobotContainer {
     // Default Command for the Intake is: STOP
     intake.setDefaultCommand(new IntakeStopCommand(intake));
     // Turning the LimeLight Off for Now.
-    //limelight.setDefaultCommand(new LimelightSetLEDMode(limelight, LimelightConstants.LIMELIGHT_LEDMODE_OFF));
+    limelight.setDefaultCommand(new LimelightInitForDriver(limelight));
     //  Set our Bling Default Pattern
-    bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
+    bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
     // Configure the trigger bindings
     configureBindings();
 
@@ -183,6 +183,7 @@ public class RobotContainer {
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
+    driverStick.povUp().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_PARTY_PALETTE));
     driverStick.cross().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "DOUBLE_HPS"));
     driverStick.square().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
     driverStick.circle().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
