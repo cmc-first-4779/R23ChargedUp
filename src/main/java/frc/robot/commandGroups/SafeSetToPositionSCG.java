@@ -5,7 +5,6 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.PositionSetpoints;
 import frc.robot.commands.MiscCommands.Wait;
 import frc.robot.commands.ShoulderCommands.ResetShoulderMM;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
