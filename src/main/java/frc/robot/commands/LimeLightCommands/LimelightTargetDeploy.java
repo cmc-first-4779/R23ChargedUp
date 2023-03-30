@@ -24,7 +24,7 @@ public class LimelightTargetDeploy extends CommandBase {
 
   // Putting a counter so we end
   int counter;
-  int maxCycles = 100;
+  int maxCycles = 50;
 
   // Which mode are we in
   String mode;
@@ -77,17 +77,17 @@ public class LimelightTargetDeploy extends CommandBase {
       // Calculate how much we have to move in the y direction
       yDrive = calculateYDrive();
     } 
-    // else {
-    //   xDrive = 0;
-    //   yDrive = 0;
-    // }
+    else {
+      xDrive = 0;
+      yDrive = 0;
+    }
 
     // Drive forward using our xAxis and yAxis rates
     // System.out.println("Xdrive" + xDrive);
     // System.out.println("Ydrive" + yDrive*-1);
     drivetrain.drive(new ChassisSpeeds(xDrive, yDrive, 0));
     // Let the motor update
-    Timer.delay(0.005);
+    Timer.delay(0.020);
     // Increment our counter
     counter++;
 
