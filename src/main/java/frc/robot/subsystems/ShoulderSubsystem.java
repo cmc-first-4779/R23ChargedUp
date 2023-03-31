@@ -104,7 +104,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
     // shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
     //SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
-    //SmartDashboard.putNumber("Absolute Encoder Position", absoluteEncoder.getAbsolutePosition());
+    //SmartDashboard.putNumber("Shoulder Absolute Position", absoluteEncoder.get());
     //SmartDashboard.putNumber("Absolute Encoder Distance", absoluteEncoder.getDistance() * -1);
   }
 
