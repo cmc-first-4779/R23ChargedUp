@@ -151,7 +151,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     if (absoluteEncoder.isConnected()) {
       // Get the current distance of the shoulder calculated based off of absolute
       // encoder.
-      double currentMotorPositon = getCurrentAbosoluteDistance() * -1; // Negating to change phase
+      double currentMotorPositon = getCurrentAbosoluteDistance() ; // Negating to change phase
 
       // Check to make sure it's a reasonable number in case the encoder crossed over
       // the 0 line i.e. is reading 0.99
@@ -458,7 +458,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     if (absoluteEncoder.isConnected()) {
       // Get the current distance of the shoulder calculated based off of absolute
       // encoder.
-      double currentMotorPositon = getCurrentAbosoluteDistance() * -1; // Negating to change phase
+      double currentMotorPositon = getCurrentAbosoluteDistance() ; // Negating to change phase
 
       // Check to make sure it's a reasonable number in case the encoder crossed over
       // the 0 line i.e. is reading 0.99

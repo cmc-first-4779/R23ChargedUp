@@ -27,16 +27,16 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_STOW = 0;
 
     // PICKUP_CONE Position for each subsystem
-    public static final double SHOULDER_POSITION_PICKUP_CONE = 30312;
-    public static final double EXTENDER_POSITION_PICKUP_CONE = 42573;
+    public static final double SHOULDER_POSITION_PICKUP_CONE = 27312;
+    public static final double EXTENDER_POSITION_PICKUP_CONE = 53873;
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 54373;
-    public static final double WRIST_POSITION_PICKUP_CONE = 19.25; // Old value: 42.75;
+    public static final double WRIST_POSITION_PICKUP_CONE = 21.25; // Old value: 42.75;
 
     // PICKUP_CUBE Position for each subsystem
-    public static final double SHOULDER_POSITION_PICKUP_CUBE = 29187;
-    public static final double EXTENDER_POSITION_PICKUP_CUBE = 37980;  //37380
+    public static final double SHOULDER_POSITION_PICKUP_CUBE = 30187;
+    public static final double EXTENDER_POSITION_PICKUP_CUBE = 42980;  //37380
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 37980;
-    public static final double WRIST_POSITION_PICKUP_CUBE = 25.223; // Old Value: 42.47;
+    public static final double WRIST_POSITION_PICKUP_CUBE = 24.223; // Old Value: 42.47;
 
     // Position for each LOW_CONE_NODE subsystem
     public static final double SHOULDER_POSITION_LOW_CONE_NODE = 42500;
@@ -49,7 +49,7 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_MID_CONE_NODE = 42.46; // Old Value: 53.07;
 
     // HIGH_CONE_NODE_Position for each subsystem
-    public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 96750;
+    public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 95750;
     public static final double EXTENDER_POSITION_HIGH_CONE_NODE = 116500;
     public static final double WRIST_POSITION_HIGH_CONE_NODE = 37.75; // Old Value: 48.07;
 
@@ -75,8 +75,8 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = .5; // Old Value: 8.5;
 
     // Double HUMAN PLAYER STATION (HPS)
-    public static final double SHOULDER_POSITION_DOUBLE_HPS = 92200;
+    public static final double SHOULDER_POSITION_DOUBLE_HPS = 93200;
     public static final double EXTENDER_POSITION_DOUBLE_HPS = 4088;
-    public static final double WRIST_POSITION_DOUBLE_HPS = 34.75; 
+    public static final double WRIST_POSITION_DOUBLE_HPS = 36.5; 
 
 }
