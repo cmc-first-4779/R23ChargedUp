@@ -26,7 +26,7 @@ public class RetractShoulderExtenderPCG extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ExtenderSetPosition(extender, PositionSetpoints.EXTENDER_POSITION_STOW),
-        new ShoulderSetPosition(shoulder, 27000)
+        new ShoulderSetPosition(shoulder, 35000) //was 27000
 
     );
   }
