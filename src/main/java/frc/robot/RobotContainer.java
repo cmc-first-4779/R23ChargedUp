@@ -173,7 +173,7 @@ public class RobotContainer {
     driverStick.L3().whileTrue(new ExtendExtender(extender));
     driverStick.R3().whileTrue(new RetractExtender(extender));
     driverStick.options().whileTrue(new sturdyBaseCommand(driveTrain));
-    //driverStick.share().onTrue(new SyncEncoders(shoulder, wrist));
+    driverStick.share().onTrue(new SyncEncoders(shoulder, wrist));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
