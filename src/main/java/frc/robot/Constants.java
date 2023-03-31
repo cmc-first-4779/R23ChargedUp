@@ -191,7 +191,7 @@ public final class Constants {
   public static final double WRIST_MIN_POSTION = -10; // Min forward rotation. Assuming we are starting in our minimal
                                                       // position of 0.
   public static final double WRIST_MOVEMENT_INCREMENT = 0.5; // Amount to move wrist postion at one time.
-  public static final double WRIST_ABSOLUTE_ENCODER_OFFSET = 0.3079;
+  public static final double WRIST_ABSOLUTE_ENCODER_OFFSET = 0.5162;
 
 
  // LIMELIGHT Constants
