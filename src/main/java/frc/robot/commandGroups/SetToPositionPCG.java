@@ -134,7 +134,7 @@ public class SetToPositionPCG extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new SyncEncoders(shoulder, wrist),
+        //new SyncEncoders(shoulder, wrist),
         new ShoulderSetPosition(shoulder, shoulderPosition),
         new ExtenderSetPosition(extender, extenderPosition),
         new WristSetPosition(wrist, wristPosition));

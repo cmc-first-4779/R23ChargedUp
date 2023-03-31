@@ -56,6 +56,7 @@ import frc.robot.commands.IntakeCommands.IntakeAutoSense;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.LimelightCommands.LimelightInitForDriver;
 import frc.robot.commands.LimelightCommands.LimelightTargetDeploy;
+import frc.robot.commands.MiscCommands.SyncEncoders;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
 import frc.robot.commands.ShoulderCommands.ShoulderRaise;
 import frc.robot.commands.WristCommands.WristLower;
@@ -144,6 +145,9 @@ public class RobotContainer {
     generatePathPlannerPathGroups();
     createAutoBuilder();
 
+    shoulder.syncEncoders();
+    wrist.syncEncoders();
+
   }
 
   /**
@@ -169,7 +173,7 @@ public class RobotContainer {
     driverStick.L3().whileTrue(new ExtendExtender(extender));
     driverStick.R3().whileTrue(new RetractExtender(extender));
     driverStick.options().whileTrue(new sturdyBaseCommand(driveTrain));
-    driverStick.options().onTrue(new LimelightInitForDriver(limelight));
+    //driverStick.share().onTrue(new SyncEncoders(shoulder, wrist));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));

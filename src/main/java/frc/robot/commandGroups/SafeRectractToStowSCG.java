@@ -6,6 +6,7 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.PositionSetpoints;
+import frc.robot.commands.MiscCommands.SyncEncoders;
 import frc.robot.commands.MiscCommands.Wait;
 import frc.robot.commands.ShoulderCommands.ResetShoulderMM;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
@@ -50,5 +51,7 @@ public class SafeRectractToStowSCG extends SequentialCommandGroup {
         new ResetShoulderMM(shoulder),
         // Put the shoulder in the STOW position
         new ShoulderSetPosition(shoulder, PositionSetpoints.SHOULDER_POSITION_STOW));
+        //new Wait(0.15),
+        //new SyncEncoders(shoulder, wrist));
   }
 }
