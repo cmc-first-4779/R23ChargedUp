@@ -145,8 +145,8 @@ public class RobotContainer {
     generatePathPlannerPathGroups();
     createAutoBuilder();
 
-    shoulder.syncEncoders();
-    wrist.syncEncoders();
+    //shoulder.syncEncoders();
+    //wrist.syncEncoders();
 
   }
 
