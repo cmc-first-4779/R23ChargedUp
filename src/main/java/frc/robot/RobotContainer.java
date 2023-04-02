@@ -182,14 +182,13 @@ public class RobotContainer {
     driverStick.triangle().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "DOUBLE_HPS_RIGHT"));
     driverStick.square().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
     driverStick.circle().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
-
     //driverStick.povRight().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
 
     // OperStick Buttons
-    // operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
-    // operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    //operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    //operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
     operStick.R1().whileTrue(new IntakeAutoSense(intake, "CONE"));
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
