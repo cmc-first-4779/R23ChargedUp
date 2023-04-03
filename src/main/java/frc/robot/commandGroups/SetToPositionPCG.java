@@ -7,7 +7,7 @@ package frc.robot.commandGroups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.PositionSetpoints;
 import frc.robot.commands.ExtenderCommands.ExtenderSetPosition;
-import frc.robot.commands.MiscCommands.SyncEncoders;
+//import frc.robot.commands.MiscCommands.SyncEncoders;
 import frc.robot.commands.ShoulderCommands.ShoulderSetPosition;
 import frc.robot.commands.WristCommands.WristSetPosition;
 import frc.robot.subsystems.ExtenderSubsystem;
@@ -91,7 +91,7 @@ public class SetToPositionPCG extends ParallelCommandGroup {
       // from the ground
       case "AUTO_PICKUP_CUBE":
         shoulderPosition = PositionSetpoints.SHOULDER_POSITION_PICKUP_CUBE;
-        extenderPosition = PositionSetpoints.EXTENDER_POSITION_AUTO_PICKUP_CUBE;
+        extenderPosition = PositionSetpoints.EXTENDER_POSITION_PICKUP_CUBE;
         wristPosition = PositionSetpoints.WRIST_POSITION_PICKUP_CUBE;
         break;
       // Set the values for the Shoulder, Extender, and Wrist Positions to Pick a CUBE

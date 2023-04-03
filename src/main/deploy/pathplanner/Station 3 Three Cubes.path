@@ -1,0 +1,226 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.77,
+        "y": 4.938586305744041
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.417558692260242,
+        "y": 4.709550419100839
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "Eject Cube",
+          "Bling Lava"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 4.47684966798505,
+        "y": 4.723865162016039
+      },
+      "prevControl": {
+        "x": 4.2191842955114485,
+        "y": 4.781124133676839
+      },
+      "nextControl": {
+        "x": 4.734515040458652,
+        "y": 4.666606190355239
+      },
+      "holonomicAngle": -15.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.89,
+        "y": 4.4
+      },
+      "prevControl": {
+        "x": 7.170499523496577,
+        "y": 4.395432183960623
+      },
+      "nextControl": {
+        "x": 3.7038535505642445,
+        "y": 4.451885046627237
+      },
+      "holonomicAngle": -2.5,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.62,
+        "y": 3.65
+      },
+      "prevControl": {
+        "x": 4.25370223883305,
+        "y": 5.181936935302442
+      },
+      "nextControl": {
+        "x": 1.0732120668440654,
+        "y": 3.331951657925307
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "Eject Cube"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.0,
+        "y": 2.85
+      },
+      "prevControl": {
+        "x": 5.291994750656168,
+        "y": 5.483341800016935
+      },
+      "nextControl": {
+        "x": 5.291994750656168,
+        "y": 5.483341800016935
+      },
+      "holonomicAngle": -70.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 2.5085725171450353,
+        "y": 3.62
+      },
+      "prevControl": {
+        "x": 3.029024848166318,
+        "y": 4.209092542119944
+      },
+      "nextControl": {
+        "x": 2.270871791943522,
+        "y": 3.350949952327166
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "Eject Cube"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.67,
+        "y": 2.62
+      },
+      "prevControl": {
+        "x": 2.138064516129033,
+        "y": 3.6101066802133612
+      },
+      "nextControl": null,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "Eject Cube"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": [
+    {
+      "position": 0.28,
+      "names": [
+        "Cube Pickup"
+      ]
+    },
+    {
+      "position": 1.672727272727273,
+      "names": [
+        "Pickup Cube"
+      ]
+    },
+    {
+      "position": 2.1818181818181808,
+      "names": [
+        "Safe Retract"
+      ]
+    },
+    {
+      "position": 3.3818181818181845,
+      "names": [
+        "Cube Pickup"
+      ]
+    },
+    {
+      "position": 3.75,
+      "names": [
+        "Pickup Cube"
+      ]
+    },
+    {
+      "position": 4.045454545454546,
+      "names": [
+        "Safe Retract"
+      ]
+    },
+    {
+      "position": 5.95,
+      "names": [
+        "Eject Cube"
+      ]
+    }
+  ]
+}

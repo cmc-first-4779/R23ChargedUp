@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.StaticConstants.BlingConstants;
+import frc.robot.StaticConstants.LimelightConstants;
 import frc.robot.commands.BlingCommands.BlingSetPattern;
 import frc.robot.commands.DriveTrainCommands.DefaultDriveCommand;
 import frc.robot.commands.DriveTrainCommands.ResetGyro;
@@ -54,9 +55,9 @@ import frc.robot.commandGroups.StopAllPCG;
 import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeAutoSense;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-import frc.robot.commands.LimelightCommands.LimelightInitForDriver;
+//import frc.robot.commands.LimelightCommands.LimelightInitForDriver;
 import frc.robot.commands.LimelightCommands.LimelightTargetDeploy;
-import frc.robot.commands.MiscCommands.SyncEncoders;
+//import frc.robot.commands.MiscCommands.SyncEncoders;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
 import frc.robot.commands.ShoulderCommands.ShoulderRaise;
 import frc.robot.commands.WristCommands.WristLower;
@@ -129,8 +130,8 @@ public class RobotContainer {
     // Default Command for the Intake is: STOP
     intake.setDefaultCommand(new IntakeStopCommand(intake));
     // Turning the LimeLight Off for Now.
-    //limelight.initLimelightforDriver();
-    //  Set our Bling Default Pattern
+    limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
+    // Set our Bling Default Pattern
     bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_GLITTER_PALETTE));
     // Configure the trigger bindings
     configureBindings();
@@ -145,8 +146,8 @@ public class RobotContainer {
     generatePathPlannerPathGroups();
     createAutoBuilder();
 
-    //shoulder.syncEncoders();
-    //wrist.syncEncoders();
+    // shoulder.syncEncoders();
+    // wrist.syncEncoders();
 
   }
 
@@ -173,7 +174,7 @@ public class RobotContainer {
     driverStick.L3().whileTrue(new ExtendExtender(extender));
     driverStick.R3().whileTrue(new RetractExtender(extender));
     driverStick.options().whileTrue(new sturdyBaseCommand(driveTrain));
-    //driverStick.share().whileTrue(new SyncEncoders(shoulder, wrist));
+    // driverStick.share().whileTrue(new SyncEncoders(shoulder, wrist));
     driverStick.povDown().whileTrue(new RunCommand(driveTrain::zeroGyroscope, driveTrain));
     driverStick.povRight().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_VIOLET));
     driverStick.povLeft().onTrue(new BlingSetPattern(bling, BlingConstants.BLING_YELLOW));
@@ -182,13 +183,13 @@ public class RobotContainer {
     driverStick.triangle().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "DOUBLE_HPS_RIGHT"));
     driverStick.square().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
     driverStick.circle().whileTrue(new LimelightTargetDeploy(driveTrain, limelight, "TELEOP_CONE"));
-    //driverStick.povRight().onTrue(new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
+    // driverStick.povRight().onTrue(new LimelightTargetDeploy(driveTrain,
+    // limelight, "CUBE"));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
-
     // OperStick Buttons
-    //operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
-    //operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    // operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    // operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
     operStick.R1().whileTrue(new IntakeAutoSense(intake, "CONE"));
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
@@ -201,7 +202,7 @@ public class RobotContainer {
     operStick.R3().onTrue(new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
     operStick.L3().onTrue(new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
     operStick.L2().onTrue(new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist));
-    operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist)); 
+    operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist));
     operStick.povUp().onTrue(new SetToPositionPCG("DOUBLE_HPS", shoulder, extender, wrist));
   }
 
@@ -235,12 +236,15 @@ public class RobotContainer {
         new PathConstraints(2, 2));
     List<PathPlannerTrajectory> Station_3_Cone_and_Pickup = PathPlanner.loadPathGroup("Station 3 Cone and Pickup",
         new PathConstraints(2, 2));
+    List<PathPlannerTrajectory> Station_3_Three_Cubes = PathPlanner.loadPathGroup("Station 3 Three Cubes",
+        new PathConstraints(3, 2.5));
 
     autoChooser.setDefaultOption("Station 2 Engage", Station_2_Engage);
     autoChooser.addOption("Station 1 Cube and Pickup", Station_1_Cube_and_Pickuptraj);
     autoChooser.addOption("Station 1 Cone And Pickup", Station_1_Cone_And_Pickuptraj);
     autoChooser.addOption("Station 1 Cube and Engage", Station_1_Cube_and_Engage);
     autoChooser.addOption("Station 3 Cone and Pickup", Station_3_Cone_and_Pickup);
+    autoChooser.addOption("Station 3 Three Cubes", Station_3_Three_Cubes);
   }
 
   /**
@@ -262,10 +266,11 @@ public class RobotContainer {
     // pathPlannerEventMap.put("Cube Pickup", new
     // AutoSafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Cone Pickup", new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist));
-    pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("AUTO_PICKUP_CUBE", shoulder, extender, wrist));
+    pathPlannerEventMap.put("Cube Pickup", new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist));
     pathPlannerEventMap.put("Safe Retract", new SafeRectractToStowSCG(shoulder, extender, wrist));
     pathPlannerEventMap.put("Eject Cone", new AutoIntakeSetSpeed(intake, "EJECT_CONE"));
     pathPlannerEventMap.put("Eject Cube", new AutoIntakeSetSpeed(intake, "EJECT_CUBE"));
+    pathPlannerEventMap.put("Eject Cube Stow", new AutoIntakeSetSpeed(intake, "EJECT_CUBE_STOW"));
     pathPlannerEventMap.put("Pickup Cone", new AutoIntakeSetSpeed(intake, "INTAKE_CONE"));
     pathPlannerEventMap.put("Pickup Cube", new AutoIntakeSetSpeed(intake, "INTAKE_CUBE"));
     pathPlannerEventMap.put("Wait Short", new WaitCommand(0.45));
@@ -275,6 +280,7 @@ public class RobotContainer {
     pathPlannerEventMap.put("Sturdy Base", new sturdyBaseCommand(driveTrain));
     pathPlannerEventMap.put("LL Cube Deploy", new LimelightTargetDeploy(driveTrain, limelight, "CUBE"));
     pathPlannerEventMap.put("LL Cone Deploy", new LimelightTargetDeploy(driveTrain, limelight, "AUTON_CONE"));
+    pathPlannerEventMap.put("Bling Lava", new BlingSetPattern(bling, BlingConstants.BLING_LAVA_PALETTE));
     autoBuilder = new SwerveAutoBuilder(
 
         driveTrain::getPose, // Pose2d supplier
@@ -409,8 +415,6 @@ public class RobotContainer {
     return DriverStation.getAlliance();
   }
 
-
-
   // Returns the DriveTrain Subsystem to other classes
   public DrivetrainSubsystem getDrivetrainSubsystem() {
     return driveTrain;
@@ -440,6 +444,5 @@ public class RobotContainer {
   public BlingSubsystem getBlingSubsystem() {
     return bling;
   }
-
 
 }

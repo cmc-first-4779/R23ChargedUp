@@ -34,7 +34,7 @@ public class PositionSetpoints {
 
     // PICKUP_CUBE Position for each subsystem
     public static final double SHOULDER_POSITION_PICKUP_CUBE = 30187;
-    public static final double EXTENDER_POSITION_PICKUP_CUBE = 42980;  //37380
+    public static final double EXTENDER_POSITION_PICKUP_CUBE = 39600;  //37380
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 37980;
     public static final double WRIST_POSITION_PICKUP_CUBE = 24.223; // Old Value: 42.47;
 

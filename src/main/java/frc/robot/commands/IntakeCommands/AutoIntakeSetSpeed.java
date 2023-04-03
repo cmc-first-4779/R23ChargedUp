@@ -45,11 +45,16 @@ public class AutoIntakeSetSpeed extends CommandBase {
         intakeRunTime = Constants.EJECT_CUBE_AUTON_TIMER;
         intakeSpeed = Constants.EJECT_CUBE_SPEED;
         break;
-            // Set the value for the Eject Cube
-            case "EJECT_CUBE_AUTON1":
-            intakeRunTime = Constants.EJECT_CUBE_AUTON_TIMER;
-            intakeSpeed = Constants.EJECT_CUBE_SPEED_AUTON1;
-            break;  
+      // Set the value for the Eject Cube
+      case "EJECT_CUBE_AUTON1":
+        intakeRunTime = Constants.EJECT_CUBE_AUTON_TIMER;
+        intakeSpeed = Constants.EJECT_CUBE_SPEED_AUTON1;
+        break;
+      // Set the value for the Eject Cube
+      case "EJECT_CUBE_STOW":
+        intakeRunTime = Constants.EJECT_CUBE_AUTON_TIMER;
+        intakeSpeed = Constants.EJECT_CUBE_SPEED_FROMSTOW;
+        break;
       // Set the value for the Intake Cone
       case "INTAKE_CONE":
         intakeRunTime = Constants.INTAKE_CONE_AUTON_TIMER;
