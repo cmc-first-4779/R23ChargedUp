@@ -27,13 +27,13 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_STOW = 0;
 
     // PICKUP_CONE Position for each subsystem
-    public static final double SHOULDER_POSITION_PICKUP_CONE = 27212;
+    public static final double SHOULDER_POSITION_PICKUP_CONE = 22000;
     public static final double EXTENDER_POSITION_PICKUP_CONE = 52873;
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CONE = 54373;
     public static final double WRIST_POSITION_PICKUP_CONE = 17.55; // Old value: 42.75;
 
     // PICKUP_CUBE Position for each subsystem
-    public static final double SHOULDER_POSITION_PICKUP_CUBE = 30187;
+    public static final double SHOULDER_POSITION_PICKUP_CUBE = 23000;
     public static final double EXTENDER_POSITION_PICKUP_CUBE = 39600;  //37380
     public static final double EXTENDER_POSITION_AUTO_PICKUP_CUBE = 37980;
     public static final double WRIST_POSITION_PICKUP_CUBE = 24.223; // Old Value: 42.47;
@@ -44,12 +44,12 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_LOW_CONE_NODE = 44.86; // Old Value: 56.07;
 
     // MID_CONE_Position for each subsystem
-    public static final double SHOULDER_POSITION_MID_CONE_NODE = 84500;
+    public static final double SHOULDER_POSITION_MID_CONE_NODE = 81000;
     public static final double EXTENDER_POSITION_MID_CONE_NODE = 3750;
     public static final double WRIST_POSITION_MID_CONE_NODE = 42.46; // Old Value: 53.07;
 
     // HIGH_CONE_NODE_Position for each subsystem
-    public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 95750;
+    public static final double SHOULDER_POSITION_HIGH_CONE_NODE = 91250;
     public static final double EXTENDER_POSITION_HIGH_CONE_NODE = 116500;
     public static final double WRIST_POSITION_HIGH_CONE_NODE = 37.75; // Old Value: 48.07;
 
@@ -75,7 +75,7 @@ public class PositionSetpoints {
     public static final double WRIST_POSITION_HUMAN_PLAYER_STATION = .5; // Old Value: 8.5;
 
     // Double HUMAN PLAYER STATION (HPS)
-    public static final double SHOULDER_POSITION_DOUBLE_HPS = 92800;
+    public static final double SHOULDER_POSITION_DOUBLE_HPS = 82750;
     public static final double EXTENDER_POSITION_DOUBLE_HPS = 4088;
     public static final double WRIST_POSITION_DOUBLE_HPS = 36.5; 
 

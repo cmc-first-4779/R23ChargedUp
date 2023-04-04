@@ -91,7 +91,7 @@ public class WristSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    SmartDashboard.putNumber("Wrist Absolute Position", absoluteEncoder.get());
+    SmartDashboard.putNumber("Wrist Absolute Position", absoluteEncoder.getAbsolutePosition());
     //SmartDashboard.putNumber("Wrist SetPoint", setPoint);
   }
 
