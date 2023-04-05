@@ -95,7 +95,6 @@ public class ShoulderSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Cruise Vel", Constants.SHOULDER_MM_VELOCITY);
     SmartDashboard.putNumber("Cruise Accel ", Constants.SHOULDER_MM_ACCELERATION);
 
-
   }
 
   @Override
@@ -105,8 +104,10 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
     // shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
     SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
-    // SmartDashboard.putNumber("Shoulder Absolute Position", absoluteEncoder.getAbsolutePosition());
-    // SmartDashboard.putNumber("Absolute Encoder Distance", absoluteEncoder.getDistance() * -1);
+    // SmartDashboard.putNumber("Shoulder Absolute Position",
+    // absoluteEncoder.getAbsolutePosition());
+    // SmartDashboard.putNumber("Absolute Encoder Distance",
+    // absoluteEncoder.getDistance() * -1);
   }
 
   // Initialize a TalonFX Motor controller and set our default settings.
@@ -146,24 +147,33 @@ public class ShoulderSubsystem extends SubsystemBase {
             MaxMotorAmpsConstants.MAX_SECS_STATOR_THRESHOLDTIME_FALCON500));
   }
 
-  // Resets our Encoder to ZERO
+  /**
+   * Resets the encoders based on the absolute encoder reading if available or to 0 if not available
+   * @param talon The motor to set the ecoder position of
+   */
+
   public void resetEncoders(WPI_TalonFX talon) {
+    double newMotorPositon;
     // Check to see if absolute encoder is present and use it's position if so.
     if (absoluteEncoder.isConnected()) {
       // Get the current distance of the shoulder calculated based off of absolute
       // encoder.
-      double currentMotorPositon = getCurrentAbosoluteDistance() ; // Negating to change phase
+      newMotorPositon = getCurrentAbosoluteDistance() ; // Negating to change phase
 
       // Check to make sure it's a reasonable number in case the encoder crossed over
       // the 0 line i.e. is reading 0.99
-      if (currentMotorPositon < -300000) {
-        System.out.println("Encoder was giving an excessively high negative distance so normalizing");
-        currentMotorPositon = currentMotorPositon + (2048 * 192);
+      if (newMotorPositon < (Constants.SHOULDER_POSITION_MIN - 2000) || newMotorPositon > Constants.SHOULDER_POSITION_MAX) {
+        System.out.println("Encoder-calculated shoulder position outside of acceptable range. " + newMotorPositon);
+        newMotorPositon = 0;
       }
-      talon.getSensorCollection().setIntegratedSensorPosition(currentMotorPositon, Constants.kTimeoutMs);
-    } else {
-      talon.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
+   } else {
+    //Absolute encoder not detected so just setting position to 0
+    newMotorPositon = 0;
     }
+    // Write out the intial position of the shoulder motor
+    SmartDashboard.putNumber("Shoulder Init Position:", newMotorPositon);
+    // Set the motor encoder to the new position
+    talon.getSensorCollection().setIntegratedSensorPosition(newMotorPositon, Constants.kTimeoutMs);
   }
 
   // Configure our PID Values
@@ -333,7 +343,6 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
   }
 
-
   /**
    * Will hold last known setpoint
    */
@@ -360,21 +369,24 @@ public class ShoulderSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double newSetPoint) {
-    // System.out.println("New Setpoint: " + newSetPoint + " Current Setpoint: " + this.setPoint);
+    // System.out.println("New Setpoint: " + newSetPoint + " Current Setpoint: " +
+    // this.setPoint);
     // If we are going down, we just have to make sure new setpoint is above our min
     // position
     if ((newSetPoint < this.setPoint) && (newSetPoint >= Constants.SHOULDER_POSITION_MIN)) {
       // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
     }
-    // If we are going up, we just have to make sure new setpoint is below our max position
+    // If we are going up, we just have to make sure new setpoint is below our max
+    // position
     else if ((newSetPoint > this.setPoint) && (newSetPoint <= Constants.SHOULDER_POSITION_MAX)) {
       // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
     } else {
       System.out
-          .println("Given position " + newSetPoint + " is outside legal bounderies of " + Constants.SHOULDER_POSITION_MIN
-              + " and " + Constants.SHOULDER_POSITION_MAX);
+          .println(
+              "Given position " + newSetPoint + " is outside legal bounderies of " + Constants.SHOULDER_POSITION_MIN
+                  + " and " + Constants.SHOULDER_POSITION_MAX);
       return false;
     }
   }
@@ -455,23 +467,7 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   // Resets our Encoder to ZERO
   public void syncEncoders() {
-    // Check to see if absolute encoder is present and use it's position if so.
-    if (absoluteEncoder.isConnected()) {
-      // Get the current distance of the shoulder calculated based off of absolute
-      // encoder.
-      double currentMotorPositon = getCurrentAbosoluteDistance() ; // Negating to change phase
-
-      // Check to make sure it's a reasonable number in case the encoder crossed over
-      // the 0 line i.e. is reading 0.99
-      if (currentMotorPositon < -300000) {
-        System.out.println("Encoder was giving an excessively high negative distance so normalizing");
-        currentMotorPositon = currentMotorPositon + (2048 * 192);
-      }
-      shoulderMotorMaster.getSensorCollection().setIntegratedSensorPosition(currentMotorPositon, Constants.kTimeoutMs);
-    } else {
-      shoulderMotorMaster.getSensorCollection().setIntegratedSensorPosition(0, Constants.kTimeoutMs);
-    }
+    resetEncoders(shoulderMotorMaster);
   }
-
 
 }
