@@ -31,7 +31,7 @@ public class ShoulderMoveWithJoystick extends CommandBase {
   @Override
   public void execute() {
         // Put the encoder value of the Master Motor to the Dashboard
-        SmartDashboard.putNumber("WinchEffort", joystick.getLeftY());
+        // SmartDashboard.putNumber("WinchEffort", joystick.getLeftY());
         shoulderSubsystem.moveShoulder(-joystick.getLeftY());
   }
 

@@ -71,7 +71,7 @@ public class ExtenderSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
-    SmartDashboard.putNumber("Extender Position", extenderMotor.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("Extender Position", extenderMotor.getSelectedSensorPosition());
    // SmartDashboard.putNumber("Extender Setpoint", setPoint);
     //SmartDashboard.putNumber("Extender Velocity", extenderMotor.getSelectedSensorVelocity());
   }

@@ -40,12 +40,12 @@ public class GetLocationOfAprilTag extends CommandBase {
       botpose = limeLight.getBotpose_WpiBlue();
     }
 
-    SmartDashboard.putNumber("BotPose X", botpose[0]);
-    SmartDashboard.putNumber("BotPose Y", botpose[1]);
-    SmartDashboard.putNumber("BotPose Z", botpose[2]);
-    SmartDashboard.putNumber("BotPose Roll", botpose[3]);
-    SmartDashboard.putNumber("BotPose Pitch", botpose[4]);
-    SmartDashboard.putNumber("BotPose Yaw", botpose[5]);
+    // SmartDashboard.putNumber("BotPose X", botpose[0]);
+    // SmartDashboard.putNumber("BotPose Y", botpose[1]);
+    // SmartDashboard.putNumber("BotPose Z", botpose[2]);
+    // SmartDashboard.putNumber("BotPose Roll", botpose[3]);
+    // SmartDashboard.putNumber("BotPose Pitch", botpose[4]);
+    // SmartDashboard.putNumber("BotPose Yaw", botpose[5]);
 
   }
 

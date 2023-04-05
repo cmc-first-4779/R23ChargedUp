@@ -37,10 +37,10 @@ public class LimelightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("LimeLight tx", getTX());
-    SmartDashboard.putNumber("LimeLight ty", getTY());
-    SmartDashboard.putNumberArray("LimeLight Blue BotPos", getBotpose_WpiBlue());
-    SmartDashboard.putNumberArray("LimeLight Red BotPos", getBotpose_WpiRed());
+    // SmartDashboard.putNumber("LimeLight tx", getTX());
+    // SmartDashboard.putNumber("LimeLight ty", getTY());
+    // SmartDashboard.putNumberArray("LimeLight Blue BotPos", getBotpose_WpiBlue());
+    // SmartDashboard.putNumberArray("LimeLight Red BotPos", getBotpose_WpiRed());
   }
 
   // SET THE LIMELIGHT CAMERA MODE

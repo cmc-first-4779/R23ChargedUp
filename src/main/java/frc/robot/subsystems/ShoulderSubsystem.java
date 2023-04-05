@@ -87,13 +87,13 @@ public class ShoulderSubsystem extends SubsystemBase {
     configSimpleMM(shoulderMotorMaster);
 
     // Add PID Fields to SmartDashboard
-    SmartDashboard.putNumber("Position", 0);
-    SmartDashboard.putNumber("kF", Constants.SHOULDER_DEFAULT_kF);
-    SmartDashboard.putNumber("kP", Constants.SHOULDER_DEFAULT_kP);
-    SmartDashboard.putNumber("kI", Constants.SHOULDER_DEFAULT_kI);
-    SmartDashboard.putNumber("kD", Constants.SHOULDER_DEFAULT_kD);
-    SmartDashboard.putNumber("Cruise Vel", Constants.SHOULDER_MM_VELOCITY);
-    SmartDashboard.putNumber("Cruise Accel ", Constants.SHOULDER_MM_ACCELERATION);
+    // SmartDashboard.putNumber("Position", 0);
+    // SmartDashboard.putNumber("kF", Constants.SHOULDER_DEFAULT_kF);
+    // SmartDashboard.putNumber("kP", Constants.SHOULDER_DEFAULT_kP);
+    // SmartDashboard.putNumber("kI", Constants.SHOULDER_DEFAULT_kI);
+    // SmartDashboard.putNumber("kD", Constants.SHOULDER_DEFAULT_kD);
+    // SmartDashboard.putNumber("Cruise Vel", Constants.SHOULDER_MM_VELOCITY);
+    // SmartDashboard.putNumber("Cruise Accel ", Constants.SHOULDER_MM_ACCELERATION);
 
   }
 
@@ -103,9 +103,8 @@ public class ShoulderSubsystem extends SubsystemBase {
     // Put the encoder value of the Master Motor to the Dashboard
     shoulderMasterPosition = shoulderMotorMaster.getSelectedSensorPosition();
     // shoulderSlavePosition = shoulderMotorSlave.getSelectedSensorPosition();
-    SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
-    // SmartDashboard.putNumber("Shoulder Absolute Position",
-    // absoluteEncoder.getAbsolutePosition());
+    // SmartDashboard.putNumber("Shoulder Encoder Position", shoulderMotorMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Shoulder Absolute Position", absoluteEncoder.getAbsolutePosition());
     // SmartDashboard.putNumber("Absolute Encoder Distance",
     // absoluteEncoder.getDistance() * -1);
   }
@@ -153,27 +152,27 @@ public class ShoulderSubsystem extends SubsystemBase {
    */
 
   public void resetEncoders(WPI_TalonFX talon) {
-    double newMotorPositon;
+    double newMotorPosition;
     // Check to see if absolute encoder is present and use it's position if so.
     if (absoluteEncoder.isConnected()) {
       // Get the current distance of the shoulder calculated based off of absolute
       // encoder.
-      newMotorPositon = getCurrentAbosoluteDistance() ; // Negating to change phase
+      newMotorPosition = getCurrentAbosoluteDistance() ; // Negating to change phase
 
       // Check to make sure it's a reasonable number in case the encoder crossed over
       // the 0 line i.e. is reading 0.99
-      if (newMotorPositon < (Constants.SHOULDER_POSITION_MIN - 2000) || newMotorPositon > Constants.SHOULDER_POSITION_MAX) {
-        System.out.println("Encoder-calculated shoulder position outside of acceptable range. " + newMotorPositon);
-        newMotorPositon = 0;
+      if (newMotorPosition < (Constants.SHOULDER_POSITION_MIN - 2000) || newMotorPosition > Constants.SHOULDER_POSITION_MAX) {
+        System.out.println("Encoder-calculated shoulder position outside of acceptable range. " + newMotorPosition);
+        newMotorPosition = 0;
       }
    } else {
     //Absolute encoder not detected so just setting position to 0
-    newMotorPositon = 0;
+    newMotorPosition = 0;
     }
     // Write out the intial position of the shoulder motor
-    SmartDashboard.putNumber("Shoulder Init Position:", newMotorPositon);
+    SmartDashboard.putNumber("Shoulder Init Position:", newMotorPosition);
     // Set the motor encoder to the new position
-    talon.getSensorCollection().setIntegratedSensorPosition(newMotorPositon, Constants.kTimeoutMs);
+    talon.getSensorCollection().setIntegratedSensorPosition(newMotorPosition, Constants.kTimeoutMs);
   }
 
   // Configure our PID Values
