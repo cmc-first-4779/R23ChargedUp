@@ -30,11 +30,9 @@ public class WristSubsystem extends SubsystemBase {
   // Reference to robot container to access other subsystems
   RobotContainer robotContainer;
 
-    // Absolute Position
-    double initialAbsolutePosition, referencePosition, relativeOffset;
-    DutyCycleEncoder absoluteEncoder;
-
-
+  // Absolute Position
+  double initialAbsolutePosition, referencePosition, relativeOffset;
+  DutyCycleEncoder absoluteEncoder;
 
   /**
    * Constructor for the wrist subsystem. Sets up the motor and pid controller
@@ -45,6 +43,8 @@ public class WristSubsystem extends SubsystemBase {
   public WristSubsystem(RobotContainer robotContainer) {
     // Address our motor
     wristMotor = new CANSparkMax(HardwareMap.CAN_ADDRESS_WRIST, MotorType.kBrushless);
+    // Address our Absolute encoder
+    absoluteEncoder = new DutyCycleEncoder(HardwareMap.DIO_PORT_WRIST_ABSOLUTE_ENCODER);
 
     m_pidController = wristMotor.getPIDController();
     this.robotContainer = robotContainer;
@@ -58,15 +58,8 @@ public class WristSubsystem extends SubsystemBase {
     m_pidController = wristMotor.getPIDController();
     wristMotor.setInverted(true);
 
-          // Address our Absolute encoder
-  absoluteEncoder=new DutyCycleEncoder(HardwareMap.DIO_PORT_WRIST_ABSOLUTE_ENCODER);
-
-  // Init our settings for our encoder
-  initAbsoluteEncoder(absoluteEncoder);
-
-    // Get the absolute position of the shoulder at RobotInit
-    initialAbsolutePosition = absoluteEncoder.getAbsolutePosition();
-    referencePosition = initialAbsolutePosition; // Safe this also in another variable for later
+    // Init our settings for our encoder
+    initAbsoluteEncoder(absoluteEncoder);
 
     // Config our PID Values
     configPIDFValues(wristMotor, Constants.WRIST_kP, Constants.WRIST_kI, Constants.WRIST_kD,
@@ -92,12 +85,13 @@ public class WristSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     // Put our Encoder Position to the SmartDashboard
     SmartDashboard.putNumber("Wrist Absolute Position", absoluteEncoder.getAbsolutePosition());
-    //SmartDashboard.putNumber("Wrist SetPoint", setPoint);
+    SmartDashboard.putNumber("Wrist Encoder", wristMotor.getEncoder().getPosition());
+    // SmartDashboard.putNumber("Wrist SetPoint", setPoint);
   }
 
   // Initialize a SparkMax Motor controller and set our default settings.
   private static void initSparkMaxMotorController(CANSparkMax sparkMax, String Motortype) {
-    System.out.println("Initializing SparkMax: " + sparkMax);
+    // System.out.println("Initializing SparkMax: " + sparkMax);
     sparkMax.restoreFactoryDefaults();
     sparkMax.setIdleMode(IdleMode.kBrake); // kCoast is Coast... kBrake is Brake
     if (Motortype == "NEO550") {
@@ -111,7 +105,25 @@ public class WristSubsystem extends SubsystemBase {
 
   // Reset our Encoder
   public void resetEncoder(CANSparkMax sparkMax) {
-    sparkMax.getEncoder().setPosition(0);
+    double newMotorPosition;
+    if (absoluteEncoder.isConnected()) {
+      // Get the current distance of the shoulder calculated based off of absolute
+      // encoder.
+      newMotorPosition = getCurrentAbosoluteDistance(); // Negating to change phase
+      // Check to make sure it's a reasonable number in case the encoder crossed over
+      // the 0 line i.e. is reading 0.99
+      if (newMotorPosition < (Constants.WRIST_MIN_POSTION) || newMotorPosition > Constants.WRIST_MAX_POSITION) {
+        System.out.println("Encoder-calculated shoulder position outside of acceptable range. " + newMotorPositon);
+        newMotorPosition = 0;
+      }
+    } else {
+      // Absolute encoder not detected so just setting position to 0
+      newMotorPosition = 0;
+    }
+    // Write out the intial position of the shoulder motor
+    SmartDashboard.putNumber("Wrist Init Position:", newMotorPosition);
+    // Set the motor controller encoder position
+    sparkMax.getEncoder().setPosition(newMotorPosition);
   }
 
   // Configure our PID Values
@@ -188,21 +200,23 @@ public class WristSubsystem extends SubsystemBase {
    * @return true if it falls on or between min and max allowed values.
    */
   private boolean setPointIsValid(double newSetPoint) {
-    // System.out.println("New Setpoint: " + newSetPoint + " Current Setpoint: " + this.setPoint);
+    // System.out.println("New Setpoint: " + newSetPoint + " Current Setpoint: " +
+    // this.setPoint);
     // If we are going down, we just have to make sure new setpoint is above our min
     // position
     if ((newSetPoint < this.setPoint) && (newSetPoint >= Constants.WRIST_MIN_POSTION)) {
       // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
     }
-    // If we are going up, we just have to make sure new setpoint is below our max position
-    else if ((newSetPoint > this.setPoint) && (newSetPoint <= Constants.WRIST_MAX_POSTION)) {
+    // If we are going up, we just have to make sure new setpoint is below our max
+    // position
+    else if ((newSetPoint > this.setPoint) && (newSetPoint <= Constants.WRIST_MAX_POSITION)) {
       // System.out.println("Setpoint is valid: " + newSetPoint);
       return true;
     } else {
       System.out
           .println("Given position " + newSetPoint + " is outside legal bounderies of " + Constants.WRIST_MIN_POSTION
-              + " and " + Constants.WRIST_MAX_POSTION);
+              + " and " + Constants.WRIST_MAX_POSITION);
       return false;
     }
   }
@@ -260,12 +274,12 @@ public class WristSubsystem extends SubsystemBase {
     // are not lower than the minimal position
     double newSetPoint = setPoint - Constants.WRIST_MOVEMENT_INCREMENT;
     // if (setPointIsValid(newSetPoint)) {
-    //   setPoint = newSetPoint;
-    //   setWristPosition(setPoint);
+    // setPoint = newSetPoint;
+    // setWristPosition(setPoint);
     // } else {
-    //   System.out.println("Setpoint at it's lower limit allready: " + setPoint);
+    // System.out.println("Setpoint at it's lower limit allready: " + setPoint);
     // }
-      setWristPosition(newSetPoint);
+    setWristPosition(newSetPoint);
   }
 
   /**
@@ -281,12 +295,12 @@ public class WristSubsystem extends SubsystemBase {
     }
 
     // if (setPointIsValid(newSetPoint)) {
-    //   setPoint = newSetPoint;
-    //   setWristPosition(setPoint);
+    // setPoint = newSetPoint;
+    // setWristPosition(setPoint);
     // } else {
-    //   System.out.println("Setpoint at it's higher limit already: " + setPoint);
+    // System.out.println("Setpoint at it's higher limit already: " + setPoint);
     // }
-      setWristPosition(newSetPoint);
+    setWristPosition(newSetPoint);
   }
 
   /**
@@ -300,9 +314,8 @@ public class WristSubsystem extends SubsystemBase {
     if (shoulderPosition > PositionSetpoints.SHOULDER_POSITION_SAFE_TO_EXTEND) {
       System.out.println("Shoulder is at safe position to extend wrist");
       return true;
-    }
-    else{
-    return false;
+    } else {
+      return false;
     }
   }
 
@@ -316,7 +329,7 @@ public class WristSubsystem extends SubsystemBase {
     return wristMotor.getEncoder();
   }
 
-    // Setup the Through Bore Encoder from REV's Specsheet:
+  // Setup the Through Bore Encoder from REV's Specsheet:
   // https://docs.revrobotics.com/through-bore-encoder/specifications
   private void initAbsoluteEncoder(DutyCycleEncoder encoder) {
     encoder.setDutyCycleRange(1.0 / 1024.0, 1023.0 / 1024.0); // PERIOD = 1025 for the Encoder
@@ -324,7 +337,7 @@ public class WristSubsystem extends SubsystemBase {
     encoder.setPositionOffset(Constants.WRIST_ABSOLUTE_ENCODER_OFFSET);
   }
 
-    /**
+  /**
    * Gets the current position of the shoulder motors based on the readings of the
    * Absolute encoder
    * taking into account the original 0 location by having the Absolute encoder
@@ -337,25 +350,9 @@ public class WristSubsystem extends SubsystemBase {
     return absoluteEncoder.getDistance() * -1;
   }
 
-    // Resets our Encoder to ZERO
-    public void syncEncoders() {
-      // Check to see if absolute encoder is present and use it's position if so.
-      if (absoluteEncoder.isConnected()) {
-        // Get the current distance of the shoulder calculated based off of absolute encoder.
-        double currentMotorPositon = getCurrentAbosoluteDistance();
-  
-        // Check to make sure it's a reasonable number in case the encoder crossed over
-        // the 0 line i.e. is reading 0.99
-        if (currentMotorPositon < -100) {
-          System.out.println("Encoder was giving an excessively high negative distance so normalizing");
-          currentMotorPositon = currentMotorPositon + (125);
-        }
-        wristMotor.getEncoder().setPosition(currentMotorPositon);
-      } else {
-        wristMotor.getEncoder().setPosition(0);
-      }
-    }
-
- 
+  // Resets our Encoder to ZERO
+  public void syncEncoders() {
+    resetEncoder(wristMotor);
+  }
 
 }
