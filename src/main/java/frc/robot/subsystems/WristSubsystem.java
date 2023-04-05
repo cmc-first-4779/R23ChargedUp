@@ -48,7 +48,7 @@ public class WristSubsystem extends SubsystemBase {
 
     m_pidController = wristMotor.getPIDController();
     this.robotContainer = robotContainer;
-
+  initAbsoluteEncoder(absoluteEncoder);
     setPoint = 0;
 
     // Initialize our SparkMax's to known settings
@@ -59,7 +59,7 @@ public class WristSubsystem extends SubsystemBase {
     wristMotor.setInverted(true);
 
     // Init our settings for our encoder
-    initAbsoluteEncoder(absoluteEncoder);
+  
 
     // Config our PID Values
     configPIDFValues(wristMotor, Constants.WRIST_kP, Constants.WRIST_kI, Constants.WRIST_kD,
@@ -86,6 +86,7 @@ public class WristSubsystem extends SubsystemBase {
     // Put our Encoder Position to the SmartDashboard
     SmartDashboard.putNumber("Wrist Absolute Position", absoluteEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Wrist Encoder", wristMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("Wrist Encoder Distance", getCurrentAbosoluteDistance());
     // SmartDashboard.putNumber("Wrist SetPoint", setPoint);
   }
 
