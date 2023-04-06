@@ -38,7 +38,7 @@
         "x": 4.734515040458652,
         "y": 4.666606190355239
       },
-      "holonomicAngle": -15.0,
+      "holonomicAngle": -2.5,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -129,16 +129,16 @@
     },
     {
       "anchorPoint": {
-        "x": 2.5085725171450353,
-        "y": 3.62
+        "x": 2.2151202873834324,
+        "y": 3.521426757139229
       },
       "prevControl": {
-        "x": 3.029024848166318,
-        "y": 4.209092542119944
+        "x": 2.3285823737079587,
+        "y": 3.6689274693611136
       },
       "nextControl": {
-        "x": 2.270871791943522,
-        "y": 3.350949952327166
+        "x": 2.071972858231431,
+        "y": 3.335335099241627
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -160,8 +160,8 @@
         "y": 2.62
       },
       "prevControl": {
-        "x": 2.138064516129033,
-        "y": 3.6101066802133612
+        "x": 2.2723737121554275,
+        "y": 3.550059835557665
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -181,7 +181,7 @@
   ],
   "markers": [
     {
-      "position": 0.28,
+      "position": 0.23,
       "names": [
         "Cube Pickup"
       ]
@@ -199,25 +199,25 @@
       ]
     },
     {
-      "position": 3.3818181818181845,
+      "position": 3.3,
       "names": [
         "Cube Pickup"
       ]
     },
     {
-      "position": 3.75,
+      "position": 3.9272727272727286,
       "names": [
         "Pickup Cube"
       ]
     },
     {
-      "position": 4.045454545454546,
+      "position": 4.145454545454545,
       "names": [
         "Safe Retract"
       ]
     },
     {
-      "position": 5.95,
+      "position": 5.85,
       "names": [
         "Eject Cube"
       ]
