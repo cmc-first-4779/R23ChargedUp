@@ -54,6 +54,7 @@ import frc.robot.commandGroups.SetToPositionPCG;
 import frc.robot.commandGroups.StopAllPCG;
 import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeAutoSense;
+import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 //import frc.robot.commands.LimelightCommands.LimelightInitForDriver;
 import frc.robot.commands.LimelightCommands.LimelightTargetDeploy;
@@ -132,7 +133,7 @@ public class RobotContainer {
     // Turning the LimeLight Off for Now.
     limelight.setLEDMode(LimelightConstants.LIMELIGHT_LEDMODE_OFF);
     // Set our Bling Default Pattern
-    bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_GLITTER_PALETTE));
+    //bling.setDefaultCommand(new BlingSetPattern(bling, BlingConstants.BLING_GLITTER_PALETTE));
     // Configure the trigger bindings
     configureBindings();
 
@@ -188,10 +189,10 @@ public class RobotContainer {
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
     // OperStick Buttons
-    // operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
-    // operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
-    operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
-    operStick.R1().whileTrue(new IntakeAutoSense(intake, "CONE"));
+    operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    //operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
+    //operStick.R1().whileTrue(new IntakeAutoSense(intake, "CONE"));
     operStick.povDown().onTrue(new StopAllPCG(shoulder, extender, wrist, intake));
     operStick.share().onTrue(new SetToPositionPCG("HIGH_CUBE", shoulder, extender, wrist));
     operStick.options().onTrue(new SetToPositionPCG("HIGH_CONE", shoulder, extender, wrist));
