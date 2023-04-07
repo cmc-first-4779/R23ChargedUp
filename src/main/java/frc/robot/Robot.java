@@ -56,11 +56,11 @@ public class Robot extends TimedRobot {
     }
 
     // Start up our Camera Server for the Driver Cam
-    CameraServer.startAutomaticCapture();
+    // CameraServer.startAutomaticCapture();
     PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
     
     // Start up our Camera Server for the Driver Cam
-    CameraServer.startAutomaticCapture();
+    // CameraServer.startAutomaticCapture();
   }
 
   /**
