@@ -239,6 +239,8 @@ public class RobotContainer {
         new PathConstraints(2, 2));
     List<PathPlannerTrajectory> Station_3_Three_Cubes = PathPlanner.loadPathGroup("Station 3 Three Cubes",
         new PathConstraints(2.82, 2.41));
+    List<PathPlannerTrajectory> no_path = PathPlanner.loadPathGroup("Station 1 - Cube Backup",
+        new PathConstraints(2.82, 2.41));
 
     autoChooser.setDefaultOption("Station 2 Engage", Station_2_Engage);
     autoChooser.addOption("Station 1 Cube and Pickup", Station_1_Cube_and_Pickuptraj);
@@ -246,6 +248,7 @@ public class RobotContainer {
     autoChooser.addOption("Station 1 Cube and Engage", Station_1_Cube_and_Engage);
     autoChooser.addOption("Station 3 Cone and Pickup", Station_3_Cone_and_Pickup);
     autoChooser.addOption("Station 3 Three Cubes", Station_3_Three_Cubes);
+    autoChooser.addOption("No Auton", no_path);
   }
 
   /**
