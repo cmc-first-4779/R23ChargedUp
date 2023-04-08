@@ -45,12 +45,11 @@
       "stopEvent": {
         "names": [
           "Eject Cone",
-          "Safe Retract",
-          "Wait Short"
+          "Safe Retract"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "before",
-        "waitTime": 1.0
+        "waitTime": 0.5
       }
     },
     {
@@ -144,14 +143,15 @@
         "y": 0.811084625099377
       },
       "nextControl": null,
-      "holonomicAngle": 168.0,
+      "holonomicAngle": 163.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Eject Cube"
+          "Eject Cube",
+          "Safe Retract"
         ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
