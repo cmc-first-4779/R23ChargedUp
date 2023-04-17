@@ -150,6 +150,9 @@ public class RobotContainer {
     // shoulder.syncEncoders();
     // wrist.syncEncoders();
 
+    //Set the gyro to 180 to start since our Autons all start from this position
+    driveTrain.setGyro(180);
+
   }
 
   /**

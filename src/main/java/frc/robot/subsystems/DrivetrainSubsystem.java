@@ -284,7 +284,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     // I'm not 100% sure I have this method doing what we want. Need to test it.
-    public void resetOdometry(Pose2d pose) {
+    public void resetOdometry(Pose2d pose) {    
         odometry.resetPosition(gyroscope.getRotation2d(),
                 getPositions(),
                 pose);
@@ -375,5 +375,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
                               // Optional, defaults to true
                         this // Requires this drive subsystem
                 ));
+    }
+
+    public void setGyro(double degrees){
+                // Settting our gyroscope Yaw to what our Odometry Pose is..  
+                gyroscope.setYaw(degrees);
+                System.out.println("Gyro Set to: " +gyroscope.getYaw());
     }
 }
