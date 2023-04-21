@@ -106,21 +106,21 @@ public class WristSubsystem extends SubsystemBase {
 
   // Reset our Encoder
   public void resetEncoder(CANSparkMax sparkMax) {
-    double newMotorPosition;
-    if (absoluteEncoder.isConnected()) {
-      // Get the current distance of the shoulder calculated based off of absolute
-      // encoder.
-      newMotorPosition = getCurrentAbosoluteDistance(); // Negating to change phase
-      // Check to make sure it's a reasonable number in case the encoder crossed over
-      // the 0 line i.e. is reading 0.99
-      if (newMotorPosition < (Constants.WRIST_MIN_POSTION) || newMotorPosition > Constants.WRIST_MAX_POSITION) {
-        System.out.println("Encoder-calculated shoulder position outside of acceptable range. " + newMotorPosition);
-        newMotorPosition = 0;
-      }
-    } else {
-      // Absolute encoder not detected so just setting position to 0
-      newMotorPosition = 0;
-    }
+    double newMotorPosition = 0;
+    // if (absoluteEncoder.isConnected()) {
+    //   // Get the current distance of the shoulder calculated based off of absolute
+    //   // encoder.
+    //   newMotorPosition = getCurrentAbosoluteDistance(); // Negating to change phase
+    //   // Check to make sure it's a reasonable number in case the encoder crossed over
+    //   // the 0 line i.e. is reading 0.99
+    //   if (newMotorPosition < (Constants.WRIST_MIN_POSTION) || newMotorPosition > Constants.WRIST_MAX_POSITION) {
+    //     System.out.println("Encoder-calculated shoulder position outside of acceptable range. " + newMotorPosition);
+    //     newMotorPosition = 0;
+    //   }
+    // } else {
+    //   // Absolute encoder not detected so just setting position to 0
+    //   newMotorPosition = 0;
+    // }
     // Write out the intial position of the shoulder motor
     SmartDashboard.putNumber("Wrist Init Position:", newMotorPosition);
     // Set the motor controller encoder position
