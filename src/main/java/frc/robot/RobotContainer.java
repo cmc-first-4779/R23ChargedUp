@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -56,7 +57,6 @@ import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeAutoSense;
 import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-//import frc.robot.commands.LimelightCommands.LimelightInitForDriver;
 import frc.robot.commands.LimelightCommands.LimelightTargetDeploy;
 //import frc.robot.commands.MiscCommands.SyncEncoders;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
@@ -106,6 +106,7 @@ public class RobotContainer {
   // OperStick on USB Port 1
   private final CommandPS4Controller driverStick = new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
   private final CommandPS4Controller operStick = new CommandPS4Controller(OperatorConstants.kOperatorControllerPort);
+  private final CommandJoystick buttonboard = new CommandJoystick(OperatorConstants.kOperatorControllerPort);
 
   // Init the HashMap for Path Planner Commands
   HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
@@ -192,6 +193,7 @@ public class RobotContainer {
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
     // OperStick Buttons
+    buttonboard.button(1).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     //operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
