@@ -106,10 +106,11 @@ public class RobotContainer {
   // OperStick on USB Port 1
   private final CommandPS4Controller driverStick = new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
   private final CommandPS4Controller operStick = new CommandPS4Controller(OperatorConstants.kOperatorControllerPort);
-  private final CommandJoystick buttonboard = new CommandJoystick(OperatorConstants.kOperatorControllerPort);
+  private final CommandJoystick buttonboard = new CommandJoystick(OperatorConstants.kButtonBoxPort);
 
   // Init the HashMap for Path Planner Commands
   HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -192,8 +193,8 @@ public class RobotContainer {
     // limelight, "CUBE"));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
-    // OperStick Buttons
     buttonboard.button(1).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    buttonboard.button(2).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     //operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
