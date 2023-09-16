@@ -193,8 +193,7 @@ public class RobotContainer {
     // limelight, "CUBE"));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
-    buttonboard.button(1).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
-    buttonboard.button(2).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    // OperStick Buttons
     operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     //operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
@@ -211,6 +210,11 @@ public class RobotContainer {
     operStick.L2().onTrue(new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist));
     operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist));
     operStick.povUp().onTrue(new SetToPositionPCG("DOUBLE_HPS", shoulder, extender, wrist));
+
+    // ButtonBoard Buttons
+    buttonboard.button(1).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    buttonboard.button(2).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+
   }
 
   /**
