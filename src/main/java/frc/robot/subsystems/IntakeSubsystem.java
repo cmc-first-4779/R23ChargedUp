@@ -47,11 +47,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
   // Stop the Intake motor
   public void stopMotor() {
+    System.out.println("Stopping Intake Motor");
     intakeMotor.stopMotor();
   }
 
   // Set the Intake to a specific Speed to pick up something
   public void intakeRun(double speed) {
+    System.out.println("Setting Intake Motor speed to : " + speed);
     intakeMotor.set(speed);
   }
 

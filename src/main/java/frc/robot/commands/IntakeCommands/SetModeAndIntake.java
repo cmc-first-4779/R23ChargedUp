@@ -5,13 +5,18 @@
 package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class SetModeAndIntake extends CommandBase {
+  private RobotContainer robotContainer;
   private IntakeSubsystem intake;
   private boolean cubeMode;
   /** Creates a new SetModeAndIntake. */
-  public SetModeAndIntake(IntakeSubsystem intake, boolean cubeMode) {
+  public SetModeAndIntake(IntakeSubsystem intake, RobotContainer container, boolean cubeMode) {
     this.intake = intake;
+    this.robotContainer = container;
     this.cubeMode = cubeMode;
 
     addRequirements(intake);
@@ -20,11 +25,11 @@ public class SetModeAndIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.setCubeMode(cubeMode);
+    robotContainer.setCubeMode(cubeMode);
     if (cubeMode) {
-      intake
+      intake.intakeRun(Constants.INTAKE_CUBE_SPEED);
     } else {
-      Robot.setCubeMode(fals)
+      intake.intakeRun(Constants.INTAKE_CONE_SPEED);
     }
   }
 

@@ -20,6 +20,8 @@ public class IntakeSetSpeed extends CommandBase {
     this.intake = intake;
     this.intakeMode = intakeMode;
 
+    System.out.println("New IntakeSetSpeed Created with intakeMode " + intakeMode);
+
     // Set up a switch statement to set our speed value to the appropriate
     // constant based on the intakeMode that is passed in.
     // (We are doing this to simplify our commands)

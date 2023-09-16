@@ -57,6 +57,7 @@ import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeAutoSense;
 import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
+import frc.robot.commands.IntakeCommands.SetModeAndIntake;
 import frc.robot.commands.LimelightCommands.LimelightTargetDeploy;
 //import frc.robot.commands.MiscCommands.SyncEncoders;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
@@ -84,6 +85,8 @@ public class RobotContainer {
   SwerveModule m_frontRightModule;
   SwerveModule m_backLeftModule;
   SwerveModule m_backRightModule;
+
+  private boolean cubeMode = false;  
 
   // Set to use Path Planner
   private boolean usePathPlanner = true;
@@ -193,7 +196,8 @@ public class RobotContainer {
     // limelight, "CUBE"));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
-    // OperStick Buttons
+    buttonboard.button(1).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
+    buttonboard.button(2).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     //operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
@@ -211,9 +215,10 @@ public class RobotContainer {
     operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist));
     operStick.povUp().onTrue(new SetToPositionPCG("DOUBLE_HPS", shoulder, extender, wrist));
 
-    // ButtonBoard Buttons
-    buttonboard.button(1).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
-    buttonboard.button(2).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
+    buttonboard.button(1).whileTrue(new SetModeAndIntake(intake, this, true)); // Intake Cube
+    buttonboard.button(2).whileTrue(new SetModeAndIntake(intake, this, false)); // Intake Cone
+
+
 
   }
 
@@ -457,6 +462,25 @@ public class RobotContainer {
   // Returns the Bling Subsystem to other classes
   public BlingSubsystem getBlingSubsystem() {
     return bling;
+  }
+
+  public boolean isCubeMode() {
+    return this.cubeMode;
+  }
+
+  public boolean getCubeMode() {
+    return this.cubeMode;
+  }
+
+  public void setCubeMode(boolean cubeMode) {
+    this.cubeMode = cubeMode;
+    if(cubeMode) {
+      System.out.println("Setting Mode to Cube");
+      limelight.setLEDMode(BlingConstants.BLING_VIOLET);
+    } else {
+      System.out.println("Setting Mode to Cone");
+      limelight.setLEDMode(BlingConstants.BLING_YELLOW);
+    }
   }
 
 }
