@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.HashMap;
 import java.util.List;
 
+import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -27,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.LimelightSubsystem;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -49,6 +51,7 @@ import frc.robot.subsystems.BlingSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExtenderSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commandGroups.FloorPickupSCG;
 import frc.robot.commandGroups.SafeRectractToStowSCG;
 import frc.robot.commandGroups.SafeSetToPositionSCG;
 import frc.robot.commandGroups.SetToPositionPCG;
@@ -57,7 +60,8 @@ import frc.robot.commands.IntakeCommands.AutoIntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeAutoSense;
 import frc.robot.commands.IntakeCommands.IntakeSetSpeed;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-import frc.robot.commands.IntakeCommands.SetModeAndIntake;
+import frc.robot.commands.IntakeCommands.SetModeAndIntakeCommand;
+import frc.robot.commands.IntakeCommands.SetModeCommand;
 import frc.robot.commands.LimelightCommands.LimelightTargetDeploy;
 //import frc.robot.commands.MiscCommands.SyncEncoders;
 import frc.robot.commands.ShoulderCommands.ShoulderLower;
@@ -196,8 +200,6 @@ public class RobotContainer {
     // limelight, "CUBE"));
     driverStick.touchpad().whileTrue(new AutoBalanceFaster(driveTrain));
 
-    buttonboard.button(1).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
-    buttonboard.button(2).whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.L1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CUBE"));
     operStick.R1().whileTrue(new IntakeSetSpeed(intake, "INTAKE_CONE"));
     //operStick.L1().whileTrue(new IntakeAutoSense(intake, "CUBE"));
@@ -215,11 +217,37 @@ public class RobotContainer {
     operStick.touchpad().onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist));
     operStick.povUp().onTrue(new SetToPositionPCG("DOUBLE_HPS", shoulder, extender, wrist));
 
-    buttonboard.button(1).whileTrue(new SetModeAndIntake(intake, this, true)); // Intake Cube
-    buttonboard.button(2).whileTrue(new SetModeAndIntake(intake, this, false)); // Intake Cone
+    buttonboard.button(1).whileTrue(new SetModeAndIntakeCommand(intake, this, true)); // Intake Cube
+    buttonboard.button(2).whileTrue(new SetModeAndIntakeCommand(intake, this, false)); // Intake Cone
+    // buttonboard.button(3).onTrue(new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist)); // Double Hunman player station
+    buttonboard.button(3).onTrue(new SequentialCommandGroup(new SetModeCommand(this, false), new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist)));
+    buttonboard.button(4).onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist)); // Stow
 
+    // Setup two commands to use in conditional command.  One for picking up cube and one for cone on the floor.  Use the cubeMode as the codition provider
+    SafeSetToPositionSCG cubeFloorPickup = new SafeSetToPositionSCG("PICKUP_CUBE", shoulder, extender, wrist);
+    SafeSetToPositionSCG coneFloorPickup = new SafeSetToPositionSCG("PICKUP_CONE", shoulder, extender, wrist);
+    buttonboard.button(5).onTrue(new ConditionalCommand(cubeFloorPickup, coneFloorPickup, this::isCubeMode)); // Set to pickup from floor
 
+    // Setup two commands to use in conditional command. One for deploying cone and one for cube to the floor.
+    SafeSetToPositionSCG lowCube = new SafeSetToPositionSCG("LOW_CUBE", shoulder, extender, wrist);
+    SafeSetToPositionSCG lowCone = new SafeSetToPositionSCG("LOW_CONE", shoulder, extender, wrist);
+    buttonboard.button(6).onTrue(new ConditionalCommand(lowCube, lowCone, this::isCubeMode)); // Set to deploy on floor
 
+    // Setup two commands to use in conditional command. One for deploying cone and one for cube at mid level.
+    SafeSetToPositionSCG midCube = new SafeSetToPositionSCG("MID_CUBE", shoulder, extender, wrist);
+    SafeSetToPositionSCG midCone = new SafeSetToPositionSCG("MID_CONE", shoulder, extender, wrist);
+    buttonboard.button(7).onTrue(new ConditionalCommand(midCube, midCone, this::isCubeMode)); // Set to deploy on floor
+
+    // Setup two commands to use in conditional command. One for deploying cone and one for cube at high level.
+    SafeSetToPositionSCG highCube = new SafeSetToPositionSCG("HIGH_CUBE", shoulder, extender, wrist);
+    SafeSetToPositionSCG highCone = new SafeSetToPositionSCG("HIGH_CONE", shoulder, extender, wrist);
+    buttonboard.button(8).onTrue(new ConditionalCommand(highCube, highCone, this::isCubeMode)); // Set to deploy on floor
+
+    // Setup two commands to use in conditional command. One for ejecting cone and one for cube.
+    IntakeSetSpeed ejectCube = new IntakeSetSpeed(intake, "INTAKE_CONE"); // Intaking Cone is same as ejecting Cube
+    IntakeSetSpeed ejectCone = new IntakeSetSpeed(intake, "INTAKE_CUBE"); // Intaking Cube is same as ejecting Cone
+    buttonboard.button(9).whileTrue(new ConditionalCommand(ejectCube, ejectCone, this::isCubeMode));
+    
   }
 
   /**
@@ -465,6 +493,7 @@ public class RobotContainer {
   }
 
   public boolean isCubeMode() {
+    System.out.println("Returning cubeMode: " + cubeMode);
     return this.cubeMode;
   }
 

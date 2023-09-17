@@ -56,6 +56,7 @@ public class LimelightSubsystem extends SubsystemBase {
   // 2 = Force the LEDs to BLINK
   // 3 = Force the LEDs ON
   public void setLEDMode(double ledMode) {
+    System.out.println("LimeLightSubsytem: Setting LEDs to " + ledMode);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ledMode);
   }
 

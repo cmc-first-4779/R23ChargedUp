@@ -28,7 +28,7 @@ public class SafeSetToPositionSCG extends SequentialCommandGroup {
   /** Creates a new SafeSetToPositionSCG. */
   public SafeSetToPositionSCG(String position, ShoulderSubsystem shoulder, ExtenderSubsystem extender,
       WristSubsystem wrist) {
-
+System.out.println("SafeSetToPositionSCG created: *************" + position);
     // Set our local variables to the pass-thru values
     this.shoulder = shoulder;
     this.extender = extender;
