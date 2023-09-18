@@ -220,7 +220,7 @@ public class RobotContainer {
     buttonboard.button(1).whileTrue(new SetModeAndIntakeCommand(intake, this, true)); // Intake Cube
     buttonboard.button(2).whileTrue(new SetModeAndIntakeCommand(intake, this, false)); // Intake Cone
     // buttonboard.button(3).onTrue(new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist)); // Double Hunman player station
-    buttonboard.button(3).onTrue(new SequentialCommandGroup(new SetModeCommand(this, false), new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist)));
+    buttonboard.button(3).onTrue(new SequentialCommandGroup(new SetModeCommand(this, false), new SafeSetToPositionSCG("HUMAN_PLAYER_STATION", shoulder, extender, wrist))); // Set mode to Cone and then go to DHP position
     buttonboard.button(4).onTrue(new SafeRectractToStowSCG(shoulder, extender, wrist)); // Stow
 
     // Setup two commands to use in conditional command.  One for picking up cube and one for cone on the floor.  Use the cubeMode as the codition provider
